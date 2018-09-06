@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digger.dao.WishMapper">
+  <resultMap id="BaseResultMap" type="com.digger.pojo.Wish">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gameid" jdbcType="INTEGER" property="gameid" />
+    <result column="coverimg" jdbcType="VARCHAR" property="coverimg" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, gameid, coverimg, userid, price, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wish
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wish
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.digger.pojo.Wish">
+    insert into wish (id, gameid, coverimg, 
+      userid, price, createtime, 
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{coverimg,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER}, #{price,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.digger.pojo.Wish">
+    insert into wish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gameid != null">
+        gameid,
+      </if>
+      <if test="coverimg != null">
+        coverimg,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gameid != null">
+        #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="coverimg != null">
+        #{coverimg,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.digger.pojo.Wish">
+    update wish
+    <set>
+      <if test="gameid != null">
+        gameid = #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="coverimg != null">
+        coverimg = #{coverimg,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.digger.pojo.Wish">
+    update wish
+    set gameid = #{gameid,jdbcType=INTEGER},
+      coverimg = #{coverimg,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      price = #{price,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

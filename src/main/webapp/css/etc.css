@@ -1,0 +1,88 @@
+body {
+	/*background-image: url(../img/exm7.jpg);*/
+}
+
+/*avatar样式表经过图片可放大*/
+.avatar {
+	display: block;
+	overflow: hidden;
+}
+
+.avatar img {
+	display: block;
+	transform: scale(1);
+	transition: all 1s ease 0s;
+	-webkit-transform: scale(1);
+	-webkit-transform: all 1s ease 0s;
+}
+
+.avatar:hover img {
+	transform: scale(1.3);
+	transition: all 1s ease 0s;
+	-webkit-transform: scale(1.3);
+	-webkit-transform: all 1s ease 0s;
+}
+
+/*游戏标签居中*/
+.localcenter > h3 {
+	text-align: center ;
+}
+
+/*游戏标签边框*/
+#f{
+width:320px;
+background-color:white;
+margin-left: 6px;
+margin-top: -15px;
+}
+
+/*跳转页的确定按钮样式*/
+.btn-confirm {
+    background: none;
+    border: 1px solid #a4a4a4;
+    color: #3c3c3c;
+    min-width: 50px;
+    border-radius: 13px;
+}
+
+/*导航样式*/
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  color: gray;	
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: white;
+  background-color: black;
+}
+
+/*分页样式*/
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: black;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #fff;
+  cursor: default;
+  background-color: black;
+  border-color: #337ab7;
+}

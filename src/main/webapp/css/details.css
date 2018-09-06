@@ -1,0 +1,85 @@
+/*重写了面包屑导航样式*/
+
+.category {
+	font-size: 15px;
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  list-style: none;
+}
+.category > li {
+  display: inline-block;
+}
+.category > li + li:before {
+  padding: 0 5px;
+  color: #737373;
+  content: "/\00a0";
+}
+.category > .active {
+  color: #777;
+}
+
+
+/**
+ * 实现位置偏移
+ */
+.name_box{
+	position: absolute;
+	top: 195px;
+	left: 0;
+	z-index: -100;
+	background-color: whitesmoke;
+	height: 50px;
+	width: 100%;
+}
+
+.detail_name{
+	border-bottom: 4px solid #EB9316;
+	height: 30px;
+	width: 68px;
+	margin-left: 375px;
+	margin-top: 20px;
+	text-align: center;
+	font-size: 16px;
+}
+
+/**
+ * 页面右侧表单样式
+ */
+.table_content{
+	border-collapse:separate;
+	 border-spacing:0px 10px;
+	 margin-top: 10px;
+	 margin-bottom: 10px;
+	 text-align: center;
+}
+
+.left_title{
+	background-color: #CCCCCC;
+	border-radius: 5px;
+	 padding: 5px 5px;
+	 height: 35px;
+	 width: 105px;
+}
+
+.right_content{
+	background-color: white;
+	border-radius: 5px; 
+	padding: 5px 5px;
+	height: 35px;
+	width: 205px;
+}
+
+/**
+ * 页面内容不可选
+ */
+body{
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digger.dao.FriendMapper">
+  <resultMap id="BaseResultMap" type="com.digger.pojo.Friend">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="friendint" jdbcType="INTEGER" property="friendint" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+  </resultMap>
+  <insert id="insert" parameterType="com.digger.pojo.Friend">
+    insert into friend (id, friendint, state
+      )
+    values (#{id,jdbcType=INTEGER}, #{friendint,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.digger.pojo.Friend">
+    insert into friend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="friendint != null">
+        friendint,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="friendint != null">
+        #{friendint,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

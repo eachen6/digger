@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
+		<script type="text/javascript" src="../bootstrap/js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../vue/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/main.css"/>
+		<title></title>
+	</head>
+
+	<body>
+	
+	
+		<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;background-color: #242424;border: none;border-radius: 0px">
+			<div class="container-fluid" style="padding-top: 15px;padding-bottom: 15px;">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+			<span class="sr-only">切换导航</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+					<img style="cursor: pointer;" height="50" height="50" src="../img/logo.png" />
+					<a class="navbar-brand" href="main.html" style="font-size: 40px;color: white;">Digger.com</a>
+				</div>
+				<div class="collapse navbar-collapse" id="example-navbar-collapse">
+					<ul class="nav navbar-nav " style="margin-left: 25%;">
+						<li>
+							<a style="color: white;" id="shop" href="main.html?location=home">商店</a>
+						</li>
+						<li>
+							<a style="color: white;" id="community" href="main.html?location=community">社区</a>
+						</li>
+						<li>
+							<a style="color: white;" id="chat">客服</a>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="registered.html" style="color: white;"><span class="glyphicon glyphicon-user"></span> 注册</a>
+						</li>
+						<li>
+							<a href="#" style="color: white;" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class=""  id="frame">
+		
+		</div>
+
+		<div class="container">
+			
+				<!-- 模态框（Modal） -->
+			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content" style="background: rgba(255,255,255,0.5);">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								请登录
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div class="container-fluid">
+	
+								<form action="" method="post">
+									<div class="row" style="margin-bottom: 20px;">
+										<input style="width: 50%;" class="form-control col-md-offset-3" type="text" name="account" id="account" value="" placeholder="请输入账号" />
+									</div>
+									<div class="row" style="margin-bottom: 20px;">
+										<input style="width: 50%;" class="form-control col-md-offset-3" class="form-control" type="password" name="password" id="password" placeholder="请输入密码" />
+									</div>
+									<div class="row">
+										<a class="pull-right">忘记密码</a>
+									</div>
+								</form>
+	
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+							<button type="button" class="btn btn-primary">
+						登录
+					</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			
+		</div>
+		
+
+		<!--<footer id="footer">-->
+			<nav class="navbar navbar-default" style="background-color: #242424;border: none;border-radius: 0px;">
+				<div class="container">
+					<div style="text-align: center;color: white;">
+						<h3>肇庆学院软件工程|实训项目|关于网站|团队组成|权利声明|法律顾问|网站广告中心|网站与营销|队友智囊团|客服中心</h3>
+						<p>搬砖队团队制作</p>
+						<p>0110-010100-100000-111100</p> 
+						<p>
+							<a href="www.baidu.com"><img src="../img/footer.png" /></a>Digger游戏平台</p>
+					</div>
+				</div>
+			</nav>
+		<!--</footer>-->
+
+
+<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+
+
+		<!--<script>
+			$(document).ready(function() {
+				$("#shop").click(function(e) {
+					$("#frame").load("home.html")
+				})
+				$("#community").click(function(e) {
+					$("#frame").load("details.html")
+				})
+			})
+		</script>-->
+		<script type="text/javascript" src="../js/main.js" ></script>
+		<!--<script type="text/javascript"color="128,0,0" opacity="0.8" count="150" src="../js/canvas-nest.js"></script>-->
+	</body>
+
+</html>

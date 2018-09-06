@@ -1,0 +1,102 @@
+body {
+/*	background-image: url(img/exm7.jpg);*/
+}
+
+/*横向时间轴*/
+.time-horizontal {
+    list-style-type: none;
+    border-top: 3px solid #F3D38F;
+    max-width: 1200px;
+    padding: 0px;
+    margin: 0px;
+    z-index: -10;
+    margin-left: 10px;
+}
+ 
+.time-horizontal li {
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 25%;
+    padding-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+ 
+.time-horizontal li b:before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border: 5px solid #FAAB00;
+    border-radius: 8px;
+}
+
+.carousel-btn{
+	width : 33px;
+	height : 75px;
+	background-color: #D4D4D4;
+	border-style: none;     //无边框
+    border: 5px ;
+    border-radius: 5px;
+}
+
+#prev-btn:hover{
+	background-color: #ADADAD;
+}
+
+#next-btn:hover{
+	background-color: #ADADAD;
+}
+
+#prev-btn1:hover{
+	background-color: #ADADAD;
+}
+
+#next-btn1:hover{
+	background-color: #ADADAD;
+}
+
+#prev-btn2:hover{
+	background-color: #ADADAD;
+}
+
+#next-btn2:hover{
+	background-color: #ADADAD;
+}
+
+.gly-css{
+	color: white;
+}
+
+.div-text{
+	width:100%; 
+	height: 100px; 
+	text-align: center;
+}
+
+.h3-margin{
+	margin-left: 65px; 
+	margin-top:30px; 
+	margin-bottom: 20px;
+}
+div .thumbnail:hover{
+	box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.div-margin{
+	margin: 20px;
+}
+
+.div-margin1{
+	margin-top:20px;
+	margin-left: 35px;
+	font-family: "arial narrow";
+}
+.div-margin2{
+	margin-top: 15px;
+	margin-left: 35px;
+	margin-right: 30px;
+}

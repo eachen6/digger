@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.digger.dao.GameMapper">
+  <resultMap id="BaseResultMap" type="com.digger.pojo.Game">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="bgurl" jdbcType="VARCHAR" property="bgurl" />
+    <result column="coverurl" jdbcType="VARCHAR" property="coverurl" />
+    <result column="videourl" jdbcType="VARCHAR" property="videourl" />
+    <result column="opstage" jdbcType="VARCHAR" property="opstage" />
+    <result column="developer" jdbcType="VARCHAR" property="developer" />
+    <result column="oper" jdbcType="VARCHAR" property="oper" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="memory" jdbcType="VARCHAR" property="memory" />
+    <result column="grcard" jdbcType="VARCHAR" property="grcard" />
+    <result column="cd" jdbcType="VARCHAR" property="cd" />
+    <result column="cpu" jdbcType="VARCHAR" property="cpu" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="driver" jdbcType="VARCHAR" property="driver" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="click" jdbcType="INTEGER" property="click" />
+    <result column="sale" jdbcType="INTEGER" property="sale" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="shelftime" jdbcType="TIMESTAMP" property="shelftime" />
+    <result column="uploadid" jdbcType="INTEGER" property="uploadid" />
+    <result column="discountstate" jdbcType="TINYINT" property="discountstate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.digger.pojo.Game">
+    <result column="detailtxt" jdbcType="LONGVARCHAR" property="detailtxt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, category, label, bgurl, coverurl, videourl, opstage, developer, oper, platform, 
+    memory, grcard, cd, cpu, system, driver, state, click, sale, createtime, updatetime, 
+    price, shelftime, uploadid, discountstate
+  </sql>
+  <sql id="Blob_Column_List">
+    detailtxt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from game
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from game
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.digger.pojo.Game">
+    insert into game (id, name, category, 
+      label, bgurl, coverurl, 
+      videourl, opstage, developer, 
+      oper, platform, memory, 
+      grcard, cd, cpu, system, 
+      driver, state, click, 
+      sale, createtime, updatetime, 
+      price, shelftime, uploadid, 
+      discountstate, detailtxt)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{label,jdbcType=VARCHAR}, #{bgurl,jdbcType=VARCHAR}, #{coverurl,jdbcType=VARCHAR}, 
+      #{videourl,jdbcType=VARCHAR}, #{opstage,jdbcType=VARCHAR}, #{developer,jdbcType=VARCHAR}, 
+      #{oper,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
+      #{grcard,jdbcType=VARCHAR}, #{cd,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
+      #{driver,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{click,jdbcType=INTEGER}, 
+      #{sale,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{price,jdbcType=REAL}, #{shelftime,jdbcType=TIMESTAMP}, #{uploadid,jdbcType=INTEGER}, 
+      #{discountstate,jdbcType=TINYINT}, #{detailtxt,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.digger.pojo.Game">
+    insert into game
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="bgurl != null">
+        bgurl,
+      </if>
+      <if test="coverurl != null">
+        coverurl,
+      </if>
+      <if test="videourl != null">
+        videourl,
+      </if>
+      <if test="opstage != null">
+        opstage,
+      </if>
+      <if test="developer != null">
+        developer,
+      </if>
+      <if test="oper != null">
+        oper,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="grcard != null">
+        grcard,
+      </if>
+      <if test="cd != null">
+        cd,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="system != null">
+        system,
+      </if>
+      <if test="driver != null">
+        driver,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="sale != null">
+        sale,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="shelftime != null">
+        shelftime,
+      </if>
+      <if test="uploadid != null">
+        uploadid,
+      </if>
+      <if test="discountstate != null">
+        discountstate,
+      </if>
+      <if test="detailtxt != null">
+        detailtxt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="bgurl != null">
+        #{bgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverurl != null">
+        #{coverurl,jdbcType=VARCHAR},
+      </if>
+      <if test="videourl != null">
+        #{videourl,jdbcType=VARCHAR},
+      </if>
+      <if test="opstage != null">
+        #{opstage,jdbcType=VARCHAR},
+      </if>
+      <if test="developer != null">
+        #{developer,jdbcType=VARCHAR},
+      </if>
+      <if test="oper != null">
+        #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="grcard != null">
+        #{grcard,jdbcType=VARCHAR},
+      </if>
+      <if test="cd != null">
+        #{cd,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null">
+        #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null">
+        #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="shelftime != null">
+        #{shelftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadid != null">
+        #{uploadid,jdbcType=INTEGER},
+      </if>
+      <if test="discountstate != null">
+        #{discountstate,jdbcType=TINYINT},
+      </if>
+      <if test="detailtxt != null">
+        #{detailtxt,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.digger.pojo.Game">
+    update game
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="bgurl != null">
+        bgurl = #{bgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverurl != null">
+        coverurl = #{coverurl,jdbcType=VARCHAR},
+      </if>
+      <if test="videourl != null">
+        videourl = #{videourl,jdbcType=VARCHAR},
+      </if>
+      <if test="opstage != null">
+        opstage = #{opstage,jdbcType=VARCHAR},
+      </if>
+      <if test="developer != null">
+        developer = #{developer,jdbcType=VARCHAR},
+      </if>
+      <if test="oper != null">
+        oper = #{oper,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="grcard != null">
+        grcard = #{grcard,jdbcType=VARCHAR},
+      </if>
+      <if test="cd != null">
+        cd = #{cd,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        system = #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null">
+        driver = #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null">
+        sale = #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="shelftime != null">
+        shelftime = #{shelftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadid != null">
+        uploadid = #{uploadid,jdbcType=INTEGER},
+      </if>
+      <if test="discountstate != null">
+        discountstate = #{discountstate,jdbcType=TINYINT},
+      </if>
+      <if test="detailtxt != null">
+        detailtxt = #{detailtxt,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.digger.pojo.Game">
+    update game
+    set name = #{name,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      bgurl = #{bgurl,jdbcType=VARCHAR},
+      coverurl = #{coverurl,jdbcType=VARCHAR},
+      videourl = #{videourl,jdbcType=VARCHAR},
+      opstage = #{opstage,jdbcType=VARCHAR},
+      developer = #{developer,jdbcType=VARCHAR},
+      oper = #{oper,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      grcard = #{grcard,jdbcType=VARCHAR},
+      cd = #{cd,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      system = #{system,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      click = #{click,jdbcType=INTEGER},
+      sale = #{sale,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=REAL},
+      shelftime = #{shelftime,jdbcType=TIMESTAMP},
+      uploadid = #{uploadid,jdbcType=INTEGER},
+      discountstate = #{discountstate,jdbcType=TINYINT},
+      detailtxt = #{detailtxt,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.digger.pojo.Game">
+    update game
+    set name = #{name,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      bgurl = #{bgurl,jdbcType=VARCHAR},
+      coverurl = #{coverurl,jdbcType=VARCHAR},
+      videourl = #{videourl,jdbcType=VARCHAR},
+      opstage = #{opstage,jdbcType=VARCHAR},
+      developer = #{developer,jdbcType=VARCHAR},
+      oper = #{oper,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      grcard = #{grcard,jdbcType=VARCHAR},
+      cd = #{cd,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      system = #{system,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      click = #{click,jdbcType=INTEGER},
+      sale = #{sale,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=REAL},
+      shelftime = #{shelftime,jdbcType=TIMESTAMP},
+      uploadid = #{uploadid,jdbcType=INTEGER},
+      discountstate = #{discountstate,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
