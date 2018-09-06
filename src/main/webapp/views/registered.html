@@ -14,7 +14,7 @@
 
 	<div class="container">
 		<h1>WELCOME TO DIGGER</h1>
-		<form class="form" action="#" method="post">
+		<form class="form" action="" method="post">
 			<input class="in" type="text" id="username" name="username" placeholder="请输入您的用户名">
 			<input class="in" type="text" id="email" name="email" placeholder="请输入邮箱">
 			<input class="in" type="text" id="question" name="question" placeholder="请输入密保问题">
@@ -42,13 +42,34 @@
 
 <script type="text/javascript">
 $('#registed-button').click(function(event){
-	event.preventDefault();
-	$('form').fadeOut(500);
-	$('.wrapper').addClass('form-success');
+	var username = $("#username").val();
+	var password = $("#email").val();
+	var question = $("#question").val();
+	var user={
+			username:username,
+			password:password,
+			question:question
+	}
 	
-	setTimeout(function () {
- window.location.href='main.html';    
-}, 1500);
+	
+	$.ajax({
+		url: "user/registered",
+		data:JSON.stringify(user),
+		method:'POST',
+		success:function(res){
+			console.log(res)
+			event.preventDefault();
+			$('form').fadeOut(500);
+			$('.wrapper').addClass('form-success');
+			
+			setTimeout(function () {
+		 window.location.href='main.html';    
+		}, 1500);
+		}
+	})
+	
+	
+	
 	
 });
 </script>

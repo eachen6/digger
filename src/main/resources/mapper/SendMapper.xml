@@ -4,17 +4,24 @@
   <resultMap id="BaseResultMap" type="com.digger.pojo.Send">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="targetid" jdbcType="INTEGER" property="targetid" />
-    <result column="message" jdbcType="VARCHAR" property="message" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="ordernum" jdbcType="BIGINT" property="ordernum" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.digger.pojo.Send">
+    <result column="message" jdbcType="LONGVARCHAR" property="message" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, targetid, message, createtime, updatetime, ordernum
+    id, targetid, createtime, updatetime, ordernum
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    message
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from send
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -23,11 +30,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Send">
-    insert into send (id, targetid, message, 
-      createtime, updatetime, ordernum
+    insert into send (id, targetid, createtime, 
+      updatetime, ordernum, message
       )
-    values (#{id,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
+    values (#{id,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}, #{message,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Send">
@@ -39,9 +46,6 @@
       <if test="targetid != null">
         targetid,
       </if>
-      <if test="message != null">
-        message,
-      </if>
       <if test="createtime != null">
         createtime,
       </if>
@@ -51,6 +55,9 @@
       <if test="ordernum != null">
         ordernum,
       </if>
+      <if test="message != null">
+        message,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -58,9 +65,6 @@
       </if>
       <if test="targetid != null">
         #{targetid,jdbcType=INTEGER},
-      </if>
-      <if test="message != null">
-        #{message,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -71,6 +75,9 @@
       <if test="ordernum != null">
         #{ordernum,jdbcType=BIGINT},
       </if>
+      <if test="message != null">
+        #{message,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.digger.pojo.Send">
@@ -78,9 +85,6 @@
     <set>
       <if test="targetid != null">
         targetid = #{targetid,jdbcType=INTEGER},
-      </if>
-      <if test="message != null">
-        message = #{message,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=TIMESTAMP},
@@ -91,13 +95,24 @@
       <if test="ordernum != null">
         ordernum = #{ordernum,jdbcType=BIGINT},
       </if>
+      <if test="message != null">
+        message = #{message,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.digger.pojo.Send">
+    update send
+    set targetid = #{targetid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      ordernum = #{ordernum,jdbcType=BIGINT},
+      message = #{message,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.digger.pojo.Send">
     update send
     set targetid = #{targetid,jdbcType=INTEGER},
-      message = #{message,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP},
       ordernum = #{ordernum,jdbcType=BIGINT}

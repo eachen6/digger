@@ -26,7 +26,7 @@
 				var password = $("#password").val();
 				console.log(username,password);
 				$.ajax({
-					url: "login",
+					url: "user/login",
 					data:{
 						username:username,
 						password:password

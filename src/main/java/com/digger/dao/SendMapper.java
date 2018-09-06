@@ -13,5 +13,7 @@ public interface SendMapper {
 
     int updateByPrimaryKeySelective(Send record);
 
+    int updateByPrimaryKeyWithBLOBs(Send record);
+
     int updateByPrimaryKey(Send record);
 }

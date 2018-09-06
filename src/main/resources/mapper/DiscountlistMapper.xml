@@ -7,9 +7,11 @@
     <result column="discount" jdbcType="REAL" property="discount" />
     <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
     <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, gameid, discount, deadline, starttime
+    id, gameid, discount, deadline, starttime, createtime, updatetime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,9 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Discountlist">
     insert into discountlist (id, gameid, discount, 
-      deadline, starttime)
+      deadline, starttime, createtime, 
+      updatetime)
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{discount,jdbcType=REAL}, 
-      #{deadline,jdbcType=TIMESTAMP}, #{starttime,jdbcType=TIMESTAMP})
+      #{deadline,jdbcType=TIMESTAMP}, #{starttime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Discountlist">
     insert into discountlist
@@ -45,6 +49,12 @@
       <if test="starttime != null">
         starttime,
       </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -61,6 +71,12 @@
       </if>
       <if test="starttime != null">
         #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -79,6 +95,12 @@
       <if test="starttime != null">
         starttime = #{starttime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,7 +109,9 @@
     set gameid = #{gameid,jdbcType=INTEGER},
       discount = #{discount,jdbcType=REAL},
       deadline = #{deadline,jdbcType=TIMESTAMP},
-      starttime = #{starttime,jdbcType=TIMESTAMP}
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

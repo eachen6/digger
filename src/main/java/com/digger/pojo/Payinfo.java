@@ -7,9 +7,9 @@ public class Payinfo {
 
     private Integer userid;
 
-    private Integer orderid;
+    private Long ordernum;
 
-    private Byte payplaform;
+    private Byte payplatform;
 
     private String platformnumber;
 
@@ -33,20 +33,20 @@ public class Payinfo {
         this.userid = userid;
     }
 
-    public Integer getOrderid() {
-        return orderid;
+    public Long getOrdernum() {
+        return ordernum;
     }
 
-    public void setOrderid(Integer orderid) {
-        this.orderid = orderid;
+    public void setOrdernum(Long ordernum) {
+        this.ordernum = ordernum;
     }
 
-    public Byte getPayplaform() {
-        return payplaform;
+    public Byte getPayplatform() {
+        return payplatform;
     }
 
-    public void setPayplaform(Byte payplaform) {
-        this.payplaform = payplaform;
+    public void setPayplatform(Byte payplatform) {
+        this.payplatform = payplatform;
     }
 
     public String getPlatformnumber() {

@@ -11,8 +11,6 @@ public class Wish {
 
     private Integer userid;
 
-    private Integer price;
-
     private Date createtime;
 
     private Date updatetime;
@@ -47,14 +45,6 @@ public class Wish {
 
     public void setUserid(Integer userid) {
         this.userid = userid;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public Date getCreatetime() {

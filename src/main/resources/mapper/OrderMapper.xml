@@ -6,12 +6,12 @@
     <result column="gameid" jdbcType="INTEGER" property="gameid" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
     <result column="coverimg" jdbcType="VARCHAR" property="coverimg" />
-    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="price" jdbcType="REAL" property="price" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="paytime" jdbcType="TIMESTAMP" property="paytime" />
-    <result column="issend" jdbcType="INTEGER" property="issend" />
+    <result column="issend" jdbcType="TINYINT" property="issend" />
     <result column="closetime" jdbcType="TIMESTAMP" property="closetime" />
     <result column="ordernum" jdbcType="BIGINT" property="ordernum" />
   </resultMap>
@@ -36,9 +36,9 @@
       issend, closetime, ordernum
       )
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP}, 
-      #{issend,jdbcType=INTEGER}, #{closetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
+      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{issend,jdbcType=TINYINT}, #{closetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Order">
@@ -95,7 +95,7 @@
         #{coverimg,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=REAL},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -104,13 +104,13 @@
         #{updatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null">
-        #{state,jdbcType=INTEGER},
+        #{state,jdbcType=TINYINT},
       </if>
       <if test="paytime != null">
         #{paytime,jdbcType=TIMESTAMP},
       </if>
       <if test="issend != null">
-        #{issend,jdbcType=INTEGER},
+        #{issend,jdbcType=TINYINT},
       </if>
       <if test="closetime != null">
         #{closetime,jdbcType=TIMESTAMP},
@@ -133,7 +133,7 @@
         coverimg = #{coverimg,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=REAL},
       </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=TIMESTAMP},
@@ -142,13 +142,13 @@
         updatetime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
+        state = #{state,jdbcType=TINYINT},
       </if>
       <if test="paytime != null">
         paytime = #{paytime,jdbcType=TIMESTAMP},
       </if>
       <if test="issend != null">
-        issend = #{issend,jdbcType=INTEGER},
+        issend = #{issend,jdbcType=TINYINT},
       </if>
       <if test="closetime != null">
         closetime = #{closetime,jdbcType=TIMESTAMP},
@@ -164,12 +164,12 @@
     set gameid = #{gameid,jdbcType=INTEGER},
       userid = #{userid,jdbcType=INTEGER},
       coverimg = #{coverimg,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT},
       paytime = #{paytime,jdbcType=TIMESTAMP},
-      issend = #{issend,jdbcType=INTEGER},
+      issend = #{issend,jdbcType=TINYINT},
       closetime = #{closetime,jdbcType=TIMESTAMP},
       ordernum = #{ordernum,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}

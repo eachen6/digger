@@ -11,17 +11,17 @@ public class Order {
 
     private String coverimg;
 
-    private Integer price;
+    private Float price;
 
     private Date createtime;
 
     private Date updatetime;
 
-    private Integer state;
+    private Byte state;
 
     private Date paytime;
 
-    private Integer issend;
+    private Byte issend;
 
     private Date closetime;
 
@@ -59,11 +59,11 @@ public class Order {
         this.coverimg = coverimg;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -83,11 +83,11 @@ public class Order {
         this.updatetime = updatetime;
     }
 
-    public Integer getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(Byte state) {
         this.state = state;
     }
 
@@ -99,11 +99,11 @@ public class Order {
         this.paytime = paytime;
     }
 
-    public Integer getIssend() {
+    public Byte getIssend() {
         return issend;
     }
 
-    public void setIssend(Integer issend) {
+    public void setIssend(Byte issend) {
         this.issend = issend;
     }
 

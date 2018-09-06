@@ -6,17 +6,24 @@
     <result column="gameid" jdbcType="INTEGER" property="gameid" />
     <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.digger.pojo.AnnouncementWithBLOBs">
+    <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, gameid, imgurl, title, introduction, content, createtime, updatetime
+    id, gameid, imgurl, title, createtime, updatetime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    introduction, content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from announcement
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -24,15 +31,15 @@
     delete from announcement
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.digger.pojo.Announcement">
+  <insert id="insert" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
     insert into announcement (id, gameid, imgurl, 
-      title, introduction, content, 
-      createtime, updatetime)
+      title, createtime, updatetime, 
+      introduction, content)
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+      #{title,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{introduction,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.digger.pojo.Announcement">
+  <insert id="insertSelective" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
     insert into announcement
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -47,17 +54,17 @@
       <if test="title != null">
         title,
       </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
       <if test="createtime != null">
         createtime,
       </if>
       <if test="updatetime != null">
         updatetime,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="content != null">
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -73,21 +80,21 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatetime != null">
         #{updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.digger.pojo.Announcement">
+  <update id="updateByPrimaryKeySelective" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
     update announcement
     <set>
       <if test="gameid != null">
@@ -99,19 +106,30 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatetime != null">
         updatetime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
+    update announcement
+    set gameid = #{gameid,jdbcType=INTEGER},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      introduction = #{introduction,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.digger.pojo.Announcement">
@@ -119,8 +137,6 @@
     set gameid = #{gameid,jdbcType=INTEGER},
       imgurl = #{imgurl,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

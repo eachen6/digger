@@ -13,6 +13,10 @@ public class Discountlist {
 
     private Date starttime;
 
+    private Date createtime;
+
+    private Date updatetime;
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +55,21 @@ public class Discountlist {
 
     public void setStarttime(Date starttime) {
         this.starttime = starttime;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 }

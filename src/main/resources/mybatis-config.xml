@@ -31,7 +31,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/digger"
+                        connectionURL="jdbc:mysql://192.168.191.1:3306/digger"
                         userId="root"
                         password="" />
 

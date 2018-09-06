@@ -1,18 +1,18 @@
 package com.digger.pojo;
 
 public class Friend {
-    private Integer id;
+    private Integer userid;
 
     private Integer friendint;
 
     private Byte state;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public Integer getFriendint() {

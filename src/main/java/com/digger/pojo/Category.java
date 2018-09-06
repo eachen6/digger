@@ -7,7 +7,7 @@ public class Category {
 
     private String name;
 
-    private Byte status;
+    private Byte state;
 
     private Date createtime;
 
@@ -29,12 +29,12 @@ public class Category {
         this.name = name;
     }
 
-    public Byte getStatus() {
-        return status;
+    public Byte getState() {
+        return state;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setState(Byte state) {
+        this.state = state;
     }
 
     public Date getCreatetime() {

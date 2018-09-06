@@ -7,13 +7,13 @@ public class Send {
 
     private Integer targetid;
 
-    private String message;
-
     private Date createtime;
 
     private Date updatetime;
 
     private Long ordernum;
+
+    private String message;
 
     public Integer getId() {
         return id;
@@ -29,14 +29,6 @@ public class Send {
 
     public void setTargetid(Integer targetid) {
         this.targetid = targetid;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public Date getCreatetime() {
@@ -61,5 +53,13 @@ public class Send {
 
     public void setOrdernum(Long ordernum) {
         this.ordernum = ordernum;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
