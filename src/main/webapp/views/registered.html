@@ -14,7 +14,7 @@
 
 	<div class="container">
 		<h1>WELCOME TO DIGGER</h1>
-		<form class="form" action="" method="post">
+		<form class="form"  action="" method="post">
 			<input class="in" type="text" id="username" name="username" placeholder="请输入您的用户名">
 			<input class="in" type="text" id="email" name="email" placeholder="请输入邮箱">
 			<input class="in" type="text" id="question" name="question" placeholder="请输入密保问题">
@@ -61,6 +61,7 @@ $('#registed-button').click(function(event){
 		url: "../user/register",
 		data:JSON.stringify(user),
 		type:'POST',
+		contentType:"application/json; charset=utf-8",
 		success:function(res){
 			console.log(res)
 			event.preventDefault();
