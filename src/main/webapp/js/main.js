@@ -17,14 +17,6 @@ $(document).ready(function(){
 		if(name==null){
 			$("#frame").load("firstindex.html");
 		}
-//		else if(name=="djyw"||name=="tzgs"||name=="dngs"||name=="xzzq"){
-//			if(id==null){
-//				$("#frame").load("publicityList.html");
-//			}
-//			else{
-//				$("#frame").load("publicity.html");
-//			}
-//		}
 		else if(name=="home"){
 			$("#frame").load("home.html");
 		}
@@ -37,4 +29,6 @@ $(document).ready(function(){
 		
 		$(".loading").fadeOut(500);
 	})
+	
+	
 })

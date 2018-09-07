@@ -32,7 +32,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{role,jdbcType=TINYINT}
+      now(), now(), #{role,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.User">
@@ -86,10 +86,10 @@
         #{answer,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="role != null">
         #{role,jdbcType=TINYINT},
@@ -118,7 +118,7 @@
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+        updatetime = now(),
       </if>
       <if test="role != null">
         role = #{role,jdbcType=TINYINT},
@@ -134,7 +134,7 @@
       question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      updatetime = now(),
       role = #{role,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>

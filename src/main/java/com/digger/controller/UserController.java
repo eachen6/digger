@@ -13,6 +13,20 @@ import com.digger.pojo.User;
 @RequestMapping("/user")
 public class UserController {
 
+	
+	/**
+	 * 注册方法
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="register", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<User> registered(@RequestBody User user){
+		System.out.println(user.toString());
+		return ServerResponse.createBySuccess(user) ;
+	}
+	
+	
 	/**
 	 * 登陆方法
 	 * @return

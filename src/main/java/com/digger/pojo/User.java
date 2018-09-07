@@ -92,4 +92,13 @@ public class User {
     public void setRole(Byte role) {
         this.role = role;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", question=" + question + ", answer=" + answer + ", createtime=" + createtime + ", updatetime="
+				+ updatetime + ", role=" + role + "]";
+	}
+    
+    
 }
