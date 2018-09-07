@@ -49,18 +49,19 @@ $('#registed-button').click(function(event){
 	var answer = $("#answer").val();
 	var email = $("#email").val();
 	var user={
-			username:username,
-			password:password,
-			question:question,
-			answer:answer,
-			email:email
+			"username":username,
+			"password":password,
+			"question":question,
+			"answer":answer,
+			"email":email
 	}
 	
 	//console.log(JSON.stringify(user))
 	$.ajax({
-		url: "user/register",
+		url: "../user/register",
 		data:JSON.stringify(user),
 		method:'POST',
+		type:'POST',
 		success:function(res){
 			console.log(res)
 			event.preventDefault();
