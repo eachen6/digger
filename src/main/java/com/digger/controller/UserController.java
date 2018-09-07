@@ -1,11 +1,14 @@
 package com.digger.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpSession;
+
 
 import com.digger.common.ServerResponse;
 import com.digger.pojo.User;
@@ -36,46 +39,20 @@ public class UserController {
 	}
 
 	/**
-	 * 登陆方法
-	 * 
-	 * @return
-	 */
+     * 用户登录
+     * @param username
+     * @param password
+     * @param session
+     * @return
+     */
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse login(String username, String password) {
-
-		User user = userService.todologin(username);
-
-		if (user == null) {
-			return ServerResponse.createByErrorMessage("用户名不存在！");
-		} 
-		
-		else {
-			
-			if(user.getPassword() .equals(password)) {
-				// 用户登陆
-				if (user.getRole() == 0) {
-					return ServerResponse.createBySuccess("登录成功，身份：用户");
-				}
-				// 管理员登陆
-				else if (user.getRole() == 1) {
-					return ServerResponse.createBySuccess("登录成功，身份：管理员");
-				} 
-				// 客服登陆
-				else if (user.getRole() == 2) {
-					return ServerResponse.createBySuccess("登录成功，身份：客服");
-				}
-			}
-			else {
-				
-				return ServerResponse.createByErrorMessage("密码错误");
-				
-				
-			}
-				
-		}
-		return ServerResponse.createByErrorMessage("登陆失败！");
-
+	public ServerResponse<User> login(String username, String password,HttpSession session) {
+		ServerResponse<User> response = userService.login(username,password);
+        if(response.isSuccess()){
+            session.setAttribute("currentUser",response.getData());
+        }
+        return response;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.digger.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.digger.common.ServerResponse;
 import com.digger.dao.UserMapper;
 import com.digger.pojo.User;
 import com.digger.service.UserService;
@@ -18,9 +19,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User todologin(String username) {
+	public ServerResponse<User> login(String username, String password) {
 		// TODO Auto-generated method stub
-		return userMapper.todologin(username);
+		int resultCount = userMapper.checkUsername(username);
+		if(resultCount == 0 ){
+            return ServerResponse.createByErrorMessage("用户名不存在");
+        }
+		User user  = userMapper.selectLogin(username,password);
+		if(user == null){
+	        return ServerResponse.createByErrorMessage("密码错误");
+	    }
+		return ServerResponse.createBySuccess("登录成功",user);
 	}
 
 }
