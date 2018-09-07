@@ -18,9 +18,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User todologin(String username, String password) {
+	public User todologin(String username) {
 		// TODO Auto-generated method stub
-		return userMapper.todologin(username, password);
+		return userMapper.todologin(username);
 	}
 
 }

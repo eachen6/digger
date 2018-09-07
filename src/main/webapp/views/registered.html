@@ -60,7 +60,6 @@ $('#registed-button').click(function(event){
 	$.ajax({
 		url: "../user/register",
 		data:JSON.stringify(user),
-		method:'POST',
 		type:'POST',
 		success:function(res){
 			console.log(res)

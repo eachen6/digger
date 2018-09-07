@@ -17,5 +17,5 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     
-    User todologin(@Param("username")String username,@Param("password")String password);
+    User todologin(@Param("username")String username);
 }

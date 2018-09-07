@@ -43,30 +43,36 @@ public class UserController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse login(String username, String password) {
-		System.out.println(123);
-		System.out.println(username);
-		System.out.println(password);
-		User user = userService.todologin(username, password);
 
-		if (user.getUsername().equals("")) {
+		User user = userService.todologin(username);
+
+		if (user == null) {
 			return ServerResponse.createByErrorMessage("用户名不存在！");
 		} 
-		else if (user.getPassword() == null) {
-			return ServerResponse.createByErrorMessage("密码错误！");
-		} 
+		
 		else {
-			// 用户登陆
-			if (user.getRole() == 0) {
-				return ServerResponse.createBySuccess("niubi");
+			
+			if(user.getPassword() .equals(password)) {
+				// 用户登陆
+				if (user.getRole() == 0) {
+					return ServerResponse.createBySuccess("登录成功，身份：用户");
+				}
+				// 管理员登陆
+				else if (user.getRole() == 1) {
+					return ServerResponse.createBySuccess("登录成功，身份：管理员");
+				} 
+				// 客服登陆
+				else if (user.getRole() == 2) {
+					return ServerResponse.createBySuccess("登录成功，身份：客服");
+				}
 			}
-			// 管理员登陆
-			else if (user.getRole() == 1) {
-				return ServerResponse.createBySuccess("niubi！！");
-			} 
-			// 客服登陆
-			else if (user.getRole() == 2) {
-				return ServerResponse.createBySuccess("niubi！！!");
+			else {
+				
+				return ServerResponse.createByErrorMessage("密码错误");
+				
+				
 			}
+				
 		}
 		return ServerResponse.createByErrorMessage("登陆失败！");
 
