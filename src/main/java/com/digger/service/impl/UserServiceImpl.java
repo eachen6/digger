@@ -17,4 +17,10 @@ public class UserServiceImpl implements UserService{
 		return userMapper.insertSelective(user);
 	}
 
+	@Override
+	public User todologin(String username, String password) {
+		// TODO Auto-generated method stub
+		return userMapper.todologin(username, password);
+	}
+
 }
