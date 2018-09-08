@@ -5,7 +5,7 @@ import com.digger.pojo.Game;
 public interface GameMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Game record);
+    int insert(Game game);
 
     int insertSelective(Game record);
 
@@ -16,4 +16,5 @@ public interface GameMapper {
     int updateByPrimaryKeyWithBLOBs(Game record);
 
     int updateByPrimaryKey(Game record);
+
 }

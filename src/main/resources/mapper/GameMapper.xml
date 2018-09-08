@@ -384,4 +384,8 @@
       discountstate = #{discountstate,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 新增方法 -->
+  
+  
 </mapper>
