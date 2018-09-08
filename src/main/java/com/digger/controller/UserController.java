@@ -29,12 +29,9 @@ public class UserController {
 	 */
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse<User> registered(@RequestBody User user) {
+	public ServerResponse<String> registered(@RequestBody User user) {
 		System.out.println(user.toString());
-		if (userService.register(user) > 0) {
-			return ServerResponse.createBySuccess(user);
-		}
-		return ServerResponse.createByErrorMessage("失败了");
+		return userService.register(user);
 
 	}
 
