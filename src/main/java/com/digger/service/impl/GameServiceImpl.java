@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.pojo.Game;
+import com.digger.service.GameService;
 
 @Service("gameService")
-public class GameServiceImpl {
+public class GameServiceImpl implements GameService{
 	
 	@Autowired
 	GameMapper gameMapper;
