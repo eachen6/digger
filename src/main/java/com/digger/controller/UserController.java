@@ -23,7 +23,6 @@ public class UserController {
 
 	/**
 	 * 注册方法
-	 * 
 	 * @param user
 	 * @return
 	 */
@@ -51,5 +50,45 @@ public class UserController {
         }
         return response;
 	}
-
+	
+	/**
+     * 查询密保问题
+     * @param username
+     * @param type（为判断传入的是username还是email）
+     * @return
+     */
+	@RequestMapping(value = "question", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<User> question(String username,String type,HttpSession session) {
+		session.setAttribute("qtype", type);
+		
+		System.out.println((String)session.getAttribute("qtype"));
+		return userService.selectQuestion(username,type);
+	}
+	
+	/**
+     * 校验密保答案
+     * @param username
+     * @param type（为判断传入的是username还是email）
+     * @return
+     */
+	@RequestMapping(value = "answer", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<String> answer(String username,String question,String answer,HttpSession session) {
+		String type = (String)session.getAttribute("qtype");
+		return userService.checkAnswer(username,question,answer,type);
+	}
+	
+	/**
+     * 忘记密码
+     * @param username
+     * @param type（为判断传入的是username还是email）
+     * @return
+     */
+	@RequestMapping(value = "password",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> password(String username,String passwordNew,String forgetToken,HttpSession session){
+		String type = (String)session.getAttribute("qtype");
+        return userService.forgetResetPassword(username,passwordNew,forgetToken,type);
+    }
 }

@@ -151,10 +151,57 @@
     where email = #{email}
   </select>
   
+  <!-- 新增方法:用户登陆校验-->
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
     select * from user
     where username = #{username}
     and password = #{password}
   </select>
+  
+  <!-- 新增方法:根据用户名查询密保问题-->
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    select
+    question
+    from user
+    where username = #{username}
+  </select>
+  
+  <!-- 新增方法:根据邮箱查询密保问题-->
+  <select id="selectQuestionByEmail" resultType="string" parameterType="string">
+    select
+    question
+    from user
+    where email = #{email}
+  </select>
+  
+  <!-- 新增方法:根据用户名查询密保答案-->
+  <select id="checkAnswerByUsername" resultType="int" parameterType="string">
+    select
+    *
+    from user
+    where username = #{username} and question = #{question} and answer = #{answer}
+  </select>
+  
+  <!-- 新增方法:根据邮箱查询密保答案-->
+  <select id="checkAnswerByEmail" resultType="string" parameterType="string">
+    select
+    *
+    from user
+    where email = #{username} and question = #{question} and answer = #{answer}
+  </select>
+  
+  <!-- 新增方法:根据用户名修改密码-->
+  <update id="updatePasswordByUsername" parameterType="String">
+    update user
+    set password = #{md5Password}
+    where username = #{username}
+  </update>
+  
+  <!-- 新增方法:根据邮箱修改密码-->
+  <update id="updatePasswordByEmail" parameterType="String">
+    update user
+    set password = #{md5Password}
+    where email = #{username}
+  </update>
   
 </mapper>
