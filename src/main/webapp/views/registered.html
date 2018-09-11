@@ -18,7 +18,7 @@
 			<input class="in" type="text" id="username" name="username" placeholder="请输入您的用户名">
 			<input class="in" type="text" id="email" name="email" placeholder="请输入邮箱">
 			<input class="in" type="text" id="question" name="question" placeholder="请输入密保问题">
-			<input class="in" type="password" id="answer" name="answer" placeholder="请输入密保答案">
+			<input class="in" type="text" id="answer" name="answer" placeholder="请输入密保答案">
 			<input class="in" type="password" id="password" name="password" placeholder="请输入密码">
 			<input class="in" type="password" id="repassword" name="repassword" onkeyup="validate()" placeholder="请确认您的密码">
 			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishi"></div>
@@ -44,7 +44,7 @@
 <script type="text/javascript">
 $('#registed-button').click(function(event){
 	var username = $("#username").val();
-	var password = $("#email").val();
+	var password = $("#password").val();
 	var question = $("#question").val();
 	var answer = $("#answer").val();
 	var email = $("#email").val();
@@ -68,9 +68,9 @@ $('#registed-button').click(function(event){
 			$('form').fadeOut(500);
 			$('.wrapper').addClass('form-success');
 			
-			//setTimeout(function () {
-		 //window.location.href='main.html';    
-		//}, 1500);
+			setTimeout(function () {
+		 window.location.href='main.html';    
+		}, 1500);
 		}
 	})
 	

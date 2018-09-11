@@ -15,6 +15,10 @@ import com.digger.service.UserService;
 import com.digger.utils.MD5Util;
 import com.digger.common.TokenCache;
 
+/**
+ * @author Administrator
+ *
+ */
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -79,13 +83,15 @@ public class UserServiceImpl implements UserService {
 		if (org.apache.commons.lang3.StringUtils.isNotBlank(type)) {
 			// 开始校验
 			if (Const.USERNAME.equals(type)) {
-				int resultCount = userMapper.checkUsername(str);
+				int resultCount = 0;
+				resultCount = userMapper.checkUsername(str);
 				if (resultCount > 0) {
 					return ServerResponse.createByErrorMessage("用户名已存在");
 				}
 			}
 			if (Const.EMAIL.equals(type)) {
-				int resultCount = userMapper.checkEmail(str);
+				int resultCount = 0;
+				resultCount = userMapper.checkEmail(str);
 				if (resultCount > 0) {
 					return ServerResponse.createByErrorMessage("email已存在");
 				}
@@ -217,5 +223,39 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createByErrorMessage("密码更新失败");
 	}
+	
+	
+	/**
+	 * 更新个人信息
+	 * 
+	 * @author 高志劲
+	 */
+	public ServerResponse<User> updateInformation(User user, User currentUser){
+        if(!currentUser.getUsername().equals(user.getUsername())){
+		int resultCount = 0;
+        resultCount = userMapper.checkUsername(user.getUsername());
+        if(resultCount > 0){
+            return ServerResponse.createByErrorMessage("用户名已存在,请更换用户名再尝试更新");
+        }
+        }
+        if(!currentUser.getEmail().equals(user.getEmail())){
+    		int resultCount = 0;
+            resultCount = userMapper.checkEmail(user.getEmail());
+            if(resultCount > 0){
+                return ServerResponse.createByErrorMessage("email已存在,请更换email再尝试更新");
+            }
+            }
+        User updateUser = new User();
+        updateUser.setId(user.getId());
+        updateUser.setUsername(user.getUsername());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setQuestion(user.getQuestion());
+        updateUser.setAnswer(user.getAnswer());
+        int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
+        if(updateCount > 0){
+            return ServerResponse.createBySuccess("更新个人信息成功",updateUser);
+        }
+        return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
 
 }

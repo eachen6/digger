@@ -124,4 +124,47 @@ public class UserController {
 		session.removeAttribute(Const.CURRENT_USER);
 		return ServerResponse.createBySuccess();
 	}
+	
+	/**
+	 * 更新用户个人信息
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<User> update(@RequestBody User user, HttpSession session)
+	{
+		/*
+		 * 测试用例User currentUser = new User();
+		currentUser.setId(7);
+		currentUser.setEmail("00");
+		currentUser.setQuestion("00");
+		currentUser.setUsername("00");*/
+		User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        user.setId(currentUser.getId());
+        ServerResponse<User> response = userService.updateInformation(user, currentUser);
+        if(response.isSuccess()){
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
+	}
+	
+	/**
+	 * 检查用户是否已登录，点击“更新个人信息”之前验证
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "check_state", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse<String> check_state(HttpSession session)
+	{
+		User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return ServerResponse.createBySuccessMessage("用户已登录");
+	}
 }
