@@ -18,6 +18,13 @@
 		<input id="delete" type="button" value="删除" />
 		<input id="update" type="button" value="更新" />
 		
+		
+		<form action="game/add" method="post" enctype="multipart/form-data">
+			文件上传：<input id="file" name="files"  type="file"/>
+			<input id="submit" type="submit" value="提交文件" />
+		</form>
+		
+		
 </body>
 	<script>
 		$(document).ready(function(){
