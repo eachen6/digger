@@ -6,6 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="carouseurl" jdbcType="VARCHAR" property="carouseurl" />
     <result column="bgurl" jdbcType="VARCHAR" property="bgurl" />
     <result column="coverurl" jdbcType="VARCHAR" property="coverurl" />
     <result column="videourl" jdbcType="VARCHAR" property="videourl" />
@@ -33,7 +34,7 @@
     <result column="detailtxt" jdbcType="LONGVARCHAR" property="detailtxt" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, category, label, bgurl, coverurl, videourl, opstage, developer, oper, platform, 
+    id, name, category, label, carouseurl, bgurl, coverurl, videourl, opstage, developer, oper, platform, 
     memory, grcard, cd, cpu, system, driver, state, click, sale, createtime, updatetime, 
     price, shelftime, uploadid, discountstate
   </sql>
@@ -54,7 +55,7 @@
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Game">
     insert into game (id, name, category, 
-      label, bgurl, coverurl, 
+      label, carouseurl, bgurl, coverurl, 
       videourl, opstage, developer, 
       oper, platform, memory, 
       grcard, cd, cpu, system, 
@@ -63,7 +64,7 @@
       price, shelftime, uploadid, 
       discountstate, detailtxt)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
-      #{label,jdbcType=VARCHAR}, #{bgurl,jdbcType=VARCHAR}, #{coverurl,jdbcType=VARCHAR}, 
+      #{label,jdbcType=VARCHAR}, #{carouseurl,jdbcType=VARCHAR}, #{bgurl,jdbcType=VARCHAR}, #{coverurl,jdbcType=VARCHAR}, 
       #{videourl,jdbcType=VARCHAR}, #{opstage,jdbcType=VARCHAR}, #{developer,jdbcType=VARCHAR}, 
       #{oper,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
       #{grcard,jdbcType=VARCHAR}, #{cd,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
@@ -86,6 +87,9 @@
       </if>
       <if test="label != null">
         label,
+      </if>
+      <if test="carouseurl != null">
+        carouseurl,
       </if>
       <if test="bgurl != null">
         bgurl,
@@ -170,6 +174,9 @@
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
+      <if test="carouseurl != null">
+        #{carouseurl,jdbcType=VARCHAR},
+      </if>
       <if test="bgurl != null">
         #{bgurl,jdbcType=VARCHAR},
       </if>
@@ -253,6 +260,9 @@
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
       </if>
+      <if test="carouseurl != null">
+        carouseurl = #{carouseurl,jdbcType=VARCHAR},
+      </if>
       <if test="bgurl != null">
         bgurl = #{bgurl,jdbcType=VARCHAR},
       </if>
@@ -330,6 +340,7 @@
     set name = #{name,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
+      carouseurl = #{carouseurl,jdbcType=VARCHAR},
       bgurl = #{bgurl,jdbcType=VARCHAR},
       coverurl = #{coverurl,jdbcType=VARCHAR},
       videourl = #{videourl,jdbcType=VARCHAR},
@@ -360,6 +371,7 @@
     set name = #{name,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
+      carouseurl = #{carouseurl,jdbcType=VARCHAR},
       bgurl = #{bgurl,jdbcType=VARCHAR},
       coverurl = #{coverurl,jdbcType=VARCHAR},
       videourl = #{videourl,jdbcType=VARCHAR},

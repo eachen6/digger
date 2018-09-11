@@ -10,6 +10,8 @@ public class Game {
     private String category;
 
     private String label;
+    
+    private String carouseurl;
 
     private String bgurl;
 
@@ -271,5 +273,13 @@ public class Game {
 
     public void setDetailtxt(String detailtxt) {
         this.detailtxt = detailtxt;
+    }
+    
+    public String getCarouseurl() {
+        return carouseurl;
+    }
+
+    public void setCarouseur(String carouseurl) {
+        this.carouseurl = carouseurl;
     }
 }
