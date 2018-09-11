@@ -10,5 +10,9 @@ public interface GameService {
 	ServerResponse toGetHotSaleCarouse();
 
 	ServerResponse toGetHotSaleGameList();
+
+	ServerResponse toGetTotalGameList();
+
+	ServerResponse toGetDiscountGameList();
 	
 }
