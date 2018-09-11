@@ -64,5 +64,26 @@ public class GameController {
 		return ServerResponse.createByErrorMessage("上传失败");
 	}
 	
+	/**
+     * 获取热销轮播图
+     * @return
+     */
+	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse hotSaleCarouse()
+	{
+		return gameService.toGetHotSaleCarouse();
+	}
+	
+	/**
+     * 获取热销游戲集合
+     * @return
+     */
+	@RequestMapping(value = "get_hotsale_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse hotSaleGameList()
+	{
+		return gameService.toGetHotSaleGameList();
+	}
 	
 }
