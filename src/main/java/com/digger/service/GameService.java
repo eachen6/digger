@@ -6,5 +6,9 @@ import com.digger.pojo.Game;
 public interface GameService {
 
 	ServerResponse toAddGame(Game game);
+
+	ServerResponse toGetHotSaleCarouse();
+
+	ServerResponse toGetHotSaleGameList();
 	
 }
