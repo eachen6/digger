@@ -115,10 +115,6 @@
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
         updatetime = now(),
-      </if>
-      <if test="role != null">
-        role = #{role,jdbcType=TINYINT},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
