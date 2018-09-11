@@ -397,7 +397,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <!-- 新增方法 -->
+  <!-- 新增方法：獲取熱銷輪播圖-->
+  <select id="toGetHotSaleCarouse" resultType="com.digger.vo.CarouseVO">
+    select
+    id,carouseurl
+    from game
+    order by sale desc limit 0,3
+  </select>
   
-  
+  <!-- 新增方法：獲取熱銷游戲集合-->
+  <select id="toGetHotSaleGameList" resultType="com.digger.vo.GamelistVO">
+    select
+    name,label,bgurl,opstage
+    from game
+  </select>
 </mapper>

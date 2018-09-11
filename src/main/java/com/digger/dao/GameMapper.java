@@ -1,6 +1,10 @@
 package com.digger.dao;
 
+import java.util.List;
+
 import com.digger.pojo.Game;
+import com.digger.vo.GamelistVO;
+import com.digger.vo.CarouseVO;
 
 public interface GameMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,5 +20,9 @@ public interface GameMapper {
     int updateByPrimaryKeyWithBLOBs(Game record);
 
     int updateByPrimaryKey(Game record);
+
+	List<CarouseVO> toGetHotSaleCarouse();
+
+	List<GamelistVO> toGetHotSaleGameList();
 
 }
