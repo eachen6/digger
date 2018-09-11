@@ -18,4 +18,6 @@ public interface UserService {
 	public ServerResponse<String> checkAnswer(String username,String question, String answer, String type);
 
 	public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken, String type);
+
+	public ServerResponse<String> updatePassword(String passwordOld, String passwordNew, User user);
 }

@@ -91,4 +91,20 @@ public class UserController {
 		String type = (String)session.getAttribute("qtype");
         return userService.forgetResetPassword(username,passwordNew,forgetToken,type);
     }
+	
+	/**
+     * 修改密码
+     * @param username
+     * @param type（为判断传入的是username还是email）
+     * @return
+     */
+	@RequestMapping(value = "updatePassword",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> updatePassword(HttpSession session,String passwordOld,String passwordNew){
+        User user = (User)session.getAttribute("currentUser");
+        if(user == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return userService.updatePassword(passwordOld,passwordNew,user);
+    }
 }

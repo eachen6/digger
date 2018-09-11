@@ -36,6 +36,8 @@ public interface UserMapper {
 
 	int checkAnswerByEmail(@Param("username")String username,@Param("question")String question,@Param("answer")String answer);
 
+	int checkPassword(@Param("md5EncodeUtf8")String md5EncodeUtf8, @Param("id")Integer id);
+
 	
 
     
