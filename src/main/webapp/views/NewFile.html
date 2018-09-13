@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+   <script src="../bootstrap/js/jquery-1.9.1.min.js"></script>
+
+</head>
+<body>
+<button type="button" id="update-button" class="btn btn-info btn-block"><b>&nbsp&nbsp提交修改&nbsp&nbsp</b></button>
+
+<script type="text/javascript">
+$('#update-button').click(function(event){
+	alert("88");
+	$.ajax({
+		url: "../game/get_notice_carouse",
+		type:'GET',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res)
+			
+		}
+	})
+	
+	
+});
+
+</script>
+</body>
+</html>

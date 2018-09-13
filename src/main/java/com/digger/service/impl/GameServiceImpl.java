@@ -61,4 +61,25 @@ public class GameServiceImpl implements GameService{
 		gamelist = gameMapper.toGetDiscountGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
+
+	/* 
+	 * 获取预告游戏轮播图集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeCarouse() {
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		carouseList = gameMapper.toGetNoticeCarouse();
+		return ServerResponse.createBySuccess(carouseList);
+	}
+
+	
+	/* 
+	 * 获取预告游戏集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeGameList() {
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		//carouseList = gameMapper.toGetNoticeGameList();
+		return null;
+	}
 }

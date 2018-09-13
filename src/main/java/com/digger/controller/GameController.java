@@ -118,4 +118,27 @@ public class GameController {
 	{
 		return gameService.toGetDiscountGameList();
 	}
+	
+	
+	/**
+	 * 获取预告游戏轮播图集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeCarouse()
+	{
+		return gameService.toGetNoticeCarouse();
+	}
+	
+	/**
+	 * 获取预告游戏集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeGameList()
+	{
+		return gameService.toGetNoticeGameList();
+	}
 }

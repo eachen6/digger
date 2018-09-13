@@ -422,4 +422,12 @@
     select * from game where discountstate = 1
   </select>
   
+   <!-- 新增方法：获取游戏预告轮播集合-->
+  <select id="toGetNoticeCarouse" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, carouseurl, shelftime
+    from game, discountlist
+    where discountstate=0
+    
+  </select>
+  
 </mapper>

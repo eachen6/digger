@@ -15,4 +15,8 @@ public interface GameService {
 
 	ServerResponse toGetDiscountGameList();
 	
+	ServerResponse toGetNoticeCarouse();
+	
+	ServerResponse toGetNoticeGameList();
+	
 }
