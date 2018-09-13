@@ -20,4 +20,6 @@ public interface UserService {
 	public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken, String type);
 
 	public ServerResponse<String> updatePassword(String passwordOld, String passwordNew, User user);
+
+	public ServerResponse<User> updateInformation(User user, User currentUser);  //更新个人信息
 }

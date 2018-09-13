@@ -97,4 +97,25 @@ public class GameController {
 		return gameService.toGetHotSaleGameList();
 	}
 	
+	/**
+     * 获取所有游戲集合
+     * @return
+     */
+	@RequestMapping(value = "get_total_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse totalGameList()
+	{
+		return gameService.toGetTotalGameList();
+	}
+	
+	/**
+     * 获取特惠游戲集合
+     * @return
+     */
+	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse discountGameList()
+	{
+		return gameService.toGetDiscountGameList();
+	}
 }

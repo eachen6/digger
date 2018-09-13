@@ -1,21 +1,29 @@
 package com.digger.vo;
 
 public class GamelistVO {
+	private int id;
 	private String name;
-	private String bgurl;
+	private String coverurl;
 	private String label;
 	private String opstage;
+	private String price;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getBgurl() {
-		return bgurl;
+	public String getCoverurl() {
+		return coverurl;
 	}
-	public void setBgurl(String bgurl) {
-		this.bgurl = bgurl;
+	public void setCoverurl(String coverurl) {
+		this.coverurl = coverurl;
 	}
 	public String getLabel() {
 		return label;
@@ -28,6 +36,12 @@ public class GamelistVO {
 	}
 	public void setOpstage(String opstage) {
 		this.opstage = opstage;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	
 }

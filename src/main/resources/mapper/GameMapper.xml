@@ -400,15 +400,26 @@
   <!-- 新增方法：獲取熱銷輪播圖-->
   <select id="toGetHotSaleCarouse" resultType="com.digger.vo.CarouseVO">
     select
-    id,carouseurl
+    id,name,carouseurl,price
     from game
     order by sale desc limit 0,3
   </select>
   
-  <!-- 新增方法：獲取熱銷游戲集合-->
+  <!-- 新增方法：獲取熱銷游戲-->
   <select id="toGetHotSaleGameList" resultType="com.digger.vo.GamelistVO">
     select
-    name,label,bgurl,opstage
+    id,name,label,coverurl,opstage,price
     from game
   </select>
+  
+  <!-- 新增方法：獲取所有游戲-->
+  <select id="toGetTotalGameList" resultType="com.digger.pojo.Game">
+    select * from game
+  </select>
+  
+   <!-- 新增方法：獲取所有游戲-->
+  <select id="toGetDiscountGameList" resultType="com.digger.pojo.Game">
+    select * from game where discountstate = 1
+  </select>
+  
 </mapper>

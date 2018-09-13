@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+    #title{
+      padding-bottom: 15px;
+      color: #363B40;
+    }
+    #content{
+      width:100%;
+      min-height:600px;
+      background:white url(footer.png);
+      padding-top:30px;
+      color:#363B40;
+    }
+    .register{
+      padding: 20px;
+      font-weight:700;
+      border:#FFF solid 1px;
+      background-color: #D5D5D5;
+      -moz-border-radius: 10px;      /* Gecko browsers */
+      -webkit-border-radius: 10px;   /* Webkit browsers */
+      border-radius:10px;            /* W3C syntax */
+    }

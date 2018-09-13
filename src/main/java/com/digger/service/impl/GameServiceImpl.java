@@ -45,4 +45,20 @@ public class GameServiceImpl implements GameService{
 		gamelist = gameMapper.toGetHotSaleGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
+
+	@Override
+	public ServerResponse toGetTotalGameList() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.toGetTotalGameList();
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	@Override
+	public ServerResponse toGetDiscountGameList() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.toGetDiscountGameList();
+		return ServerResponse.createBySuccess(gamelist);
+	}
 }
