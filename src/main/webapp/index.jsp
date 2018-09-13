@@ -20,7 +20,8 @@
 		
 		
 		<form action="game/add" method="post" enctype="multipart/form-data">
-			文件上传：<input id="file" name="files"  type="file"/>
+			视频上传：<input id="video" name="files"  type="file"/>
+			图片上传：<input id="img" name="files"  type="file"/>
 			<input id="submit" type="submit" value="提交文件" />
 		</form>
 		

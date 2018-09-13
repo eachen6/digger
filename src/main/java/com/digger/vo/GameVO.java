@@ -34,8 +34,6 @@ public class GameVO {
 
     private Float price;
 
-    private String detailtxt;
-
 	public String getName() {
 		return name;
 	}
@@ -154,14 +152,6 @@ public class GameVO {
 
 	public void setPrice(Float price) {
 		this.price = price;
-	}
-
-	public String getDetailtxt() {
-		return detailtxt;
-	}
-
-	public void setDetailtxt(String detailtxt) {
-		this.detailtxt = detailtxt;
 	}
     
     
