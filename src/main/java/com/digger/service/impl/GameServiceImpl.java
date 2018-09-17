@@ -78,8 +78,9 @@ public class GameServiceImpl implements GameService{
 	 * @author 高志劲
 	 */
 	public ServerResponse toGetNoticeGameList() {
+		System.out.println("kkkkkkkkkkkkkkkkkkkkkkk");
 		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
-		//carouseList = gameMapper.toGetNoticeGameList();
-		return null;
+		carouseList = gameMapper.toGetNoticeGameList();
+		return ServerResponse.createBySuccess(carouseList);
 	}
 }

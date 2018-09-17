@@ -139,6 +139,7 @@ public class GameController {
 	@ResponseBody
 	public ServerResponse noticeGameList()
 	{
+		System.out.println("uuuuuuuuuuuuuu");
 		return gameService.toGetNoticeGameList();
 	}
 }

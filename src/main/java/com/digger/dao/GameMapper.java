@@ -31,4 +31,6 @@ public interface GameMapper {
 
 	List<CarouseVO> toGetNoticeCarouse();
 
+	List<CarouseVO> toGetNoticeGameList();
+
 }
