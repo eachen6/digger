@@ -30,6 +30,7 @@ public class GameController {
 	@Autowired
 	GameService gameService;
 	
+	
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files,
@@ -106,5 +107,17 @@ public class GameController {
 	public ServerResponse discountGameList()
 	{
 		return gameService.toGetDiscountGameList();
+	}
+	
+	/**
+     * 获取游戏详情
+     * @param id
+     * @return
+     */
+	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetDetail(int id)
+	{
+		return gameService.toGetDetail(id);
 	}
 }

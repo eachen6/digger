@@ -29,4 +29,6 @@ public interface GameMapper {
 
 	List<Game> toGetDiscountGameList();
 
+	List<Game> toGetDetail(int id);
+
 }

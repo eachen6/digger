@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.pojo.Game;
+import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
@@ -61,4 +62,13 @@ public class GameServiceImpl implements GameService{
 		gamelist = gameMapper.toGetDiscountGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
+
+	@Override
+	public ServerResponse toGetDetail(int id) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.toGetDetail(id);
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
 }
