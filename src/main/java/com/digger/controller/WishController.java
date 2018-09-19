@@ -11,27 +11,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.pojo.User;
-import com.digger.service.SendService;
+import com.digger.service.WishService;
 
 @Controller
-@RequestMapping("/send")
-public class SendController {
-
+@RequestMapping("/wish")
+public class WishController {
+	
 	@Autowired
-	SendService sendService;
+	WishService wishService;
 	
 	/**
-     * 赠送
+     * 获取游戏是否加入清单
      * @return
      */
-	@RequestMapping(value = "gift", method = RequestMethod.POST)
+	@RequestMapping(value = "get_wishgame", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse<String> toSendGame(int gameid, int targetid,float price, String message, HttpSession session) 
+	public ServerResponse toGetWishGame(int gameid,HttpSession session) 
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		//0为加入愿望清单，1为未加入愿望清单
 		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
+			return ServerResponse.createBySuccess(1);
 		}
-		return sendService.toSendGame(gameid,user.getId(),targetid,price,message);
+		return wishService.toGetWishGame(gameid);
 	}
 }
