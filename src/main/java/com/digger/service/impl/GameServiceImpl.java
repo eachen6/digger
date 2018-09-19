@@ -63,6 +63,7 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createBySuccess(gamelist);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public ServerResponse toGetDetail(int id) {
 		// TODO Auto-generated method stub
@@ -71,4 +72,27 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createBySuccess(gamelist);
 	}
 
+=======
+	/* 
+	 * 获取预告游戏轮播图集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeCarouse() {
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		carouseList = gameMapper.toGetNoticeCarouse();
+		return ServerResponse.createBySuccess(carouseList);
+	}
+
+	
+	/* 
+	 * 获取预告游戏集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeGameList() {
+		System.out.println("kkkkkkkkkkkkkkkkkkkkkkk");
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		carouseList = gameMapper.toGetNoticeGameList();
+		return ServerResponse.createBySuccess(carouseList);
+	}
+>>>>>>> aab97540c55bbdbb916f735dfdd83a5200ce285e
 }

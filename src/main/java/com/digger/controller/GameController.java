@@ -2,6 +2,10 @@ package com.digger.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.digger.service.GameService;
+import com.digger.utils.FTPSSMLoad;
+import com.digger.utils.UploadUtil;
 import com.digger.vo.GameVO;
+import com.sun.tools.classfile.Annotation.element_value;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -33,7 +40,8 @@ public class GameController {
 	
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files,
+	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
+			//@RequestParam(value="game") Game game,
 			 HttpServletRequest request) throws IllegalStateException, IOException{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
@@ -41,27 +49,30 @@ public class GameController {
         }
 		
 		//增加游戏，包括上传视频、图片以及其他信息
-		if (files != null && files.length > 0) {
-            //循环获取file数组中得文件
-            for (int i = 0; i < files.length; i++) {
-                MultipartFile file = files[i];
-             // 如果没有文件上传，MultipartFile也不会为null，可以通过调用getSize()方法获取文件的大小来判断是否有上传文件
-                if (file.getSize() > 0) {
-                    // 得到项目在服务器的真实根路径，如：/home/tomcat/webapp/项目名/images
-                    //String path = session.getServletContext().getRealPath("tempfordigger");
-                	String path = "F:\\tempfordigger\\";
-                    // 得到文件的原始名称
-                    String fileName = file.getOriginalFilename();
-                    // 通过文件的原始名称，可以对上传文件类型做限制，如：只能上传jpg和png的图片文件
-                    if (fileName.endsWith("mp4")) {
-                        File videofile = new File(path, fileName);
-                        file.transferTo(videofile);
-                        System.out.println("已上传一个视频文件，路径为"+path+fileName);
-                        return ServerResponse.createBySuccessMessage("上传成功");
-                    }
-            }
-		}
-		}
+				if (files != null && files.length > 0) {
+		            //循环获取file数组中得文件
+					Map returnMap = new HashMap<>();
+		            for (int i = 0; i < files.length; i++) {
+		                MultipartFile file = files[i];       
+		                if(file.getOriginalFilename().endsWith("mp4")) {
+		                	Map fileMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	//return ServerResponse.createBySuccess(fileMap);
+		                	returnMap.put("videourl", fileMap.get("http_url"));
+		                }
+		                else if(file.getOriginalFilename().endsWith("cover.jpg")) {
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	returnMap.put("coverurl", imgMap.get("http_url"));
+		                }else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	returnMap.put("carouse", imgMap.get("http_url"));
+		                }else if(file.getOriginalFilename().endsWith("bg.jpg")) {
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	returnMap.put("bg", imgMap.get("http_url"));
+		                }
+		            }
+		            return ServerResponse.createBySuccess(returnMap);
+				}
+		
 		return ServerResponse.createByErrorMessage("上传失败");
 	}
 	
@@ -109,6 +120,7 @@ public class GameController {
 		return gameService.toGetDiscountGameList();
 	}
 	
+<<<<<<< HEAD
 	/**
      * 获取游戏详情
      * @param id
@@ -119,5 +131,29 @@ public class GameController {
 	public ServerResponse toGetDetail(int id)
 	{
 		return gameService.toGetDetail(id);
+=======
+	
+	/**
+	 * 获取预告游戏轮播图集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeCarouse()
+	{
+		return gameService.toGetNoticeCarouse();
+	}
+	
+	/**
+	 * 获取预告游戏集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeGameList()
+	{
+		System.out.println("uuuuuuuuuuuuuu");
+		return gameService.toGetNoticeGameList();
+>>>>>>> aab97540c55bbdbb916f735dfdd83a5200ce285e
 	}
 }

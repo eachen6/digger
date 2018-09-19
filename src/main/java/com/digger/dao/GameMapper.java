@@ -29,6 +29,12 @@ public interface GameMapper {
 
 	List<Game> toGetDiscountGameList();
 
+<<<<<<< HEAD
 	List<Game> toGetDetail(int id);
+=======
+	List<CarouseVO> toGetNoticeCarouse();
+
+	List<CarouseVO> toGetNoticeGameList();
+>>>>>>> aab97540c55bbdbb916f735dfdd83a5200ce285e
 
 }
