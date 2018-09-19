@@ -23,6 +23,10 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	OrderMapper orderMapper;
 	
+	/* 
+	 * 生成订单
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse<String> toCreateOrder(Integer userid, int gameid, float price)  {
 		// TODO Auto-generated method stub

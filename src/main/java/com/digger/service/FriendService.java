@@ -1,4 +1,4 @@
-package com.digger.controller;
+package com.digger.service;
 
 import com.digger.common.ServerResponse;
 

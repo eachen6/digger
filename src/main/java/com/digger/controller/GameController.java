@@ -23,7 +23,6 @@ import com.digger.service.GameService;
 import com.digger.utils.FTPSSMLoad;
 import com.digger.utils.UploadUtil;
 import com.digger.vo.GameVO;
-import com.sun.tools.classfile.Annotation.element_value;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -37,7 +36,10 @@ public class GameController {
 	@Autowired
 	GameService gameService;
 	
-	
+	/**
+     * 增加游戏
+     * @return
+     */
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
@@ -120,18 +122,6 @@ public class GameController {
 		return gameService.toGetDiscountGameList();
 	}
 	
-<<<<<<< HEAD
-	/**
-     * 获取游戏详情
-     * @param id
-     * @return
-     */
-	@RequestMapping(value = "detail", method = RequestMethod.GET)
-	@ResponseBody
-	public ServerResponse toGetDetail(int id)
-	{
-		return gameService.toGetDetail(id);
-=======
 	
 	/**
 	 * 获取预告游戏轮播图集合
@@ -154,6 +144,16 @@ public class GameController {
 	{
 		System.out.println("uuuuuuuuuuuuuu");
 		return gameService.toGetNoticeGameList();
->>>>>>> aab97540c55bbdbb916f735dfdd83a5200ce285e
+	}
+	
+	/**
+	 * 获取游戏详情
+	 * @return
+	 */
+	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetGameDetail(int gameid)
+	{
+		return gameService.toGetDetail(gameid);
 	}
 }

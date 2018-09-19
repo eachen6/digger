@@ -422,11 +422,6 @@
     select * from game where discountstate = 1
   </select>
   
-<<<<<<< HEAD
-  <!-- 新增方法：獲取游戏详情-->
-  <select id="toGetDetail" resultType="com.digger.pojo.Game">
-    select * from game where id = #{id}
-=======
    <!-- 新增方法：获取游戏预告轮播集合-->
   <select id="toGetNoticeCarouse" resultType="com.digger.vo.CarouseVO">
     select game.id, name, price, carouseurl, shelftime, discount, discountstate
@@ -441,7 +436,10 @@
     from game left join discountlist 
     on game.id=discountlist.gameid
     order by shelftime desc 
->>>>>>> aab97540c55bbdbb916f735dfdd83a5200ce285e
   </select>
   
+  <!-- 新增方法：獲取游戏详情-->
+  <select id="toGetDetail" resultType="com.digger.pojo.Game">
+    select * from game where id = #{id}
+  </select>
 </mapper>

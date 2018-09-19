@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digger.common.ServerResponse;
-import com.digger.controller.FriendService;
+import com.digger.service.FriendService;
 import com.digger.dao.FriendMapper;
 import com.digger.pojo.Friend;
 import com.digger.vo.CarouseVO;
@@ -19,6 +19,10 @@ public class FriendServiceImpl implements FriendService{
 	@Autowired
 	FriendMapper friendMapper;
 	
+	/* 
+	 * 获取个人好友列表
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse toGetPersonalFriendList(Integer id) {
 		// TODO Auto-generated method stub

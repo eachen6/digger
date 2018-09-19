@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.pojo.User;
+import com.digger.service.FriendService;
 
 @Controller
 @RequestMapping("/friend")

@@ -28,6 +28,10 @@ public class SendServiceImpl implements SendService {
 	@Autowired
 	OrderMapper orderMapper;
 
+	/* 
+	 * 生成赠送记录
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse<String> toSendGame(Integer gameid, Integer id, int targetid, float price, String message) {
 		// TODO Auto-generated method stub
