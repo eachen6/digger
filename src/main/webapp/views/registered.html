@@ -15,10 +15,19 @@
 	<div class="container">
 		<h1>WELCOME TO DIGGER</h1>
 		<form class="form"  action="" method="post">
-			<input class="in" type="text" id="username" name="username" placeholder="请输入您的用户名">
-			<input class="in" type="text" id="email" name="email" placeholder="请输入邮箱">
+			<input class="in" type="text" id="username" name="username" onblur="validateUserN()" placeholder="请输入您的用户名">
+			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiUserName"></div>
+			<input class="in" type="text" id="email" name="email" onblur="validateEmail()" placeholder="请输入邮箱">
+			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiEmail"></div>
 			<input class="in" type="text" id="question" name="question" placeholder="请输入密保问题">
 			<input class="in" type="text" id="answer" name="answer" placeholder="请输入密保答案">
+			<input class="in" type="password" id="password" name="password" onblur="validatePwd1()" placeholder="请输入密码">
+			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiPwd1"></div>
+			<div class="form-group">
+			<input class="in" type="password" id="repassword" name="repassword" onblur="validatePwd2()" placeholder="请确认您的密码">
+			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiPwd2"></div>
+			</div>
+
 			<input class="in" type="password" id="password" name="password" placeholder="请输入密码">
 			<input class="in" type="password" id="repassword" name="repassword" onkeyup="validate()" placeholder="请确认您的密码">
 			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishi"></div>
@@ -42,6 +51,78 @@
 </div>
 
 <script type="text/javascript">
+	
+//校验用户名
+function validateUserN(){
+	var username = document.getElementById("username").value;
+	var nameTest = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+	if(username.trim().length==0||username==""){
+		document.getElementById("tishiUserName").innerHTML = "<font color='red'>用户名不能为空</font>";
+		document.getElementById("registed-button").disabled = true;
+	}else if(!nameTest.test(username)){
+		document.getElementById("tishiUserName").innerHTML = "<font color='red'>用户名应为字母开头，长度5-16字节，允许字母数字下划线</font>";
+		document.getElementById("registed-button").disabled = true;
+	}//else if(){
+		//Todo 查重
+	//}
+	else{
+		document.getElementById("tishiUserName").innerHTML = "<font color='white'></font>"
+		document.getElementById("registed-button").disabled = false;
+	}
+}
+	
+//校验第一次输入的密码
+function validatePwd1(){
+	var pwd1 = document.getElementById("password").value;
+	var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if(pwd1.trim().length==0||pwd1==""){
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("registed-button").disabled = true;
+	}else if(!testPwd.test(pwd1)){
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间</font>";
+		document.getElementById("registed-button").disabled = true;
+	}else{
+		document.getElementById("tishiPwd1").innerHTML="<font color='white'></font>";
+                  document.getElementById("registed-button").disabled = false;
+	}
+	
+}
+	
+function validatePwd2() {
+              var pwd1 = document.getElementById("password").value;
+              var pwd2 = document.getElementById("repassword").value;
+//		 对比两次输入的密码 
+              if(pwd2.trim().length==0){
+              	document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
+              	document.getElementById("registed-button").disabled = true;
+              }
+              else if(pwd1 == pwd2) {
+                  document.getElementById("tishiPwd2").innerHTML="<font color='white'>两次密码相同</font>";
+                  document.getElementById("registed-button").disabled = false;
+              }
+              else {
+                  document.getElementById("tishiPwd2").innerHTML="<font color='red'>两次密码不相同</font>";
+                document.getElementById("registed-button").disabled = true;
+              }
+          }
+
+//校验邮箱
+function validateEmail(){
+				var email = document.getElementById("email").value;
+				var tEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/ ;
+				//var right = email.match(tEmail);
+				if(email.value==""||email.length==0){
+					document.getElementById("tishiEmail").innerHTML = "<font color='red'>请输入邮箱</font>";
+					document.getElementById("registed-button").disabled=true;
+				}else if(!tEmail.test(email)){
+					document.getElementById("tishiEmail").innerHTML = "<font color='red'>邮箱格式错误</font>";
+					document.getElementById("registed-button").disabled = true;
+				}else{
+					document.getElementById("tishiEmail").innerHTML = "<font> </font>"
+					document.getElementById("registed-button").disabled = false;
+				}
+			}	
+
 $('#registed-button').click(function(event){
 	var username = $("#username").val();
 	var password = $("#password").val();
@@ -55,7 +136,7 @@ $('#registed-button').click(function(event){
 			"answer":answer,
 			"email":email
 	}
-	alert("8888888");
+	//alert("8888888");
 	//console.log(JSON.stringify(user))
 	$.ajax({
 		url: "../user/register",
@@ -78,19 +159,6 @@ $('#registed-button').click(function(event){
 });
 
 
-function validate() {
-              var pwd1 = document.getElementById("password").value;
-              var pwd2 = document.getElementById("repassword").value;
-//		 对比两次输入的密码 
-              if(pwd1 == pwd2) {
-                  document.getElementById("tishi").innerHTML="<font color='white'>两次密码相同</font>";
-                  document.getElementById("registed-button").disabled = false;
-              }
-              else {
-                  document.getElementById("tishi").innerHTML="<font color='red'>两次密码不相同</font>";
-                document.getElementById("registed-button").disabled = true;
-              }
-          }
 
 </script>
 
