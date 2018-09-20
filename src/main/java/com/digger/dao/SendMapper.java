@@ -5,7 +5,7 @@ import com.digger.pojo.Send;
 public interface SendMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Send record);
+    int insert(Send send);
 
     int insertSelective(Send record);
 

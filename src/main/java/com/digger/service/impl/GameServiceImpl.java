@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.pojo.Game;
+import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
@@ -20,6 +21,10 @@ public class GameServiceImpl implements GameService{
 	@Autowired
 	GameMapper gameMapper;
 	
+	/* 
+	 * 增加游戏
+	 * @author 陈进雄
+	 */
 	public ServerResponse toAddGame(Game game){
 		
 		int rowCount = gameMapper.insert(game);
@@ -30,6 +35,10 @@ public class GameServiceImpl implements GameService{
 		
 	}
 
+	/* 
+	 * 获取热销游戏轮播图集合
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse toGetHotSaleCarouse() {
 		// TODO Auto-generated method stub
@@ -38,6 +47,10 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createBySuccess(carouseList);
 	}
 
+	/* 
+	 * 获取热销游戏集合
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse toGetHotSaleGameList() {
 		// TODO Auto-generated method stub
@@ -46,6 +59,10 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createBySuccess(gamelist);
 	}
 
+	/* 
+	 * 获取所有游戏集合
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse toGetTotalGameList() {
 		// TODO Auto-generated method stub
@@ -54,11 +71,49 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createBySuccess(gamelist);
 	}
 
+	/* 
+	 * 获取特惠游戏集合
+	 * @author 徐子颖
+	 */
 	@Override
 	public ServerResponse toGetDiscountGameList() {
 		// TODO Auto-generated method stub
 		List<Game> gamelist = new ArrayList<Game>();
 		gamelist = gameMapper.toGetDiscountGameList();
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 获取预告游戏轮播图集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeCarouse() {
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		carouseList = gameMapper.toGetNoticeCarouse();
+		return ServerResponse.createBySuccess(carouseList);
+	}
+
+	
+	/* 
+	 * 获取预告游戏集合
+	 * @author 高志劲
+	 */
+	public ServerResponse toGetNoticeGameList() {
+		System.out.println("kkkkkkkkkkkkkkkkkkkkkkk");
+		List<CarouseVO> carouseList = new ArrayList<CarouseVO>();
+		carouseList = gameMapper.toGetNoticeGameList();
+		return ServerResponse.createBySuccess(carouseList);
+	}
+
+	/* 
+	 * 获取游戏详情
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetDetail(int id) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.toGetDetail(id);
 		return ServerResponse.createBySuccess(gamelist);
 	}
 }

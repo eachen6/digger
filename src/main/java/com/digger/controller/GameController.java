@@ -23,7 +23,6 @@ import com.digger.service.GameService;
 import com.digger.utils.FTPSSMLoad;
 import com.digger.utils.UploadUtil;
 import com.digger.vo.GameVO;
-import com.sun.tools.classfile.Annotation.element_value;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -38,6 +37,7 @@ public class GameController {
 	GameService gameService;
 	
 	/**
+<<<<<<< HEAD
 	 * 视频与图片上传
 	 * @param session
 	 * @param files
@@ -48,6 +48,11 @@ public class GameController {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
+=======
+     * 增加游戏
+     * @return
+     */
+>>>>>>> 35b1d30fdc580da450a31f4a918d16d26770f551
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
@@ -130,5 +135,40 @@ public class GameController {
 	public ServerResponse discountGameList()
 	{
 		return gameService.toGetDiscountGameList();
+	}
+	
+	
+	/**
+	 * 获取预告游戏轮播图集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeCarouse()
+	{
+		return gameService.toGetNoticeCarouse();
+	}
+	
+	/**
+	 * 获取预告游戏集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse noticeGameList()
+	{
+		System.out.println("uuuuuuuuuuuuuu");
+		return gameService.toGetNoticeGameList();
+	}
+	
+	/**
+	 * 获取游戏详情
+	 * @return
+	 */
+	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetGameDetail(int gameid)
+	{
+		return gameService.toGetDetail(gameid);
 	}
 }

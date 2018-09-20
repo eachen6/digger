@@ -33,8 +33,8 @@
     insert into send (id, targetid, createtime, 
       updatetime, ordernum, message
       )
-    values (#{id,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}, #{message,jdbcType=LONGVARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, now(), 
+      now(), #{ordernum,jdbcType=BIGINT}, #{message,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Send">

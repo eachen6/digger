@@ -417,9 +417,29 @@
     select * from game
   </select>
   
-   <!-- 新增方法：獲取所有游戲-->
+  <!-- 新增方法：獲取所有游戲-->
   <select id="toGetDiscountGameList" resultType="com.digger.pojo.Game">
     select * from game where discountstate = 1
   </select>
   
+   <!-- 新增方法：获取游戏预告轮播集合-->
+  <select id="toGetNoticeCarouse" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, carouseurl, shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    order by shelftime desc limit 0,3
+  </select>
+  
+   <!-- 新增方法：获取预告游戏集合-->
+  <select id="toGetNoticeGameList" resultType="com.digger.vo.CarouseVO">
+   select game.id, name, price, carouseurl, shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    order by shelftime desc 
+  </select>
+  
+  <!-- 新增方法：獲取游戏详情-->
+  <select id="toGetDetail" resultType="com.digger.pojo.Game">
+    select * from game where id = #{id}
+  </select>
 </mapper>

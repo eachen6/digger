@@ -1,5 +1,7 @@
 package com.digger.service;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.digger.common.ServerResponse;
 import com.digger.pojo.Game;
 
@@ -14,5 +16,12 @@ public interface GameService {
 	ServerResponse toGetTotalGameList();
 
 	ServerResponse toGetDiscountGameList();
+
+	ServerResponse toGetDetail(int id);
+
+	
+	ServerResponse toGetNoticeCarouse();
+	
+	ServerResponse toGetNoticeGameList();
 	
 }

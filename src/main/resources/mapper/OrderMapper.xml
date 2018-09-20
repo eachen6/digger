@@ -30,15 +30,15 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Order">
-    insert into order (id, gameid, userid, 
+    insert into `order` (id, gameid, userid, 
       coverimg, price, createtime, 
       updatetime, state, paytime, 
       issend, closetime, ordernum
       )
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, #{paytime,jdbcType=TIMESTAMP}, 
-      #{issend,jdbcType=TINYINT}, #{closetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
+      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, now(), now(), #{state,jdbcType=TINYINT}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{issend,jdbcType=TINYINT},
+      #{closetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Order">

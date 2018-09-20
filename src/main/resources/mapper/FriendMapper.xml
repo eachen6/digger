@@ -37,4 +37,11 @@
       </if>
     </trim>
   </insert>
+  
+  <!-- 新增方法：获取好友列表-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.digger.pojo.Friend">
+    select *
+    from friend
+    where userid = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

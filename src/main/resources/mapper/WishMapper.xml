@@ -103,4 +103,10 @@
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByGameid" parameterType="java.lang.Integer" resultType="int">
+    select *
+    from wish
+    where gameid = #{gameid,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -5,7 +5,7 @@ import com.digger.pojo.Order;
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Order record);
+    int insert(Order order);
 
     int insertSelective(Order record);
 
