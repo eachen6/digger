@@ -12,6 +12,7 @@
 	</head>
 
 	<body>
+	<div id="main">
 	
 	
 		<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;background-color: #242424;border: none;border-radius: 0px">
@@ -39,12 +40,20 @@
 						</li>
 					</ul>
 
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" v-if="user == ''">
 						<li>
 							<a href="registered.html" style="color: white;"><span class="glyphicon glyphicon-user"></span> 注册</a>
 						</li>
 						<li>
 							<a href="#" style="color: white;" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right" v-else>
+						<li>
+							<a href="#" style="color: white;"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a>
+						</li>
+						<li>
+							<a href="#" style="color: white;" @click="logout()"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
 						</li>
 					</ul>
 				</div>
@@ -88,7 +97,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
-							<button type="button"  class="btn btn-primary">
+							<button type="button" @click="login()" id="Tologin" class="btn btn-primary">
 						登录
 					</button>
 						</div>
@@ -116,7 +125,7 @@
 			</nav>
 		<!--</footer>-->
 
-
+	</div>
 <ul class="bg-bubbles">
 		<li></li>
 		<li></li>

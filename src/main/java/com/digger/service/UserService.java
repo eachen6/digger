@@ -22,4 +22,6 @@ public interface UserService {
 	public ServerResponse<String> updatePassword(String passwordOld, String passwordNew, User user);
 
 	public ServerResponse<User> updateInformation(User user, User currentUser);  //更新个人信息
+	
+	public ServerResponse<User> getUserInfo(int userId);
 }

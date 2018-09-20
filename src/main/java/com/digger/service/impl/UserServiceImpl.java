@@ -257,5 +257,19 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
     }
+	
+	/**
+	 * @author eachen
+	 * 获取用户信息
+	 * @param userId
+	 * @return
+	 */
+	public ServerResponse<User> getUserInfo(int userId) {
+		User user = userMapper.selectByPrimaryKey(userId);
+		if (user != null) {
+			return ServerResponse.createBySuccess(user);
+		}
+		return ServerResponse.createByErrorMessage("用户ID不存在");
+	}
 
 }

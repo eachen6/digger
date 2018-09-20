@@ -37,15 +37,28 @@ public class GameController {
 	@Autowired
 	GameService gameService;
 	
+	/**
+	 * 视频与图片上传
+	 * @param session
+	 * @param files
+	 * @param name
+	 * @param category
+	 * @param request
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
-			//@RequestParam(value="game") Game game,
+			@RequestParam(value="name") String name,@RequestParam(value="category") String category,
 			 HttpServletRequest request) throws IllegalStateException, IOException{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
         }
+		
+		System.out.println(name);
 		
 		//增加游戏，包括上传视频、图片以及其他信息
 				if (files != null && files.length > 0) {
@@ -54,18 +67,18 @@ public class GameController {
 		            for (int i = 0; i < files.length; i++) {
 		                MultipartFile file = files[i];       
 		                if(file.getOriginalFilename().endsWith("mp4")) {
-		                	Map fileMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	Map fileMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
 		                	//return ServerResponse.createBySuccess(fileMap);
 		                	returnMap.put("videourl", fileMap.get("http_url"));
 		                }
 		                else if(file.getOriginalFilename().endsWith("cover.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
 		                	returnMap.put("coverurl", imgMap.get("http_url"));
 		                }else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
 		                	returnMap.put("carouse", imgMap.get("http_url"));
 		                }else if(file.getOriginalFilename().endsWith("bg.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/NBA2K17/");
+		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
 		                	returnMap.put("bg", imgMap.get("http_url"));
 		                }
 		            }

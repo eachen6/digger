@@ -167,4 +167,19 @@ public class UserController {
         }
         return ServerResponse.createBySuccessMessage("用户已登录");
 	}
+	
+	/**
+	 * @author eachen
+	 * 获取用户信息
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "get_userinfo", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse getUserInfo(HttpSession session){
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null)
+			return ServerResponse.createByErrorMessage("用户未登录");
+		return userService.getUserInfo(user.getId());
+	}
 }

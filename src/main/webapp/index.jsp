@@ -9,6 +9,7 @@
 </head>
 <body>
 		hello digger!
+		<a href="views/main.html">首页</a>
 		<form action="" method="post">
 			账号：<input id="username" name="username"  type="text"/>
 			密码：<input id="password" name="password" type="password" />
@@ -22,6 +23,7 @@
 		<form action="game/add" method="post" enctype="multipart/form-data">
 			视频上传：<input id="video" name="files"  type="file"/>
 			图片上传：<input id="img" name="files"  type="file"/>
+			文字：<input id="name" name="name"  type="text"/>
 			<input id="submit" type="submit" value="提交文件" />
 		</form>
 		
