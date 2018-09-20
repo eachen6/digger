@@ -37,7 +37,6 @@ public class GameController {
 	GameService gameService;
 	
 	/**
-<<<<<<< HEAD
 	 * 视频与图片上传
 	 * @param session
 	 * @param files
@@ -47,12 +46,9 @@ public class GameController {
 	 * @return
 	 * @throws IllegalStateException
 	 * @throws IOException
-	 */
-=======
      * 增加游戏
      * @return
      */
->>>>>>> 35b1d30fdc580da450a31f4a918d16d26770f551
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
