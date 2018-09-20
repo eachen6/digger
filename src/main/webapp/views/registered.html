@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="../css/registered.css"/>
 		<script type="text/javascript" src="../vue/vue.min.js" ></script>
+		<script type="text/javascript" src="../js/registed.js"></script>
 		<title></title>
 	</head>
 	<body>
@@ -15,8 +16,8 @@
 	<div class="container">
 		<h1>WELCOME TO DIGGER</h1>
 		<form class="form"  action="" method="post">
-			<input class="in" type="text" id="username" name="username" onblur="validateUserN()" placeholder="请输入您的用户名">
-			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiUserName"></div>
+			<input class="in" type="text" id="username" name="username" onblur="validateUserN()"  placeholder="请输入您的用户名">
+			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiUserName" v-html="messege"></div>
 			<input class="in" type="text" id="email" name="email" onblur="validateEmail()" placeholder="请输入邮箱">
 			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiEmail"></div>
 			<input class="in" type="text" id="question" name="question" placeholder="请输入密保问题">
@@ -27,10 +28,6 @@
 			<input class="in" type="password" id="repassword" name="repassword" onblur="validatePwd2()" placeholder="请确认您的密码">
 			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiPwd2"></div>
 			</div>
-
-			<input class="in" type="password" id="password" name="password" placeholder="请输入密码">
-			<input class="in" type="password" id="repassword" name="repassword" onkeyup="validate()" placeholder="请确认您的密码">
-			<div style="margin-top: 5px;margin-bottom: 5px;" id="tishi"></div>
 			<button type="button" id="registed-button">注册</button>
 		</form>
 	</div>
@@ -52,7 +49,7 @@
 
 <script type="text/javascript">
 	
-//校验用户名
+校验用户名
 function validateUserN(){
 	var username = document.getElementById("username").value;
 	var nameTest = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
