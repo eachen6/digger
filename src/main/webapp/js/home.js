@@ -41,3 +41,22 @@ $(document).ready(function(){
 		$("#frame").load("../views/etc.html")
 	})
 })
+
+
+//搜索提示框
+$('#search_input').click(function(){
+    	$("#search_suggest").width($("#search_input").width()+25),
+        $('#search_suggest').show().css({
+         top:$('#search_input').offset().top+$('#search_input').height()+15,
+         left:$('#search_input').offset().left,
+         position:'absolute'
+        });
+        });
+   
+        
+       $('body').click(function(e) {
+       if(e.target.id != 'search_input')
+       if ( $('#search_suggest').is(':visible') ) {
+           $('#search_suggest').hide();
+       }
+       });
