@@ -23,5 +23,7 @@ public interface GameService {
 	ServerResponse toGetNoticeCarouse();
 	
 	ServerResponse toGetNoticeGameList();
+
+	ServerResponse searchGameByword(String keyword);
 	
 }

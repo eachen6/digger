@@ -116,4 +116,16 @@ public class GameServiceImpl implements GameService{
 		gamelist = gameMapper.toGetDetail(id);
 		return ServerResponse.createBySuccess(gamelist);
 	}
+
+	/* 
+	 * 搜索框根据关键词提示
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse searchGameByword(String keyword) {
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.searchGamewByword(keyword);
+		//System.out.println(gamelist.get(0).getName());
+		return ServerResponse.createBySuccess(gamelist);
+	}
 }

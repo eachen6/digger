@@ -35,4 +35,6 @@ public interface GameMapper {
 
 	List<Game> toGetDetail(int id);
 
+	List<Game> searchGamewByword(String keyword);
+
 }

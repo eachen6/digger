@@ -442,4 +442,12 @@
   <select id="toGetDetail" resultType="com.digger.pojo.Game">
     select * from game where id = #{id}
   </select>
+  
+  <!-- 新增方法：根据关键词提示  -->
+  <select id="searchGamewByword" resultType="com.digger.pojo.Game">
+      select id, name
+      from game
+      where name LIKE "%"#{keyword}"%" and state > 0
+      order by sale desc limit 0, 5
+  </select>
 </mapper>

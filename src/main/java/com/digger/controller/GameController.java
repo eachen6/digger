@@ -167,4 +167,15 @@ public class GameController {
 	{
 		return gameService.toGetDetail(gameid);
 	}
+	
+	/**
+	 * 根据关键词提示
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_byword", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse searchGameByword(@RequestParam(value="keyword") String keyword){
+		System.out.println(keyword+"ggggggggggggggggggggggggggggggggggggggg");
+		return gameService.searchGameByword(keyword);
+	}
 }
