@@ -4,6 +4,6 @@ import com.digger.common.ServerResponse;
 
 public interface WishService {
 
-	ServerResponse toGetWishGame(int gameid);
+	ServerResponse toGetWishGame(Integer gameid);
 	
 }

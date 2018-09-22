@@ -104,7 +104,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="selectByGameid" parameterType="java.lang.Integer" resultType="int">
+  <select id="selectByGameid" parameterType="java.lang.Integer" resultType="Integer">
     select *
     from wish
     where gameid = #{gameid,jdbcType=INTEGER}
