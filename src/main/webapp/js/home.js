@@ -50,7 +50,7 @@ var search = new Vue({
 	},
 	methods: {
 		change:function(e){
-			search_change(this.search_value);
+			search_change(this.search_value.replace(/^\s+|\s+$/g,""));
 		}
 	},
 	created: function(){
@@ -65,11 +65,9 @@ function search_change(input_value){
 			type:'GET',
 			contentType:"application/json; charset=utf-8",
 			success:function(res){
-				console.log(res);
 				if(res.status==0)
 				{
 					search.game = res.data;
-					console.log(search.game);
 				}
 			}
 		})  

@@ -175,7 +175,11 @@ public class GameController {
 	@RequestMapping(value = "search_game_byword", method = RequestMethod.GET)
 	@ResponseBody
 	public ServerResponse searchGameByword(@RequestParam(value="keyword") String keyword){
-		System.out.println(keyword+"ggggggggggggggggggggggggggggggggggggggg");
+		System.out.println(keyword+"ggggggggggggg");
+		keyword = keyword.trim();
+		if(keyword.equals("")||keyword==null){
+			return ServerResponse.createBySuccess(null);
+		}
 		return gameService.searchGameByword(keyword);
 	}
 }
