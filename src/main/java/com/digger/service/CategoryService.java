@@ -1,5 +1,9 @@
 package com.digger.service;
 
-public class CategoryService {
+import com.digger.common.ServerResponse;
+
+public interface CategoryService{
+
+	public ServerResponse getAllLabel();
 
 }

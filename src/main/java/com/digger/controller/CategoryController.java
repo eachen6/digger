@@ -18,13 +18,13 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 	/**
-	 * 查找所有游戏标签（即分类）
+	 * 查询所有游戏标签（即分类）
 	 * @return
 	 */
 	@RequestMapping(value = "search_alllabel", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse searchAllLabel(){
-		return null;
+		return categoryService.getAllLabel();
 	}
 
 }

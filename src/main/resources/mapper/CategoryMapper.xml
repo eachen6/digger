@@ -90,4 +90,11 @@
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 新增方法：查询所有标签（即分类）-->
+  <select id="selectAllLabel" resultType="com.digger.pojo.Category">
+    select id, name 
+    from category
+    where state > 0
+  </select>
 </mapper>
