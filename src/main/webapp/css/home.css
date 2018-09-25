@@ -1,5 +1,5 @@
 body {
-/*	background-image: url(img/exm7.jpg);*/
+	background-image: url(img/exm7.jpg);
 }
 
 /*横向时间轴*/
@@ -112,4 +112,17 @@ div .thumbnail:hover{
 	border: none;
 }
 
+#search_suggest1{
+	position: absolute;
+    z-index: 1;
+    display: none;
+}
 
+#search_suggest1 a{
+	border: none;
+}
+
+.div-label{
+	background-color: white;
+    margin-left:70%; 
+}

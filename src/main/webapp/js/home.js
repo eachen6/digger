@@ -50,13 +50,14 @@ var search = new Vue({
 	},
 	methods: {
 		change:function(e){
-			search_change(this.search_value.replace(/^\s+|\s+$/g,""));
+			search_change(this.search_value);
 		}
 	},
 	created: function(){
 		
 	}
 })
+
 
 function search_change(input_value){
 	 $.ajax({
@@ -65,6 +66,7 @@ function search_change(input_value){
 			type:'GET',
 			contentType:"application/json; charset=utf-8",
 			success:function(res){
+				console.log(res);
 				if(res.status==0)
 				{
 					search.game = res.data;
@@ -73,11 +75,26 @@ function search_change(input_value){
 		})  
 }
 
-$(document).ready(function(){
-/*$("#search_input").on("input propertychange",function(){
-	   //alert($("#search_input").val())
-	   var input_value = $("#search_input").val();
-	    $.ajax({
+
+//搜索框2
+var search1 = new Vue({
+	el:"#search_form1",
+	data:{
+		"game": [],
+		"search_value": ""
+	},
+	methods: {
+		change:function(e){
+			search_change1(this.search_value);
+		}
+	},
+	created: function(){
+		
+	}
+})
+
+function search_change1(input_value){
+	 $.ajax({
 			url: "../game/search_game_byword",
 			data:{"keyword":input_value},
 			type:'GET',
@@ -86,15 +103,14 @@ $(document).ready(function(){
 				console.log(res);
 				if(res.status==0)
 				{
-					//alert("uuuuuuu");
-					search.game = res.data;
-//					alert(search.game[0].id);
-					console.log(search.game);
+					search1.game = res.data;
 				}
 			}
 		})  
-	 });*/
+}
 
+
+$(document).ready(function(){
 //搜索提示框
 $('#search_input').click(function(){
 	$("#search_suggest").width($("#search_input").width()+25),
@@ -103,6 +119,8 @@ $('#search_input').click(function(){
      left:$('#search_input').offset().left,
      position:'absolute'
     });
+	alert($('#search_input').offset().left);
+
     });
 
 $('body').click(function(e) {
@@ -110,5 +128,23 @@ if(e.target.id != 'search_input')
 if ( $('#search_suggest').is(':visible') ) {
     $('#search_suggest').hide();
 }
-})
+});
+
+$('body').click(function(e) {
+	if(e.target.id != 'search_input1')
+	if ( $('#search_suggest1').is(':visible') ) {
+	    $('#search_suggest1').hide();
+	}
+	});
+
+
+$('#search_input1').click(function(){
+	$("#search_suggest1").width($("#search_input1").width()+25),
+    $('#search_suggest1').show().css({
+     top:$('#search_input1').offset().top+$('#search_input1').height()+15,
+     left:$('#search_input1').offset().left,
+     position:'absolute'
+    });
+    });
+
 })
