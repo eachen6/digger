@@ -182,4 +182,5 @@ public class GameController {
 		}
 		return gameService.searchGameByword(keyword);
 	}
+	
 }
