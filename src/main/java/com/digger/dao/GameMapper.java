@@ -37,4 +37,6 @@ public interface GameMapper {
 
 	List<Game> searchGamewByword(String keyword);
 
+	List<CarouseVO> searchGamewByname(String name);
+
 }

@@ -12,6 +12,8 @@ public class CarouseVO {
 	private Date shelftime;
 	private String coverurl;
 	private Date deadline;
+	private String category;
+	private String discountstate;
 	public int getId() {
 		return id;
 	}
@@ -59,6 +61,18 @@ public class CarouseVO {
 	}
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getDiscountstate() {
+		return discountstate;
+	}
+	public void setDiscountstate(String discountstate) {
+		this.discountstate = discountstate;
 	}
 
 }

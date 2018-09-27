@@ -183,4 +183,14 @@ public class GameController {
 		return gameService.searchGameByword(keyword);
 	}
 	
+	/**
+	 * 根据关键词搜索游戏
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_byname")
+	@ResponseBody
+	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
+		System.out.println(name+"tttttttttttt");
+		return gameService.searchGameByname(name);
+	}
 }

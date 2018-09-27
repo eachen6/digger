@@ -115,12 +115,10 @@ $(document).ready(function(){
 $('#search_input').click(function(){
 	$("#search_suggest").width($("#search_input").width()+25),
     $('#search_suggest').show().css({
-     top:$('#search_input').offset().top+$('#search_input').height()+15,
+     top:$('#search_input').offset().top+$('#search_input').height()-67,
      left:$('#search_input').offset().left,
      position:'absolute'
     });
-	alert($('#search_input').offset().left);
-
     });
 
 $('body').click(function(e) {

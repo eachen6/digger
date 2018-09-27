@@ -128,4 +128,15 @@ public class GameServiceImpl implements GameService{
 		//System.out.println(gamelist.get(0).getName());
 		return ServerResponse.createBySuccess(gamelist);
 	}
+
+	/* 
+	 * 根据关键词搜索游戏
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse searchGameByname(String name) {
+		List<CarouseVO> list = new ArrayList<CarouseVO>();
+		list = gameMapper.searchGamewByname(name);
+		return ServerResponse.createBySuccess(list);
+	}
 }
