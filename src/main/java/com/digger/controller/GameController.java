@@ -190,7 +190,17 @@ public class GameController {
 	@RequestMapping(value = "search_game_byname")
 	@ResponseBody
 	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
-		System.out.println(name+"tttttttttttt");
+		return gameService.searchGameByname(name);
+	}
+	
+	/**
+	 * 根据标签（即分类）搜索游戏
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_bycategory")
+	@ResponseBody
+	public ServerResponse searchGameBycategory(@RequestParam(value="name") String name){
+		System.out.println(name+"kkkkkkkkkkk");
 		return gameService.searchGameByname(name);
 	}
 }

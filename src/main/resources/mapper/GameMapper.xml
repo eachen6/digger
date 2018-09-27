@@ -456,7 +456,7 @@
       select  game.id, name, price, coverurl, shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
-      where name LIKE "%"#{name}"%" and state > 0
+      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state > 0
       order by sale desc 
   </select>
 </mapper>

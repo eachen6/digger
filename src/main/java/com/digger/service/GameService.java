@@ -19,7 +19,6 @@ public interface GameService {
 
 	ServerResponse toGetDetail(int id);
 
-	
 	ServerResponse toGetNoticeCarouse();
 	
 	ServerResponse toGetNoticeGameList();
