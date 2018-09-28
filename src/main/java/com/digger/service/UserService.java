@@ -2,6 +2,9 @@ package com.digger.service;
 
 
 import com.digger.pojo.User;
+
+import java.util.List;
+
 import com.digger.common.ServerResponse;
 
 
@@ -24,4 +27,6 @@ public interface UserService {
 	public ServerResponse<User> updateInformation(User user, User currentUser);  //更新个人信息
 	
 	public ServerResponse<User> getUserInfo(int userId);
+
+	public List<User> getAllUser();
 }

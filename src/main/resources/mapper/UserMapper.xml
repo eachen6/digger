@@ -205,4 +205,10 @@
     and id = #{id}
   </select>
   
+  <!-- 新增方法:分页测试-->
+  <select id="getAllUser" resultType="com.digger.pojo.User">
+    select id, username
+    from user
+  </select>
+  
 </mapper>

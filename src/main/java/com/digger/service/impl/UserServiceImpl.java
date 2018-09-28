@@ -1,5 +1,7 @@
 package com.digger.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.dao.UserMapper;
+import com.digger.pojo.Game;
 import com.digger.pojo.User;
 import com.digger.service.UserService;
 import com.digger.utils.MD5Util;
@@ -270,6 +273,19 @@ public class UserServiceImpl implements UserService {
 			return ServerResponse.createBySuccess(user);
 		}
 		return ServerResponse.createByErrorMessage("用户ID不存在");
+	}
+
+	/**
+	 * @author gzj
+	 * 分页此时
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<User> getAllUser() {
+		List<User> list = new ArrayList<User>();
+		list = userMapper.getAllUser();
+		return list;
 	}
 
 }
