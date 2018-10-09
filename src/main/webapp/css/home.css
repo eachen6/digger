@@ -126,3 +126,13 @@ div .thumbnail:hover{
 	background-color: white;
     margin-left:70%; 
 }
+
+.dingwei{
+	position:absolute;
+	z-index:9;
+	top:0%;
+	left:69%;
+    width: 31%; 
+    height: 100%; 
+} 
+
