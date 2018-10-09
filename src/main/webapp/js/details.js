@@ -23,22 +23,6 @@ $(document).ready(function(){
 var game = new Vue({
 	el:'#game',
 	data:{
-<<<<<<< HEAD
-		"gamelist": []
-	},
-	methods: {
-		
-	},
-	created: function(){
-		var that = this;
-		$.ajax({
-			type:"get",
-			url:"../game/detail/4",
-			async:true,
-			success: function(res){
-				that.gamelist = res.data;
-			}
-=======
 //		head_img:"https://cdn.rail.tgp.qq.com/info/games/2000352/27d1c5e3f37e219feb118895f7f37165.jpg",
 		prename:"所有游戏",
 //		gamename:"NBA2KOL2",
@@ -66,7 +50,6 @@ var game = new Vue({
 				that.contents = res.data[0]
 				that.selective = that.contents.category.split(",");
 			}
->>>>>>> e4a0717c585defc8982213240f6b4a317532bc1d
 		});
 	}
 })
