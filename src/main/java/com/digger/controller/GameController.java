@@ -168,4 +168,40 @@ public class GameController {
 	{
 		return gameService.toGetDetail(gameid);
 	}
+	
+	/**
+	 * 根据关键词提示
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_byword", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse searchGameByword(@RequestParam(value="keyword") String keyword){
+		System.out.println(keyword+"ggggggggggggg");
+		keyword = keyword.trim();
+		if(keyword.equals("")||keyword==null){
+			return ServerResponse.createBySuccess(null);
+		}
+		return gameService.searchGameByword(keyword);
+	}
+	
+	/**
+	 * 根据关键词搜索游戏
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_byname")
+	@ResponseBody
+	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
+		return gameService.searchGameByname(name);
+	}
+	
+	/**
+	 * 根据标签（即分类）搜索游戏
+	 * @return
+	 */
+	@RequestMapping(value = "search_game_bycategory")
+	@ResponseBody
+	public ServerResponse searchGameBycategory(@RequestParam(value="name") String name){
+		System.out.println(name+"kkkkkkkkkkk");
+		return gameService.searchGameByname(name);
+	}
 }

@@ -86,3 +86,14 @@ margin-top: -15px;
   background-color: black;
   border-color: #337ab7;
 }
+
+#search_suggest{
+	position:absolute;
+    z-index:9999;
+    display: none;
+}
+
+#search_suggest a{
+	border: none;
+}
+

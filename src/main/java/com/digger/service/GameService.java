@@ -19,9 +19,12 @@ public interface GameService {
 
 	ServerResponse toGetDetail(int id);
 
-	
 	ServerResponse toGetNoticeCarouse();
 	
 	ServerResponse toGetNoticeGameList();
+
+	ServerResponse searchGameByword(String keyword);
+
+	ServerResponse searchGameByname(String name);
 	
 }

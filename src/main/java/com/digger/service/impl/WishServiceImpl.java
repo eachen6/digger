@@ -14,10 +14,10 @@ public class WishServiceImpl implements WishService{
 	WishMapper wishMapper;
 
 	@Override
-	public ServerResponse toGetWishGame(int gameid) {
+	public ServerResponse toGetWishGame(Integer gameid) {
 		// TODO Auto-generated method stub
-		int resultCount = wishMapper.selectByGameid(gameid);
-		if(resultCount>0){
+		Integer resultCount = wishMapper.selectByGameid(gameid);
+		if(resultCount!=null){
 			return ServerResponse.createBySuccess(0);
 		}
 		return ServerResponse.createBySuccess(1);

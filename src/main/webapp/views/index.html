@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="ch">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>Digger游戏平台</title>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		
+		
+		<script>
+			$(function() {
+				$(".meun-item").click(function() {
+					$(".meun-item").removeClass("meun-item-active");
+					$(this).addClass("meun-item-active");
+					var itmeObj = $(".meun-item").find("img");
+					itmeObj.each(function() {
+						var items = $(this).attr("src");
+						items = items.replace("_grey.png", ".png");
+						items = items.replace(".png", "_grey.png")
+						$(this).attr("src", items);
+					});
+					var attrObj = $(this).find("img").attr("src");;
+					attrObj = attrObj.replace("_grey.png", ".png");
+					$(this).find("img").attr("src", attrObj);
+				});
+				$("#topAD").click(function() {
+					$("#topA").toggleClass(" glyphicon-triangle-right");
+					$("#topA").toggleClass(" glyphicon-triangle-bottom");
+				});
+				$("#topBD").click(function() {
+					$("#topB").toggleClass(" glyphicon-triangle-right");
+					$("#topB").toggleClass(" glyphicon-triangle-bottom");
+				});
+				$("#topCD").click(function() {
+					$("#topC").toggleClass(" glyphicon-triangle-right");
+					$("#topC").toggleClass(" glyphicon-triangle-bottom");
+				});
+				$(".toggle-btn").click(function() {
+					$("#leftMeun").toggleClass("show");
+					$("#rightContent").toggleClass("pd0px");
+				})
+			})
+		</script>
+		<!--限制文本长度-->
+		<style type="text/css">
+			.line-limit-length {
+				/*width:10em;*/
+				/*保证文字不会被半汉字截断,显示10个文字*/
+				overflow: hidden;
+				/*超出长度的文字隐藏*/
+				text-overflow: ellipsis;
+				/*文字隐藏以后添加省略号*/
+				white-space: nowrap;
+				/*强制不换行*/
+			}
+		</style>
+		<!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/slide.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/flat-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/jquery.nouislider.css">
+	</head>
+
+	<body>
+		<div id="wrap">
+			<!-- 左侧菜单栏目块 -->
+			<div class="leftMeun" id="leftMeun">
+				<div id="logoDiv">
+					<p id="logoP"><img id="logo" alt="digger" src="../img/b_logo.png"><span>digger</span></p>
+				</div>
+				<div id="personInfor">
+					<p>
+						<a>退出登录</a>
+					</p>
+				</div>
+				<div class="meun-title">账号管理</div>
+				<div class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
+				<div class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">上传游戏</div>
+				<div class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
+				<div class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
+				<div class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
+				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
+				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">帮助</div>
+			</div>
+			<!-- 右侧具体内容栏目 -->
+			<div id="rightContent">
+				<a class="toggle-btn" id="nimei">
+					<i class="glyphicon glyphicon-align-justify"></i>
+				</a>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<!--游戏审核模块-->
+					<div role="tabpanel" class="tab-pane active" id="sour">
+						<div class="check-div form-inline">
+							<div class="col-md-3">
+								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+						</div>
+							<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+	                            <li class="col-md-3 col-xs-3"><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#regu" data-toggle="tab">未上架</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#stud" data-toggle="tab">在销售</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#sitt" data-toggle="tab">已下架</a></li>
+                                </ul>
+						<div class="data-div">
+							<div class="row tableHeader" style="text-align: center;">
+								<div class="col-md-1 col-xs-1">
+									编码
+								</div>
+								<div class="col-md-2 col-xs-2">
+									游戏名称
+								</div>
+								<div class="col-md-1 col-xs-1">
+									上传玩家
+								</div>
+								<div class="col-md-2 col-xs-2">
+									上传时间
+								</div>
+								<div class="col-md-2 col-xs-2">
+									游戏类型
+								</div>
+								<div class="col-md-2 col-xs-2">
+									备注
+								</div>
+								<div class="col-md-2 col-xs-2">
+									操作
+								</div>
+							</div>
+							<div class="tablebody">
+
+								<div class="row" style="text-align: center;">
+									<div class="col-md-1 col-xs-1">
+										001
+									</div>
+									<div class="col-md-2 col-xs-2">
+										英雄联盟
+									</div>
+									<div class="col-md-1 col-xs-1">
+										拳头
+									</div>
+									<div class="col-md-2 col-xs-2">
+										2011-1-1
+									</div>
+									<div class="col-md-2 col-xs-2">
+										益智
+									</div>
+									<div class="col-md-2 col-xs-2">
+										巨TM好玩
+									</div>
+									<div class="col-md-2 col-xs-2">
+										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">查看</button>
+										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
+                            </i>
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
+                            </i>
+								</li>
+							</ul>
+						</footer>
+
+						<!--弹出审核游戏窗口-->
+						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">游戏审核</h4>
+									</div>
+                                    <div class="modal-body">
+                                    	<div class="container-fluid">
+										<div class="row">
+
+											<div class="col-md-7">
+												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360" poster="" data-setup="{}">
+													<source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type='video/mp4'>
+													<source src="MY_VIDEO.webm" type='video/webm'>
+													<p class="vjs-no-js">
+														To view this video please enable JavaScript, and consider upgrading to a web browser that
+														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+													</p>
+												</video>
+											</div>
+
+											<div class="col-md-5">
+												<h5 style="text-align: center;">英雄联盟</h5>
+												<p>《英雄联盟》是由美国拳头游戏(Riot Games)开发、中国大陆地区腾讯游戏代理运营的英雄对战MOBA竞技网游。 游戏里拥有数百个个性英雄，并拥有排位系统、符文系统等特色养成系统。 《英雄联盟》还致力于推动全球电子竞技的发展，除了联动各赛区发展职业联赛、打造电竞体系之外，每年还会举办“季中冠军赛”“全球总决赛”“All Star全明星赛”三大世界级赛事，获得了亿万玩家的喜爱，形成了自己独有的电子竞技文化。
+												</p>
+											</div>
+										</div>
+										<div class="row" style="margin-top:10px ;">
+
+											<div class="col-sm-6 col-md-3">
+												<a href="#" class="thumbnail">
+													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="col-sm-6 col-md-3">
+												<a href="#" class="thumbnail">
+													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="col-sm-6 col-md-3">
+												<a href="#" class="thumbnail">
+													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="col-sm-6 col-md-3">
+												<a href="#" class="thumbnail">
+													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+										</div>
+									</div>
+                                    </div>
+									
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">通过</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deleteSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该地区？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-md btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-md btn-danger">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+					</div>
+					
+					<!-- 上传文件模块 -->
+					<div role="tabpanel" class="tab-pane" id="char">
+                <div class="main_page">
+	            <iframe scrolling="no" id="main1" name="main" frameborder="0"  src="upload.html" style="min-height:400px;width:100%;height:50%;"></iframe>
+	           
+                </div>
+                   </div>
+				
+					<!--游戏未上架模块-->
+					<div role="tabpanel" class="tab-pane" id="regu">
+						<div class="check-div form-inline">
+							<div class="col-md-3">
+								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+						</div>
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
+	                            <li><a href="#regu" data-toggle="tab" style="background: #4B6075;">未上架</a></li>
+	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
+	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
+                                </ul>
+						<div class="row tableHeader" style="text-align: center;">
+							<div class="col-md-1 ">
+								编码
+							</div>
+							<div class="col-md-2 ">
+								游戏名称
+							</div>
+							<div class="col-md-1">
+								上传玩家
+							</div>
+							<div class="col-md-2">
+								审核时间
+							</div>
+							<div class="col-md-2">
+								游戏类型
+							</div>
+							<div class="col-md-2">
+								上架时间
+							</div>
+							<div class="col-md-2">
+								操作
+							</div>
+						</div>
+						<div class="tablebody">
+
+							<div class="row" style="text-align: center;">
+								<div class="col-md-1 ">
+									001
+								</div>
+								<div class="col-md-2">
+									英雄联盟
+								</div>
+								<div class="col-md-1">
+									拳头
+								</div>
+								<div class="col-md-2">
+									2011-1-1
+								</div>
+								<div class="col-md-2">
+									益智
+								</div>
+								<div class="col-md-2">
+									2011-1-1
+								</div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">上架</button>
+									<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
+								</div>
+							</div>
+
+						</div>
+                        <!--页码块-->
+					<footer class="footer">
+						<ul class="pagination">
+							<li>
+								<select>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+								</select>
+								页
+							</li>
+							<li class="gray">
+								共20页
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-left">
+                            </i>
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-right">
+                            </i>
+							</li>
+						</ul>
+					</footer>
+					</div>
+
+			
+					<!--游戏下架模块-->
+					<div role="tabpanel" class="tab-pane" id="sitt">
+                             <div class="check-div form-inline">
+							<div class="col-md-3">
+								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+						</div>
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
+	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
+	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
+	                            <li><a href="#sitt" data-toggle="tab"style="background: #4B6075;">已下架</a></li>
+                                </ul>
+						<div class="row tableHeader" style="text-align: center;">
+							<div class="col-md-1 ">
+								编码
+							</div>
+							<div class="col-md-2 ">
+								游戏名称
+							</div>
+							<div class="col-md-1">
+								上传玩家
+							</div>
+							<div class="col-md-2">
+								下架时间
+							</div>
+							<div class="col-md-2">
+								游戏类型
+							</div>
+							<div class="col-md-2">
+								备注
+							</div>
+							<div class="col-md-2">
+								操作
+							</div>
+						</div>
+						<div class="tablebody">
+
+							<div class="row" style="text-align: center;">
+								<div class="col-md-1 ">
+									001
+								</div>
+								<div class="col-md-2">
+									英雄联盟
+								</div>
+								<div class="col-md-1">
+									拳头
+								</div>
+								<div class="col-md-2">
+									--
+								</div>
+								<div class="col-md-2">
+									益智
+								</div>
+								<div class="col-md-2">
+									巨TM好玩
+								</div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">重新上架</button>
+									<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
+								</div>
+							</div>
+
+						</div>
+
+					
+					<!--页码块-->
+					<footer class="footer">
+						<ul class="pagination">
+							<li>
+								<select>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+								</select>
+								页
+							</li>
+							<li class="gray">
+								共20页
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-left">
+                            </i>
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-right">
+                            </i>
+							</li>
+						</ul>
+					</footer>
+</div>
+				
+					<!--游戏在销售模块-->
+					<div role="tabpanel" class="tab-pane" id="stud">
+						<div class="check-div form-inline">
+							<div class="col-md-3">
+								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+						</div>
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
+	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
+	                            <li><a href="#stud" data-toggle="tab" style="background: #4B6075;">在销售</a></li>
+	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
+                                </ul>
+						<div class="row tableHeader" style="text-align: center;">
+							<div class="col-md-1 ">
+								编码
+							</div>
+							<div class="col-md-2 ">
+								游戏名称
+							</div>
+							<div class="col-md-1">
+								上传玩家
+							</div>
+							<div class="col-md-2">
+								上架时间
+							</div>
+							<div class="col-md-2">
+								游戏类型
+							</div>
+							<div class="col-md-2">
+								备注
+							</div>
+							<div class="col-md-2">
+								操作
+							</div>
+						</div>
+						<div class="tablebody">
+
+							<div class="row" style="text-align: center;">
+								<div class="col-md-1 ">
+									001
+								</div>
+								<div class="col-md-2">
+									英雄联盟
+								</div>
+								<div class="col-md-1">
+									拳头
+								</div>
+								<div class="col-md-2">
+									2010-1-1
+								</div>
+								<div class="col-md-2">
+									益智
+								</div>
+								<div class="col-md-2">
+									巨TM好玩
+								</div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">下架</button>
+									<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
+								</div>
+							</div>
+
+						</div>
+
+					
+					<!--页码块-->
+					<footer class="footer">
+						<ul class="pagination">
+							<li>
+								<select>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+								</select>
+								页
+							</li>
+							<li class="gray">
+								共20页
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-left">
+                            </i>
+							</li>
+							<li>
+								<i class="glyphicon glyphicon-menu-right">
+                            </i>
+							</li>
+						</ul>
+					</footer>
+                    </div>
+					<!--用户管理模块-->
+					<div role="tabpanel" class="tab-pane" id="user">
+						<div class="check-div form-inline">
+							<div class="col-xs-3">
+								<button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addUser">添加用户 </button>
+							</div>
+							<div class="col-xs-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+							<div class="col-lg-3 col-lg-offset-2 col-xs-4" style=" padding-right: 40px;text-align: right;">
+								<label for="paixu">排序:&nbsp;</label>
+								<select class=" form-control">
+									<option>用户id</option>
+									<option>用户名</option>
+									<option>状态</option>
+								</select>
+							</div>
+						</div>
+						<div class="data-div">
+							<div class="row tableHeader">
+								<div class="col-xs-3 ">
+									用户id
+								</div>
+								<div class="col-xs-3">
+									用户名
+								</div>
+								<div class="col-xs-3">
+									状态
+								</div>
+								<div class="col-xs-3">
+									操作
+								</div>
+							</div>
+							<div class="tablebody" id="alluser">
+								<div class="row">
+									<div class="col-xs-3 ">
+										{{userid}}
+									</div>
+									<div class="col-xs-3">
+										{{username}}
+									</div>
+									<div class="col-xs-3">
+										{{status}}
+									</div>
+									<div class="col-xs-3">
+										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseUser">修改</button>
+										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteUser">删除</button>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共10页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
+                            </i>
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
+                            </i>
+								</li>
+							</ul>
+						</footer>
+
+						<!--弹出添加用户窗口-->
+						<div class="modal fade" id="addUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加用户</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">用户id：</label>
+													<div class="col-xs-8 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">用户名：</label>
+													<div class="col-xs-8 ">
+														<input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="situation" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<label class="control-label" for="anniu">
+                                                    <input type="radio" name="situation" id="normal">正常</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<label class="control-label" for="meun">
+                                                    <input type="radio" name="situation" id="forbid"> 禁用</label>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--弹出修改用户窗口-->
+						<div class="modal fade" id="reviseUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">修改用户</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">用户id：</label>
+													<div class="col-xs-8 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">用户名：</label>
+													<div class="col-xs-8 ">
+														<input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="situation" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<label class="control-label" for="anniu">
+                                                    <input type="radio" name="situation" id="normal">正常</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<label class="control-label" for="meun">
+                                                    <input type="radio" name="situation" id="forbid"> 禁用</label>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该用户？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn  btn-xs btn-danger">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+					</div>
+					<!-- 公告管理模块 -->
+					<div role="tabpanel" class="tab-pane" id="gonggao">
+						<div class="check-div">
+							<button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addChar">添加公告</button>
+						</div>
+						<div class="data-div">
+							<div class="row tableHeader">
+								<div class="col-xs-1 ">
+									编码
+								</div>
+								<div class="col-xs-2">
+									标题
+								</div>
+								<div class="col-xs-5">
+									内容
+								</div>
+								<div class="col-lg-2">
+									状态
+								</div>
+								<div class="col-xs-2">
+									操作
+								</div>
+							</div>
+							<div class="tablebody">
+								<div class="row">
+									<div class="col-xs-1 ">
+										1
+									</div>
+									<div class="col-xs-2">
+										{{title}}
+									</div>
+									<div class="col-xs-5">
+										<div class="line-limit-length">
+											{{content}}
+										</div>
+									</div>
+									<div class="col-lg-2">
+										{{release}}
+									</div>
+									<div class="col-xs-2">
+										<button class="btn btn-default btn-xs">发布</button>
+										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeChar">修改</button>
+										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteChar">删除</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共10页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
+                            </i>
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
+                            </i>
+								</li>
+							</ul>
+						</footer>
+						<!--增加权限弹出窗口-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">标题：</label>
+													<div class="col-xs-6 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">内容：</label>
+													<div class="col-xs-6 ">
+														<textarea class="form-control input-sm duiqi"></textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<select class=" form-control select-duiqi">
+															<option value="">未发布</option>
+															<option value="">发布</option>
+														</select>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--修改权限弹出窗口-->
+						<div class="modal fade" id="changeChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">修改公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">标题：</label>
+													<div class="col-xs-6 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">内容：</label>
+													<div class="col-xs-6 ">
+														<textarea class="form-control input-sm duiqi"></textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<select class=" form-control select-duiqi">
+															<option value="">未发布</option>
+															<option value="">发布</option>
+														</select>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--弹出删除权限警告窗口-->
+						<div class="modal fade" id="deleteChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该公告？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-danger">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+					</div>
+					<!--个人信息模块-->
+					<div role="tabpanel" class="tab-pane" id="self">
+						<div class="row" style="margin: auto;">
+							<div class="col-md-4">
+								<br>
+								<div id="myTabContent" class="tab-content">
+									<div class="tab-pane active in" id="home">
+										<div class="form-group">
+											<label>用户账号</label>
+											<input type="text" id="employeeID" v-model="userid" class="form-control" readonly>
+										</div>
+										<div class="form-group">
+											<label>用户姓名</label>
+											<input type="text" id="employeeName" v-model="username" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>性别</label>
+											<input type="text" id="sex" v-model="sex" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>出生日期</label>
+											<input type="date" id="birthday" v-model="birthday" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>学历</label>
+											<input type="text" id="education" v-model="education" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>用户住址</label>
+											<input type="text" id="address" v-model="address" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>身份证号</label>
+											<input type="text" id="noCode" v-model="noCode" class="form-control">
+										</div>
+										<div class="form-group">
+											<label>联系电话</label>
+											<input type="text" id="mobile" v-model="mobile" class="form-control">
+										</div>
+
+										<div class="form-group">
+											<label>Email</label>
+											<input type="text" id="email" v-model="email" class="form-control">
+										</div>
+
+										<div class="btn-toolbar list-toolbar">
+											<button class="btn btn-primary" onclick="updateMessage()"><i class="fa fa-save"></i> Save</button>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--数据统计模块-->
+					<div role="tabpanel" class="tab-pane" id="shuju">
+					 <iframe scrolling="no" id="main" name="main" frameborder="0"  src="data1.html" style="min-height:750px;width:100%;height:100%;"></iframe>	
+					</div>	
+					<!--修改密码模块-->
+					<div role="tabpanel" class="tab-pane" id="updatapw">
+						<div class="check-div">
+							原始密码为12312313
+						</div>
+						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label for="sKnot" class="col-xs-4 control-label">原密码：</label>
+									<div class="col-xs-5">
+										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="sKnot" class="col-xs-4 control-label">新密码：</label>
+									<div class="col-xs-5">
+										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="sKnot" class="col-xs-4 control-label">重复密码：</label>
+									<div class="col-xs-5">
+										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+									</div>
+								</div>
+								<div class="form-group text-right">
+									<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
+										<button type="reset" class="btn btn-xs btn-white">取 消</button>
+										<button type="submit" class="btn btn-xs btn-green">保存</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../js/myvue.js" ></script>
+		<script>
+			 function calcPageHeight(doc) {
+      var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+      var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+      var height  = Math.max(cHeight, sHeight)
+      return height
+  }
+  //根据ID获取iframe对象
+  var ifr = document.getElementById('main')
+  ifr.onload = function() {
+  	  //解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
+  	  ifr.style.height='0px';
+      var iDoc = ifr.contentDocument || ifr.document
+      var height = calcPageHeight(iDoc)
+      if(height < 850){
+      	height = 850;
+      }
+      ifr.style.height = height + 'px'
+  }
+		</script>
+	</body>
+
+</html>

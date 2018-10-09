@@ -26,7 +26,7 @@ public class WishController {
      */
 	@RequestMapping(value = "get_wishgame", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetWishGame(int gameid,HttpSession session) 
+	public ServerResponse toGetWishGame(Integer gameid,HttpSession session) 
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		//0为加入愿望清单，1为未加入愿望清单

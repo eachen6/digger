@@ -14,7 +14,7 @@ public class GamelistVO {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return name; 
 	}
 	public void setName(String name) {
 		this.name = name;

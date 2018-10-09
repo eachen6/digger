@@ -1,6 +1,6 @@
-body {
-/*	background-image: url(img/exm7.jpg);*/
-}
+/* body {
+	background-image: url(img/exm7.jpg);
+} */
 
 /*横向时间轴*/
 .time-horizontal {
@@ -99,4 +99,30 @@ div .thumbnail:hover{
 	margin-top: 15px;
 	margin-left: 35px;
 	margin-right: 30px;
+}
+
+
+#search_suggest{
+	position:absolute;
+    z-index:9999;
+    display: none;
+}
+
+#search_suggest a{
+	border: none;
+}
+
+#search_suggest1{
+	position: absolute;
+    z-index: 1;
+    display: none;
+}
+
+#search_suggest1 a{
+	border: none;
+}
+
+.div-label{
+	background-color: white;
+    margin-left:70%; 
 }

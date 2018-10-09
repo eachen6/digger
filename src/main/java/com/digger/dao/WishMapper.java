@@ -15,5 +15,5 @@ public interface WishMapper {
 
     int updateByPrimaryKey(Wish record);
 
-	int selectByGameid(int gameid);
+    Integer selectByGameid(Integer gameid);
 }

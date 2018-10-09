@@ -2,16 +2,23 @@ package com.digger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.pojo.User;
 import com.digger.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 @RequestMapping("/user")
@@ -182,4 +189,25 @@ public class UserController {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		return userService.getUserInfo(user.getId());
 	}
+	
+	
+	/**
+	 * @author gzj
+	 * 分页测试
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "pagetest", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse getUser(@RequestParam(value="pn",defaultValue="1") Integer pn){
+		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
+        PageHelper.startPage(pn, 2);
+        //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
+        List<User> allUser = userService.getAllUser();
+        System.out.println(allUser);
+        //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
+        PageInfo page = new PageInfo(allUser,5);
+        return ServerResponse.createBySuccess(page);
+	}
+	
 }
