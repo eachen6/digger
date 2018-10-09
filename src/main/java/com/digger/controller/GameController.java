@@ -173,9 +173,9 @@ public class GameController {
 	 * 获取游戏详情
 	 * @return
 	 */
-	@RequestMapping(value = "detail{gameid}", method = RequestMethod.GET)
+	@RequestMapping(value = "detail/{gameid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetGameDetail(@PathVariable(value="gameid")int gameid)
+	public ServerResponse toGetGameDetail(@PathVariable(value="gameid") int gameid)
 	{
 		return gameService.toGetDetail(gameid);
 	}

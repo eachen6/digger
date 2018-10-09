@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- release v4.5.0, copyright 2014 - 2018 Kartik Visweswaran -->
+<!--suppress JSUnresolvedLibraryURL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>富文本上传</title>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+    <link href="../richtext/dist/summernote.css" rel="stylesheet">
+    <link href="../richtext/dist/bootstrap.css" rel="stylesheet">
+<script src="../richtext/js/jquery.min.js"></script>
+<script src="../richtext/js/bootstrap.min.js"></script>
+<script src="../richtext/dist/summernote.js"></script>
+<script src="../richtext/dist/lang/summernote-zh-CN.js"></script> 
+<script>
+$(function(){
+ $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        lang: 'zh-CN'
+    });
+});
+</script>
+<style>
+	.navbar{
+		position: relative;
+        min-height: 55px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+		background-color: #56B9AB;
+	}
+</style>
+</head>
+<body>
+	<div class="navbar"></div>
+	<div class="container">
+	<form enctype="multipart/form-data" id="form1">
+	<div class="input-group ">
+	<span class="input-group-addon">游戏名称:</span>
+      <input type="text" class="form-control" id="gname" name="gname">
+    </div>
+    <br>
+     <div class="input-group">
+    <span class="input-group-addon">游戏属性:</span>
+      <input type="text" class="form-control" id="gname">
+    </div>
+    <br>
+     <div class="input-group">
+    <span class="input-group-addon">运行内存:</span>
+      <input type="text" class="form-control" id="gname">
+    </div>
+     <br>
+     <div class="input-group">
+    <span class="input-group-addon">运行显卡:</span>
+      <input type="text" class="form-control" id="gname">
+    </div>
+     <br>
+    <div class="input-group">
+	<span class="input-group-addon">开  发  商:&nbsp;</span>
+      <input type="text" class="form-control" id="gname">
+    </div>
+     <br>
+    <div class="input-group">
+    <span class="input-group-addon">运  营  商:&nbsp;</span>
+      <input type="text" class="form-control" id="gname">
+    </div>
+     <br>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">动作游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">冒险游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="" >模拟游戏
+      </label>
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">角色扮演
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">策略游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="" >体育类型
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">射击游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">益智游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="" >棋牌游戏
+      </label>
+    
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">休闲游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">过关游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="" >3 D 游戏
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">单机游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="">双人游戏
+      </label>
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" value="" >网页游戏
+      </label>
+    </div>
+  </form>
+   <div class="summernote"></div>
+    <input type="submit" id="up" value="上传" />
+    <input type="button" id="et" value="重置" />
+</div>
+</body>
+<script>
+var markupStr = $('.summernote').summernote('code');
+$(function(){
+$("#submit").click(function(){
+    alert("Text: " + markupStr);
+  });
+$("#et").click(function(){
+	 $('.summernote').summernote('reset');
+  });
+});
+/*监听复选框，只能选择4个*/
+$('input[type=checkbox]').click(function(){
+
+if($("input[name='genres']:checked").length >= 5)
+
+{
+
+$(this).removeAttr("checked");
+
+alert("最多选4个!")}
+
+});
+
+</script>
+</html>

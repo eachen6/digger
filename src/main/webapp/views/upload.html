@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- release v4.5.0, copyright 2014 - 2018 Kartik Visweswaran -->
+<!--suppress JSUnresolvedLibraryURL -->
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>文件上传</title>
+
+<script src="../fileinput/js/bootstrap-table.js"></script>
+<script src="../fileinput/js/jquery/jquery.min.js"></script>
+<link href="../fileinput/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+<script src="../fileinput/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../fileinput/css/fileinput/fileinput.css" />  
+<link type="text/css" rel="stylesheet" href="../fileinput/css/fileinput/fileinput.min.css" />  
+<script type="text/javascript" src="../fileinput/js/fileinput/fileinput.js"></script>  
+<script type="text/javascript" src="../fileinput/js/fileinput/fileinput_locale_zh.js"></script>
+
+<style>
+        body {
+            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+            background-color: #EBF5F3;
+        }
+        * {
+            margin: 0;
+        }
+        html, body {
+            height: 100%;
+        }
+        .navbar-custom {
+            /*color: #FFFFFF;*/
+            background-color: #56b9ab;
+        }
+        .navbar-brand,
+        .navbar-nav li a {
+            line-height: 55px;
+            height: 55px;
+            padding-top: 0px;
+            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        }
+        .navbar-default .navbar-nav > li > a {
+            color: #ffffff;
+        }
+        .navbar-default .navbar-nav > li > a:hover {
+            color: #175A94;
+        }
+        .page-header {
+            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+            /* border-bottom: 1px solid #bbb;*/
+        }
+        hr {
+            border-bottom: 1px solid #bbb;
+        }
+        .img_border {
+            border: 1px solid #bbb;
+        }
+        @media screen and (min-width: 900px) {
+            .container {
+                width: 900px;
+            }
+        }
+        @media screen and (min-width: 800px) {
+            .center_toaster {
+                right: 35%;
+                width: 30%;
+            }
+        }
+        @media screen and (min-width: 400px) and (max-width: 799px) {
+            .center_toaster {
+                right: 25%;
+                width: 50%;
+            }
+        }
+        @media screen and (min-width: 200px ) and (max-width: 399px) {
+            .center_toaster {
+                right: 10%;
+                width: 80%;
+            }
+        }
+        .row a {
+            text-decoration: none;
+        }
+        .row a:hover {
+            text-decoration: none;
+        }
+        .addMaigin {
+            margin-bottom: 30px;
+        }
+        .change_font {
+            font-size: 1.5em;
+        }
+        .button_width {
+            width: 4em;
+        }
+        .button_width2 {
+            width: 4em;
+        }
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -6em;
+        }
+        .push {
+            height: 6em;
+        }
+        .footer, {
+            height: 4em;
+        }
+        .color_white{
+            background: #ffffff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="navbar navbar-default navbar-custom" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="">
+                <!--<img alt="zjk" src="../bootstrap/images/logo.png" height="50">-->
+            </a>
+        </div>
+   </div>
+    <!-- 文件拖拽上传 -->
+    <div class="container kv-main">
+        <div class="row ">
+            <div style="padding:10px; ">
+                <form enctype="multipart/form-data" id="form">
+                    <input id="file-0a" class="file" name="file" type="file" multiple data-min-file-count="1">
+                    <br>
+                 </form>
+            </div>
+        </div>
+       <a type="button" class="btn btn-primary btn-lg btn-block" href="upload1.html">下一步</a>
+     </div>
+    <div class="push"></div>
+</div>
+
+</body>
+<!-- /.container -->
+
+<script>
+  $('#file-0a').fileinput({
+        language: 'zh',
+        uploadUrl: '../game/add',
+        showUpload: true, 
+        allowedPreviewTypes : ['image', 'html', 'text', 'video', 'audio', 'flash']
+    });
+     $('#file-0a').on('fileuploaderror', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+        console.log(data);
+        console.log('File upload error');
+    });
+    $('#file-0a').on('fileerror', function(event, data) {
+        console.log(data.id);
+        console.log(data.index);
+        console.log(data.file);
+        console.log(data.reader);
+        console.log(data.files);
+    });
+    $('#file-0a').on('fileuploaded', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+        console.log('File uploaded triggered');
+        console.log(event);
+        console.log(data);
+        });
+   
+</script>
+
+</html>

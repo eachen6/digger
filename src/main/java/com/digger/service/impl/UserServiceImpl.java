@@ -152,6 +152,9 @@ public class UserServiceImpl implements UserService {
 				TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
 				return ServerResponse.createBySuccess(forgetToken);
 			}
+			else {
+				return ServerResponse.createByErrorMessage("密保答案错误");
+			}
 		} 
 		else if (Const.EMAIL.equals(type)) {
 			int resultCount = userMapper.checkAnswerByEmail(username, question, answer);
@@ -160,6 +163,9 @@ public class UserServiceImpl implements UserService {
 				String forgetToken = UUID.randomUUID().toString();
 				TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
 				return ServerResponse.createBySuccess(forgetToken);
+			}
+			else {
+				return ServerResponse.createByErrorMessage("密保答案错误");
 			}
 		}
 		return ServerResponse.createByErrorMessage("问题的答案错误");
