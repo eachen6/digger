@@ -26,5 +26,7 @@ public interface GameService {
 	ServerResponse searchGameByword(String keyword);
 
 	ServerResponse searchGameByname(String name);
+
+	ServerResponse toGetTotalGame();
 	
 }

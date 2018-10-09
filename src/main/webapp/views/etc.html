@@ -1,332 +1,314 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title></title>
-	</head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+</head>
 
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
-	<link rel="stylesheet" href="../css/etc.css" />
-	<script type="text/javascript " src="../bootstrap/js/jquery-1.9.1.js"></script>
-	<script type="text/javascript " src="../bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="../css/etc.css" />
+<script type="text/javascript " src="../bootstrap/js/jquery-1.9.1.js"></script>
+<script type="text/javascript " src="../bootstrap/js/bootstrap.js"></script>
 
-	<body>
-		
+<body>
+
 	<!--顶部导航栏-->
 	<nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid" style="margin-left: 17%; margin-right: 17%;"> 
-            <ul class="nav navbar-nav" >
-               <li class="active"><a href="main.html?location=home">精选</a></li>
-               <li><a id="toallgame" style="cursor: pointer;" href="main.html?location=etc">所有游戏</a></li>
-            </ul>
-            <form class="navbar-form navbar-right" action="../game/search_game_byname" style="margin-right: auto;" role="search" id="search_form">
-                 <div class="form-group"> 
-                     <input type="text" class="form-control" name="name" id="search_input" autocomplete="off" v-model="search_value" v-on:input="change"  placeholder="Search">
-                 </div>
-                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                  <!--搜索提示框-->
-                  <div class="list-group" id="search_suggest">
-                     <template v-if="game!=''">
-                       <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
-                     </template>
-                  </div>
-            </form>
-        </div>
-    </nav>
+		<div class="container-fluid"
+			style="margin-left: 17%; margin-right: 17%;">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="main.html?location=home">精选</a></li>
+				<li><a id="toallgame" style="cursor: pointer;"
+					href="main.html?location=etc">所有游戏</a></li>
+			</ul>
+			<form class="navbar-form navbar-right"
+				action="../game/search_game_byname" style="margin-right: auto;"
+				role="search" id="search_form">
+				<div class="form-group">
+					<input type="text" class="form-control" name="name"
+						id="search_input" autocomplete="off" v-model="search_value"
+						v-on:input="change" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+				<!--搜索提示框-->
+				<div class="list-group" id="search_suggest">
+					<template v-if="game!=''"> <a v-for="value in game"
+						:href="'../game/search_game_byname?name='+value.name"
+						class="list-group-item list-group-item-action">{{value.name}}</a>
+					</template>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-		<!--轮播图界面-->
-		<div id="carousel" class="container" style="height: 550px;margin-top: 30px;">
-			<div class="row" style="margin-top: 40px;">
+	<!--轮播图界面-->
+	<div id="carousel" class="container"
+		style="height: 550px; margin-top: 30px;">
+		<div class="row" style="margin-top: 40px;">
 
-				<!--添加輪播容器-->
-				<div class="carousel slide" id="myCarousel" date-ride="carousel">
+			<!--添加輪播容器-->
+			<div class="carousel slide" id="myCarousel" date-ride="carousel">
 
-					<!-- 轮播（Carousel）指标 -->
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-						<li data-target="#myCarousel" data-slide-to="3"></li>
-					</ol>
-					<!--設置輪播圖片-->
-					<div class="carousel-inner">
+				<!-- 轮播（Carousel）指标 -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+				</ol>
+				<!--設置輪播圖片-->
+				<div class="carousel-inner">
 
-						<template v-for="(value,index) in hereimg">
-							<div class="item active" v-if="index==0">
-								<a :href="value.local" class="avatar">
-									<img :src="value.img" alt=" " style="height:400px; width:100%; " />
-									<!--添加游戏對應的名称和价格-->
-									<div class="carousel-caption ">
-										<h4>{{value.gamename}}</h4>
-										<p>{{value.gameprice}}</p>
-									</div>
-								</a>
+					<template v-for="(value,index) in hereimg">
+					<div class="item active" v-if="index==0">
+						<a href="#" class="avatar"> <img :src="value.carouseurl"
+							alt=" " style="height: 400px; width: 100%;" /> <!--添加游戏對應的名称和价格-->
+							<div class="carousel-caption ">
+								<h4>{{value.name}}</h4>
+								<p>{{value.price}}</p>
 							</div>
-							<div class="item" v-else>
-								<a :href="value.local" class="avatar">
-									<img :src="value.img" alt=" " style="height:400px; width:100%; ">
-									<!--添加游戏對應的名称和价格-->
-									<div class="carousel-caption ">
-										<h4>{{value.gamename}}</h4>
-										<p>{{value.gameprice}}</p>
-									</div>
-
-							</div>
-						</template>
-
-						<!--設置輪播圖片控制器-->
-						<!-- 轮播（Carousel）导航 -->
-						<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
 						</a>
 					</div>
+					<div class="item" v-else>
+						<a href="#" class="avatar"> <img :src="value.carouseurl"
+							alt=" " style="height: 400px; width: 100%;"> <!--添加游戏對應的名称和价格-->
+							<div class="carousel-caption ">
+								<h4>{{value.name}}</h4>
+								<p>{{value.price}}</p>
+							</div>
+					</div>
+					</template>
+
+					<!--設置輪播圖片控制器-->
+					<!-- 轮播（Carousel）导航 -->
+					<a class="left carousel-control" href="#myCarousel" role="button"
+						data-slide="prev"> <span
+						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a> <a class="right carousel-control" href="#myCarousel" role="button"
+						data-slide="next"> <span
+						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!--游戏列表界面-->
-		<div id="gameList" class="container" style="margin-top: 30px;">
-			<div class="row">
+	<!--游戏列表界面-->
+	<div id="gameList" class="container" style="margin-top: 30px;">
+		<div class="row">
 
-				<!--导航栏与游戏列表-->
-				<div class="col-md-8">
+			<!--导航栏与游戏列表-->
+			<div class="col-md-8">
 
-					<div class="row" style="padding-bottom: 10px;padding-left: 15px;">
-						<!--游戏总数-->
-						<div class="col-md-6" style="padding-top: 10px;">全部游戏共{{total}}款</div>
+				<div class="row" style="padding-bottom: 10px; padding-left: 15px;">
+					<!--游戏总数-->
+					<div class="col-md-4" style="padding-top: 10px;">全部游戏共{{total}}款</div>
+					<!--導航-->
+					<div class="col-md-8">
+						<ul class="nav nav-pills" style="float: right">
+							<li class="active"><a href="#">火爆新品</a></li>
+							<li><a href="#">本周热点</a></li>
+							<li><a href="#">最新上架</a></li>
+							<li><a href="#">折扣促销</a></li>
+						</ul>
+					</div>
+				</div>
 
-						<!--導航-->
+				<!--游戏列表-->
+				<div class="container-fluid" v-for="item in gamelist">
+
+					<!--游戏1信息-->
+					<div class="row"
+						style="cursor: pointer; margin-bottom: 20px; background-color: white;">
+						<div class="col-md-3">
+							<img :src="item.carouseurl" style="width: 180px; height: 136px;" />
+						</div>
+						<div class="col-md-7">
+							<div>
+								<h3>{{item.name}}</h3>
+								<p>{{item.developer}}</p>
+
+								<div style="padding-bottom: 20px; padding-right:5px ;display: inline"
+									v-for="itemcate in item.category">
+									<a herf="#" style="color: black"><button class="btn btn-sm">{{itemcate}}</button></a>
+								</div>
+
+
+							</div>
+						</div>
+						<div class="col-md-2"
+							style="margin-top: 50px; padding-left: 35px;">{{item.platform}}</div>
+					</div>
+
+
+				</div>
+
+				<!--分页与跳转页-->
+				<div>
+					<div class="row">
+
+						<!--分頁-->
 						<div class="col-md-6">
-							<ul class="nav nav-pills">
-								<li class="active">
-									<a :href="navUrl1">火爆新品</a>
-								</li>
-								<li>
-									<a :href="navUrl2">本周热点</a>
-								</li>
-								<li>
-									<a :href="navUrl3">最新上架</a>
-								</li>
-								<li>
-									<a :href="navUrl4">折扣促销</a>
-								</li>
+							<ul class="pagination">
+								<li><a href="#" class="disabled">&laquo;</a></li>
+								<li class="active"><a href="#">1</a></li>
+								<li class=""><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">&raquo;</a></li>
 							</ul>
 						</div>
-					</div>
 
-					<!--游戏列表-->
-					<div class="container-fluid">
-
-						<!--游戏1信息-->
-						<div v-on:click="gameDetails" class="row" style="cursor:pointer;margin-bottom: 20px;background-color: white;">
-							<div class="col-md-3">
-								<img src="../img/exm6.jpg" style="width: 180px;height: 136px;" />
-							</div>
-							<div class="col-md-7">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-
-						<!--游戏2信息-->
-						<div v-on:click="gameDetails" class="row" style="cursor:pointer;margin-bottom: 20px;background-color: white;">
-							<div class="col-md-3">
-								<img src="../img/exm6.jpg" style="width: 180px;height: 136px;" />
-							</div>
-							<div class="col-md-7">
-								<div style="padding-bottom: 20px;">
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-
-						<!--游戏3信息-->
-						<div v-on:click="gameDetails" class="row" style="cursor:pointer;margin-bottom: 20px;background-color: white;">
-							<div class="col-md-3">
-								<img src="../img/exm6.jpg" style="width: 180px;height: 136px;" />
-							</div>
-							<div class="col-md-7">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a :herf="gameType" style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
+						<!--跳转页-->
+						<div class="col-md-6" style="margin: 25px 0;">
+							到第<input type="text" v-model="specifiedPage"
+								style="width: 40px; height: 20px;" />页 <input type="button"
+								class="btn-confirm" value="确定" />
 						</div>
 					</div>
-
-					<!--分页与跳转页-->
-					<div>
-						<div class="row">
-
-							<!--分頁-->
-							<div class="col-md-6">
-								<ul class="pagination">
-									<li>
-										<a href="#" class="disabled">&laquo;</a>
-									</li>
-									<li class="active">
-										<a :href="pageUrl1">1</a>
-									</li>
-									<li class="">
-										<a :href="pageUrl1">2</a>
-									</li>
-									<li>
-										<a :href="pageUrl1">3</a>
-									</li>
-									<li>
-										<a :href="pageUrl1">4</a>
-									</li>
-									<li>
-										<a :href="pageUrl1">5</a>
-									</li>
-									<li>
-										<a href="#">&raquo;</a>
-									</li>
-								</ul>
-							</div>
-
-							<!--跳转页-->
-							<div class="col-md-6" style="margin: 25px 0;">
-								到第<input type="text" v-model="specifiedPage" style="width:40px; height:20px;" />页
-								<input type="button" v-on:click="skip" class="btn-confirm" value="确定" />
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!--游戏标签-->
-				<div class="col-md-4">
-					<div class="row" style="background-color: white;">
-						<table class="table">
-							<tr>
-								<th>
-									<h4 style="margin-top: 30px;">分类</h4></th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">体育</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">动作</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">益智</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">FPS</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">策略</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">网游</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">装扮</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">休闲</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">双人</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">单机</label></div>
-								</th>
-							</tr>
-						</table>
-					</div>
-					<br />
-					<div class="row">
-						<table class="table" style="background-color: white;">
-							<tr>
-								<th>
-									<h4 style="margin-top: 30px;">热门属性</h4>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持多人联机</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持控制器</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持模组</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持WG成就</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持云存档</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">支持退款</label></div>
-								</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">含内购项</label></div>
-								</th>
-								<th>
-									<div class="checkbox btn btn-sm"><label><input type="checkbox">WG专属汉化</label></div>
-								</th>
-							</tr>
-						</table>
-					</div>
-
 				</div>
 			</div>
-			
-			<script type="text/javascript" src="../vue/vue.min.js"></script>
-			<script type="text/javascript" src="../js/etc.js"></script>
-	</body>
+
+			<!--游戏标签-->
+			<div class="col-md-4">
+				<div class="row" style="background-color: white;">
+					<table class="table">
+						<tr>
+							<th>
+								<h4 style="margin-top: 30px;">分类</h4>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">体育</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">动作</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">益智</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">FPS</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">策略</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">网游</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">装扮</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">休闲</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">双人</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">单机</label>
+								</div>
+							</th>
+						</tr>
+					</table>
+				</div>
+				<br />
+				<div class="row">
+					<table class="table" style="background-color: white;">
+						<tr>
+							<th>
+								<h4 style="margin-top: 30px;">热门属性</h4>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持多人联机</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持控制器</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持模组</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持WG成就</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持云存档</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">支持退款</label>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">含内购项</label>
+								</div>
+							</th>
+							<th>
+								<div class="checkbox btn btn-sm">
+									<label><input type="checkbox">WG专属汉化</label>
+								</div>
+							</th>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../vue/vue.min.js"></script>
+		<script type="text/javascript" src="../js/etc.js"></script>
+</body>
 </html>

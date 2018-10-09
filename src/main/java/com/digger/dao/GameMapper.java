@@ -39,4 +39,6 @@ public interface GameMapper {
 
 	List<CarouseVO> searchGamewByname(String name);
 
+	int toGetTotalGame();
+
 }

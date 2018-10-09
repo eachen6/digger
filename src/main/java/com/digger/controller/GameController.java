@@ -15,6 +15,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,6 +124,17 @@ public class GameController {
 	}
 	
 	/**
+     * 获取所有游戲总数
+     * @return
+     */
+	@RequestMapping(value = "get_total_game", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse totalGame()
+	{
+		return gameService.toGetTotalGame();
+	}
+	
+	/**
      * 获取特惠游戲集合
      * @return
      */
@@ -161,9 +173,9 @@ public class GameController {
 	 * 获取游戏详情
 	 * @return
 	 */
-	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@RequestMapping(value = "detail{gameid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetGameDetail(int gameid)
+	public ServerResponse toGetGameDetail(@PathVariable(value="gameid")int gameid)
 	{
 		return gameService.toGetDetail(gameid);
 	}

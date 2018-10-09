@@ -139,4 +139,15 @@ public class GameServiceImpl implements GameService{
 		list = gameMapper.searchGamewByname(name);
 		return ServerResponse.createBySuccess(list);
 	}
+
+	/* 
+	 * 获取游戏总数
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetTotalGame() {
+		// TODO Auto-generated method stub
+		int count = gameMapper.toGetTotalGame();
+		return ServerResponse.createBySuccess(count);
+	}
 }
