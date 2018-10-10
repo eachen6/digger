@@ -126,3 +126,55 @@ div .thumbnail:hover{
 	background-color: white;
     margin-left:70%; 
 }
+
+.dingwei{
+	position:absolute;
+	z-index:9;
+	left:69%;
+	top:0%;
+	width:31%;
+	height:100%;
+}
+
+.gamename{
+	text-align:center;
+	padding-top:15%;
+	font-size:2em;
+	color:#FFFFFF;
+}
+
+.shelftime{
+	text-align:center;
+	color:#C5CDD3;
+	padding-top:5%;
+	font-size:1em;
+}
+
+.gameprice{
+	text-align:center;
+	overflow:hidden;
+	padding-top:7%;
+}
+
+.originalprice{
+	font-size:1.5em;
+	text-decoration:line-through;
+	color:#858585;
+}
+
+.price{
+	font-size:1.5em;
+	color:#FFFFFF;
+}
+
+.discount{
+	font-size:2em;
+	color:#FF6732;
+}
+
+.go{
+	padding-top:7%;
+	text-align:center;
+	font-size:1.2em;
+	color:#FF6732;
+}
