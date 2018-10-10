@@ -156,7 +156,12 @@ div .thumbnail:hover{
 	padding-top:7%;
 }
 
-.originalprice{
+.originalprice1{
+	font-size:1.5em;
+	color:#FFFFFF;
+}
+
+.originalprice2{
 	font-size:1.5em;
 	text-decoration:line-through;
 	color:#858585;

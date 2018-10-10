@@ -146,3 +146,29 @@ $('#search_input1').click(function(){
     });
 
 })
+
+//轮播图渲染
+new Vue({
+	el:"#myCarousel",
+	data:{
+		games: []
+	},
+	methods: {},
+	created: function(){
+		console.log("99999999999");
+		var that = this;
+		$.ajax({
+			url: "../game/get_notice_carouse",
+			type:'POST',
+			contentType:"application/json; charset=utf-8",
+			success:function(res){
+				console.log(res);
+				if(res.status==0)
+				{
+					that.games = res.data;
+					console.log(that.games[0].name);
+				}
+			}
+		})  
+	}
+})

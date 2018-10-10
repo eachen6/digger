@@ -150,7 +150,7 @@ public class GameController {
 	 * 获取预告游戏轮播图集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeCarouse()
 	{
