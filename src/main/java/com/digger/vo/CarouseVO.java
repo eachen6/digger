@@ -9,9 +9,9 @@ public class CarouseVO {
 	private String name;
 	private String price;
 	private String discount;
-	private Date shelftime;
+	private String shelftime;
 	private String coverurl;
-	private Date deadline;
+	private String deadline;
 	private String category;
 	private String discountstate;
 	public int getId() {
@@ -44,23 +44,11 @@ public class CarouseVO {
 	public void setDiscount(String discount) {
 		this.discount = discount;
 	}
-	public Date getShelftime() {
-		return shelftime;
-	}
-	public void setShelftime(Date shelftime) {
-		this.shelftime = shelftime;
-	}
 	public String getCoverurl() {
 		return coverurl;
 	}
 	public void setCoverurl(String coverurl) {
 		this.coverurl = coverurl;
-	}
-	public Date getDeadline() {
-		return deadline;
-	}
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
 	}
 	public String getCategory() {
 		return category;
@@ -73,6 +61,18 @@ public class CarouseVO {
 	}
 	public void setDiscountstate(String discountstate) {
 		this.discountstate = discountstate;
+	}
+	public String getShelftime() {
+		return shelftime;
+	}
+	public void setShelftime(String shelftime) {
+		this.shelftime = shelftime;
+	}
+	public String getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 
 }

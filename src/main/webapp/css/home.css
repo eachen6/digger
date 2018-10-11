@@ -19,7 +19,7 @@
     text-align: center;
     width: 25%;
     padding-top: 10px;
-    font-size: 20px;
+    font-size: 1.2em;
     font-weight: 600;
 }
  
@@ -73,8 +73,13 @@
 
 .div-text{
 	width:100%; 
-	height: 100px; 
+	height: 85px; 
 	text-align: center;
+}
+
+.div-text1{
+	width:100%; 
+	height: 120px; 
 }
 
 .h3-margin{
@@ -126,3 +131,100 @@ div .thumbnail:hover{
 	background-color: white;
     margin-left:70%; 
 }
+
+.dingwei{
+	position:absolute;
+	z-index:9;
+	left:69%;
+	top:0%;
+	width:31%;
+	height:100%;
+}
+
+.gamename{
+	text-align:center;
+	padding-top:15%;
+	font-size:2em;
+	color:#FFFFFF;
+}
+
+.shelftime{
+	text-align:center;
+	color:#C5CDD3;
+	padding-top:5%;
+	font-size:1em;
+}
+
+.gameprice{
+	text-align:center;
+	overflow:hidden;
+	padding-top:7%;
+}
+
+.originalprice1{
+	font-size:1.5em;
+	color:#FFFFFF;
+}
+
+.originalprice2{
+	font-size:1.5em;
+	text-decoration:line-through;
+	color:#858585;
+}
+
+.price{
+	font-size:1.5em;
+	color:#FFFFFF;
+}
+
+.discount{
+	font-size:2em;
+	color:#FF6732;
+}
+
+.go{
+	padding-top:7%;
+	text-align:center;
+	font-size:1.2em;
+	color:#FF6732;
+}
+
+.gamenoticeorig{
+	font-size:1.2em;
+	text-decoration:line-through;
+	color:#858585;
+}
+
+.gamenoticeprice{
+	font-size:1.5em;
+	color:#FF6732;
+}
+
+.gamenoticeorig1{
+	font-size:1.2em;
+	text-decoration:line-through;
+	color:#858585;
+}
+
+.gamenoticeprice1{
+	font-size:1.2em;
+	color:#FF6732;
+}
+.gamenoticeodc{
+	font-size:2em;
+	color:#FF6732;
+	float:right;
+	font-weight:600;
+	 /* font-style:oblique; */
+	  font-style:italic;
+}
+
+h4{
+	font-weight:600;
+}
+
+.hr1{
+	height:1px;
+	border:none;
+	border-top:0.5px solid #EEEEEE;
+}  
