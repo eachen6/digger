@@ -27,7 +27,7 @@ public interface GameMapper {
 
 	List<Game> toGetTotalGameList();
 
-	List<Game> toGetDiscountGameList();
+	List<CarouseVO> toGetDiscountGameList();
 
 	List<CarouseVO> toGetNoticeCarouse();
 

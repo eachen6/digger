@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="../bootstrap/js/jquery-1.9.1.min.js"></script>
+<body>
+
+<div id="myCarousel1">
+				<div v-for="n in sum" class="item">
+					<div class="row">
+						<br>
+			           <ul >
+                          <li v-for="(game,index) in games" v-if="(n-1)*4<=index&&n*4>index">{{game.shelftime}}</li>
+                       </ul>
+                    </div>
+              </div>
+              </div>
+
+    <script src="../vue/vue.min.js"></script>
+	 <script src="../js/home.js"></script>
+</body>
+</html>

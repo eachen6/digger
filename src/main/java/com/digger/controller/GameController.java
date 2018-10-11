@@ -138,7 +138,7 @@ public class GameController {
      * 获取特惠游戲集合
      * @return
      */
-	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse discountGameList()
 	{
@@ -161,7 +161,7 @@ public class GameController {
 	 * 获取预告游戏集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeGameList()
 	{

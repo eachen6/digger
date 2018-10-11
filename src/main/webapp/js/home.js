@@ -155,10 +155,35 @@ new Vue({
 	},
 	methods: {},
 	created: function(){
-		console.log("99999999999");
 		var that = this;
 		$.ajax({
 			url: "../game/get_notice_carouse",
+			type:'POST',
+			contentType:"application/json; charset=utf-8",
+			success:function(res){
+				//console.log(res);
+				if(res.status==0)
+				{
+					that.games = res.data;
+					//console.log(that.games[0].name);
+				}
+			}
+		})  
+	}
+})
+
+//热点预告渲染
+new Vue({
+	el:"#gamenotice",
+	data:{
+		games: [],
+		sum:""
+	},
+	methods: {},
+	created: function(){
+		var that = this;
+		$.ajax({
+			url: "../game/get_notice_gamelist",
 			type:'POST',
 			contentType:"application/json; charset=utf-8",
 			success:function(res){
@@ -166,7 +191,47 @@ new Vue({
 				if(res.status==0)
 				{
 					that.games = res.data;
-					console.log(that.games[0].name);
+					var s = res.data.length;
+					if(s%4==0) 
+						s = s/4;
+					else
+						s = parseInt(s/4) + 1;
+					that.sum = s;
+					console.log(that.sum);
+				}
+			}
+		})  
+	}
+})
+
+
+//限时特惠渲染
+new Vue({
+	el:"#myCarousel3",
+	data:{
+		games: [],
+		sum:""
+	},
+	methods: {},
+	created: function(){
+		console.log("9999999999666666666666669");
+		var that = this;
+		$.ajax({
+			url: "../game/get_discount_gamelist",
+			type:'POST',
+			contentType:"application/json; charset=utf-8",
+			success:function(res){
+				console.log(res);
+				if(res.status==0)
+				{
+					that.games = res.data;
+					var s = res.data.length;
+					if(s%3==0) 
+						s = s/3;
+					else
+						s = parseInt(s/3) + 1;
+					that.sum = s;
+					console.log(that.sum);
 				}
 			}
 		})  

@@ -78,7 +78,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse toGetDiscountGameList() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
 		gamelist = gameMapper.toGetDiscountGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
