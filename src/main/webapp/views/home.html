@@ -54,7 +54,7 @@
 	                <!-- 轮播（Carousel）项目 -->
 	                <div class="carousel-inner">
 	                <div v-for="(game, index) in games" class="item" :class="{'active':!index}">
-	                    <a :href="'../game/search_game_byname?id='+game.id">
+	                    <a :href="'main.html?location=details&id='+game.id">
 	                        <img :src="game.carouseurl" style="width:100%; height: 300px;" alt="First slide">
 	                        <div class="dingwei">
 	                            <div class="gamename">
@@ -132,7 +132,7 @@
 			       <div class="carousel-inner">
 				      <div v-for="n in sum" class="item" :class="{'active':!(n-1)}">
 						      <div class="col-md-3" v-for="(game,index) in games" v-if="(n-1)*4<=index&&n*4>index">
-						      	<a href="#" style="text-decoration: none;">
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
 							        <img style="width:100%; height: 300px;" :src="game.coverurl" />
 							        <div class="caption div-text">
@@ -182,15 +182,15 @@
 				        <template v-for="(game,index) in games" v-if="(n-1)*3<=index&&n*3>index">
 				          <template v-if="(n-1)*3==index">
 						      <div class="col-md-6">
-						      	<a href="#" style="text-decoration: none;">
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
 							        <img style="width:100%; height: 300px;" :src="game.coverurl"/>
+							        <span class="gamenoticeodc"><br>{{game.discount}}折</span >
 							        <div class="caption div-text1">
 							        <h4>{{game.name}}</h4>
 							        <span class="gamenoticeprice1">￥{{game.price*game.discount*0.1}}</span >
                                     <span class="gamenoticeorig1">￥{{game.price}}</span >
-                                    <span class="gamenoticeodc">{{game.discount}}折</span >
-                                    <p>截止到 {{game.deadline}}</p>
+                                    <div class="deadline1">截止到 {{game.deadline}}</div>
                                    </div>
 							     </div>
 							    </a>
@@ -198,7 +198,7 @@
 						   </template>
 						   <template v-else>
 						      <div class="col-md-3" >
-						      	<a href="#" style="text-decoration: none;">
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
 							        <img style="width:100%; height: 300px;" :src="game.coverurl"/>
 							        <span class="gamenoticeodc"><br>{{game.discount}}折</span>
@@ -206,8 +206,7 @@
                                        <h4>{{game.name}}</h4>
                                        <span class="gamenoticeprice1">￥{{game.price*game.discount*0.1}}</span >                                     
                                        <span class="gamenoticeorig1">￥{{game.price}}</span>
-                                       <hr class="hr1" /> 
-                                       <div>截止到 {{game.deadline}}</div>
+                                       <div class="deadline">截止到 {{game.deadline}}</div>
                                    </div>
 							     </div>
 							    </a>
@@ -234,10 +233,10 @@
         	         <div class="col-md-6">
         	         	 <div class="btn-toolbar" role="toolbar">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default">火爆新品</button>
-                                <button type="button" class="btn btn-default">本周热门</button>
-                                <button type="button" class="btn btn-default">最新上架</button>
-                                <button type="button" class="btn btn-default">折扣促销</button>
+                                <button id="btn1" type="button" class="gameactive btn btn-default">火爆新品</button>
+                                <button id="btn2" type="button" class="btn btn-default">本周热门</button>
+                                <button id="btn3" type="button" class="btn btn-default">最新上架</button>
+                                <button id="btn4" type="button" class="btn btn-default">折扣促销</button>
                             </div>
                        </div>
         	         </div>

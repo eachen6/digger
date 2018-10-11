@@ -13,7 +13,7 @@ public interface GameService {
 
 	ServerResponse toGetHotSaleGameList();
 
-	ServerResponse toGetTotalGameList();
+	ServerResponse toGetHotnewGameList();
 
 	ServerResponse toGetDiscountGameList();
 

@@ -113,14 +113,14 @@ public class GameController {
 	}
 	
 	/**
-     * 获取所有游戲集合
+     * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_total_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.GET)
 	@ResponseBody
 	public ServerResponse totalGameList()
 	{
-		return gameService.toGetTotalGameList();
+		return gameService.toGetHotnewGameList();
 	}
 	
 	/**
