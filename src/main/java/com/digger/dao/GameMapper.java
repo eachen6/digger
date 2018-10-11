@@ -41,4 +41,24 @@ public interface GameMapper {
 
 	int toGetTotalGame();
 
+	List<Game> unauditedGamelistByName(String name);
+
+	List<Game> notOnTheShelfGamelistByName(String name);
+
+	List<Game> onTheShelfGamelistByName(String name);
+
+	List<Game> pullOffShelvesGamelistByName(String name);
+
+	List<Game> unauditedGamelist();
+
+	List<Game> notOnTheShelfGamelist();
+
+	List<Game> onTheShelfGamelist();
+
+	List<Game> pullOffShelvesGamelist();
+
+	int onTheShelfGame(Integer id);
+
+	int pullOffShelvesGame(Integer id);
+
 }

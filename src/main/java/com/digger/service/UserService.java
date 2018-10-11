@@ -29,4 +29,19 @@ public interface UserService {
 	public ServerResponse<User> getUserInfo(int userId);
 
 	public List<User> getAllUser();
+
+	public ServerResponse getTotalUserList();
+
+	public ServerResponse updateStateById(Integer id, Integer state);
+
+	public ServerResponse deleteUserById(Integer id);
+
+	public ServerResponse selectUserByUsername(String username);
+
+	public ServerResponse sortById();
+
+	public ServerResponse sortByState();
+
+	public ServerResponse updatePassword(String username, String passwordOld, String passwordNew,
+			String passwordRepeat);
 }

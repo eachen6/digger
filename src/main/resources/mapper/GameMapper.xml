@@ -464,4 +464,74 @@
       where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state > 0
       order by sale desc 
   </select>
+  
+  <!-- 新增方法：根据游戏名查找待审核的游戏列表  -->
+  <select id="unauditedGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 0
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 1
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 2
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 3
+  </select>
+  
+  <!-- 新增方法：查找待审核的游戏列表  -->
+  <select id="unauditedGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 0
+  </select>
+  
+  <!-- 新增方法：查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 1
+  </select>
+  
+  <!-- 新增方法：查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 2
+  </select>
+  
+  <!-- 新增方法：查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 3
+  </select>
+  
+  <!-- 新增方法：根据id上架游戏  -->
+  <update id="onTheShelfGame" parameterType="Integer">
+    update game
+    set state = 2
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增方法：根据id下架游戏  -->
+  <update id="pullOffShelvesGame" parameterType="Integer">
+    update game
+    set state = 3
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>
