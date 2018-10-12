@@ -29,10 +29,6 @@ public interface UserService {
 	public ServerResponse<User> getUserInfo(int userId);
 
 	public List<User> getAllUser();
-<<<<<<< HEAD
-	
-	public String selectNameByID(Integer id);
-=======
 
 	public ServerResponse getTotalUserList();
 
@@ -48,5 +44,6 @@ public interface UserService {
 
 	public ServerResponse updatePassword(String username, String passwordOld, String passwordNew,
 			String passwordRepeat);
->>>>>>> 370c307efe23db3507e7bfa02d7df3644caeabd2
+	
+	public String selectNameByID(Integer id);
 }
