@@ -61,14 +61,14 @@ public class GameServiceImpl implements GameService{
 	}
 
 	/* 
-	 * 获取所有游戏集合
+	 * 获取所有游戏<火爆新品>集合
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse toGetTotalGameList() {
+	public ServerResponse toGetHotnewGameList() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
-		gamelist = gameMapper.toGetTotalGameList();
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetHotnewGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
 

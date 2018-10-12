@@ -44,4 +44,11 @@
     from friend
     where userid = #{id,jdbcType=INTEGER}
   </select>
+  
+   <select id="selectByUserId" parameterType="java.lang.Integer" >
+    select friendint
+    from friend
+    where userid = #{id,jdbcType=INTEGER} and state = 1
+  </select>
+  
 </mapper>

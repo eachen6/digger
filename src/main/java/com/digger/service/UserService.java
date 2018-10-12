@@ -44,4 +44,6 @@ public interface UserService {
 
 	public ServerResponse updatePassword(String username, String passwordOld, String passwordNew,
 			String passwordRepeat);
+	
+	public String selectNameByID(Integer id);
 }

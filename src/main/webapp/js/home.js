@@ -214,6 +214,35 @@ new Vue({
 	},
 	methods: {},
 	created: function(){
+		var that = this;
+		$.ajax({
+			url: "../game/get_discount_gamelist",
+			type:'POST',
+			contentType:"application/json; charset=utf-8",
+			success:function(res){
+				if(res.status==0)
+				{
+					that.games = res.data;
+					var s = res.data.length;
+					if(s%3==0) 
+						s = s/3;
+					else
+						s = parseInt(s/3) + 1;
+					that.sum = s;
+				}
+			}
+		})  
+	}
+})
+
+//更多游戏<火爆新品>渲染
+new Vue({
+	el:"#pp",
+	data:{
+		games: []
+	},
+	methods: {},
+	created: function(){
 		console.log("9999999999666666666666669");
 		var that = this;
 		$.ajax({
@@ -237,3 +266,32 @@ new Vue({
 		})  
 	}
 })
+
+//按钮切换active效果
+$("#btn1").click(function(){
+	$("#btn1").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+  });
+
+$("#btn2").click(function(){
+	$("#btn2").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+  });
+
+$("#btn3").click(function(){
+	$("#btn3").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+  });
+
+$("#btn4").click(function(){
+	$("#btn4").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+  });

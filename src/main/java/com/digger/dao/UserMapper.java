@@ -52,7 +52,7 @@ public interface UserMapper {
 
 	List<User> sortByState();
 
-	
+	String selectNameByID(Integer id);
 
     
     

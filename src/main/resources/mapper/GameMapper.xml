@@ -412,8 +412,8 @@
     from game
   </select>
   
-  <!-- 新增方法：獲取所有游戲-->
-  <select id="toGetTotalGameList" resultType="com.digger.pojo.Game">
+  <!-- 新增方法：获取所有游戏<火爆新品>集合-->
+  <select id="toGetHotnewGameList" resultType="com.digger.vo.CarouseVO">
     select * from game
   </select>
   
@@ -427,8 +427,8 @@
     select game.id, name, price, coverurl, DATE_FORMAT(deadline,'%Y-%m-%d') deadline, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where discountstate = 1
-    order by deadline desc
+    where discountstate = 1 and state = 1
+    order by deadline
   </select>
   
    <!-- 新增方法：获取游戏预告轮播集合-->
@@ -436,6 +436,7 @@
     select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc limit 0,3
   </select>
   
@@ -444,6 +445,7 @@
    select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc 
   </select>
   
@@ -456,7 +458,7 @@
   <select id="searchGamewByword" resultType="com.digger.pojo.Game">
       select id, name
       from game
-      where name LIKE "%"#{keyword}"%" and state > 0
+      where name LIKE "%"#{keyword}"%" and state = 1
       order by sale desc limit 0, 5
   </select>
   
@@ -465,7 +467,7 @@
       select  game.id, name, price, coverurl, shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
-      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state > 0
+      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 1
       order by sale desc 
   </select>
   

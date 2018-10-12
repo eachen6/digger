@@ -14,6 +14,7 @@ public class CarouseVO {
 	private String deadline;
 	private String category;
 	private String discountstate;
+	private String surfaceurl;
 	public int getId() {
 		return id;
 	}
@@ -73,6 +74,12 @@ public class CarouseVO {
 	}
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
+	}
+	public String getSurfaceurl() {
+		return surfaceurl;
+	}
+	public void setSurfaceurl(String surfaceurl) {
+		this.surfaceurl = surfaceurl;
 	}
 
 }

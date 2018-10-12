@@ -416,4 +416,9 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public String selectNameByID(Integer id) {
+		return userMapper.selectNameByID(id);
+	}
+
 }

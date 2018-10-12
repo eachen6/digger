@@ -25,7 +25,7 @@ public interface GameMapper {
 
 	List<GamelistVO> toGetHotSaleGameList();
 
-	List<Game> toGetTotalGameList();
+	List<CarouseVO> toGetHotnewGameList();
 
 	List<CarouseVO> toGetDiscountGameList();
 
