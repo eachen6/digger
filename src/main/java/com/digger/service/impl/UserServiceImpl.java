@@ -295,11 +295,128 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
-	 * @author eachen
+	 * @author 徐子颖
+	 * 获取用户列表
+	 * @return
+	 */
+	@Override
+	public ServerResponse getTotalUserList() {
+		// TODO Auto-generated method stub
+		List<User> list = new ArrayList<User>();
+		list = userMapper.getTotalUserList();
+		return ServerResponse.createBySuccess(list);
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 修改用户封禁状态
+	 * @param id
+	 * @param state
+	 * @return
+	 */
+	@Override
+	public ServerResponse updateStateById(Integer id,Integer state) {
+		// TODO Auto-generated method stub
+		int updateCount = userMapper.updateStateById(id,state);
+		if(updateCount>0){
+			return ServerResponse.createBySuccess("修改用户状态成功");
+		}
+		return ServerResponse.createByErrorMessage("修改用户状态失败");
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 删除用户
 	 * @param id
 	 * @return
-	 * 根据id返回用户名
 	 */
+	@Override
+	public ServerResponse deleteUserById(Integer id) {
+		// TODO Auto-generated method stub
+		int deleteCount = userMapper.deleteByPrimaryKey(id);
+		if(deleteCount>0){
+			return ServerResponse.createBySuccess("删除用户成功");
+		}
+		return ServerResponse.createByErrorMessage("删除用户失败");
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 管理员根据用户名搜索用户
+	 * @param username
+	 * @return
+	 */
+	@Override
+	public ServerResponse selectUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		User user = new User();
+		user = userMapper.selectUserByUsername(username);
+		return ServerResponse.createBySuccess("查找成功",user);
+
+		
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 根据id排序
+	 * @return
+	 */
+	@Override
+	public ServerResponse sortById() {
+		// TODO Auto-generated method stub
+		List<User> list = new ArrayList<User>();
+		list = userMapper.sortById();
+		return ServerResponse.createBySuccess("排序成功",list);
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 根据状态排序
+	 * @return
+	 */
+	@Override
+	public ServerResponse sortByState() {
+		// TODO Auto-generated method stub
+		List<User> list = new ArrayList<User>();
+		list = userMapper.sortByState();
+		return ServerResponse.createBySuccess("排序成功",list);
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 修改密码
+	 * @param passwordOld
+	 * @param passwordNew
+	 * @param passwordRepeat
+	 * @return
+	 */
+	@Override
+	public ServerResponse updatePassword(String username, String passwordOld, String passwordNew,String passwordRepeat) {
+		// TODO Auto-generated method stub
+		if(passwordNew.equals(passwordRepeat)){
+		String forgetToken = UUID.randomUUID().toString();
+		TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
+		String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
+		if (org.apache.commons.lang3.StringUtils.isBlank(token)) {
+			return ServerResponse.createByErrorMessage("token无效或者过期");
+		}
+		if (org.apache.commons.lang3.StringUtils.equals(forgetToken, token)) {
+			String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
+				int rowCount = userMapper.updatePasswordByUsername(username, md5Password);
+				if (rowCount > 0) {
+					return ServerResponse.createBySuccessMessage("根据用户名修改密码成功");
+				}
+		} else {
+			return ServerResponse.createByErrorMessage("token错误,请重新获取重置密码的token");
+		}
+		return ServerResponse.createByErrorMessage("修改密码失败");
+		}
+		else{
+			return ServerResponse.createByErrorMessage("密码不一致");
+		}
+	}
+
+	@Override
 	public String selectNameByID(Integer id) {
 		return userMapper.selectNameByID(id);
 	}

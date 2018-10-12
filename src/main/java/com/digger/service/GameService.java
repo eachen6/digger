@@ -13,7 +13,7 @@ public interface GameService {
 
 	ServerResponse toGetHotSaleGameList();
 
-	ServerResponse toGetTotalGameList();
+	ServerResponse toGetHotnewGameList();
 
 	ServerResponse toGetDiscountGameList();
 
@@ -28,5 +28,26 @@ public interface GameService {
 	ServerResponse searchGameByname(String name);
 
 	ServerResponse toGetTotalGame();
+
+	ServerResponse unauditedGamelistByName(String name);
+
+	ServerResponse notOnTheShelfGamelistByName(String name);
+
+	ServerResponse onTheShelfGamelistByName(String name);
+
+	ServerResponse pullOffShelvesGamelistByName(String name);
+
+	ServerResponse unauditedGamelist();
+
+	ServerResponse notOnTheShelfGamelist();
+
+	ServerResponse onTheShelfGamelist();
+
+	ServerResponse pullOffShelvesGamelist();
+
+	ServerResponse onThesShelfGame(Integer id);
+
+	ServerResponse pullOffShelvesGame(Integer id);
+
 	
 }

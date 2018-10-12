@@ -11,9 +11,10 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="role" jdbcType="TINYINT" property="role" />
+    <result column="state" jdbcType="TINYINT" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, email, question, answer, createtime, updatetime, role
+    id, username, password, email, question, answer, createtime, updatetime, role,state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,11 +29,11 @@
   <insert id="insert" parameterType="com.digger.pojo.User">
     insert into user (id, username, password, 
       email, question, answer, 
-      createtime, updatetime, role
+      createtime, updatetime, role, state
       )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
-      now(), now(), #{role,jdbcType=TINYINT}
+      now(), now(), #{role,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.User">
@@ -65,6 +66,9 @@
       <if test="role != null">
         role,
       </if>
+      <if test="state != null">
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -93,6 +97,9 @@
       </if>
       <if test="role != null">
         #{role,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -128,6 +135,7 @@
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = now(),
       role = #{role,jdbcType=TINYINT}
+      state = #{state,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -211,10 +219,41 @@
     from user
   </select>
   
-  <!-- 新增方法，根据id返回对应的用户名 -->
-  <select id="selectNameByID"  parameterType="Integer"  resultType="String">
-  	select username
-  	from user where id = #{id}
+  <!-- 新增方法:管理员获取所有用户信息-->
+  <select id="getTotalUserList" resultType="com.digger.pojo.User">
+    select *
+    from user
+  </select>
+  
+  <!-- 新增方法:修改用户封禁状态-->
+  <update id="updateStateById" parameterType="Integer">
+    update user
+    set state = #{state}
+    where id = #{id}
+  </update>
+  
+  <!-- 新增方法:管理员根据用户名查找用户-->
+  <select id="selectUserByUsername" resultType="com.digger.pojo.User" parameterType="String">
+    select
+    *
+    from user
+    where username = #{username}
+  </select>
+  
+  <!-- 新增方法:根据id排序-->
+  <select id="sortById" resultType="com.digger.pojo.User" >
+    select
+    *
+    from user
+    order by id
+  </select>
+  
+  <!-- 新增方法:根据状态排序-->
+  <select id="sortByState" resultType="com.digger.pojo.User" >
+    select
+    *
+    from user
+    order by state
   </select>
   
 </mapper>

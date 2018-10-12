@@ -412,8 +412,8 @@
     from game
   </select>
   
-  <!-- 新增方法：獲取所有游戲-->
-  <select id="toGetTotalGameList" resultType="com.digger.pojo.Game">
+  <!-- 新增方法：获取所有游戏<火爆新品>集合-->
+  <select id="toGetHotnewGameList" resultType="com.digger.vo.CarouseVO">
     select * from game
   </select>
   
@@ -422,24 +422,30 @@
     select count(id) from game
   </select>
   
-  <!-- 新增方法：獲取所有游戲-->
-  <select id="toGetDiscountGameList" resultType="com.digger.pojo.Game">
-    select * from game where discountstate = 1
+  <!-- 新增方法：获取特惠游戲集合-->
+  <select id="toGetDiscountGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, coverurl, DATE_FORMAT(deadline,'%Y-%m-%d') deadline, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where discountstate = 1 and state = 1
+    order by deadline
   </select>
   
    <!-- 新增方法：获取游戏预告轮播集合-->
   <select id="toGetNoticeCarouse" resultType="com.digger.vo.CarouseVO">
-    select game.id, name, price, carouseurl, shelftime, discount, discountstate
+    select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc limit 0,3
   </select>
   
    <!-- 新增方法：获取预告游戏集合-->
   <select id="toGetNoticeGameList" resultType="com.digger.vo.CarouseVO">
-   select game.id, name, price, carouseurl, shelftime, discount, discountstate
+   select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc 
   </select>
   
@@ -452,7 +458,7 @@
   <select id="searchGamewByword" resultType="com.digger.pojo.Game">
       select id, name
       from game
-      where name LIKE "%"#{keyword}"%" and state > 0
+      where name LIKE "%"#{keyword}"%" and state = 1
       order by sale desc limit 0, 5
   </select>
   
@@ -461,7 +467,77 @@
       select  game.id, name, price, coverurl, shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
-      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state > 0
+      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 1
       order by sale desc 
   </select>
+  
+  <!-- 新增方法：根据游戏名查找待审核的游戏列表  -->
+  <select id="unauditedGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 0
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 1
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 2
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 3
+  </select>
+  
+  <!-- 新增方法：查找待审核的游戏列表  -->
+  <select id="unauditedGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 0
+  </select>
+  
+  <!-- 新增方法：查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 1
+  </select>
+  
+  <!-- 新增方法：查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 2
+  </select>
+  
+  <!-- 新增方法：查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 3
+  </select>
+  
+  <!-- 新增方法：根据id上架游戏  -->
+  <update id="onTheShelfGame" parameterType="Integer">
+    update game
+    set state = 2
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增方法：根据id下架游戏  -->
+  <update id="pullOffShelvesGame" parameterType="Integer">
+    update game
+    set state = 3
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

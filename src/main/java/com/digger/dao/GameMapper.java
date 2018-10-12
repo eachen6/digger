@@ -25,9 +25,9 @@ public interface GameMapper {
 
 	List<GamelistVO> toGetHotSaleGameList();
 
-	List<Game> toGetTotalGameList();
+	List<CarouseVO> toGetHotnewGameList();
 
-	List<Game> toGetDiscountGameList();
+	List<CarouseVO> toGetDiscountGameList();
 
 	List<CarouseVO> toGetNoticeCarouse();
 
@@ -40,5 +40,25 @@ public interface GameMapper {
 	List<CarouseVO> searchGamewByname(String name);
 
 	int toGetTotalGame();
+
+	List<Game> unauditedGamelistByName(String name);
+
+	List<Game> notOnTheShelfGamelistByName(String name);
+
+	List<Game> onTheShelfGamelistByName(String name);
+
+	List<Game> pullOffShelvesGamelistByName(String name);
+
+	List<Game> unauditedGamelist();
+
+	List<Game> notOnTheShelfGamelist();
+
+	List<Game> onTheShelfGamelist();
+
+	List<Game> pullOffShelvesGamelist();
+
+	int onTheShelfGame(Integer id);
+
+	int pullOffShelvesGame(Integer id);
 
 }

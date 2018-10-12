@@ -113,14 +113,14 @@ public class GameController {
 	}
 	
 	/**
-     * 获取所有游戲集合
+     * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_total_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.GET)
 	@ResponseBody
 	public ServerResponse totalGameList()
 	{
-		return gameService.toGetTotalGameList();
+		return gameService.toGetHotnewGameList();
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class GameController {
      * 获取特惠游戲集合
      * @return
      */
-	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse discountGameList()
 	{
@@ -150,7 +150,7 @@ public class GameController {
 	 * 获取预告游戏轮播图集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeCarouse()
 	{
@@ -161,7 +161,7 @@ public class GameController {
 	 * 获取预告游戏集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeGameList()
 	{
