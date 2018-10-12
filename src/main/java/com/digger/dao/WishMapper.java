@@ -1,6 +1,11 @@
 package com.digger.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.digger.pojo.Wish;
+import com.digger.vo.WishVO;
 
 public interface WishMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +21,10 @@ public interface WishMapper {
     int updateByPrimaryKey(Wish record);
 
     Integer selectByGameid(Integer gameid);
+
+	int delete(@Param("gameid")Integer gameid, @Param("userid")Integer userid);
+
+	Integer select(@Param("gameid")Integer gameid, @Param("userid")Integer userid);
+
+	List<WishVO> toGetMyselfWishGame(Integer userid);
 }

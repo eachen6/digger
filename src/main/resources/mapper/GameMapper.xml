@@ -538,4 +538,11 @@
     set state = 3
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 新增方法：根据id查找封面图  -->
+  <select id="findCoverimg" resultType="String">
+      select  
+      coverurl
+      from game where id = #{gameid}
+  </select>
 </mapper>

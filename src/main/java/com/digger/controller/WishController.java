@@ -21,7 +21,7 @@ public class WishController {
 	WishService wishService;
 	
 	/**
-     * 获取游戏是否加入清单
+     * 获取该游戏是否被当前用户加入愿望清单
      * @return
      */
 	@RequestMapping(value = "get_wishgame", method = RequestMethod.GET)
@@ -29,10 +29,65 @@ public class WishController {
 	public ServerResponse toGetWishGame(Integer gameid,HttpSession session) 
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		//0为加入愿望清单，1为未加入愿望清单
 		if(user == null){
-			return ServerResponse.createBySuccess(1);
+			return ServerResponse.createByErrorMessage("用户未登录");
 		}
-		return wishService.toGetWishGame(gameid);
+		return wishService.toGetWishGame(gameid,user.getId());
+	}
+	
+	/**
+     * 将游戏添加到愿望清单
+     * @return
+     */
+	@RequestMapping(value = "add_wishgame", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toAddWishGame(Integer gameid,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return wishService.toAddWishGame(gameid,user.getId());
+	}
+	
+	/**
+     * 根据游戏id和用户id将游戏从愿望清单删除
+     * @return
+     */
+	@RequestMapping(value = "delete_wishgame", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toDeleteWishGame(Integer gameid,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return wishService.toDeleteWishGame(gameid,user.getId());
+	}
+	
+	/**
+     * 查看自己的愿望清单
+     * @return
+     */
+	@RequestMapping(value = "get_myself_wishgame", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetMyselfWishGame(HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return wishService.toGetMyselfWishGame(user.getId());
+	}
+	
+	/**
+     * 查看好友的愿望清单
+     * @return
+     */
+	@RequestMapping(value = "get_friend_wishgame", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetFriendWishGame(Integer userid) 
+	{
+		return wishService.toGetFriendWishGame(userid);
 	}
 }

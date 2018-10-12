@@ -61,4 +61,6 @@ public interface GameMapper {
 
 	int pullOffShelvesGame(Integer id);
 
+	String findCoverimg(Integer gameid);
+
 }
