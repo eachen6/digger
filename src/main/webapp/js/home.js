@@ -237,16 +237,27 @@ new Vue({
 
 //更多游戏<火爆新品>渲染
 new Vue({
-	el:"#pp",
+	el:"#rank",
 	data:{
 		games: []
 	},
-	methods: {},
+	methods: {
+		details:function(id){
+			window.location.href="main.html?location=details&id="+id;
+			console.log("ddddd");
+		},
+		search:function(cg,ev){
+			window.location.href="main.html?location=etc&cg="+cg;
+			var oEvent = ev || event;
+            console.log("ffffffffff");
+            oEvent.cancelBubble = true; 
+			
+		}
+	},
 	created: function(){
-		console.log("9999999999666666666666669");
 		var that = this;
 		$.ajax({
-			url: "../game/get_discount_gamelist",
+			url: "../game/get_hotnew_gamelist",
 			type:'POST',
 			contentType:"application/json; charset=utf-8",
 			success:function(res){
@@ -254,13 +265,37 @@ new Vue({
 				if(res.status==0)
 				{
 					that.games = res.data;
-					var s = res.data.length;
-					if(s%3==0) 
-						s = s/3;
-					else
-						s = parseInt(s/3) + 1;
-					that.sum = s;
-					console.log(that.sum);
+					for(var i = 0; i < that.games.length; i++)
+					{
+						that.games[i].category = that.games[i].category.split(",");
+					}
+				}
+			}
+		})  
+	}
+})
+
+//标签渲染
+new Vue({
+	el:"#gamecategory",
+	data:{
+		categorys: []
+	},
+	methods: {
+		clickcategory:function(cg){
+			window.location.href="main.html?location=etc&cg="+cg;
+		}
+	},
+	created: function(){
+		var that = this;
+		$.ajax({
+			url: "../category/search_alllabel",
+			type:'POST',
+			contentType:"application/json; charset=utf-8",
+			success:function(res){
+				if(res.status==0)
+				{
+					that.categorys = res.data;
 				}
 			}
 		})  

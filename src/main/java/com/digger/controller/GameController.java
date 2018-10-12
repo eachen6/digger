@@ -116,7 +116,7 @@ public class GameController {
      * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse totalGameList()
 	{
@@ -215,4 +215,5 @@ public class GameController {
 		System.out.println(name+"kkkkkkkkkkk");
 		return gameService.searchGameByname(name);
 	}
+	
 }

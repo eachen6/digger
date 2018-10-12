@@ -223,7 +223,6 @@
     		    </div>
         	</div>
         
-        
         <div class="row" style="margin:32px;">
         	<div class="col-md-8">
         	     <div class="row">
@@ -241,84 +240,21 @@
                        </div>
         	         </div>
         	     </div> 
-        	     <div class="col-md-12">
+        	     <div id="rank" class="col-md-12">
         	     <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
+						<div v-for="game in games" id="gamediv" class="row" @click="details(game.id)" style="cursor: pointer; margin-top: 20px;">
 							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
+								<img :src="game.surfaceurl" style="width: 190px;height: 130px;" />
 							</div>
 							<div class="col-md-7" style="padding-left:30px ;">
 								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
+									<h3 style="color:black;">{{game.name}}</h3>
+									<p style="color:black;">{{game.shelftime}}上线</p>
+									<div style="padding-bottom: 15px; color:black;">
+										<button v-for="cg in game.category" class="btn btn-sm" @click="search(cg)">{{cg}}</button>
+										<!-- <a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
 										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
+										<a style="color:black"><button class="btn btn-sm">大型网游</button></a> -->
 									</div>
 								</div>
 							</div>
@@ -354,32 +290,9 @@
                     </form>
         		</div>
         		<div class="div-margin1">按标签查找</div>
-        		<div class="div-margin2">
-        		<button class="btn btn-xs" style="margin: 6px; " >
-							篮球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							大型游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							免费
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							足球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							FPS
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							角色扮演
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							格斗游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							动漫风格
+        		<div id="gamecategory" class="div-margin2">
+        		<button v-for="category in categorys" class="btn btn-xs" @click="clickcategory(category.name)" style="margin: 6px; " >
+							{{category.name}}
 				</button>
 				</div>
         	</div>

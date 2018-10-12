@@ -2,6 +2,7 @@ package com.digger.dao;
 
 import java.util.List;
 
+import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;

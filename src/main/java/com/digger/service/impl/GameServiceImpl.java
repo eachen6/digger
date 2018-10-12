@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
+import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.GameService;
