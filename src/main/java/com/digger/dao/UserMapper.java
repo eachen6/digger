@@ -42,7 +42,7 @@ public interface UserMapper {
 
 	List<User> getAllUser();
 
-	
+	String selectNameByID(Integer id);
 
     
     

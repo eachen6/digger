@@ -293,5 +293,15 @@ public class UserServiceImpl implements UserService {
 		list = userMapper.getAllUser();
 		return list;
 	}
+	
+	/**
+	 * @author eachen
+	 * @param id
+	 * @return
+	 * 根据id返回用户名
+	 */
+	public String selectNameByID(Integer id) {
+		return userMapper.selectNameByID(id);
+	}
 
 }

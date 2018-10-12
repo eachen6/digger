@@ -211,4 +211,10 @@
     from user
   </select>
   
+  <!-- 新增方法，根据id返回对应的用户名 -->
+  <select id="selectNameByID"  parameterType="Integer"  resultType="String">
+  	select username
+  	from user where id = #{id}
+  </select>
+  
 </mapper>

@@ -29,4 +29,6 @@ public interface UserService {
 	public ServerResponse<User> getUserInfo(int userId);
 
 	public List<User> getAllUser();
+	
+	public String selectNameByID(Integer id);
 }
