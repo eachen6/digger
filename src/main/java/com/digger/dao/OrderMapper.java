@@ -1,5 +1,7 @@
 package com.digger.dao;
 
+import java.util.List;
+
 import com.digger.pojo.Order;
 
 public interface OrderMapper {
@@ -14,4 +16,6 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+	List<Order> toGetOrder(Integer userid);
 }

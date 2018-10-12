@@ -1,9 +1,11 @@
 package com.digger.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,22 @@ public class OrderServiceImpl implements OrderService{
 		}
 		
 		return ServerResponse.createByErrorMessage("订单生成失败");
+	}
+
+	/* 
+	 * 查看订单
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetOrder(Integer userid) {
+		// TODO Auto-generated method stub
+		List<Order> list = new ArrayList<Order>();
+		list = orderMapper.toGetOrder(userid);
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createByErrorMessage("查看订单失败");
+		}
+		return ServerResponse.createBySuccess("查看订单成功", list);
+		
 	}
 	
 }
