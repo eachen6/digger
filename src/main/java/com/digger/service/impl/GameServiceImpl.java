@@ -66,11 +66,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse toGetHotnewGameList() {
+	public List<CarouseVO> toGetHotnewGameList() {
 		// TODO Auto-generated method stub
 		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
 		gamelist = gameMapper.toGetHotnewGameList();
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 

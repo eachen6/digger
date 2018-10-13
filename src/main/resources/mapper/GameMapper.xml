@@ -399,9 +399,10 @@
   
   <!-- 新增方法：獲取熱銷輪播圖-->
   <select id="toGetHotSaleCarouse" resultType="com.digger.vo.CarouseVO">
-    select
-    id,name,carouseurl,price
-    from game
+    select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1
     order by sale desc limit 0,3
   </select>
   
@@ -418,7 +419,7 @@
     from game left join discountlist 
     on game.id=discountlist.gameid
     where state = 1
-    order by shelftime desc limit 0,10
+    order by shelftime desc 
   </select>
   
   <!-- 新增方法：獲取游戲总数-->

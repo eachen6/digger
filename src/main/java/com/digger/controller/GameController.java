@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.digger.service.GameService;
 import com.digger.utils.FTPSSMLoad;
 import com.digger.utils.UploadUtil;
+import com.digger.vo.CarouseVO;
 import com.digger.vo.GameVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -94,7 +97,7 @@ public class GameController {
      * 获取热销轮播图
      * @return
      */
-	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse hotSaleCarouse()
 	{
@@ -116,11 +119,18 @@ public class GameController {
      * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.POST)
+	@RequestMapping(value = "get_hotnew_gamelist/{pn}", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse totalGameList()
+	public ServerResponse totalGameList(@PathVariable(value="pn") int pn)
 	{
-		return gameService.toGetHotnewGameList();
+		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
+        PageHelper.startPage(pn, 2);
+        //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
+        List<CarouseVO> list = gameService.toGetHotnewGameList();
+        System.out.println(list);
+        //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
+        PageInfo page = new PageInfo(list,5);
+        return ServerResponse.createBySuccess(page);
 	}
 	
 	/**

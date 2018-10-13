@@ -1,9 +1,12 @@
 package com.digger.service;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.digger.common.ServerResponse;
 import com.digger.pojo.Game;
+import com.digger.vo.CarouseVO;
 
 public interface GameService {
 
@@ -13,7 +16,7 @@ public interface GameService {
 
 	ServerResponse toGetHotSaleGameList();
 
-	ServerResponse toGetHotnewGameList();
+	List<CarouseVO> toGetHotnewGameList();
 
 	ServerResponse toGetDiscountGameList();
 
