@@ -1,3 +1,4 @@
+var select = 1; //判断选择的按钮
 /*轮播图界面*/
 new Vue({
 	el: '#myCarousel',
@@ -139,36 +140,6 @@ $("#next-btn").click(function() {
 	$("#myCarousel").carousel('next');
 });
 
-//按钮切换active效果
-$("#btn1").click(function(){
-	$("#btn1").css({"background-color":"#474747" ,"color":"#FFFFFF"});
-	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-  });
-
-$("#btn2").click(function(){
-	$("#btn2").css({"background-color":"#474747" ,"color":"#FFFFFF"});
-	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-  });
-
-$("#btn3").click(function(){
-	$("#btn3").css({"background-color":"#474747" ,"color":"#FFFFFF"});
-	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-  });
-
-$("#btn4").click(function(){
-	$("#btn4").css({"background-color":"#474747" ,"color":"#FFFFFF"});
-	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
-  });
-
-
 
 //标签渲染
 new Vue({
@@ -199,7 +170,7 @@ new Vue({
 })
 
 //更多游戏<火爆新品>渲染
-var hotnew = new Vue({
+var moregame = new Vue({
 	el:"#rank",
 	data:{
 		games: [],
@@ -227,43 +198,182 @@ var hotnew = new Vue({
             oEvent.cancelBubble = true; 	
 		},
 		change:function(pn){
-			queryajax(pn);
+			//alert(select);
+			if(select == 1)
+				newhot(pn);
+			else if(select == 2)
+				weekhot(pn);
+			else if(select == 3)
+				newput(pn);
+			else if(select == 4)
+				discount(pn);
 		}
 	},
-	created: function(){
-		queryajax(1);
+	created: function(pn){
+		newhot(1);
 	}
 })
 
-function queryajax(pn){
-	//alert("444");
+//<火爆新品>
+function newhot(pn){
 	$.ajax({
 		url: "../game/get_hotnew_gamelist/"+pn,
 		type:'POST',
 		contentType:"application/json; charset=utf-8",
 		success:function(res){
 			console.log(res);
-			
 			if(res.status==0)
 			{
-				hotnew.games = res.data.list;
-				for(var i = 0; i < hotnew.games.length; i++)
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
 				{
-					hotnew.games[i].category = hotnew.games[i].category.split(",");
+					moregame.games[i].category = moregame.games[i].category.split(",");
 				}	
-				hotnew.pageNum = res.data.pageNum;
-				hotnew.total = res.data.total;				
-				hotnew.pages = res.data.pages;
-				hotnew.prePage = res.data.prePage;
-				hotnew.nextPage = res.data.nextPage;
-				hotnew.isFirstPage = res.data.isFirstPage;
-				hotnew.isLastPage = res.data.isLastPage;				
-				hotnew.hasPreviousPage = res.data.hasPreviousPage;			
-				hotnew.hasNextPage = res.data.hasNextPage;
-				hotnew.navigatePages = res.data.navigatePages;
-				hotnew.navigatepageNums = res.data.navigatepageNums;
+				moregame.pageNum = res.data.pageNum;
+				moregame.total = res.data.total;				
+				moregame.pages = res.data.pages;
+				moregame.prePage = res.data.prePage;
+				moregame.nextPage = res.data.nextPage;
+				moregame.isFirstPage = res.data.isFirstPage;
+				moregame.isLastPage = res.data.isLastPage;				
+				moregame.hasPreviousPage = res.data.hasPreviousPage;			
+				moregame.hasNextPage = res.data.hasNextPage;
+				moregame.navigatePages = res.data.navigatePages;
+				moregame.navigatepageNums = res.data.navigatepageNums;
 			}
 		}
 	})  
 }
+
+//<本周热门>
+function weekhot(pn){
+	alert("gggg");
+	$.ajax({
+		url: "../game/get_weekhot_gamelist/"+pn,
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+					moregame.pageNum = res.data.pageNum;
+					moregame.total = res.data.total;				
+					moregame.pages = res.data.pages;
+					moregame.prePage = res.data.prePage;
+					moregame.nextPage = res.data.nextPage;
+					moregame.isFirstPage = res.data.isFirstPage;
+					moregame.isLastPage = res.data.isLastPage;				
+					moregame.hasPreviousPage = res.data.hasPreviousPage;			
+					moregame.hasNextPage = res.data.hasNextPage;
+					moregame.navigatePages = res.data.navigatePages;
+					moregame.navigatepageNums = res.data.navigatepageNums;
+				}
+			}
+		}
+	})  
+}
+
+//<最新上架>
+function newput(pn){
+	$.ajax({
+		url: "../game/get_newput_gamelist/"+pn,
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+					moregame.pageNum = res.data.pageNum;
+					moregame.total = res.data.total;				
+					moregame.pages = res.data.pages;
+					moregame.prePage = res.data.prePage;
+					moregame.nextPage = res.data.nextPage;
+					moregame.isFirstPage = res.data.isFirstPage;
+					moregame.isLastPage = res.data.isLastPage;				
+					moregame.hasPreviousPage = res.data.hasPreviousPage;			
+					moregame.hasNextPage = res.data.hasNextPage;
+					moregame.navigatePages = res.data.navigatePages;
+					moregame.navigatepageNums = res.data.navigatepageNums;
+				}
+			}
+		}
+	})  
+}
+
+//<折扣促销>
+function discount(pn){
+	$.ajax({
+		url: "../game/get_discount_gamelist/"+pn,
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+					moregame.pageNum = res.data.pageNum;
+					moregame.total = res.data.total;				
+					moregame.pages = res.data.pages;
+					moregame.prePage = res.data.prePage;
+					moregame.nextPage = res.data.nextPage;
+					moregame.isFirstPage = res.data.isFirstPage;
+					moregame.isLastPage = res.data.isLastPage;				
+					moregame.hasPreviousPage = res.data.hasPreviousPage;			
+					moregame.hasNextPage = res.data.hasNextPage;
+					moregame.navigatePages = res.data.navigatePages;
+					moregame.navigatepageNums = res.data.navigatepageNums;
+				}
+			}
+		}
+	})  
+}
+
+
+//按钮切换active效果
+$("#btn1").click(function(){
+	select = 1;
+	$("#btn1").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	moregame.change(1);
+  });
+
+$("#btn2").click(function(){
+	select = 2;
+	$("#btn2").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	moregame.change(1);
+  });
+
+$("#btn3").click(function(){
+	select = 3;
+	$("#btn3").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn4").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	moregame.change(1);
+  });
+
+$("#btn4").click(function(){
+	select = 4;
+	$("#btn4").css({"background-color":"#474747" ,"color":"#FFFFFF"});
+	$("#btn2").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn3").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	$("#btn1").css({"background-color":"#FFFFFF" ,"color":"#3C3C3C"});
+	moregame.change(1);
+  });
 

@@ -62,18 +62,6 @@ public class GameServiceImpl implements GameService{
 	}
 
 	/* 
-	 * 获取所有游戏<火爆新品>集合
-	 * @author 徐子颖
-	 */
-	@Override
-	public List<CarouseVO> toGetHotnewGameList() {
-		// TODO Auto-generated method stub
-		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
-		gamelist = gameMapper.toGetHotnewGameList();
-		return gamelist;
-	}
-
-	/* 
 	 * 获取特惠游戏集合
 	 * @author 徐子颖
 	 */
@@ -300,6 +288,52 @@ public class GameServiceImpl implements GameService{
 			return ServerResponse.createBySuccessMessage("下架成功");
 		}
 		return ServerResponse.createByErrorMessage("下架失败");
+	}
+	
+	/* 
+	 * 获取所有游戏<火爆新品>集合
+	 * @author 徐子颖
+	 */
+	@Override
+	public List<CarouseVO> toGetHotnewGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetHotnewGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<本周热门>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetWeekhotGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetWeekhotGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<最新上架>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetNewputGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetNewputGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<折扣促销>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetMydiscountGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetMydiscountGameList();
+		return gamelist;
 	}
 
 }

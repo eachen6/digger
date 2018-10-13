@@ -1,3 +1,4 @@
+
 $(function() {
 				// 循环轮播到上一个项目
 				$("#prev-btn").click(function() {
@@ -235,8 +236,8 @@ new Vue({
 	}
 })
 
-//更多游戏<火爆新品>渲染
-new Vue({
+//更多游戏渲染
+var moregame = new Vue({
 	el:"#rank",
 	data:{
 		games: []
@@ -249,31 +250,106 @@ new Vue({
 		search:function(cg,ev){
 			window.location.href="main.html?location=etc&cg="+cg;
 			var oEvent = ev || event;
-            console.log("ffffffffff");
-            oEvent.cancelBubble = true; 
-			
+            //console.log("ffffffffff");
+            oEvent.cancelBubble = true; 	
+		},
+		hotnew:function(){
+			newhot();
+		},
+		weekhot:function(){
+			weekhot();
+		},
+		newput:function(){
+			newput();
+		},
+		discount:function(){
+			discount();
 		}
 	},
 	created: function(){
-		var that = this;
-		$.ajax({
-			url: "../game/get_hotnew_gamelist",
-			type:'POST',
-			contentType:"application/json; charset=utf-8",
-			success:function(res){
-				console.log(res);
-				if(res.status==0)
-				{
-					that.games = res.data;
-					for(var i = 0; i < that.games.length; i++)
-					{
-						that.games[i].category = that.games[i].category.split(",");
-					}
-				}
-			}
-		})  
+		newhot();
 	}
 })
+
+//<火爆新品>
+function newhot(){
+	$.ajax({
+		url: "../game/get_hotnew_gamelist/1",
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+				}
+			}
+		}
+	})  
+}
+
+//<本周热门>
+function weekhot(){
+	$.ajax({
+		url: "../game/get_weekhot_gamelist/1",
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+				}
+			}
+		}
+	})  
+}
+
+//<最新上架>
+function newput(){
+	$.ajax({
+		url: "../game/get_newput_gamelist/1",
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+				}
+			}
+		}
+	})  
+}
+
+//<折扣促销>
+function discount(){
+	$.ajax({
+		url: "../game/get_discount_gamelist/1",
+		type:'POST',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+				}
+			}
+		}
+	})  
+}
 
 //标签渲染
 new Vue({

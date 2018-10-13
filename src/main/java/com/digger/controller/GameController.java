@@ -121,15 +121,63 @@ public class GameController {
      */
 	@RequestMapping(value = "get_hotnew_gamelist/{pn}", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse totalGameList(@PathVariable(value="pn") int pn)
+	public ServerResponse hotnewGameList(@PathVariable(value="pn") int pn)
 	{
 		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
-        PageHelper.startPage(pn, 2);
+        PageHelper.startPage(pn, Const.gamecount);
         //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
         List<CarouseVO> list = gameService.toGetHotnewGameList();
-        System.out.println(list);
+        System.out.println("1");
         //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
-        PageInfo page = new PageInfo(list,5);
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<本周热门>集合
+     * @return
+     */
+	@RequestMapping(value = "get_weekhot_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse weekhotGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetWeekhotGameList();
+        System.out.println("2");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<最新上架>集合
+     * @return
+     */
+	@RequestMapping(value = "get_newput_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse newputGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetNewputGameList();
+        System.out.println("3");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<折扣促销>集合
+     * @return
+     */
+	@RequestMapping(value = "get_discount_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse mydiscountGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetMydiscountGameList();
+        System.out.println("4");
+        PageInfo page = new PageInfo(list,Const.pagecount);
         return ServerResponse.createBySuccess(page);
 	}
 	

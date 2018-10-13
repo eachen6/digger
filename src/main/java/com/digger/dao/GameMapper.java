@@ -64,4 +64,10 @@ public interface GameMapper {
 
 	String findCoverimg(Integer gameid);
 
+	List<CarouseVO> toGetWeekhotGameList();
+
+	List<CarouseVO> toGetNewputGameList();
+
+	List<CarouseVO> toGetMydiscountGameList();
+
 }

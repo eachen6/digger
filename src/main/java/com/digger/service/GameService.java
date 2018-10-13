@@ -16,8 +16,6 @@ public interface GameService {
 
 	ServerResponse toGetHotSaleGameList();
 
-	List<CarouseVO> toGetHotnewGameList();
-
 	ServerResponse toGetDiscountGameList();
 
 	ServerResponse toGetDetail(int id);
@@ -51,6 +49,14 @@ public interface GameService {
 	ServerResponse onThesShelfGame(Integer id);
 
 	ServerResponse pullOffShelvesGame(Integer id);
+	
+	List<CarouseVO> toGetHotnewGameList();
+
+	List<CarouseVO> toGetWeekhotGameList();
+
+	List<CarouseVO> toGetMydiscountGameList();
+
+	List<CarouseVO> toGetNewputGameList();
 
 	
 }
