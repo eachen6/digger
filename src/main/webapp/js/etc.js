@@ -1,4 +1,27 @@
 var select = 1; //判断选择的按钮
+var searchvalue = "" //保存搜索关键词
+	
+	/*
+	 * 取路径参数
+	 */
+	function getUrlParam(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return decodeURI(r[2]); return null; 
+	}
+
+	$(document).ready(function(){
+		/*
+		 * 跳转
+		 */
+		$(function(){
+			var name=getUrlParam('name');
+			if(name!=null)
+			   searchgame(name,1);
+		})
+		
+		})
+	
 /*轮播图界面*/
 new Vue({
 	el: '#myCarousel',
@@ -80,6 +103,7 @@ new Vue({
 //	}
 //})
 
+//搜索框提示渲染
 var search = new Vue({
 	el: "#search_form",
 	data: {
@@ -89,13 +113,20 @@ var search = new Vue({
 	methods: {
 		change: function(e) {
 			search_change(this.search_value);
-		}
+		},
+	    searchgame:function(name){
+	    	searchgame(name,1);
+	    },
+	    searchgame1:function(){
+	    	searchgame(this.search_value,1);
+	    }
 	},
 	created: function() {
 
 	}
 })
 
+//根据关键词自动跳出提示词
 function search_change(input_value) {
 	$.ajax({
 		url: "../game/search_game_byword",
@@ -111,6 +142,41 @@ function search_change(input_value) {
 		}
 	})
 }
+
+//根据关键词进行搜索
+function searchgame(name,pn){
+	searchvalue = name;
+	select = 5;
+	$.ajax({
+		url: "../game/search_game_byname/"+name+"/"+pn,
+		type: 'GET',
+		contentType: "application/json; charset=utf-8",
+		success: function(res) {
+			if(res.status == 0) {
+				moregame.games = res.data.list;
+				for(var i = 0; i < moregame.games.length; i++)
+				{
+					moregame.games[i].category = moregame.games[i].category.split(",");
+				}	
+				moregame.pageNum = res.data.pageNum;
+				moregame.total = res.data.total;				
+				moregame.pages = res.data.pages;
+				moregame.prePage = res.data.prePage;
+				moregame.nextPage = res.data.nextPage;
+				moregame.isFirstPage = res.data.isFirstPage;
+				moregame.isLastPage = res.data.isLastPage;				
+				moregame.hasPreviousPage = res.data.hasPreviousPage;			
+				moregame.hasNextPage = res.data.hasNextPage;
+				moregame.navigatePages = res.data.navigatePages;
+				moregame.navigatepageNums = res.data.navigatepageNums;
+				$("#rankbtn").hide();
+				$("#mypp").text("搜索    "+name+" 共"+moregame.total+"款");
+				$('body,html').animate({scrollTop: $('#mypp').offset().top}, 500);
+			}
+		}
+	})
+}
+
 
 $(document).ready(function() {
 	//搜索提示框
@@ -148,8 +214,9 @@ new Vue({
 		categorys: []
 	},
 	methods: {
-		clickcategory:function(cg){
-			window.location.href="main.html?location=etc&cg="+cg;
+		searchgame:function(name){
+			searchgame(name,1);
+			$('body,html').animate({scrollTop: $('#mypp').offset().top}, 500);
 		}
 	},
 	created: function(){
@@ -192,7 +259,8 @@ var moregame = new Vue({
 			console.log("ddddd");
 		},
 		search:function(cg,ev){
-			window.location.href="main.html?location=etc&cg="+cg;
+			//searchgame(cg,pn)
+			window.location.href="main.html?location=etc&name="+cg;
 			var oEvent = ev || event;
             console.log("ffffffffff");
             oEvent.cancelBubble = true; 	
@@ -207,6 +275,8 @@ var moregame = new Vue({
 				newput(pn);
 			else if(select == 4)
 				discount(pn);
+			else if(select == 5)
+				searchgame(searchvalue,pn)
 		}
 	},
 	created: function(pn){
@@ -247,7 +317,6 @@ function newhot(pn){
 
 //<本周热门>
 function weekhot(pn){
-	alert("gggg");
 	$.ajax({
 		url: "../game/get_weekhot_gamelist/"+pn,
 		type:'POST',

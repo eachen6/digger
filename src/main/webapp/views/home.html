@@ -19,7 +19,8 @@
                <li class="active"><a href="main.html?location=home">精选</a></li>
                <li><a id="toallgame" style="cursor: pointer;" href="main.html?location=etc">所有游戏</a></li>
             </ul>
-            <form class="navbar-form navbar-right" action="../game/search_game_byname" style="margin-right: auto;" role="search" id="search_form">
+            <form class="navbar-form navbar-right" action="main.html" style="margin-right: auto;" role="search" id="search_form">
+            <input type="hidden" name="location" value="etc">
                  <div class="form-group">
                      <input type="text" name="name" class="form-control" id="search_input" autocomplete="off" v-model="search_value" v-on:input="change"  placeholder="Search">
                  </div>
@@ -27,7 +28,7 @@
                   <!--搜索提示框-->
                   <div class="list-group" id="search_suggest">
                      <template v-if="game!=''">
-                       <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                       <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                      </template>
                   </div>
             </form>
@@ -264,7 +265,7 @@
 						</div>
 						<!--更多游戏推荐-->
 						<div class="row" style="background-color: #E2E2E2; margin-top: 20px;">
-							<a href="#" style="text-decoration: none; color: #333333;">
+							<a href="main.html?location=etc" style="text-decoration: none; color: #333333;">
 							<div style="text-align: center; margin: 7px;">
 								更多游戏推荐 >
 							</div>
@@ -276,7 +277,8 @@
         	<div class="row div-label" >
         	  
         		<div class="div-margin">
-        			<form class="navbar-form" role="search" id="search_form1" action="../game/search_game_byname">
+        			<form class="navbar-form" role="search" id="search_form1" action="main.html">
+        			    <input type="hidden" name="location" value="etc">
 	                    <div class="form-group">
 		                   <input type="text" name="name" id="search_input1" autocomplete="off" v-model="search_value" v-on:input="change" class="form-control" placeholder="Search">
 	                    </div>
@@ -284,7 +286,7 @@
 	                    <!--搜索提示框-->
                         <div class="list-group" id="search_suggest1">
                            <template v-if="game!=''">
-                              <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                              <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                            </template>
                         </div>
                     </form>

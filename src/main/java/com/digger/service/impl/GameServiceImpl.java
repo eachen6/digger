@@ -124,10 +124,10 @@ public class GameServiceImpl implements GameService{
 	 * @author 高志劲
 	 */
 	@Override
-	public ServerResponse searchGameByname(String name) {
+	public List<CarouseVO> searchGameByname(String name) {
 		List<CarouseVO> list = new ArrayList<CarouseVO>();
 		list = gameMapper.searchGamewByname(name);
-		return ServerResponse.createBySuccess(list);
+		return list;
 	}
 
 	/* 

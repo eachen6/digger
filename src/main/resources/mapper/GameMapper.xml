@@ -496,7 +496,7 @@
   
    <!-- 新增方法：根据关键词提示  -->
   <select id="searchGamewByname" resultType="com.digger.vo.CarouseVO">
-      select  game.id, name, price, coverurl, shelftime, discount, discountstate,category
+      select  game.id, name, price, surfaceurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
       where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 1

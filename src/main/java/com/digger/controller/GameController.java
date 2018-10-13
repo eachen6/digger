@@ -257,21 +257,25 @@ public class GameController {
 	 * 根据关键词搜索游戏
 	 * @return
 	 */
-	@RequestMapping(value = "search_game_byname")
+	@RequestMapping(value = "search_game_byname/{name}/{pn}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
-		return gameService.searchGameByname(name);
+	public ServerResponse searchGameByname(@PathVariable(value="name") String name,@PathVariable(value="pn") int pn){
+		PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.searchGameByname(name);
+        System.out.println("5");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
 	}
 	
 	/**
 	 * 根据标签（即分类）搜索游戏
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "search_game_bycategory")
 	@ResponseBody
 	public ServerResponse searchGameBycategory(@RequestParam(value="name") String name){
 		System.out.println(name+"kkkkkkkkkkk");
 		return gameService.searchGameByname(name);
-	}
+	}*/
 	
 }

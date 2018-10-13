@@ -248,7 +248,7 @@ var moregame = new Vue({
 			console.log("ddddd");
 		},
 		search:function(cg,ev){
-			window.location.href="main.html?location=etc&cg="+cg;
+			window.location.href="main.html?location=etc&name="+cg;
 			var oEvent = ev || event;
             //console.log("ffffffffff");
             oEvent.cancelBubble = true; 	
@@ -359,7 +359,7 @@ new Vue({
 	},
 	methods: {
 		clickcategory:function(cg){
-			window.location.href="main.html?location=etc&cg="+cg;
+			window.location.href="main.html?location=etc&name="+cg;
 		}
 	},
 	created: function(){
