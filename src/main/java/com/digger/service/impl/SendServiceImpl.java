@@ -54,12 +54,8 @@ public class SendServiceImpl implements SendService {
 		if(resultCount>0){
 			
 			//获取游戏信息
-			List<Game> gamelist = new ArrayList<Game>();
-			gamelist = gameMapper.toGetDetail(gameid);
 			String coverimg = null;
-			for(Game list : gamelist){
-				coverimg = list.getCoverurl();
-			}
+			coverimg = gameMapper.findCoverimg(gameid);
 			Order order = new Order();
 			order.setGameid(gameid);
 			order.setUserid(id);

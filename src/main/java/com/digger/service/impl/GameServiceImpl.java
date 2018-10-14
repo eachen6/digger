@@ -16,6 +16,7 @@ import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GamedetailsVO;
 
 @Service("gameService")
 public class GameServiceImpl implements GameService{
@@ -102,7 +103,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse toGetDetail(int id) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GamedetailsVO> gamelist = new ArrayList<GamedetailsVO>();
 		gamelist = gameMapper.toGetDetail(id);
 		return ServerResponse.createBySuccess(gamelist);
 	}
