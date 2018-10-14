@@ -58,5 +58,7 @@ public interface GameService {
 
 	List<CarouseVO> toGetNewputGameList();
 
+	void addclick(int gameid);
+
 	
 }

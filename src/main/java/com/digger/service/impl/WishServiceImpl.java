@@ -32,7 +32,7 @@ public class WishServiceImpl implements WishService{
 	public ServerResponse toGetWishGame(Integer gameid, Integer userid) {
 		// TODO Auto-generated method stub
 		Integer resultCount = wishMapper.select(gameid,userid);
-		if(resultCount!=null){
+		if(resultCount > 0){
             return ServerResponse.createBySuccessMessage("愿望清单存在该游戏！");
         }
         return ServerResponse.createByErrorMessage("愿望清单不存在该游戏！");

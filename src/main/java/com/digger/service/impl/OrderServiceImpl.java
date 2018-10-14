@@ -97,5 +97,20 @@ public class OrderServiceImpl implements OrderService{
         }
         return ServerResponse.createByErrorMessage("删除失败！");
 	}
+
+	/* 
+	 * 查询该游戏是否已被用户购买
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse isBuy_Order(int gameid,int userid) {
+		Integer resultCount = 0;
+		resultCount = orderMapper.isBuy_Order(gameid,userid);
+		System.out.println(resultCount+"yyyyyyyyyyyyyy");
+		if(resultCount > 0){
+            return ServerResponse.createBySuccessMessage("您已购买该游戏！");
+        }
+        return ServerResponse.createByErrorMessage("您未购买该游戏！");
+	}
 	
 }

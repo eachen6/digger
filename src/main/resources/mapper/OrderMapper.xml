@@ -181,4 +181,12 @@
     from `order` as a,game as b
     where userid = #{userid} and a.gameid = b.id
   </select>
+  
+  <!-- 新增方法：查看订单-->
+  <select id="isBuy_Order" parameterType="java.lang.Integer" resultType="Integer">
+    select count(a.id)
+    from `order` as a, send as b
+    where (a.userid = #{userid} and a.gameid = #{gameid}) 
+    or (a.gameid = #{gameid}) and a.ordernum=b.ordernum and b.targetid=#{userid})
+  </select>
 </mapper>

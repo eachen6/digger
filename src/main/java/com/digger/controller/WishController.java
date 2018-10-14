@@ -30,7 +30,7 @@ public class WishController {
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
+			return ServerResponse.createByErrorCodeMessage(1,"用户未登录"); //返回一个1代表用户未登陆
 		}
 		return wishService.toGetWishGame(gameid,user.getId());
 	}
@@ -45,7 +45,7 @@ public class WishController {
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
+			return ServerResponse.createByErrorCodeMessage(1,"用户未登录"); //返回一个1代表用户未登陆
 		}
 		return wishService.toAddWishGame(gameid,user.getId());
 	}
@@ -58,9 +58,9 @@ public class WishController {
 	@ResponseBody
 	public ServerResponse toDeleteWishGame(Integer gameid,HttpSession session) 
 	{
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		User user = (User) session.getAttribute(Const.CURRENT_USER); 
 		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
+			return ServerResponse.createByErrorCodeMessage(1,"用户未登录"); //返回一个1代表用户未登陆
 		}
 		return wishService.toDeleteWishGame(gameid,user.getId());
 	}

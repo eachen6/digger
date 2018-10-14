@@ -146,7 +146,8 @@
 								<button class="btn btn-default" id="btn_wish" @click="deleteFromWish" :data-id="iswish" v-model="iswish" v-if="iswish">GET（点击取消）</button>
 								<button class="btn btn-default" id="btn_wish" @click="addToWish" v-model="iswish" v-else>点击加入</button>
 								<button class="btn btn-default" data-toggle="modal" data-target="#sendModal">赠送</button>
-								<button class="btn btn-warning" style="margin-left: 10px;" data-toggle="modal" data-target="#myModal">立即购买</button>
+								<button class="btn btn-warning" style="margin-left: 10px;" data-toggle="modal" data-target="#myModal" v-if="!isbuy">立即购买</button>
+								<button class="btn btn-warning" style="margin-left: 10px;" v-else>您已购买</button>
 							</div>
 						</div>
 

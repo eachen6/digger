@@ -19,4 +19,6 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
 	List<OrderVO> toGetOrder(Integer userid);
+
+	Integer isBuy_Order(int gameid, int userid);
 }

@@ -337,4 +337,14 @@ public class GameServiceImpl implements GameService{
 		return gamelist;
 	}
 
+	/* 
+	 * 游戏点击量+1
+	 * @author 高志劲
+	 */
+	@Override
+	public void addclick(int gameid) {
+		int result = 0;
+		result = gameMapper.addclick(gameid);
+	}
+
 }
