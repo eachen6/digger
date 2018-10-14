@@ -34,6 +34,24 @@ function getOrderList(){
 
 function deleteTheOrder(id){
 	var that = this;
+	$.ajax({
+		type:"POST",
+		url:"../order/delete_order",
+		data:{
+			gameid:id
+		},
+		async:true,
+		success:function(res){
+			console.log(res)
+			if(res.status == 1)
+				alert(res.msg)
+				else if(res.status == 0)
+				{
+					alert(res.msg)
+				}
+				location.reload();
+		}
+	});
 	console.log("执行删除操作,id为",id)
 }
 
