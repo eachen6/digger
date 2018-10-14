@@ -27,16 +27,16 @@ public class OrderVO {
 
     private Long ordernum;
     
-    public String getGamename() {
-		return gamename;
+    private String name;
+    
+    public String getName() {
+		return name;
 	}
 
-	public void setGamename(String gamename) {
-		this.gamename = gamename;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	private String gamename;
-
+    
     public Integer getId() {
         return id;
     }
