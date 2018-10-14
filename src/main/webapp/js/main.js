@@ -20,7 +20,7 @@ $(document).ready(function(){
 		else if(name=="home"){
 			$("#frame").load("home.html");
 		}
-		else if(name=="community"){
+		else if(name=="details"){
 			$("#frame").load("details.html");
 		}
 		else if(name=="etc"){

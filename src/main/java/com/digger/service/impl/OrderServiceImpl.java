@@ -35,14 +35,9 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		
 		//获取游戏信息
-		List<Game> gamelist = new ArrayList<Game>();
-		gamelist = gameMapper.toGetDetail(gameid);
 		String coverimg = null;
+		coverimg = gameMapper.findCoverimg(gameid);
 		long orderNum = 0;
-		for(Game list : gamelist){
-			coverimg = list.getCoverurl();
-		}
-		
 		Order order = new Order();
 		order.setGameid(gameid);
 		order.setUserid(userid);
