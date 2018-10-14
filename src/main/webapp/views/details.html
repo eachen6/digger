@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
-		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
+		<!--<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />-->
 		<link rel="stylesheet" type="text/css" href="../css/details.css" />
 
 		<script type="text/javascript" src="../vue/vue.min.js"></script>
@@ -147,8 +147,8 @@
 							</div>
 
 							<div class="" style="margin-top: 50px;">
-								<button class="btn btn-default" id="btn_wish" :data-id="iswish" v-model="iswish" v-if="iswish">愿望清单&#10084</button>
-								<button class="btn btn-default" id="btn_wish" v-model="iswish" v-else>加入愿望清单</button>
+								<button class="btn btn-default" id="btn_wish" @click="deleteFromWish" :data-id="iswish" v-model="iswish" v-if="iswish">GET（点击取消）</button>
+								<button class="btn btn-default" id="btn_wish" @click="addToWish" v-model="iswish" v-else>点击加入</button>
 								<button class="btn btn-default" data-toggle="modal" data-target="#sendModal">赠送</button>
 								<button class="btn btn-warning" style="margin-left: 10px;" data-toggle="modal" data-target="#myModal">立即购买</button>
 							</div>

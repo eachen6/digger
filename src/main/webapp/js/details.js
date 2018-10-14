@@ -37,7 +37,20 @@ var game = new Vue({
 		},
 		selective:[
 		],
+		id:null,
 		contents:""
+	},
+	methods:{
+		addToWish:function(){
+			//增加到愿望清单
+			addToWish(this.id)
+			console.log("执行了添加到愿望清单功能")
+		},
+		deleteFromWish:function(){
+			//从愿望清单中删除
+			deleteFromWish(this.id)
+			console.log("执行了从愿望清单中取消的功能")
+		}
 	},
 	created: function(){
 		var that = this;
@@ -48,8 +61,81 @@ var game = new Vue({
 			success: function(res){
 				console.log(res.data)
 				that.contents = res.data[0]
+				that.id = res.data[0].id;
 				that.selective = that.contents.category.split(",");
 			}
 		});
+//		$.ajax({
+//			type:"get",
+//			url:"../wish/get_wishgame",
+//			data:{
+//				gameid:4
+//			},
+//			async:true,
+//			success: function(res){
+//				if(res.status == 1){
+//					this.iswish = false;
+//				}
+//				else if(res.status == 0)
+//				{
+//					this.iswish = true
+//				}
+//			}
+//		});
+		getWishState(4);
 	}
 })
+
+function getWishState(id){
+	$.ajax({
+			type:"get",
+			url:"../wish/get_wishgame",
+			data:{
+				gameid:4
+			},
+			async:true,
+			success: function(res){
+				if(res.status == 1){
+					game.iswish = false;
+				}
+				else if(res.status == 0)
+				{
+					game.iswish = true
+				}
+			}
+		});
+}
+
+function addToWish(id){
+	var that = this;
+	$.ajax({
+		type:"POST",
+		url:"../wish/add_wishgame",
+		data:{
+			gameid:id
+		},
+		async:true,
+		success:function(res){
+			console.log(res)
+			getWishState(id)
+		}
+	});
+}
+
+function deleteFromWish(id){
+	var that = this;
+	$.ajax({
+		type:"POST",
+		url:"../wish/delete_wishgame",
+		data:{
+			gameid:id
+		},
+		async:true,
+		success:function(res){
+			console.log(res)
+			getWishState(id)
+		}
+	});
+}
+
+

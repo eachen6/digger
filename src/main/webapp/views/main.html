@@ -49,8 +49,20 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" v-else>
-						<li>
+						<!--<li>
 							<a href="#" style="color: white;"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a>
+						</li>-->
+						<li class="dropdown">
+							<a class="dropdown-toggle" style="color: white;" data-toggle="dropdown" href="#">
+								<span class="glyphicon glyphicon-user"></span> {{user.username}}
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="main.html?location=order">我的订单</a></li>
+								<li><a href="#">愿望清单</a></li>
+								<li><a href="main.html?location=chat">聊天室</a></li>
+								<!--<li class="divider"></li>
+								<li><a href="#">分离的链接</a></li>-->
+							</ul>
 						</li>
 						<li>
 							<a href="#" style="color: white;" @click="logout()"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
@@ -140,7 +152,12 @@
 	</ul>
 
 		<script type="text/javascript" src="../js/main.js" ></script>
-
+		<script>
+			$(function(){
+				// 默认显示
+				$(".dropdown-toggle").dropdown('toggle');
+			}); 
+			</script>
 	</body>
 
 </html>

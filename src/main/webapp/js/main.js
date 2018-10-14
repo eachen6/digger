@@ -26,6 +26,12 @@ $(document).ready(function(){
 		else if(name=="etc"){
 			$("#frame").load("etc.html");
 		}
+		else if(name=="order"){
+			$("#frame").load("order.html");
+		}
+		else if(name=="chat"){
+			$("#frame").load("../socket/socketpage.html");
+		}
 		
 		$(".loading").fadeOut(500);
 	})
@@ -76,6 +82,7 @@ var main = new Vue({
 			url:"../user/get_userinfo",
 			async:true,
 			success: function(res){
+				if(res.status == 0)
 				that.user = res.data;
 			}
 		});
