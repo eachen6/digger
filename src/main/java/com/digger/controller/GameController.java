@@ -1,18 +1,25 @@
 package com.digger.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,43 +59,60 @@ public class GameController {
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
-			@RequestParam(value="name") String name,@RequestParam(value="category") String category,
-			 HttpServletRequest request) throws IllegalStateException, IOException{
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
-        }
+			HttpServletRequest request) throws IllegalStateException, IOException{
+		//User user = (User) session.getAttribute(Const.CURRENT_USER);
+		//if(user == null){
+       //    return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
+      //  }
 		
-		System.out.println(name);
-		
+		String name = null;
 		//增加游戏，包括上传视频、图片以及其他信息
 				if (files != null && files.length > 0) {
+					//获取视频文件名称
+					for(int j = 0; j < files.length; j++) {
+						String file_name=files[j].getOriginalFilename();
+						System.out.println(file_name);
+						String suffix = file_name.substring(file_name.lastIndexOf(".") + 1);
+						System.out.println(suffix);
+						if(suffix.equals("mp4")) {
+						name = file_name.substring(0, file_name.lastIndexOf(".mp4"));
+						}
+						else if(suffix.equals("rmvb")) {
+							name = file_name.substring(0, file_name.lastIndexOf(".rmvb"));
+						}
+						else if(suffix.equals("avi")) {
+							name = file_name.substring(0, file_name.lastIndexOf(".avi"));
+						}
+					}
+					System.out.println(name);
 		            //循环获取file数组中得文件
 					Map returnMap = new HashMap<>();
 		            for (int i = 0; i < files.length; i++) {
-		                MultipartFile file = files[i];       
-		                if(file.getOriginalFilename().endsWith("mp4")) {
-		                	Map fileMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-		                	//return ServerResponse.createBySuccess(fileMap);
-		                	returnMap.put("videourl", fileMap.get("http_url"));
-		                }
-		                else if(file.getOriginalFilename().endsWith("cover.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-		                	returnMap.put("coverurl", imgMap.get("http_url"));
-		                }else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-		                	returnMap.put("carouse", imgMap.get("http_url"));
-		                }else if(file.getOriginalFilename().endsWith("bg.jpg")) {
-		                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-		                	returnMap.put("bg", imgMap.get("http_url"));
-		                }
+		            	if(name!=null) {
+		            		 MultipartFile file = files[i];       
+				                if(file.getOriginalFilename().endsWith("mp4")) {
+				                	Map fileMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	//return ServerResponse.createBySuccess(fileMap);
+				                	returnMap.put("videourl", fileMap.get("http_url"));
+				                }
+				                else if(file.getOriginalFilename().endsWith("cover.jpg")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("coverurl", imgMap.get("http_url"));
+				                }else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("carouse", imgMap.get("http_url"));
+				                }else if(file.getOriginalFilename().endsWith("bg.jpg")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("bg", imgMap.get("http_url"));
+				                }
+		            	}
+		               
 		            }
 		            return ServerResponse.createBySuccess(returnMap);
 				}
 		
 		return ServerResponse.createByErrorMessage("上传失败");
 	}
-	
 	/**
      * 获取热销轮播图
      * @return
@@ -203,4 +227,19 @@ public class GameController {
 		System.out.println(name+"kkkkkkkkkkk");
 		return gameService.searchGameByname(name);
 	}
+	
+	/**
+     * 富文本及游戏属性保存
+     * @return
+     */
+	@RequestMapping(value="add1", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse gameExplain(HttpServletRequest request, HttpServletResponse response,@RequestParam Map <String,Object> form) throws IllegalStateException, IOException {
+		
+	   System.out.println(form);
+		return null;
+	}
+	
+
 }
+   
