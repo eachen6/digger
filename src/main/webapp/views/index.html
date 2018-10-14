@@ -4,7 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="左右结构项目，属于大人员的社交工具">
+		<meta name="keywords" content="左右结构项目 社交 占座 ">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="format-detection" content="telephone=no">
 		<title>Digger游戏平台</title>
 		<script src="../js/jquery.min.js"></script>
@@ -58,12 +60,13 @@
 				white-space: nowrap;
 				/*强制不换行*/
 			}
+			
 		</style>
 		<!--[if lt IE 9]>
   <script src="js/html5shiv.min.js"></script>
   <script src="js/respond.min.js"></script>
 <![endif]-->
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="../css/common.css" />
 		<link rel="stylesheet" type="text/css" href="../css/slide.css" />
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
@@ -76,7 +79,7 @@
 			<!-- 左侧菜单栏目块 -->
 			<div class="leftMeun" id="leftMeun">
 				<div id="logoDiv">
-					<p id="logoP"><img id="logo" alt="digger" src="../img/b_logo.png"><span>digger</span></p>
+					<p id="logoP"><img id="logo" alt="digger" src="../img/logo.png"><span>digger</span></p>
 				</div>
 				<div id="personInfor">
 					<p>
@@ -111,57 +114,57 @@
 							</div>
 						</div>
 							<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li class="col-md-3 col-xs-3"><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#regu" data-toggle="tab">未上架</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#stud" data-toggle="tab">在销售</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#sitt" data-toggle="tab">已下架</a></li>
+	                            <li><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
+	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
+	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
+	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
                                 </ul>
 						<div class="data-div">
 							<div class="row tableHeader" style="text-align: center;">
-								<div class="col-md-1 col-xs-1">
+								<div class="col-md-1 col-sm-1">
 									编码
 								</div>
-								<div class="col-md-2 col-xs-2">
+								<div class="col-md-2 col-sm-2">
 									游戏名称
 								</div>
-								<div class="col-md-1 col-xs-1">
+								<div class="col-md-1 col-sm-1">
 									上传玩家
 								</div>
-								<div class="col-md-2 col-xs-2">
+								<div class="col-md-2 col-sm-2">
 									上传时间
 								</div>
-								<div class="col-md-2 col-xs-2">
+								<div class="col-md-2 col-sm-2">
 									游戏类型
 								</div>
-								<div class="col-md-2 col-xs-2">
+								<div class="col-md-2 col-sm-2">
 									备注
 								</div>
-								<div class="col-md-2 col-xs-2">
+								<div class="col-md-2 col-sm-2">
 									操作
 								</div>
 							</div>
 							<div class="tablebody">
 
 								<div class="row" style="text-align: center;">
-									<div class="col-md-1 col-xs-1">
+									<div class="col-md-1 col-sm-1">
 										001
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<div class="col-md-2 col-sm-2">
 										英雄联盟
 									</div>
-									<div class="col-md-1 col-xs-1">
+									<div class="col-md-1 col-sm-1">
 										拳头
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<div class="col-md-2 col-sm-2">
 										2011-1-1
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<div class="col-md-2 col-sm-2">
 										益智
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<div class="col-md-2 col-sm-2">
 										巨TM好玩
 									</div>
-									<div class="col-md-2 col-xs-2">
+									<div class="col-md-2 col-sm-2">
 										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">查看</button>
 										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
 									</div>
@@ -204,7 +207,7 @@
 
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-dialog modal-lg " role="document">
 								<div class="modal-content">
 
 									<div class="modal-header">
@@ -215,8 +218,8 @@
                                     	<div class="container-fluid">
 										<div class="row">
 
-											<div class="col-md-7">
-												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360" poster="" data-setup="{}">
+										
+												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" style="margin-left: 6px;" poster="" data-setup="{}">
 													<source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type='video/mp4'>
 													<source src="MY_VIDEO.webm" type='video/webm'>
 													<p class="vjs-no-js">
@@ -224,36 +227,35 @@
 														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 													</p>
 												</video>
-											</div>
+										</div>
 
-											<div class="col-md-5">
-												<h5 style="text-align: center;">英雄联盟</h5>
+											
+												<div class="row">
+												<a href="#" class="thumbnail">
+													<img src="../img/bgimg.PNG" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="row">
+												<div class="col-sm-6 col-md-6">
+												<a href="#" class="thumbnail">
+													<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="col-sm-6 col-md-6">
+												<a href="#" class="thumbnail">
+													<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											</div>
+											
+											
+										
+										<div class="row" style="margin-top:10px ; margin-left: 6px;">
+
+                                        <h5 style="text-align: center;">英雄联盟</h5>
 												<p>《英雄联盟》是由美国拳头游戏(Riot Games)开发、中国大陆地区腾讯游戏代理运营的英雄对战MOBA竞技网游。 游戏里拥有数百个个性英雄，并拥有排位系统、符文系统等特色养成系统。 《英雄联盟》还致力于推动全球电子竞技的发展，除了联动各赛区发展职业联赛、打造电竞体系之外，每年还会举办“季中冠军赛”“全球总决赛”“All Star全明星赛”三大世界级赛事，获得了亿万玩家的喜爱，形成了自己独有的电子竞技文化。
 												</p>
-											</div>
-										</div>
-										<div class="row" style="margin-top:10px ;">
-
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
+											
 										</div>
 									</div>
                                     </div>
@@ -266,7 +268,7 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
-						</div>
+					</div>
 						<!-- /.modal -->
 
 						<!--弹出删除用户警告窗口-->
@@ -297,8 +299,7 @@
 					<!-- 上传文件模块 -->
 					<div role="tabpanel" class="tab-pane" id="char">
                 <div class="main_page">
-	            <iframe scrolling="no" id="main1" name="main" frameborder="0"  src="upload.html" style="min-height:400px;width:100%;height:50%;"></iframe>
-	           
+	            <iframe scrolling="no" id="main" name="main" frameborder="0"  src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
                 </div>
                    </div>
 				
@@ -1064,7 +1065,7 @@
 					</div>
 					<!--数据统计模块-->
 					<div role="tabpanel" class="tab-pane" id="shuju">
-					 <iframe scrolling="no" id="main" name="main" frameborder="0"  src="data1.html" style="min-height:750px;width:100%;height:100%;"></iframe>	
+					 <iframe scrolling="no" id="main" name="main" frameborder="0"  src="data1.html" style="min-height:600px;width:100%;height:100%;"></iframe>	
 					</div>	
 					<!--修改密码模块-->
 					<div role="tabpanel" class="tab-pane" id="updatapw">
@@ -1105,7 +1106,7 @@
 			</div>
 		</div>
 		
-		<script type="text/javascript" src="../js/myvue.js" ></script>
+		<script type="text/javascript" src="js/myvue.js" ></script>
 		<script>
 			 function calcPageHeight(doc) {
       var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
