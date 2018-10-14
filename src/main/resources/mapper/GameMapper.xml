@@ -399,9 +399,10 @@
   
   <!-- 新增方法：獲取熱銷輪播圖-->
   <select id="toGetHotSaleCarouse" resultType="com.digger.vo.CarouseVO">
-    select
-    id,name,carouseurl,price
-    from game
+    select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1
     order by sale desc limit 0,3
   </select>
   
@@ -412,51 +413,174 @@
     from game
   </select>
   
-  <!-- 新增方法：獲取所有游戲-->
-  <select id="toGetTotalGameList" resultType="com.digger.pojo.Game">
-    select * from game
+  <!-- 新增方法：获取所有游戏<火爆新品>集合(待修改)-->
+  <select id="toGetHotnewGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1
+    order by sale desc 
   </select>
   
-  <!-- 新增方法：獲取所有游戲-->
-  <select id="toGetDiscountGameList" resultType="com.digger.pojo.Game">
-    select * from game where discountstate = 1
+  <!-- 新增方法：获取所有游戏<本周热门>集合(待修改)-->
+  <select id="toGetWeekhotGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1
+    order by sale desc 
+  </select>
+  
+  <!-- 新增方法：获取所有游戏<最新上架>集合(待修改)-->
+  <select id="toGetNewputGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1
+    order by shelftime desc 
+  </select>
+  
+  <!-- 新增方法：获取所有游戏<折扣促销>集合(待修改)-->
+  <select id="toGetMydiscountGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where state = 1 and discountstate = 1
+    order by sale desc 
+  </select>
+  
+  <!-- 新增方法：獲取游戲总数-->
+  <select id="toGetTotalGame" resultType="int">
+    select count(id) from game
+  </select>
+  
+  <!-- 新增方法：获取特惠游戲集合-->
+  <select id="toGetDiscountGameList" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, coverurl, DATE_FORMAT(deadline,'%Y-%m-%d') deadline, discount, discountstate
+    from game left join discountlist 
+    on game.id=discountlist.gameid
+    where discountstate = 1 and state = 1
+    order by deadline
   </select>
   
    <!-- 新增方法：获取游戏预告轮播集合-->
   <select id="toGetNoticeCarouse" resultType="com.digger.vo.CarouseVO">
-    select game.id, name, price, carouseurl, shelftime, discount, discountstate
+    select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc limit 0,3
   </select>
   
    <!-- 新增方法：获取预告游戏集合-->
   <select id="toGetNoticeGameList" resultType="com.digger.vo.CarouseVO">
-   select game.id, name, price, carouseurl, shelftime, discount, discountstate
+    select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
+    where state = 1
     order by shelftime desc 
   </select>
   
   <!-- 新增方法：獲取游戏详情-->
-  <select id="toGetDetail" resultType="com.digger.pojo.Game">
-    select * from game where id = #{id}
+  <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
+    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,shelftime,discountstate,detailtxt,discount,starttime,deadline
+    from game left join discountlist 
+    on game.id=discountlist.gameid 
+    where gameid = #{id} and now()>starttime and deadline>now() 
   </select>
   
   <!-- 新增方法：根据关键词提示  -->
   <select id="searchGamewByword" resultType="com.digger.pojo.Game">
       select id, name
       from game
-      where name LIKE "%"#{keyword}"%" and state > 0
+      where name LIKE "%"#{keyword}"%" and state = 1
       order by sale desc limit 0, 5
   </select>
   
    <!-- 新增方法：根据关键词提示  -->
   <select id="searchGamewByname" resultType="com.digger.vo.CarouseVO">
-      select  game.id, name, price, coverurl, shelftime, discount, discountstate,category
+      select  game.id, name, price, surfaceurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
-      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state > 0
+      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 1
       order by sale desc 
   </select>
+  
+  <!-- 新增方法：根据游戏名查找待审核的游戏列表  -->
+  <select id="unauditedGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 0
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 1
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 2
+  </select>
+  
+  <!-- 新增方法：根据游戏名查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelistByName" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where name = #{name} and state = 3
+  </select>
+  
+  <!-- 新增方法：查找待审核的游戏列表  -->
+  <select id="unauditedGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 0
+  </select>
+  
+  <!-- 新增方法：查找未上架的游戏列表  -->
+  <select id="notOnTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 1
+  </select>
+  
+  <!-- 新增方法：查找已上架的游戏列表  -->
+  <select id="onTheShelfGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 2
+  </select>
+  
+  <!-- 新增方法：查找下架的游戏列表  -->
+  <select id="pullOffShelvesGamelist" resultType="com.digger.pojo.Game">
+      select  
+      *
+      from game where state = 3
+  </select>
+  
+  <!-- 新增方法：根据id上架游戏  -->
+  <update id="onTheShelfGame" parameterType="Integer">
+    update game
+    set state = 2
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增方法：根据id下架游戏  -->
+  <update id="pullOffShelvesGame" parameterType="Integer">
+    update game
+    set state = 3
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增方法：根据id查找封面图  -->
+  <select id="findCoverimg" resultType="String">
+      select  
+      coverurl
+      from game where id = #{gameid}
+  </select>
+  
 </mapper>

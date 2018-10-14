@@ -42,7 +42,17 @@ public interface UserMapper {
 
 	List<User> getAllUser();
 
-	
+	List<User> getTotalUserList();
+
+	int updateStateById(@Param("id")Integer id, @Param("state")Integer state);
+
+	User selectUserByUsername(String username);
+
+	List<User> sortById();
+
+	List<User> sortByState();
+
+	String selectNameByID(Integer id);
 
     
     

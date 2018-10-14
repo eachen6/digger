@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.digger.service.GameService;
 import com.digger.utils.FTPSSMLoad;
 import com.digger.utils.UploadUtil;
+import com.digger.vo.CarouseVO;
 import com.digger.vo.GameVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -117,7 +121,7 @@ public class GameController {
      * 获取热销轮播图
      * @return
      */
-	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse hotSaleCarouse()
 	{
@@ -136,21 +140,87 @@ public class GameController {
 	}
 	
 	/**
-     * 获取所有游戲集合
+     * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_total_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotnew_gamelist/{pn}", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse totalGameList()
+	public ServerResponse hotnewGameList(@PathVariable(value="pn") int pn)
 	{
-		return gameService.toGetTotalGameList();
+		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
+        PageHelper.startPage(pn, Const.gamecount);
+        //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
+        List<CarouseVO> list = gameService.toGetHotnewGameList();
+        System.out.println("1");
+        //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<本周热门>集合
+     * @return
+     */
+	@RequestMapping(value = "get_weekhot_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse weekhotGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetWeekhotGameList();
+        System.out.println("2");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<最新上架>集合
+     * @return
+     */
+	@RequestMapping(value = "get_newput_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse newputGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetNewputGameList();
+        System.out.println("3");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+	 * author 高志劲
+     * 获取所有游戏<折扣促销>集合
+     * @return
+     */
+	@RequestMapping(value = "get_discount_gamelist/{pn}", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse mydiscountGameList(@PathVariable(value="pn") int pn)
+	{
+        PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.toGetMydiscountGameList();
+        System.out.println("4");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
+	}
+	
+	/**
+     * 获取所有游戲总数
+     * @return
+     */
+	@RequestMapping(value = "get_total_game", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse totalGame()
+	{
+		return gameService.toGetTotalGame();
 	}
 	
 	/**
      * 获取特惠游戲集合
      * @return
      */
-	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_discount_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse discountGameList()
 	{
@@ -162,7 +232,7 @@ public class GameController {
 	 * 获取预告游戏轮播图集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeCarouse()
 	{
@@ -173,7 +243,7 @@ public class GameController {
 	 * 获取预告游戏集合
 	 * @return
 	 */
-	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_notice_gamelist", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse noticeGameList()
 	{
@@ -185,9 +255,9 @@ public class GameController {
 	 * 获取游戏详情
 	 * @return
 	 */
-	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@RequestMapping(value = "detail/{gameid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetGameDetail(int gameid)
+	public ServerResponse toGetGameDetail(@PathVariable(value="gameid") int gameid)
 	{
 		return gameService.toGetDetail(gameid);
 	}
@@ -211,16 +281,20 @@ public class GameController {
 	 * 根据关键词搜索游戏
 	 * @return
 	 */
-	@RequestMapping(value = "search_game_byname")
+	@RequestMapping(value = "search_game_byname/{name}/{pn}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
-		return gameService.searchGameByname(name);
+	public ServerResponse searchGameByname(@PathVariable(value="name") String name,@PathVariable(value="pn") int pn){
+		PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.searchGameByname(name);
+        System.out.println("5");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
 	}
 	
 	/**
 	 * 根据标签（即分类）搜索游戏
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "search_game_bycategory")
 	@ResponseBody
 	public ServerResponse searchGameBycategory(@RequestParam(value="name") String name){
@@ -241,5 +315,7 @@ public class GameController {
 	}
 	
 
+
+	
 }
    

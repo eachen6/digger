@@ -37,4 +37,34 @@ public class OrderController {
 		return orderService.toCreateOrder(user.getId(),gameid,price);
 	}
 	
+	/**
+     * 查看订单
+     * @return
+     */
+	@RequestMapping(value = "get_order", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetOrder(HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toGetOrder(user.getId());
+	}
+	
+	/**
+     * 根据订单id将订单删除
+     * @return
+     */
+	@RequestMapping(value = "delete_order", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toDeleteOrder(Integer id,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toDeleteOrder(id);
+	}
+	
 }

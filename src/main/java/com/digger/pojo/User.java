@@ -20,8 +20,18 @@ public class User {
     private Date updatetime;
 
     private Byte role;
+    
+    private Byte state;
 
-    public Integer getId() {
+    public Byte getState() {
+		return state;
+	}
+
+	public void setState(Byte state) {
+		this.state = state;
+	}
+
+	public Integer getId() {
         return id;
     }
 

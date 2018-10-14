@@ -45,13 +45,7 @@ margin-top: -15px;
     border-radius: 13px;
 }
 
-/*导航样式*/
-.nav > li > a {
-  position: relative;
-  display: block;
-  padding: 10px 15px;
-  color: gray;	
-}
+
 
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
@@ -97,3 +91,41 @@ margin-top: -15px;
 	border: none;
 }
 
+
+input[type="radio"] {
+    visibility: hidden;
+}
+ 
+.chose + b {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    display: inline-block;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 1px solid #CACACA;
+}
+ 
+.chose:checked + b:after {
+    opacity: 1;
+}
+ 
+.chose:checked + b:after {
+    content: '';
+    opacity: 1;
+    position: absolute;
+    width: 7px;
+    height: 3px;
+    background: transparent;
+    top: 2px;
+    left: 1px;
+    border: 2px solid #41B44B;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}

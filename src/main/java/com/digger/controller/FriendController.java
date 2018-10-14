@@ -1,5 +1,7 @@
 package com.digger.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,16 @@ public class FriendController {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
 		return friendService.toGetPersonalFriendList(user.getId());
+	}
+	
+	@RequestMapping(value = "getFriendlist", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse getFriendlist(HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			//return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return friendService.getPersonalFriends(user.getId());
 	}
 }

@@ -1,9 +1,11 @@
 package com.digger.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.digger.dao.OrderMapper;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.OrderService;
+import com.digger.vo.OrderVO;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
@@ -32,14 +35,9 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		
 		//获取游戏信息
-		List<Game> gamelist = new ArrayList<Game>();
-		gamelist = gameMapper.toGetDetail(gameid);
 		String coverimg = null;
+		coverimg = gameMapper.findCoverimg(gameid);
 		long orderNum = 0;
-		for(Game list : gamelist){
-			coverimg = list.getCoverurl();
-		}
-		
 		Order order = new Order();
 		order.setGameid(gameid);
 		order.setUserid(userid);
@@ -67,6 +65,37 @@ public class OrderServiceImpl implements OrderService{
 		}
 		
 		return ServerResponse.createByErrorMessage("订单生成失败");
+	}
+
+	/* 
+	 * 查看订单
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetOrder(Integer userid) {
+		// TODO Auto-generated method stub
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		list = orderMapper.toGetOrder(userid);
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createByErrorMessage("查看订单失败");
+		}
+		return ServerResponse.createBySuccess("查看订单成功", list);
+		
+	}
+
+	/* 
+	 * 删除订单
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toDeleteOrder(Integer id) {
+		// TODO Auto-generated method stub
+		int rowCount = orderMapper.deleteByPrimaryKey(id);
+		System.out.println(rowCount);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("删除成功！");
+        }
+        return ServerResponse.createByErrorMessage("删除失败！");
 	}
 	
 }

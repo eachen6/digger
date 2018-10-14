@@ -3,6 +3,7 @@ package com.digger.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class CategoryServiceImpl  implements CategoryService{
 	public ServerResponse getAllLabel() {
 		List<Category> list = new ArrayList<Category>();
 		list = categoryMapper.selectAllLabel();
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createByErrorMessage("未找到相关标签！");
+		}
 		return  ServerResponse.createBySuccess(list);
 	}
 

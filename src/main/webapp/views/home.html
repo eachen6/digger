@@ -8,18 +8,19 @@
 		<link rel="stylesheet" href="../css/home.css">
 		 <script src="../bootstrap/js/jquery-1.9.1.min.js"></script>
 	    <script src="../bootstrap/js/bootstrap.js"></script>
-	   
+	    
 	</head>
 	<body>
 		
     <!--顶部导航栏-->
 	<nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid" style="margin-left: 17%; margin-right: 17%;"> 
-            <ul class="nav navbar-nav" >
+            <ul class="nav navbar-nav">
                <li class="active"><a href="main.html?location=home">精选</a></li>
                <li><a id="toallgame" style="cursor: pointer;" href="main.html?location=etc">所有游戏</a></li>
             </ul>
-            <form class="navbar-form navbar-right" action="../game/search_game_byname" style="margin-right: auto;" role="search" id="search_form">
+            <form class="navbar-form navbar-right" action="main.html" style="margin-right: auto;" role="search" id="search_form">
+            <input type="hidden" name="location" value="etc">
                  <div class="form-group">
                      <input type="text" name="name" class="form-control" id="search_input" autocomplete="off" v-model="search_value" v-on:input="change"  placeholder="Search">
                  </div>
@@ -27,7 +28,7 @@
                   <!--搜索提示框-->
                   <div class="list-group" id="search_suggest">
                      <template v-if="game!=''">
-                       <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                       <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                      </template>
                   </div>
             </form>
@@ -49,21 +50,39 @@
 	    		    <div id="myCarousel" class="carousel slide col-md-12" data-ride="carousel" data-interval="5000">
 	                <!-- 轮播（Carousel）指标 -->
 	                    <ol class="carousel-indicators">
-	                       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-	                       <li data-target="#myCarousel" data-slide-to="1"></li>
-	                       <li data-target="#myCarousel" data-slide-to="2"></li>
+	                       <li data-target="#myCarousel" v-for="(game,index) in games" v-bind:data-slide-to="index" :class="{'active':!index}"></li>	                       
 	                    </ol>   
 	                <!-- 轮播（Carousel）项目 -->
 	                <div class="carousel-inner">
-	                    <div class="item active">
-	                        <img src="../img/01.jpg" style="width:100%; height: 300px;" alt="First slide">
-	                    </div>
-	                    <div class="item">
-	                        <img src="../img/02.jpg" style="width:100%; height: 300px;" alt="Second slide">
-	                    </div>
-	                    <div class="item">
-	                        <img src="../img/03.jpg" style="width:100%; height: 300px;" alt="Third slide">
-	                    </div>
+	                <div v-for="(game, index) in games" class="item" :class="{'active':!index}">
+	                    <a :href="'main.html?location=details&id='+game.id">
+	                        <img :src="game.carouseurl" style="width:100%; height: 300px;" alt="First slide">
+	                        <div class="dingwei">
+	                            <div class="gamename">
+	                                  {{game.name}}
+	                            </div>
+	                            <div class="shelftime">
+	                                  {{game.shelftime}}首发
+	                            </div>
+	                            <div class="gameprice">
+	                                 <template v-if="game.price==0">
+	                                 <span class="originalprice1">免费</span>
+	                                 </template>
+	                                 <template v-else-if="game.discount==null">
+	                                 <span class="originalprice1">￥{{game.price}}</span>
+	                                 </template>
+	                                 <template v-else>
+	                                 <span class="originalprice2">￥{{game.price}}</span>
+	                                 <span class="price">￥{{game.price*game.discount*0.1}}</span>
+	                                 <span class="discount">&nbsp;&nbsp;&nbsp;{{game.discount}}折</span>
+	                                 </template>
+	                            </div>
+	                            <div class="go">
+	                                                                                                     立即前往 > >
+	                            </div>
+	                        </div>
+	                    </a>
+	                    </div>	       
 	                </div>
 	               
 	                </div>
@@ -79,43 +98,18 @@
         <div class="row">
         	<h3 class="h3-margin">热点预告</h3>
         </div>
-       
+       <div id="gamenotice">
         <div class="row" style="margin-left: 17px; margin-right: 17px;">
         	<div class="container-fluid">
         		
         	<div id="myCarousel1" class="carousel slide " data-interval="false">
 			<!-- 轮播（Carousel）项目 -->
 			<div class="carousel-inner">
-				<div class="item active">
+				<div v-for="n in sum" class="item" :class="{'active':!(n-1)}">
 					<div class="row">
 						<br>
 			           <ul class="time-horizontal">
-                          <li><b></b>9月发售</li>
-                          <li><b></b>合作</li>
-                          <li><b></b>发展</li>
-                          <li><b></b>共赢</li>
-                       </ul>
-                    </div>
-              </div>
-              	<div class="item">
-					<div class="row">
-						<br>
-			           <ul class="time-horizontal">
-                          <li><b></b>dfda</li>
-                          <li><b></b>asdf</li>
-                          <li><b></b>gsad</li>
-                          <li><b></b>asgd</li>
-                       </ul>
-                    </div>
-              </div>				
-              <div class="item">
-					<div class="row">
-						<br>
-			           <ul class="time-horizontal">
-                          <li><b></b>zxc成立</li>
-                          <li><b></b>bhfg</li>
-                          <li><b></b>bz</li>
-                          <li><b></b>共zbn</li>
+                          <li v-for="(game,index) in games" v-if="(n-1)*4<=index&&n*4>index"><b></b>{{game.shelftime}}首发</li>
                        </ul>
                     </div>
               </div>
@@ -124,7 +118,9 @@
         	</div>
         </div>   
       
+      
         <!--热点预告-->
+        
         <div class="row" style="display: flex;flex-wrap: nowrap;align-items: center;">
         		<div>
 	    		    <button id="prev-btn1" class="carousel-btn" style="outline: none;">
@@ -133,150 +129,30 @@
     			</div>
     		
         		<div id="myCarousel2" class="carousel slide col-md-12" data-interval="false">
-
 			      <!-- 轮播（Carousel）项目 -->
 			       <div class="carousel-inner">
-				      <div class="item active">
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
+				      <div v-for="n in sum"
+				       class="item" :class="{'active':!(n-1)}">
+						      <div class="col-md-3" v-for="(game,index) in games" v-if="(n-1)*4<=index&&n*4>index">
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg" />
+							        <img style="width:100%; height: 300px;" :src="game.coverurl" />
 							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>  
+                                       <h4>{{game.name}}</h4>
+                                       <template v-if="game.price==0">
+                                         <span  class="gamenoticeprice">免费</span >
+                                       </template>
+                                       <template v-else-if="game.discount==null">
+                                         <span class="gamenoticeprice">￥{{game.price}}</span >
+                                       </template>
+                                       <template v-else>
+                                       <span class="gamenoticeorig">￥{{game.price}}</span >
+                                       <span  class="gamenoticeprice">￥{{game.price*game.discount*0.1}}</span >
+                                       </template>
                                    </div>
 							     </div>
 						      	</a>
 						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							    </a>
-						      </div>						      
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>                
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-                     </div>
-				      <div class="item">
-                         
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg" />
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>               
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							     </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							    </a>
-						      </div>						      
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>                
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-					     
-                     </div>
-				      <div class="item">
-                   
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg" />
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>               
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							     </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							     </a>
-						      </div>						      
-						     <!-- <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。</p>                
-                                   </div>
-							     </div>
-							    </a>
-						      </div>-->
-					     
                      </div>
 			       </div>
                 </div>
@@ -286,7 +162,7 @@
     		         	<span class="glyphicon glyphicon-chevron-right gly-css " ></span>
     		         </button>	
     		    </div>
-        	
+        	</div>
         </div>
         
         <div class="row">
@@ -304,66 +180,41 @@
 
 			      <!-- 轮播（Carousel）项目 -->
 			       <div class="carousel-inner">
-				      <div class="item active">
+				      <div v-for="n in sum" class="item" :class="{'active':!(n-1)}">
+				        <template v-for="(game,index) in games" v-if="(n-1)*3<=index&&n*3>index">
+				          <template v-if="(n-1)*3==index">
 						      <div class="col-md-6">
-						      	<a href="#" style="text-decoration: none;">
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
+							        <img style="width:100%; height: 300px;" :src="game.coverurl"/>
+							        <span class="gamenoticeodc"><br>{{game.discount}}折</span >
+							        <div class="caption div-text1">
+							        <h4>{{game.name}}</h4>
+							        <span class="gamenoticeprice1">￥{{game.price*game.discount*0.1}}</span >
+                                    <span class="gamenoticeorig1">￥{{game.price}}</span >
+                                    <div class="deadline1">截止到 {{game.deadline}}</div>
                                    </div>
 							     </div>
 							    </a>
 						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
+						   </template>
+						   <template v-else>
+						      <div class="col-md-3" >
+						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
+							        <img style="width:100%; height: 300px;" :src="game.coverurl"/>
+							        <span class="gamenoticeodc"><br>{{game.discount}}折</span>
+							        <div class="caption div-text1">
+                                       <h4>{{game.name}}</h4>
+                                       <span class="gamenoticeprice1">￥{{game.price*game.discount*0.1}}</span >                                     
+                                       <span class="gamenoticeorig1">￥{{game.price}}</span>
+                                       <div class="deadline">截止到 {{game.deadline}}</div>
                                    </div>
 							     </div>
 							    </a>
 						      </div>
-						     
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>                
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-                     </div>
-				      <div class="item">
-                         <div class="col-md-6">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-						      <div class="col-md-3">
-						      	<a href="#" style="text-decoration: none;">
-						      	 <div class="thumbnail">
-							        <img style="width:100%; height: 300px;" src="https://cdn.rail.tgp.qq.com/info/games/2000240/688608c6e5ad6a6492ba003556729087.jpg"/>
-							        <div class="caption div-text">
-                                       <h3>缩略图标签</h3>
-                                       <p>一些示例文本。一些示例文本。</p>
-                                   </div>
-							     </div>
-							    </a>
-						      </div>
-						     
+						    </template>
+						    </template>
                      </div>
 			       </div>
                 </div>
@@ -374,9 +225,8 @@
     		    </div>
         	</div>
         
-        
         <div class="row" style="margin:32px;">
-        	<div class="col-md-8">
+        	<div id="rank" class="col-md-8">
         	     <div class="row">
         	         <div class="col-md-6">
         	         	<h3 style="padding-top:5px ; margin: 0px;">更多游戏</h3>
@@ -384,92 +234,29 @@
         	         <div class="col-md-6">
         	         	 <div class="btn-toolbar" role="toolbar">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default">火爆新品</button>
-                                <button type="button" class="btn btn-default">本周热门</button>
-                                <button type="button" class="btn btn-default">最新上架</button>
-                                <button type="button" class="btn btn-default">折扣促销</button>
+                                <button id="btn1" type="button" @click="newhot()" class="gameactive btn btn-default">火爆新品</button>
+                                <button id="btn2" type="button" @click="weekhot()" class="btn btn-default">本周热门</button>
+                                <button id="btn3" type="button" @click="newput()" class="btn btn-default">最新上架</button>
+                                <button id="btn4" type="button" @click="discount()" class="btn btn-default">折扣促销</button>
                             </div>
                        </div>
         	         </div>
         	     </div> 
         	     <div class="col-md-12">
         	     <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
+						<div v-for="game in games" id="gamediv" class="row" @click="details(game.id)" style="cursor: pointer; margin-top: 20px;">
 							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
+								<img :src="game.surfaceurl" style="width: 190px;height: 130px;" />
 							</div>
 							<div class="col-md-7" style="padding-left:30px ;">
 								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
+									<h3 style="color:black;">{{game.name}}</h3>
+									<p style="color:black;">{{game.shelftime}}上线</p>
+									<div style="padding-bottom: 15px; color:black;">
+										<button v-for="cg in game.category" class="btn btn-sm" @click="search(cg)">{{cg}}</button>
+										<!-- <a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
 										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
+										<a style="color:black"><button class="btn btn-sm">大型网游</button></a> -->
 									</div>
 								</div>
 							</div>
@@ -479,7 +266,7 @@
 						</div>
 						<!--更多游戏推荐-->
 						<div class="row" style="background-color: #E2E2E2; margin-top: 20px;">
-							<a href="#" style="text-decoration: none; color: #333333;">
+							<a href="main.html?location=etc" style="text-decoration: none; color: #333333;">
 							<div style="text-align: center; margin: 7px;">
 								更多游戏推荐 >
 							</div>
@@ -491,7 +278,8 @@
         	<div class="row div-label" >
         	  
         		<div class="div-margin">
-        			<form class="navbar-form" role="search" id="search_form1" action="../game/search_game_byname">
+        			<form class="navbar-form" role="search" id="search_form1" action="main.html">
+        			    <input type="hidden" name="location" value="etc">
 	                    <div class="form-group">
 		                   <input type="text" name="name" id="search_input1" autocomplete="off" v-model="search_value" v-on:input="change" class="form-control" placeholder="Search">
 	                    </div>
@@ -499,38 +287,15 @@
 	                    <!--搜索提示框-->
                         <div class="list-group" id="search_suggest1">
                            <template v-if="game!=''">
-                              <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                              <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                            </template>
                         </div>
                     </form>
         		</div>
         		<div class="div-margin1">按标签查找</div>
-        		<div class="div-margin2">
-        		<button class="btn btn-xs" style="margin: 6px; " >
-							篮球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							大型游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							免费
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							足球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							FPS
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							角色扮演
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							格斗游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							动漫风格
+        		<div id="gamecategory" class="div-margin2">
+        		<button v-for="category in categorys" class="btn btn-xs" @click="clickcategory(category.name)" style="margin: 6px; " >
+							{{category.name}}
 				</button>
 				</div>
         	</div>
@@ -538,7 +303,9 @@
         </div>
         
     </div>
-     <script src="../vue/vue.min.js"></script>
+    
+    <script src="../vue/vue.min.js"></script>
 	 <script src="../js/home.js"></script>
+    
 	</body>
 </html>

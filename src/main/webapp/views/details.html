@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
-		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
+		<!--<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />-->
 		<link rel="stylesheet" type="text/css" href="../css/details.css" />
 
 		<script type="text/javascript" src="../vue/vue.min.js"></script>
@@ -19,7 +19,7 @@
 
 				<!--顶部栏背景图-->
 				<div class="nav" style="position: absolute;top: 0;left: 0;z-index: -100;">
-					<img class="img-responsive" style="height: 195px;" :src="head_img" />
+					<img class="img-responsive" style="height: 195px;" :src="contents.bgurl" />
 				</div>
 
 				<div class="container" style="padding-top: 20px;">
@@ -28,18 +28,18 @@
 
 						<ul class="category">
 							<li>
-								<a style="color: #737373;text-decoration:none;" href="main.html?location=etc">{{prename}}</a>
+								<a style="color: #737373;text-decoration:none;" href="main.html?location=etc">全部游戏</a>
 							</li>
-							<li style="color: #ADADAD;">{{gamename}}</li>
+							<li style="color: #ADADAD;">{{contents.name}}</li>
 						</ul>
 					</div>
 					<!--封面图以及名称-->
 					<div class="row" id="cover">
 						<div class="coverimg col-md-2 col-xs-2">
-							<img style="height: 150px;width: 105px;border-radius: 5px;border: 1px solid whitesmoke;" :src="cover_img" />
+							<img style="height: 150px;width: 105px;border-radius: 5px;border: 1px solid whitesmoke;" :src="contents.coverurl" />
 						</div>
 						<div class="coverinfo" style="float: left;">
-							<h1 style="color: white;">{{gamename}}</h1>
+							<h1 style="color: white;">{{contents.name}}</h1>
 						</div>
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 									<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 								</p>
 							</video>-->
-							<video id="my-video" width="100%" height="360" controls="controls" :src="video_src"></video>
+							<video id="my-video" width="100%" height="360" controls="controls" :src="contents.videourl"></video>
 						</div>
 
 						<div style="margin-top: 30px;">
@@ -117,38 +117,34 @@
 								<tr>
 									<td class="left_title">运营阶段</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">{{message.opstage}}</td>
+									<td class="right_content">{{contents.opstage}}</td>
 								</tr>
 								<tr>
 									<td class="left_title">开发商</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">{{message.developer}}</td>
+									<td class="right_content">{{contents.developer}}</td>
 								</tr>
 								<tr>
 									<td class="left_title">运营商</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">{{message.oper}}</td>
+									<td class="right_content">{{contents.oper}}</td>
 								</tr>
 								<tr>
 									<td class="left_title">发行平台</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">{{message.platform}}</td>
+									<td class="right_content">{{contents.platform}}</td>
 								</tr>
 							</table>
 
 							<div class="selective">
 								<button class="btn btn-xs" :data-id="item" style="margin-left: 5px;" v-for="item in selective">
-							{{item}}
-						</button>
-								<!--<button class="btn btn-xs">体育竞技</button>
-						<button class="btn btn-xs">多人联机</button>
-						<button class="btn btn-xs">大型网游</button>
-						<button class="btn btn-xs">免费</button>-->
+									{{item}}
+								</button>
 							</div>
 
 							<div class="" style="margin-top: 50px;">
-								<button class="btn btn-default" id="btn_wish" :data-id="iswish" v-model="iswish" v-if="iswish">愿望清单&#10084</button>
-								<button class="btn btn-default" id="btn_wish" v-model="iswish" v-else>加入愿望清单</button>
+								<button class="btn btn-default" id="btn_wish" @click="deleteFromWish" :data-id="iswish" v-model="iswish" v-if="iswish">GET（点击取消）</button>
+								<button class="btn btn-default" id="btn_wish" @click="addToWish" v-model="iswish" v-else>点击加入</button>
 								<button class="btn btn-default" data-toggle="modal" data-target="#sendModal">赠送</button>
 								<button class="btn btn-warning" style="margin-left: 10px;" data-toggle="modal" data-target="#myModal">立即购买</button>
 							</div>
@@ -180,12 +176,12 @@
 								<tr>
 									<td class="left_title">内存</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">3GB以上</td>
+									<td class="right_content">{{contents.memory}}</td>
 								</tr>
 								<tr>
 									<td class="left_title">显卡</td>
 									<td>&nbsp;&nbsp</td>
-									<td class="right_content">GeForce GT 630</td>
+									<td class="right_content">{{contents.grcard}}</td>
 								</tr>
 							</table>
 						</div>
@@ -212,12 +208,12 @@
 
 										<div class="row" style="border: 1px solid #EC971F;padding-top: 15px;padding-bottom: 15px;border-radius: 10px;background-color: #FFF7E1;">
 											<div class="col-md-4" style="">
-												<img class="img-responsive" height="120" width="84" src="https://cdn.rail.tgp.qq.com/info/games/2000352/2c2dc799c98d1904cd062e60a0924cef.jpg" />
+												<img class="img-responsive" height="120" width="84" :src="contents.coverurl" />
 											</div>
 											<div class="col-md-8">
-												<h3>NBA2KOL2</h3>
+												<h3>{{contents.name}}</h3>
 												<span id="" class="pull-right" style="color: #FF6732;font-size: 25px;">
-												¥22
+												{{contents.price}}
 											</span>
 											</div>
 										</div>

@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
+import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GamedetailsVO;
 
 @Service("gameService")
 public class GameServiceImpl implements GameService{
@@ -60,25 +63,13 @@ public class GameServiceImpl implements GameService{
 	}
 
 	/* 
-	 * 获取所有游戏集合
-	 * @author 徐子颖
-	 */
-	@Override
-	public ServerResponse toGetTotalGameList() {
-		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
-		gamelist = gameMapper.toGetTotalGameList();
-		return ServerResponse.createBySuccess(gamelist);
-	}
-
-	/* 
 	 * 获取特惠游戏集合
 	 * @author 徐子颖
 	 */
 	@Override
 	public ServerResponse toGetDiscountGameList() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
 		gamelist = gameMapper.toGetDiscountGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
@@ -112,7 +103,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse toGetDetail(int id) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GamedetailsVO> gamelist = new ArrayList<GamedetailsVO>();
 		gamelist = gameMapper.toGetDetail(id);
 		return ServerResponse.createBySuccess(gamelist);
 	}
@@ -134,9 +125,216 @@ public class GameServiceImpl implements GameService{
 	 * @author 高志劲
 	 */
 	@Override
-	public ServerResponse searchGameByname(String name) {
+	public List<CarouseVO> searchGameByname(String name) {
 		List<CarouseVO> list = new ArrayList<CarouseVO>();
 		list = gameMapper.searchGamewByname(name);
-		return ServerResponse.createBySuccess(list);
+		return list;
 	}
+
+	/* 
+	 * 获取游戏总数
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetTotalGame() {
+		// TODO Auto-generated method stub
+		int count = gameMapper.toGetTotalGame();
+		return ServerResponse.createBySuccess(count);
+	}
+
+	/* 
+	 * 根据游戏名查找待审核的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse unauditedGamelistByName(String name) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.unauditedGamelistByName(name);
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+		
+	}
+
+	/* 
+	 * 根据游戏名查找未上架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse notOnTheShelfGamelistByName(String name) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.notOnTheShelfGamelistByName(name);
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 根据游戏名查找已上架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse onTheShelfGamelistByName(String name) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.onTheShelfGamelistByName(name);
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 根据游戏名查找下架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse pullOffShelvesGamelistByName(String name) {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.pullOffShelvesGamelistByName(name);
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 查找待审核的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse unauditedGamelist() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.unauditedGamelist();
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 查找未上架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse notOnTheShelfGamelist() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.notOnTheShelfGamelist();
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 查找已上架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse onTheShelfGamelist() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.onTheShelfGamelist();
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 查找下架的游戏列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse pullOffShelvesGamelist() {
+		// TODO Auto-generated method stub
+		List<Game> gamelist = new ArrayList<Game>();
+		gamelist = gameMapper.pullOffShelvesGamelist();
+		if(CollectionUtils.isEmpty(gamelist)){
+			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
+		}
+		return ServerResponse.createBySuccess(gamelist);
+	}
+
+	/* 
+	 * 根据id上架游戏
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse onThesShelfGame(Integer id) {
+		// TODO Auto-generated method stub
+		int updateCount = gameMapper.onTheShelfGame(id);
+		if(updateCount>0){
+			return ServerResponse.createBySuccessMessage("上架成功");
+		}
+		return ServerResponse.createByErrorMessage("上架失败");
+	}
+
+	/* 
+	 * 根据id下架游戏
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse pullOffShelvesGame(Integer id) {
+		// TODO Auto-generated method stub
+		int updateCount = gameMapper.pullOffShelvesGame(id);
+		if(updateCount>0){
+			return ServerResponse.createBySuccessMessage("下架成功");
+		}
+		return ServerResponse.createByErrorMessage("下架失败");
+	}
+	
+	/* 
+	 * 获取所有游戏<火爆新品>集合
+	 * @author 徐子颖
+	 */
+	@Override
+	public List<CarouseVO> toGetHotnewGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetHotnewGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<本周热门>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetWeekhotGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetWeekhotGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<最新上架>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetNewputGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetNewputGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<折扣促销>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetMydiscountGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetMydiscountGameList();
+		return gamelist;
+	}
+
 }

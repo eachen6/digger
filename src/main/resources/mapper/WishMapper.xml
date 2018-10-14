@@ -27,7 +27,7 @@
       userid, createtime, updatetime
       )
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{coverimg,jdbcType=VARCHAR}, 
-      #{userid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      #{userid,jdbcType=INTEGER}, now(), now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Wish">
@@ -104,9 +104,22 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="selectByGameid" parameterType="java.lang.Integer" resultType="Integer">
+  <!-- 新增方法：获取该游戏是否被当前用户加入愿望清单-->
+  <select id="select" parameterType="java.lang.Integer" resultType="Integer">
     select *
     from wish
-    where gameid = #{gameid,jdbcType=INTEGER}
+    where gameid = #{gameid,jdbcType=INTEGER} and userid = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 新增方法：根据游戏id和用户id删除从愿望清单删除-->
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from wish
+    where gameid = #{gameid} and userid = #{userid}
+  </delete>
+  
+  <!-- 新增方法：获取该游戏是否被当前用户加入愿望清单-->
+  <select id="toGetMyselfWishGame" parameterType="java.lang.Integer" resultType="com.digger.vo.WishVO">
+    select c.*,a.price,a.discountstate,b.discount from game as a,discountlist as b,wish as c 
+    where c.userid = #{userid} and c.gameid = a.id and c.gameid = b.gameid
   </select>
 </mapper>

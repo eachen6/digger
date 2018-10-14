@@ -1,9 +1,12 @@
 package com.digger.service;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.digger.common.ServerResponse;
 import com.digger.pojo.Game;
+import com.digger.vo.CarouseVO;
 
 public interface GameService {
 
@@ -12,8 +15,6 @@ public interface GameService {
 	ServerResponse toGetHotSaleCarouse();
 
 	ServerResponse toGetHotSaleGameList();
-
-	ServerResponse toGetTotalGameList();
 
 	ServerResponse toGetDiscountGameList();
 
@@ -25,6 +26,37 @@ public interface GameService {
 
 	ServerResponse searchGameByword(String keyword);
 
-	ServerResponse searchGameByname(String name);
+	List<CarouseVO> searchGameByname(String name);
+
+	ServerResponse toGetTotalGame();
+
+	ServerResponse unauditedGamelistByName(String name);
+
+	ServerResponse notOnTheShelfGamelistByName(String name);
+
+	ServerResponse onTheShelfGamelistByName(String name);
+
+	ServerResponse pullOffShelvesGamelistByName(String name);
+
+	ServerResponse unauditedGamelist();
+
+	ServerResponse notOnTheShelfGamelist();
+
+	ServerResponse onTheShelfGamelist();
+
+	ServerResponse pullOffShelvesGamelist();
+
+	ServerResponse onThesShelfGame(Integer id);
+
+	ServerResponse pullOffShelvesGame(Integer id);
+	
+	List<CarouseVO> toGetHotnewGameList();
+
+	List<CarouseVO> toGetWeekhotGameList();
+
+	List<CarouseVO> toGetMydiscountGameList();
+
+	List<CarouseVO> toGetNewputGameList();
+
 	
 }
