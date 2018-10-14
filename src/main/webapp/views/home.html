@@ -19,7 +19,8 @@
                <li class="active"><a href="main.html?location=home">精选</a></li>
                <li><a id="toallgame" style="cursor: pointer;" href="main.html?location=etc">所有游戏</a></li>
             </ul>
-            <form class="navbar-form navbar-right" action="../game/search_game_byname" style="margin-right: auto;" role="search" id="search_form">
+            <form class="navbar-form navbar-right" action="main.html" style="margin-right: auto;" role="search" id="search_form">
+            <input type="hidden" name="location" value="etc">
                  <div class="form-group">
                      <input type="text" name="name" class="form-control" id="search_input" autocomplete="off" v-model="search_value" v-on:input="change"  placeholder="Search">
                  </div>
@@ -27,7 +28,7 @@
                   <!--搜索提示框-->
                   <div class="list-group" id="search_suggest">
                      <template v-if="game!=''">
-                       <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                       <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                      </template>
                   </div>
             </form>
@@ -223,9 +224,8 @@
     		    </div>
         	</div>
         
-        
         <div class="row" style="margin:32px;">
-        	<div class="col-md-8">
+        	<div id="rank" class="col-md-8">
         	     <div class="row">
         	         <div class="col-md-6">
         	         	<h3 style="padding-top:5px ; margin: 0px;">更多游戏</h3>
@@ -233,92 +233,29 @@
         	         <div class="col-md-6">
         	         	 <div class="btn-toolbar" role="toolbar">
                             <div class="btn-group">
-                                <button id="btn1" type="button" class="gameactive btn btn-default">火爆新品</button>
-                                <button id="btn2" type="button" class="btn btn-default">本周热门</button>
-                                <button id="btn3" type="button" class="btn btn-default">最新上架</button>
-                                <button id="btn4" type="button" class="btn btn-default">折扣促销</button>
+                                <button id="btn1" type="button" @click="newhot()" class="gameactive btn btn-default">火爆新品</button>
+                                <button id="btn2" type="button" @click="weekhot()" class="btn btn-default">本周热门</button>
+                                <button id="btn3" type="button" @click="newput()" class="btn btn-default">最新上架</button>
+                                <button id="btn4" type="button" @click="discount()" class="btn btn-default">折扣促销</button>
                             </div>
                        </div>
         	         </div>
         	     </div> 
         	     <div class="col-md-12">
         	     <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
+						<div v-for="game in games" id="gamediv" class="row" @click="details(game.id)" style="cursor: pointer; margin-top: 20px;">
 							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
+								<img :src="game.surfaceurl" style="width: 190px;height: 130px;" />
 							</div>
 							<div class="col-md-7" style="padding-left:30px ;">
 								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
+									<h3 style="color:black;">{{game.name}}</h3>
+									<p style="color:black;">{{game.shelftime}}上线</p>
+									<div style="padding-bottom: 15px; color:black;">
+										<button v-for="cg in game.category" class="btn btn-sm" @click="search(cg)">{{cg}}</button>
+										<!-- <a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
 										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
-							</div>
-						</div>
-						 <!--游戏1信息-->
-						<div class="row" style="background-color: white; margin-top: 20px;">
-							<div class="col-md-3" style="padding: 0px; ">
-								<img src="https://p.qpic.cn/wegame/0/d4b7777209ce710d20c537ff7a1b8f16.jpg/180" style="width: 190px;height: 136px;" />
-							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
-								<div>
-									<h3>NBA2KOL2</h3>
-									<p>2018-08-02 不限号测试</p>
-									<div style="padding-bottom: 20px;">
-										<a style="color:black"><button class="btn btn-sm">篮球</button></a>
-										<a style="color:black"><button class="btn btn-sm">体育竞技</button></a>
-										<a style="color:black"><button class="btn btn-sm">多人联机</button></a>
-										<a style="color:black"><button class="btn btn-sm">大型网游</button></a>
+										<a style="color:black"><button class="btn btn-sm">大型网游</button></a> -->
 									</div>
 								</div>
 							</div>
@@ -328,7 +265,7 @@
 						</div>
 						<!--更多游戏推荐-->
 						<div class="row" style="background-color: #E2E2E2; margin-top: 20px;">
-							<a href="#" style="text-decoration: none; color: #333333;">
+							<a href="main.html?location=etc" style="text-decoration: none; color: #333333;">
 							<div style="text-align: center; margin: 7px;">
 								更多游戏推荐 >
 							</div>
@@ -340,7 +277,8 @@
         	<div class="row div-label" >
         	  
         		<div class="div-margin">
-        			<form class="navbar-form" role="search" id="search_form1" action="../game/search_game_byname">
+        			<form class="navbar-form" role="search" id="search_form1" action="main.html">
+        			    <input type="hidden" name="location" value="etc">
 	                    <div class="form-group">
 		                   <input type="text" name="name" id="search_input1" autocomplete="off" v-model="search_value" v-on:input="change" class="form-control" placeholder="Search">
 	                    </div>
@@ -348,38 +286,15 @@
 	                    <!--搜索提示框-->
                         <div class="list-group" id="search_suggest1">
                            <template v-if="game!=''">
-                              <a v-for="value in game" :href="'../game/search_game_byname?name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
+                              <a v-for="value in game" :href="'main.html?location=etc&name='+value.name" class="list-group-item list-group-item-action">{{value.name}}</a>
                            </template>
                         </div>
                     </form>
         		</div>
         		<div class="div-margin1">按标签查找</div>
-        		<div class="div-margin2">
-        		<button class="btn btn-xs" style="margin: 6px; " >
-							篮球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							大型游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							免费
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							足球
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							FPS
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							角色扮演
-				</button>
-				
-				<button class="btn btn-xs" style="margin: 6px;" >
-							格斗游戏
-				</button>
-				<button class="btn btn-xs" style="margin: 6px;" >
-							动漫风格
+        		<div id="gamecategory" class="div-margin2">
+        		<button v-for="category in categorys" class="btn btn-xs" @click="clickcategory(category.name)" style="margin: 6px; " >
+							{{category.name}}
 				</button>
 				</div>
         	</div>

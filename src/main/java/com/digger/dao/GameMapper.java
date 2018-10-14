@@ -2,6 +2,7 @@ package com.digger.dao;
 
 import java.util.List;
 
+import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
@@ -62,5 +63,11 @@ public interface GameMapper {
 	int pullOffShelvesGame(Integer id);
 
 	String findCoverimg(Integer gameid);
+
+	List<CarouseVO> toGetWeekhotGameList();
+
+	List<CarouseVO> toGetNewputGameList();
+
+	List<CarouseVO> toGetMydiscountGameList();
 
 }

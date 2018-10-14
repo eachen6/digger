@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.digger.service.GameService;
 import com.digger.utils.FTPSSMLoad;
 import com.digger.utils.UploadUtil;
+import com.digger.vo.CarouseVO;
 import com.digger.vo.GameVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
@@ -116,9 +119,9 @@ public class GameController {
      * 获取所有游戏<火爆新品>集合
      * @return
      */
-	@RequestMapping(value = "get_hotnew_gamelist", method = RequestMethod.GET)
+	@RequestMapping(value = "get_hotnew_gamelist/{pn}", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse totalGameList()
+	public ServerResponse hotnewGameList(@PathVariable(value="pn") int pn)
 	{
 		return gameService.toGetHotnewGameList();
 	}
@@ -199,20 +202,25 @@ public class GameController {
 	 * 根据关键词搜索游戏
 	 * @return
 	 */
-	@RequestMapping(value = "search_game_byname")
+	@RequestMapping(value = "search_game_byname/{name}/{pn}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse searchGameByname(@RequestParam(value="name") String name){
-		return gameService.searchGameByname(name);
+	public ServerResponse searchGameByname(@PathVariable(value="name") String name,@PathVariable(value="pn") int pn){
+		PageHelper.startPage(pn, Const.gamecount);
+        List<CarouseVO> list = gameService.searchGameByname(name);
+        System.out.println("5");
+        PageInfo page = new PageInfo(list,Const.pagecount);
+        return ServerResponse.createBySuccess(page);
 	}
 	
 	/**
 	 * 根据标签（即分类）搜索游戏
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "search_game_bycategory")
 	@ResponseBody
 	public ServerResponse searchGameBycategory(@RequestParam(value="name") String name){
 		System.out.println(name+"kkkkkkkkkkk");
 		return gameService.searchGameByname(name);
-	}
+	}*/
+	
 }

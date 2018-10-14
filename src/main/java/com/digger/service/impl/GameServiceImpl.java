@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
+import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.GameService;
@@ -57,18 +58,6 @@ public class GameServiceImpl implements GameService{
 		// TODO Auto-generated method stub
 		List<GamelistVO> gamelist = new ArrayList<GamelistVO>();
 		gamelist = gameMapper.toGetHotSaleGameList();
-		return ServerResponse.createBySuccess(gamelist);
-	}
-
-	/* 
-	 * 获取所有游戏<火爆新品>集合
-	 * @author 徐子颖
-	 */
-	@Override
-	public ServerResponse toGetHotnewGameList() {
-		// TODO Auto-generated method stub
-		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
-		gamelist = gameMapper.toGetHotnewGameList();
 		return ServerResponse.createBySuccess(gamelist);
 	}
 
@@ -135,10 +124,10 @@ public class GameServiceImpl implements GameService{
 	 * @author 高志劲
 	 */
 	@Override
-	public ServerResponse searchGameByname(String name) {
+	public List<CarouseVO> searchGameByname(String name) {
 		List<CarouseVO> list = new ArrayList<CarouseVO>();
 		list = gameMapper.searchGamewByname(name);
-		return ServerResponse.createBySuccess(list);
+		return list;
 	}
 
 	/* 
@@ -299,6 +288,52 @@ public class GameServiceImpl implements GameService{
 			return ServerResponse.createBySuccessMessage("下架成功");
 		}
 		return ServerResponse.createByErrorMessage("下架失败");
+	}
+	
+	/* 
+	 * 获取所有游戏<火爆新品>集合
+	 * @author 徐子颖
+	 */
+	@Override
+	public List<CarouseVO> toGetHotnewGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetHotnewGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<本周热门>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetWeekhotGameList() {
+		// TODO Auto-generated method stub
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetWeekhotGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<最新上架>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetNewputGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetNewputGameList();
+		return gamelist;
+	}
+
+	/* 
+	 * 获取所有游戏<折扣促销>集合
+	 * @author 高志劲
+	 */
+	@Override
+	public List<CarouseVO> toGetMydiscountGameList() {
+		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
+		gamelist = gameMapper.toGetMydiscountGameList();
+		return gamelist;
 	}
 
 }

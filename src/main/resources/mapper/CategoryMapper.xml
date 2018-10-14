@@ -95,6 +95,6 @@
   <select id="selectAllLabel" resultType="com.digger.pojo.Category">
     select id, name 
     from category
-    where state > 0
+    where state = 1
   </select>
 </mapper>
