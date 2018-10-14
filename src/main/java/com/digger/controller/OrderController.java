@@ -52,4 +52,19 @@ public class OrderController {
 		return orderService.toGetOrder(user.getId());
 	}
 	
+	/**
+     * 根据订单id将订单删除
+     * @return
+     */
+	@RequestMapping(value = "delete_order", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toDeleteOrder(Integer id,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toDeleteOrder(id);
+	}
+	
 }

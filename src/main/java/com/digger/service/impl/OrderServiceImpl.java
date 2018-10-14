@@ -15,6 +15,7 @@ import com.digger.dao.OrderMapper;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.OrderService;
+import com.digger.vo.OrderVO;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
@@ -73,13 +74,28 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public ServerResponse toGetOrder(Integer userid) {
 		// TODO Auto-generated method stub
-		List<Order> list = new ArrayList<Order>();
+		List<OrderVO> list = new ArrayList<OrderVO>();
 		list = orderMapper.toGetOrder(userid);
 		if(CollectionUtils.isEmpty(list)){
 			return ServerResponse.createByErrorMessage("查看订单失败");
 		}
 		return ServerResponse.createBySuccess("查看订单成功", list);
 		
+	}
+
+	/* 
+	 * 删除订单
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toDeleteOrder(Integer id) {
+		// TODO Auto-generated method stub
+		int rowCount = orderMapper.deleteByPrimaryKey(id);
+		System.out.println(rowCount);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("删除成功！");
+        }
+        return ServerResponse.createByErrorMessage("删除失败！");
 	}
 	
 }
