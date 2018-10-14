@@ -10,4 +10,6 @@ public interface OrderService {
 
 	ServerResponse toGetOrder(Integer userid);
 
+	ServerResponse toDeleteOrder(Integer id);
+
 }

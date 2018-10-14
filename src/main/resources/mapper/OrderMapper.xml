@@ -26,7 +26,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from `order`
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Order">
@@ -176,9 +176,9 @@
   </update>
   
   <!-- 新增方法：查看订单-->
-  <select id="toGetOrder" parameterType="java.lang.Integer" resultType="com.digger.pojo.Order">
-    select *
-    from `order`
-    where userid = #{userid}
+  <select id="toGetOrder" parameterType="java.lang.Integer" resultType="com.digger.vo.OrderVO">
+    select a.*,b.name
+    from `order` as a,game as b
+    where userid = #{userid} and a.gameid = b.id
   </select>
 </mapper>
