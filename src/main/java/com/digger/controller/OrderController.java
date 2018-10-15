@@ -77,13 +77,10 @@ public class OrderController {
 	@ResponseBody
 	public ServerResponse IsBuy_Order(@RequestParam(value="gameid") int gameid,HttpSession session) 
 	{
-		System.out.println("oooooooooooooooooooooo");
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
 			return ServerResponse.createByErrorCodeMessage(1,"用户未登录");
 		}
-		System.out.println("oooooooooooooooooooooo");
-		System.out.println(user.getId());
 		return orderService.isBuy_Order(gameid,user.getId());
 	}
 	
