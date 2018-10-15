@@ -32,6 +32,9 @@ $(document).ready(function(){
 		else if(name=="chat"){
 			$("#frame").load("../socket/socketpage.html");
 		}
+		else if(name=="wish"){
+			$("#frame").load("wish.html")
+		}
 		
 		$(".loading").fadeOut(500);
 	})

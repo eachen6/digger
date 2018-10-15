@@ -119,7 +119,7 @@
   
   <!-- 新增方法：获取该游戏是否被当前用户加入愿望清单-->
   <select id="toGetMyselfWishGame" parameterType="java.lang.Integer" resultType="com.digger.vo.WishVO">
-    select c.*,a.price,a.discountstate,b.discount from game as a,discountlist as b,wish as c 
+    select c.*,a.price,a.discountstate,a.name,b.discount from game as a,discountlist as b,wish as c 
     where c.userid = #{userid} and c.gameid = a.id and c.gameid = b.gameid
   </select>
 </mapper>

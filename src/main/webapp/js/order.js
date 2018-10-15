@@ -38,7 +38,7 @@ function deleteTheOrder(id){
 		type:"POST",
 		url:"../order/delete_order",
 		data:{
-			gameid:id
+			id:id
 		},
 		async:true,
 		success:function(res){

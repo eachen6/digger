@@ -64,11 +64,11 @@ public class GameController {
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
 			HttpServletRequest request) throws IllegalStateException, IOException{
-		//User user = (User) session.getAttribute(Const.CURRENT_USER);
-		//if(user == null){
-       //    return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
-      //  }
-		
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+           return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
+        }
+		System.out.println(files);
 		String name = null;
 		//增加游戏，包括上传视频、图片以及其他信息
 				if (files != null && files.length > 0) {
@@ -99,20 +99,33 @@ public class GameController {
 				                	//return ServerResponse.createBySuccess(fileMap);
 				                	returnMap.put("videourl", fileMap.get("http_url"));
 				                }
+				                else if(file.getOriginalFilename().endsWith("rmvb")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("videourl", imgMap.get("http_url"));
+				                }
+				                else if(file.getOriginalFilename().endsWith("avi")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("videourl", imgMap.get("http_url"));
+				                }
 				                else if(file.getOriginalFilename().endsWith("cover.jpg")) {
 				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
 				                	returnMap.put("coverurl", imgMap.get("http_url"));
-				                }else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
+				                }
+				                else if(file.getOriginalFilename().endsWith("surface.jpg")) {
 				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-				                	returnMap.put("carouse", imgMap.get("http_url"));
+				                	returnMap.put("surfaceurl", imgMap.get("http_url"));
+				                }
+				                else if(file.getOriginalFilename().endsWith("carouse.jpg")) {
+				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	returnMap.put("carouseurl", imgMap.get("http_url"));
 				                }else if(file.getOriginalFilename().endsWith("bg.jpg")) {
 				                	Map imgMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
-				                	returnMap.put("bg", imgMap.get("http_url"));
+				                	returnMap.put("bgurl", imgMap.get("http_url"));
 				                }
 		            	}
 		               
 		            }
-		            return ServerResponse.createBySuccess(returnMap);
+		            return gameService.toAddGamefile(returnMap,user.getId());
 				}
 		
 		return ServerResponse.createByErrorMessage("上传失败");
