@@ -12,4 +12,6 @@ public interface OrderService {
 
 	ServerResponse toDeleteOrder(Integer id);
 
+	ServerResponse isBuy_Order(int id, int userid);
+
 }

@@ -22,9 +22,10 @@
 		
 		<form action="game/add" method="post" enctype="multipart/form-data">
 			视频上传：<input id="video" name="files"  type="file"/>
-			图片上传：<input id="img" name="files"  type="file"/>
-			文字：<input id="name" name="name"  type="text"/>
-			分类：<input id="category" name="category"  type="text"/>
+			图片上传：<input id="img1" name="files"  type="file"/>
+			图片上传：<input id="img2" name="files"  type="file"/>
+			图片上传：<input id="img3" name="files"  type="file"/>
+			图片上传：<input id="img4" name="files"  type="file"/>
 			<input id="submit" type="submit" value="提交文件" />
 		</form>
 		

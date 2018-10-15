@@ -10,6 +10,7 @@
     <result column="bgurl" jdbcType="VARCHAR" property="bgurl" />
     <result column="coverurl" jdbcType="VARCHAR" property="coverurl" />
     <result column="videourl" jdbcType="VARCHAR" property="videourl" />
+    <result column="surfaceurl" jdbcType="VARCHAR" property="surfaceurl" />
     <result column="opstage" jdbcType="VARCHAR" property="opstage" />
     <result column="developer" jdbcType="VARCHAR" property="developer" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -34,7 +35,7 @@
     <result column="detailtxt" jdbcType="LONGVARCHAR" property="detailtxt" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, category, label, carouseurl, bgurl, coverurl, videourl, opstage, developer, oper, platform, 
+    id, name, category, label, carouseurl, bgurl, coverurl, videourl, surfaceurl, opstage, developer, oper, platform, 
     memory, grcard, cd, cpu, system, driver, state, click, sale, createtime, updatetime, 
     price, shelftime, uploadid, discountstate
   </sql>
@@ -53,10 +54,10 @@
     delete from game
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.digger.pojo.Game">
+  <insert id="insert" parameterType="com.digger.pojo.Game" useGeneratedKeys="true" keyProperty="id">
     insert into game (id, name, category, 
       label, carouseurl, bgurl, coverurl, 
-      videourl, opstage, developer, 
+      videourl, surfaceurl, opstage, developer, 
       oper, platform, memory, 
       grcard, cd, cpu, system, 
       driver, state, click, 
@@ -65,11 +66,11 @@
       discountstate, detailtxt)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
       #{label,jdbcType=VARCHAR}, #{carouseurl,jdbcType=VARCHAR}, #{bgurl,jdbcType=VARCHAR}, #{coverurl,jdbcType=VARCHAR}, 
-      #{videourl,jdbcType=VARCHAR}, #{opstage,jdbcType=VARCHAR}, #{developer,jdbcType=VARCHAR}, 
+      #{videourl,jdbcType=VARCHAR},#{surfaceurl,jdbcType=VARCHAR}, #{opstage,jdbcType=VARCHAR}, #{developer,jdbcType=VARCHAR}, 
       #{oper,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
       #{grcard,jdbcType=VARCHAR}, #{cd,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
       #{driver,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{click,jdbcType=INTEGER}, 
-      #{sale,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{sale,jdbcType=INTEGER}, now(), now(), 
       #{price,jdbcType=REAL}, #{shelftime,jdbcType=TIMESTAMP}, #{uploadid,jdbcType=INTEGER}, 
       #{discountstate,jdbcType=TINYINT}, #{detailtxt,jdbcType=LONGVARCHAR})
   </insert>
@@ -99,6 +100,9 @@
       </if>
       <if test="videourl != null">
         videourl,
+      </if>
+      <if test="surfaceurl != null">
+        surfaceurl,
       </if>
       <if test="opstage != null">
         opstage,
@@ -186,6 +190,9 @@
       <if test="videourl != null">
         #{videourl,jdbcType=VARCHAR},
       </if>
+      <if test="surfaceurl != null">
+        #{surfaceurl,jdbcType=VARCHAR},
+      </if>
       <if test="opstage != null">
         #{opstage,jdbcType=VARCHAR},
       </if>
@@ -272,6 +279,9 @@
       <if test="videourl != null">
         videourl = #{videourl,jdbcType=VARCHAR},
       </if>
+      <if test="surfaceurl != null">
+        surfaceurl = #{surfaceurl,jdbcType=VARCHAR},
+      </if>
       <if test="opstage != null">
         opstage = #{opstage,jdbcType=VARCHAR},
       </if>
@@ -344,6 +354,7 @@
       bgurl = #{bgurl,jdbcType=VARCHAR},
       coverurl = #{coverurl,jdbcType=VARCHAR},
       videourl = #{videourl,jdbcType=VARCHAR},
+      surfaceurl = #{surfaceurl,jdbcType=VARCHAR},
       opstage = #{opstage,jdbcType=VARCHAR},
       developer = #{developer,jdbcType=VARCHAR},
       oper = #{oper,jdbcType=VARCHAR},
@@ -375,6 +386,7 @@
       bgurl = #{bgurl,jdbcType=VARCHAR},
       coverurl = #{coverurl,jdbcType=VARCHAR},
       videourl = #{videourl,jdbcType=VARCHAR},
+      surfaceurl = #{surfaceurl,jdbcType=VARCHAR},
       opstage = #{opstage,jdbcType=VARCHAR},
       developer = #{developer,jdbcType=VARCHAR},
       oper = #{oper,jdbcType=VARCHAR},
@@ -474,7 +486,7 @@
   
    <!-- 新增方法：获取预告游戏集合-->
   <select id="toGetNoticeGameList" resultType="com.digger.vo.CarouseVO">
-   select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
+    select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
     where state = 1
@@ -482,8 +494,11 @@
   </select>
   
   <!-- 新增方法：獲取游戏详情-->
-  <select id="toGetDetail" resultType="com.digger.pojo.Game">
-    select * from game where id = #{id}
+  <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
+    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,shelftime,discountstate,detailtxt,discount,starttime,deadline
+    from game left join (select * from discountlist where now()>starttime and deadline>now()) as a
+    on game.id=a.gameid 
+    where game.id = #{id}
   </select>
   
   <!-- 新增方法：根据关键词提示  -->
@@ -579,4 +594,12 @@
       coverurl
       from game where id = #{gameid}
   </select>
+  
+  <!-- 新增方法：游戏点击量+1  -->
+  <update id="addclick" parameterType="Integer">
+    update game
+    set click = click+1
+    where id = #{gameid}
+  </update>
+  
 </mapper>

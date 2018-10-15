@@ -1,17 +1,17 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html lang="ch">
 
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="左右结构项目，属于大人员的社交工具">
+		<meta name="keywords" content="左右结构项目 社交 占座 ">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="format-detection" content="telephone=no">
 		<title>Digger游戏平台</title>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../js/vue.min.js"></script>
-		
-		
+
 		<script>
 			$(function() {
 				$(".meun-item").click(function() {
@@ -76,7 +76,7 @@
 			<!-- 左侧菜单栏目块 -->
 			<div class="leftMeun" id="leftMeun">
 				<div id="logoDiv">
-					<p id="logoP"><img id="logo" alt="digger" src="../img/b_logo.png"><span>digger</span></p>
+					<p id="logoP"><img id="logo" alt="digger" src="../img/logo.png"><span>digger</span></p>
 				</div>
 				<div id="personInfor">
 					<p>
@@ -110,66 +110,46 @@
 								<button class="btn btn-white btn-xs ">查 询 </button>
 							</div>
 						</div>
-							<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li class="col-md-3 col-xs-3"><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#regu" data-toggle="tab">未上架</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#stud" data-toggle="tab">在销售</a></li>
-	                            <li class="col-md-3 col-xs-3"><a href="#sitt" data-toggle="tab">已下架</a></li>
-                                </ul>
-						<div class="data-div">
-							<div class="row tableHeader" style="text-align: center;">
-								<div class="col-md-1 col-xs-1">
-									编码
-								</div>
-								<div class="col-md-2 col-xs-2">
-									游戏名称
-								</div>
-								<div class="col-md-1 col-xs-1">
-									上传玩家
-								</div>
-								<div class="col-md-2 col-xs-2">
-									上传时间
-								</div>
-								<div class="col-md-2 col-xs-2">
-									游戏类型
-								</div>
-								<div class="col-md-2 col-xs-2">
-									备注
-								</div>
-								<div class="col-md-2 col-xs-2">
-									操作
-								</div>
-							</div>
-							<div class="tablebody">
-
-								<div class="row" style="text-align: center;">
-									<div class="col-md-1 col-xs-1">
-										001
-									</div>
-									<div class="col-md-2 col-xs-2">
-										英雄联盟
-									</div>
-									<div class="col-md-1 col-xs-1">
-										拳头
-									</div>
-									<div class="col-md-2 col-xs-2">
-										2011-1-1
-									</div>
-									<div class="col-md-2 col-xs-2">
-										益智
-									</div>
-									<div class="col-md-2 col-xs-2">
-										巨TM好玩
-									</div>
-									<div class="col-md-2 col-xs-2">
-										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">查看</button>
-										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
-									</div>
-								</div>
-
-							</div>
-
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+							<li class="col-md-3 col-xs-3">
+								<a href="#sour" data-toggle="tab" style="background: #4B6075;">待审核</a>
+							</li>
+							<li class="col-md-3 col-xs-3">
+								<a href="#regu" data-toggle="tab">未上架</a>
+							</li>
+							<li class="col-md-3 col-xs-3">
+								<a href="#stud" data-toggle="tab">在销售</a>
+							</li>
+							<li class="col-md-3 col-xs-3">
+								<a href="#sitt" data-toggle="tab">已下架</a>
+							</li>
+						</ul>
+						<!--审核表单-->
+						<div id="check" class="table-responsive">
+							<table class="table">
+								<thead class="table-active">
+									<tr>
+										<th>编码</th>
+										<th>游戏名称</th>
+										<th>上传玩家</th>
+										<th>上传时间</th>
+										<th>游戏类型</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in checks">
+										<td>{{item.id}}</td>
+										<td>{{item.name}}</td>
+										<td>{{item.uploadid}}</td>
+										<td>{{item.createtime}}</td>
+										<td>{{item.category}}</td>
+										<td><button class="btn btn-info">审核</button></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+
 						<!--页码块-->
 						<footer class="footer">
 							<ul class="pagination">
@@ -204,21 +184,20 @@
 
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-dialog modal-lg " role="document">
 								<div class="modal-content">
 
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title" id="gridSystemModalLabel">游戏审核</h4>
 									</div>
-                                    <div class="modal-body">
-                                    	<div class="container-fluid">
-										<div class="row">
+									<div class="modal-body">
+										<div class="container-fluid">
+											<div class="row">
 
-											<div class="col-md-7">
-												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360" poster="" data-setup="{}">
-													<source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type='video/mp4'>
-													<source src="MY_VIDEO.webm" type='video/webm'>
+												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" style="margin-left: 6px;" poster="" data-setup="{}">
+													<source :src="videourl" type='video/mp4'>
+
 													<p class="vjs-no-js">
 														To view this video please enable JavaScript, and consider upgrading to a web browser that
 														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -226,38 +205,34 @@
 												</video>
 											</div>
 
-											<div class="col-md-5">
+											<div class="row">
+												<a href="#" class="thumbnail">
+													<img src="../img/bgimg.PNG" alt="通用的占位符缩略图">
+												</a>
+											</div>
+											<div class="row">
+												<div class="col-sm-6 col-md-6">
+													<a href="#" class="thumbnail">
+														<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+													</a>
+												</div>
+												<div class="col-sm-6 col-md-6">
+													<a href="#" class="thumbnail">
+														<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+													</a>
+												</div>
+											</div>
+
+											<div class="row" style="margin-top:10px ; margin-left: 6px;">
+
 												<h5 style="text-align: center;">英雄联盟</h5>
 												<p>《英雄联盟》是由美国拳头游戏(Riot Games)开发、中国大陆地区腾讯游戏代理运营的英雄对战MOBA竞技网游。 游戏里拥有数百个个性英雄，并拥有排位系统、符文系统等特色养成系统。 《英雄联盟》还致力于推动全球电子竞技的发展，除了联动各赛区发展职业联赛、打造电竞体系之外，每年还会举办“季中冠军赛”“全球总决赛”“All Star全明星赛”三大世界级赛事，获得了亿万玩家的喜爱，形成了自己独有的电子竞技文化。
 												</p>
-											</div>
-										</div>
-										<div class="row" style="margin-top:10px ;">
 
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
-											</div>
-											<div class="col-sm-6 col-md-3">
-												<a href="#" class="thumbnail">
-													<img src="../img/logo1.jpg" alt="通用的占位符缩略图">
-												</a>
 											</div>
 										</div>
 									</div>
-                                    </div>
-									
+
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
 										<button type="button" class="btn btn-xs btn-green">通过</button>
@@ -293,15 +268,14 @@
 						</div>
 						<!-- /.modal -->
 					</div>
-					
+
 					<!-- 上传文件模块 -->
 					<div role="tabpanel" class="tab-pane" id="char">
-                <div class="main_page">
-	            <iframe scrolling="no" id="main1" name="main" frameborder="0"  src="upload.html" style="min-height:400px;width:100%;height:50%;"></iframe>
-	           
-                </div>
-                   </div>
-				
+						<div class="main_page">
+							<iframe scrolling="no" id="main" name="main" frameborder="0" src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
+						</div>
+					</div>
+
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
 						<div class="check-div form-inline">
@@ -314,11 +288,19 @@
 							</div>
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
-	                            <li><a href="#regu" data-toggle="tab" style="background: #4B6075;">未上架</a></li>
-	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
-	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
-                                </ul>
+							<li>
+								<a href="#sour" data-toggle="tab">待审核</a>
+							</li>
+							<li>
+								<a href="#regu" data-toggle="tab" style="background: #4B6075;">未上架</a>
+							</li>
+							<li>
+								<a href="#stud" data-toggle="tab">在销售</a>
+							</li>
+							<li>
+								<a href="#sitt" data-toggle="tab">已下架</a>
+							</li>
+						</ul>
 						<div class="row tableHeader" style="text-align: center;">
 							<div class="col-md-1 ">
 								编码
@@ -370,43 +352,42 @@
 							</div>
 
 						</div>
-                        <!--页码块-->
-					<footer class="footer">
-						<ul class="pagination">
-							<li>
-								<select>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-								</select>
-								页
-							</li>
-							<li class="gray">
-								共20页
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-left">
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
                             </i>
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-right">
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
                             </i>
-							</li>
-						</ul>
-					</footer>
+								</li>
+							</ul>
+						</footer>
 					</div>
 
-			
 					<!--游戏下架模块-->
 					<div role="tabpanel" class="tab-pane" id="sitt">
-                             <div class="check-div form-inline">
+						<div class="check-div form-inline">
 							<div class="col-md-3">
 								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
 							</div>
@@ -416,11 +397,19 @@
 							</div>
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
-	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
-	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
-	                            <li><a href="#sitt" data-toggle="tab"style="background: #4B6075;">已下架</a></li>
-                                </ul>
+							<li>
+								<a href="#sour" data-toggle="tab">待审核</a>
+							</li>
+							<li>
+								<a href="#regu" data-toggle="tab">未上架</a>
+							</li>
+							<li>
+								<a href="#stud" data-toggle="tab">在销售</a>
+							</li>
+							<li>
+								<a href="#sitt" data-toggle="tab" style="background: #4B6075;">已下架</a>
+							</li>
+						</ul>
 						<div class="row tableHeader" style="text-align: center;">
 							<div class="col-md-1 ">
 								编码
@@ -473,40 +462,39 @@
 
 						</div>
 
-					
-					<!--页码块-->
-					<footer class="footer">
-						<ul class="pagination">
-							<li>
-								<select>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-								</select>
-								页
-							</li>
-							<li class="gray">
-								共20页
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-left">
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
                             </i>
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-right">
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
                             </i>
-							</li>
-						</ul>
-					</footer>
-</div>
-				
+								</li>
+							</ul>
+						</footer>
+					</div>
+
 					<!--游戏在销售模块-->
 					<div role="tabpanel" class="tab-pane" id="stud">
 						<div class="check-div form-inline">
@@ -519,11 +507,19 @@
 							</div>
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li><a href="#sour" data-toggle="tab">待审核</a></li>
-	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
-	                            <li><a href="#stud" data-toggle="tab" style="background: #4B6075;">在销售</a></li>
-	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
-                                </ul>
+							<li>
+								<a href="#sour" data-toggle="tab">待审核</a>
+							</li>
+							<li>
+								<a href="#regu" data-toggle="tab">未上架</a>
+							</li>
+							<li>
+								<a href="#stud" data-toggle="tab" style="background: #4B6075;">在销售</a>
+							</li>
+							<li>
+								<a href="#sitt" data-toggle="tab">已下架</a>
+							</li>
+						</ul>
 						<div class="row tableHeader" style="text-align: center;">
 							<div class="col-md-1 ">
 								编码
@@ -576,39 +572,38 @@
 
 						</div>
 
-					
-					<!--页码块-->
-					<footer class="footer">
-						<ul class="pagination">
-							<li>
-								<select>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-								</select>
-								页
-							</li>
-							<li class="gray">
-								共20页
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-left">
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
                             </i>
-							</li>
-							<li>
-								<i class="glyphicon glyphicon-menu-right">
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
                             </i>
-							</li>
-						</ul>
-					</footer>
-                    </div>
+								</li>
+							</ul>
+						</footer>
+					</div>
 					<!--用户管理模块-->
 					<div role="tabpanel" class="tab-pane" id="user">
 						<div class="check-div form-inline">
@@ -838,7 +833,7 @@
 							<div class="tablebody">
 								<div class="row">
 									<div class="col-xs-1 ">
-										1
+										{{1}}
 									</div>
 									<div class="col-xs-2">
 										{{title}}
@@ -1064,8 +1059,8 @@
 					</div>
 					<!--数据统计模块-->
 					<div role="tabpanel" class="tab-pane" id="shuju">
-					 <iframe scrolling="no" id="main" name="main" frameborder="0"  src="data1.html" style="min-height:750px;width:100%;height:100%;"></iframe>	
-					</div>	
+						<iframe scrolling="no" id="main" name="main" frameborder="0" src="data1.html" style="min-height:600px;width:100%;height:100%;"></iframe>
+					</div>
 					<!--修改密码模块-->
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
@@ -1104,28 +1099,29 @@
 				</div>
 			</div>
 		</div>
-		
-		<script type="text/javascript" src="../js/myvue.js" ></script>
-		<script>
-			 function calcPageHeight(doc) {
-      var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
-      var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
-      var height  = Math.max(cHeight, sHeight)
-      return height
-  }
-  //根据ID获取iframe对象
-  var ifr = document.getElementById('main')
-  ifr.onload = function() {
-  	  //解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
-  	  ifr.style.height='0px';
-      var iDoc = ifr.contentDocument || ifr.document
-      var height = calcPageHeight(iDoc)
-      if(height < 850){
-      	height = 850;
-      }
-      ifr.style.height = height + 'px'
-  }
-		</script>
+
+		<script type="text/javascript" src="../vue/vue.min.js"></script>
+		<script src="../js/myvue.js"></script>
 	</body>
+	<script>
+		function calcPageHeight(doc) {
+			var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+			var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+			var height = Math.max(cHeight, sHeight)
+			return height
+		}
+		//根据ID获取iframe对象
+		var ifr = document.getElementById('main')
+		ifr.onload = function() {
+			//解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
+			ifr.style.height = '0px';
+			var iDoc = ifr.contentDocument || ifr.document
+			var height = calcPageHeight(iDoc)
+			if(height < 850) {
+				height = 850;
+			}
+			ifr.style.height = height + 'px'
+		}
+	</script>
 
 </html>

@@ -1,6 +1,8 @@
 package com.digger.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -10,7 +12,7 @@ import com.digger.vo.CarouseVO;
 
 public interface GameService {
 
-	ServerResponse toAddGame(Game game);
+	ServerResponse toAddGamefile(Map map,int id);
 
 	ServerResponse toGetHotSaleCarouse();
 
@@ -57,6 +59,8 @@ public interface GameService {
 	List<CarouseVO> toGetMydiscountGameList();
 
 	List<CarouseVO> toGetNewputGameList();
+
+	void addclick(int gameid);
 
 	
 }

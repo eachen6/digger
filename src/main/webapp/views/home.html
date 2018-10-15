@@ -131,7 +131,8 @@
         		<div id="myCarousel2" class="carousel slide col-md-12" data-interval="false">
 			      <!-- 轮播（Carousel）项目 -->
 			       <div class="carousel-inner">
-				      <div v-for="n in sum" class="item" :class="{'active':!(n-1)}">
+				      <div v-for="n in sum"
+				       class="item" :class="{'active':!(n-1)}">
 						      <div class="col-md-3" v-for="(game,index) in games" v-if="(n-1)*4<=index&&n*4>index">
 						      	<a :href="'main.html?location=details&id='+game.id" style="text-decoration: none;">
 						      	 <div class="thumbnail">

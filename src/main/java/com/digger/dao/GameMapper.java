@@ -7,6 +7,7 @@ import com.digger.pojo.Game;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
 import com.digger.vo.GameAuditVO;
+import com.digger.vo.GamedetailsVO;
 
 public interface GameMapper {
     int deleteByPrimaryKey(Integer id);
@@ -35,7 +36,7 @@ public interface GameMapper {
 
 	List<CarouseVO> toGetNoticeGameList();
 
-	List<Game> toGetDetail(int id);
+	List<GamedetailsVO> toGetDetail(int id);
 
 	List<Game> searchGamewByword(String keyword);
 
@@ -70,5 +71,7 @@ public interface GameMapper {
 	List<CarouseVO> toGetNewputGameList();
 
 	List<CarouseVO> toGetMydiscountGameList();
+
+	int addclick(int gameid);
 
 }

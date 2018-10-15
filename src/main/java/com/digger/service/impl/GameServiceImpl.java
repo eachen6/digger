@@ -3,6 +3,7 @@ package com.digger.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
 import com.digger.vo.GameAuditVO;
+import com.digger.vo.GamedetailsVO;
 
 @Service("gameService")
 public class GameServiceImpl implements GameService{
@@ -25,14 +27,22 @@ public class GameServiceImpl implements GameService{
 	GameMapper gameMapper;
 	
 	/* 
-	 * 增加游戏
+	 * 增加游戏文件
 	 * @author 陈进雄
 	 */
-	public ServerResponse toAddGame(Game game){
-		
+	public ServerResponse toAddGamefile(Map map,int id){
+		Game game = new Game();
+		game.setBgurl((String) map.get("bgurl"));
+		game.setCarouseurl((String)map.get("carouseurl"));
+		game.setCoverurl((String)map.get("coverurl"));
+		game.setVideourl((String)map.get("videourl"));
+		game.setSurfaceurl((String)map.get("surfaceurl"));
+		game.setUploadid(id);
+		System.out.println(game.toString());
 		int rowCount = gameMapper.insert(game);
 		if(rowCount > 0){
-            return ServerResponse.createBySuccess("上传游戏成功");
+			int rowID = game.getId();
+            return ServerResponse.createBySuccess("文件上传成功", rowID);
         }
         return ServerResponse.createByErrorMessage("上传游戏失败");
 		
@@ -103,7 +113,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse toGetDetail(int id) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GamedetailsVO> gamelist = new ArrayList<GamedetailsVO>();
 		gamelist = gameMapper.toGetDetail(id);
 		return ServerResponse.createBySuccess(gamelist);
 	}
@@ -335,6 +345,16 @@ public class GameServiceImpl implements GameService{
 		List<CarouseVO> gamelist = new ArrayList<CarouseVO>();
 		gamelist = gameMapper.toGetMydiscountGameList();
 		return gamelist;
+	}
+
+	/* 
+	 * 游戏点击量+1
+	 * @author 高志劲
+	 */
+	@Override
+	public void addclick(int gameid) {
+		int result = 0;
+		result = gameMapper.addclick(gameid);
 	}
 
 }

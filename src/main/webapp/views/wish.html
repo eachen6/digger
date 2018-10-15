@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
+		<script type="text/javascript" src="../bootstrap/js/bootstrap.js" ></script>-->
+		<link rel="stylesheet" type="text/css" href="../css/wish.css"/>
+	</head>
+	<body>
+		<div class="container" id="wish">
+			<div class="row">
+				<div class="container-fluid" v-for="item in contents" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
+				
+					<div class="row" style="padding-left: 20px;">
+						<span style="color: #098DDF;">添加时间：</span>{{item.createtime}}
+						
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-md-2">
+							
+							<div class="" style="margin-left: 50px;">
+								<img style="height: 150px;width: 105px;border-radius: 5px;border: 1px solid whitesmoke;" :src="item.coverimg"/>
+							</div>
+							
+						</div>
+						<div class="col-md-4">
+							<p style="font-size: 35px;">{{item.name}}</p>
+						</div>
+						<div class="col-md-4">
+							<div class="gameprice" style="float: right;">
+                                 <template v-if="item.price==0">
+                                 <span class="originalprice1">免费</span>
+                                 </template>
+                                 <template v-else-if="item.discountstate==0">
+                                 <span class="originalprice1">￥{{item.price}}</span>
+                                 </template>
+                                 <template v-else>
+                                 <span class="originalprice2">￥{{item.price}}</span>
+                                 <span class="price">￥{{item.price*item.discount*0.1}}</span>
+                                 <span class="discount">&nbsp;&nbsp;&nbsp;{{item.discount}}折</span>
+                                 </template>
+                            </div>
+						</div>
+						<div class="col-md-2" style="padding-top: 150px;">
+							<button type="button" :data-id = "item.id" class="btn btn-danger">删除</button>
+							<button type="button" class="btn btn-info">支付</button>
+						</div>
+	
+					</div>
+			
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/wish.js"></script>
+	</body>
+</html>

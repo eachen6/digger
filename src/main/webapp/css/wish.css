@@ -1,0 +1,26 @@
+.gameprice{
+	text-align:center;
+	overflow:hidden;
+	padding-top:7%;
+}
+
+.originalprice1{
+	font-size:1.5em;
+	color:#2F4154;
+}
+
+.originalprice2{
+	font-size:1.5em;
+	text-decoration:line-through;
+	color:#858585;
+}
+
+.price{
+	font-size:1.5em;
+	color:#2F4154;
+}
+
+.discount{
+	font-size:2em;
+	color:#FF6732;
+}

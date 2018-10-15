@@ -58,6 +58,8 @@ public class Game {
     private Byte discountstate;
 
     private String detailtxt;
+    
+    private String surfaceurl;
 
     public Integer getId() {
         return id;
@@ -279,7 +281,30 @@ public class Game {
         return carouseurl;
     }
 
-    public void setCarouseur(String carouseurl) {
+    public void setCarouseurl(String carouseurl) {
         this.carouseurl = carouseurl;
     }
+
+	public String getSurfaceurl() {
+		return surfaceurl;
+	}
+
+	public void setSurfaceurl(String surfaceurl) {
+		this.surfaceurl = surfaceurl;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", name=" + name + ", category=" + category + ", label=" + label + ", carouseurl="
+				+ carouseurl + ", bgurl=" + bgurl + ", coverurl=" + coverurl + ", videourl=" + videourl + ", opstage="
+				+ opstage + ", developer=" + developer + ", oper=" + oper + ", platform=" + platform + ", memory="
+				+ memory + ", grcard=" + grcard + ", cd=" + cd + ", cpu=" + cpu + ", system=" + system + ", driver="
+				+ driver + ", state=" + state + ", click=" + click + ", sale=" + sale + ", createtime=" + createtime
+				+ ", updatetime=" + updatetime + ", price=" + price + ", shelftime=" + shelftime + ", uploadid="
+				+ uploadid + ", discountstate=" + discountstate + ", detailtxt=" + detailtxt + ", surfaceurl="
+				+ surfaceurl + "]";
+	}
+    
+	
+    
 }

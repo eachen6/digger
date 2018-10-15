@@ -35,14 +35,9 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		
 		//获取游戏信息
-		List<Game> gamelist = new ArrayList<Game>();
-		gamelist = gameMapper.toGetDetail(gameid);
 		String coverimg = null;
+		coverimg = gameMapper.findCoverimg(gameid);
 		long orderNum = 0;
-		for(Game list : gamelist){
-			coverimg = list.getCoverurl();
-		}
-		
 		Order order = new Order();
 		order.setGameid(gameid);
 		order.setUserid(userid);
@@ -101,6 +96,26 @@ public class OrderServiceImpl implements OrderService{
             return ServerResponse.createBySuccessMessage("删除成功！");
         }
         return ServerResponse.createByErrorMessage("删除失败！");
+	}
+
+	/* 
+	 * 查询该游戏是否已被用户购买
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse isBuy_Order(int gameid,int userid) {
+		Integer resultCount = 0;
+		Integer resultCount1 = 1;
+		System.out.println(gameid+"    "+userid);		
+		resultCount = orderMapper.isBuy_Order(userid, gameid);  //0代表别人赠送过改款游戏给我,1则反之
+		if(resultCount<1){ 
+		  resultCount1 = orderMapper.isBuy_Order1(userid,gameid);  //0代表我自己购买给自己过（非自己购买赠送给别人）
+		}
+		System.out.println(resultCount+"yyyyyyyyyyyyyy"+resultCount1);
+		if(resultCount > 0 || resultCount1==0){
+            return ServerResponse.createBySuccessMessage("您已购买该游戏！");
+        }
+        return ServerResponse.createByErrorMessage("您未购买该游戏！");
 	}
 	
 }

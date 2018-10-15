@@ -1,30 +1,49 @@
-new Vue({
-		el: '#home',
-		data: {
-			userid: '20180005',
-			username:'李大白',
-			sex:'男',
-			birthday:'2018-06-06',
-			education:'151',
-			address:'asd',
-			noCode:'123315',
-			mobile:'151151631',
-			email:'6153'
+/**
+ * 待审核模块
+ */
+var check = new Vue({
+	el:"#check",
+	data:{
+		checks:[]
+	},
+	methods:{},
+	created:function(){
+		getCheckList();
+	}
+})
+
+/**
+ * 获取待审核列表
+ */
+function getCheckList(){
+	var that = this;
+	$.ajax({
+		type:"get",
+		url:"../gameaudit/unaudited_gamelist",
+		async:true,
+		success:function(res){
+			check.checks = res.data;
+			for(var i = 0; i < check.checks.length; i++){
+				check.checks[i].createtime = that.format(check.checks[i].createtime)
+			}
 		}
-	}) 
-new Vue({
-	el: '#alluser',
-	data:{
-		userid:'1',
-		username:'泰国张大宝',
-		status:'正常'
-	}
-})
-new Vue({
-	el:"#gonggao",
-	data:{
-		title:'小胖胖戴绿帽',
-		content:'没有什么可以阻挡，我对绿帽的向往，在生活的每一天，都得戴上不同的绿帽，这就是我，不一样的绿帽玩家',
-		release:'已发布'
-	}
-})
+	});
+}
+
+/**
+ * 时间戳装换格式函数
+ * @param {Object} m
+ */
+function add0(m){return m<10?'0'+m:m }
+function format(shijianchuo)
+{
+//shijianchuo是整数，否则要parseInt转换
+var time = new Date(shijianchuo);
+var y = time.getFullYear();
+var m = time.getMonth()+1;
+var d = time.getDate();
+var h = time.getHours();
+var mm = time.getMinutes();
+var s = time.getSeconds();
+return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+}

@@ -9,11 +9,11 @@ import java.util.Set;
  */
 public class Const {
 	
-	public static final String FTP_SERVER_IP = "10.71.98.39";//ftp服务器ip地址
+	public static final String FTP_SERVER_IP = "10.71.98.95";//ftp服务器ip地址
     public static final String FTP_USERNAME = "digger";//ftp服务器用户名
     public static final String FTP_PASSWORD = "123";//ftp服务器密码
-    public static final String FTP_PREFIX = "ftp://10.71.98.39";//ftp服务器资源访问前缀
-    public static final String HTTP_PREFIX = "http://10.71.98.39";//ftp服务器资源访问前缀
+    public static final String FTP_PREFIX = "ftp://10.71.98.95";//ftp服务器资源访问前缀
+    public static final String HTTP_PREFIX = "http://10.71.98.95";//ftp服务器资源访问前缀
     public static final String DOWN_INTERFACE = "http://localhost:8080/digger/?";//下载文档接口
 
     public static final String CURRENT_USER = "currentUser";
@@ -23,6 +23,8 @@ public class Const {
     
     public static final int gamecount = 3; //每页所显示的游戏数
     public static final int pagecount = 5; //显示页码的个数
+    
+    public static final String IP = "ip";
 
     public interface ProductListOrderBy{
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");

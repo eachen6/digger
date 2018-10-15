@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.digger.common.Const;
@@ -66,5 +67,22 @@ public class OrderController {
 		}
 		return orderService.toDeleteOrder(id);
 	}
+	
+	/**
+	 * author 高志劲
+     * 查询该游戏是否已被用户购买
+     * @return
+     */
+	@RequestMapping(value = "isbuy_order", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse IsBuy_Order(@RequestParam(value="gameid") int gameid,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorCodeMessage(1,"用户未登录");
+		}
+		return orderService.isBuy_Order(gameid,user.getId());
+	}
+	
 	
 }
