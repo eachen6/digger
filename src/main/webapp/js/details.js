@@ -1,4 +1,4 @@
-
+var id;//游戏的id
 /**
  * QRCode生成
  */
@@ -16,16 +16,17 @@ $(document).ready(function(){
 	/*
 	 * 跳转
 	 */
-//	$(function(){
-//		var id=getUrlParam('id');
-//		if(id!=null){
-//			gamedetails(id); //获取游戏属性
-//			//gameiswish(id);  //判断用户是否已将该游戏加入愿望清单了
-//			gameisbuy(id);   //判断这款游戏是否已被用户购买过了 
-//		}
-//		else 
-//			history.go(-1);
-//	});
+	$(function(){
+		id=getUrlParam('id');
+		if(id!=null){
+			gamedetails(id); //获取游戏属性
+			getWishState(id); //获取该游戏的愿望清单状态
+			gameisbuy(id);   //判断这款游戏是否已被用户购买过了 
+		}
+		else 
+			history.go(-1);
+	});
+
 	
 	//点击愿望清单的切换
 	$("#btn_wish").click(function(e){
@@ -33,7 +34,7 @@ $(document).ready(function(){
 	    console.log("之后",game.iswish)
     });
 
-    //点击确认购买动作
+    //点击确认购买动
     $("#sureforpay").click(function(e){
         
     })
@@ -57,6 +58,7 @@ var game = new Vue({
 		prename:"所有游戏",
 //		gamename:"NBA2KOL2",
 		iswish:false,
+		isbuy:false,
 //		cover_img:"https://cdn.rail.tgp.qq.com/info/games/2000352/2c2dc799c98d1904cd062e60a0924cef.jpg",
 //		video_src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
 		anno:{
@@ -73,26 +75,23 @@ var game = new Vue({
 	methods:{
 		addToWish:function(){
 			//增加到愿望清单
+			this.id = id;
 			addToWish(this.id)
 			console.log("执行了添加到愿望清单功能")
 		},
 		deleteFromWish:function(){
 			//从愿望清单中删除
+			this.id = id;
 			deleteFromWish(this.id)
 			console.log("执行了从愿望清单中取消的功能")
 		}
 	},
 	created: function(){
-		var id=getUrlParam('id');
-		console.log(id)
-		if(id!=null){
-			getWishState(id);
-			gamedetails(id);
-		}else 
-			history.go(-1);
 	}
 })
 
+
+//获取该游戏的愿望清单状态
 function getWishState(id){
 	$.ajax({
 			type:"get",
@@ -102,19 +101,21 @@ function getWishState(id){
 			},
 			async:true,
 			success: function(res){
+				console.log(res);
 				if(res.status == 1){
 					game.iswish = false;
 				}
 				else if(res.status == 0)
 				{
-					game.iswish = true
+					game.iswish = true;
 				}
 			}
 		});
 }
 
+//该游戏加入愿望清单
 function addToWish(id){
-	var that = this;
+	alert(game.iswish);
 	$.ajax({
 		type:"POST",
 		url:"../wish/add_wishgame",
@@ -124,13 +125,22 @@ function addToWish(id){
 		async:true,
 		success:function(res){
 			console.log(res)
-			getWishState(id)
+			alert(game.iswish);
+			if(res.status==0){
+			    getWishState(id);
+			}
+			else if(res.status==1)
+			{
+				alert(game.iswish);
+				game.iswish = false;
+				console.log(res.msg);
+			}
 		}
 	});
 }
 
+//将该游戏从愿望清单中删除
 function deleteFromWish(id){
-	var that = this;
 	$.ajax({
 		type:"POST",
 		url:"../wish/delete_wishgame",
@@ -140,29 +150,45 @@ function deleteFromWish(id){
 		async:true,
 		success:function(res){
 			console.log(res)
-			getWishState(id)
+			if(res.status==0){
+			    getWishState(id);
+			}
+			else if(res.status==1)
+			{				
+				game.iswish = false;
+				console.log(res.msg);
+			}
 		}
 	});
 }
 
-
-
-//
-
-/*//获取用户是否
-function gameiswish(id){
+//检查游戏是否被用户购买
+function gameisbuy(id){
+	alert(id);
 	$.ajax({
-		type:"get",
-		url:"../game/iswish/4",
+		type:"POST",
+		url:"../order/isbuy_order",
+		data:{
+			gameid:id
+		},
 		async:true,
-		success: function(res){
-			console.log(res.data)
-			game.contents = res.data[0]
-			game.selective = game.contents.category.split(",");
+		success:function(res){
+			alert("444444");
+			console.log(res)
+			if(res.status==0){
+			    game.isbuy = true;
+			}
+			else if(res.status==1)
+			{				
+				game.isbuy = false;
+				console.log(res.msg);
+			}
 		}
 	});
 }
-*/
+
+
+
 //获取游戏属性（包括折扣信息），其中让这款游戏的点击量+1（有判断是否刷点击量的机制）
 function gamedetails(id){
 	$.ajax({
@@ -171,9 +197,10 @@ function gamedetails(id){
 		async:true,
 		success: function(res){
 			console.log(res.data)
-			game.contents = res.data[0]
-			game.id = game.contents.id;
-			game.selective = game.contents.category.split(",");
+			if(res.status==0){
+			    game.contents = res.data[0]
+			    game.selective = game.contents.category.split(",");
+			}
 		}
 	});
 }

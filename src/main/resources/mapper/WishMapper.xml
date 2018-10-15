@@ -106,7 +106,7 @@
   
   <!-- 新增方法：获取该游戏是否被当前用户加入愿望清单-->
   <select id="select" parameterType="java.lang.Integer" resultType="Integer">
-    select *
+    select count(id)
     from wish
     where gameid = #{gameid,jdbcType=INTEGER} and userid = #{userid,jdbcType=INTEGER}
   </select>

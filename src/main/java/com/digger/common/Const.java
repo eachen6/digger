@@ -23,6 +23,8 @@ public class Const {
     
     public static final int gamecount = 3; //每页所显示的游戏数
     public static final int pagecount = 5; //显示页码的个数
+    
+    public static final String IP = "ip";
 
     public interface ProductListOrderBy{
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");

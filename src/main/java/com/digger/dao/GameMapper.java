@@ -71,4 +71,6 @@ public interface GameMapper {
 
 	List<CarouseVO> toGetMydiscountGameList();
 
+	int addclick(int gameid);
+
 }

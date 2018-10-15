@@ -1,8 +1,11 @@
 package com.digger.controller;
 
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -267,11 +270,26 @@ public class GameController {
 	/**
 	 * 获取游戏详情
 	 * @return
+	 * @throws UnknownHostException 
 	 */
 	@RequestMapping(value = "detail/{gameid}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetGameDetail(@PathVariable(value="gameid") int gameid)
+	public ServerResponse toGetGameDetail(HttpSession session ,@PathVariable(value="gameid") int gameid) throws UnknownHostException
 	{
+		String ip = (String)session.getAttribute(Const.IP);
+		String myip = InetAddress.getLocalHost().getHostAddress().toString();
+		System.out.println(myip);
+		if(ip == null){
+			session.setAttribute(Const.IP, myip);
+			session.setMaxInactiveInterval(30*60);
+			System.out.println("IP不同");
+			gameService.addclick(gameid);            //在这里调用函数，使数据库的点击次数+1；
+		}
+		else if(ip.equals(ip))
+		{
+			System.out.println("IP相同");
+                        //在这里不用调用数据库，正常返回就行
+		}
 		return gameService.toGetDetail(gameid);
 	}
 	
