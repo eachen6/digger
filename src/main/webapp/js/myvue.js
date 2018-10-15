@@ -28,3 +28,4 @@ new Vue({
 		release:'已发布'
 	}
 })
+

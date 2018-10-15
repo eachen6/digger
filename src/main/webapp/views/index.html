@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html lang="ch">
 
 	<head>
@@ -11,7 +11,7 @@
 		<title>Digger游戏平台</title>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../js/vue.min.js"></script>
+		
 		
 		
 		<script>
@@ -114,65 +114,37 @@
 							</div>
 						</div>
 							<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-	                            <li><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
-	                            <li><a href="#regu" data-toggle="tab">未上架</a></li>
-	                            <li><a href="#stud" data-toggle="tab">在销售</a></li>
-	                            <li><a href="#sitt" data-toggle="tab">已下架</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#sour" data-toggle="tab"style="background: #4B6075;">待审核</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#regu" data-toggle="tab">未上架</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#stud" data-toggle="tab">在销售</a></li>
+	                            <li class="col-md-3 col-xs-3"><a href="#sitt" data-toggle="tab">已下架</a></li>
                                 </ul>
-						<div class="data-div">
-							<div class="row tableHeader" style="text-align: center;">
-								<div class="col-md-1 col-sm-1">
-									编码
-								</div>
-								<div class="col-md-2 col-sm-2">
-									游戏名称
-								</div>
-								<div class="col-md-1 col-sm-1">
-									上传玩家
-								</div>
-								<div class="col-md-2 col-sm-2">
-									上传时间
-								</div>
-								<div class="col-md-2 col-sm-2">
-									游戏类型
-								</div>
-								<div class="col-md-2 col-sm-2">
-									备注
-								</div>
-								<div class="col-md-2 col-sm-2">
-									操作
-								</div>
-							</div>
-							<div class="tablebody">
-
-								<div class="row" style="text-align: center;">
-									<div class="col-md-1 col-sm-1">
-										001
-									</div>
-									<div class="col-md-2 col-sm-2">
-										英雄联盟
-									</div>
-									<div class="col-md-1 col-sm-1">
-										拳头
-									</div>
-									<div class="col-md-2 col-sm-2">
-										2011-1-1
-									</div>
-									<div class="col-md-2 col-sm-2">
-										益智
-									</div>
-									<div class="col-md-2 col-sm-2">
-										巨TM好玩
-									</div>
-									<div class="col-md-2 col-sm-2">
-										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseSchool">查看</button>
-										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSchool">删除</button>
-									</div>
-								</div>
-
-							</div>
-
-						</div>
+						<!--审核表单-->
+							  <div id="check" class="table-responsive">          
+                                <table class="table">
+								<thead class="table-active">
+									<tr>
+									<th>编码</th>
+									<th>游戏名称</th>
+									<th>上传玩家</th>
+									<th>上传时间</th>
+									<th>游戏类型</th>
+									<th>操作</th>	
+									</tr>
+								</thead>
+								 <tbody>
+                                    <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{name}}</td>
+                                    <td>{{Pitt}}</td>
+                                    <td>{{createtime}}</td>
+                                    <td>{{category}}</td>
+                                    <td>{{USA}}</td>
+                                    </tr>
+                                </tbody>
+						        </table>
+                             </div>
+						
 						<!--页码块-->
 						<footer class="footer">
 							<ul class="pagination">
@@ -220,8 +192,8 @@
 
 										
 												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" style="margin-left: 6px;" poster="" data-setup="{}">
-													<source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type='video/mp4'>
-													<source src="MY_VIDEO.webm" type='video/webm'>
+													<source src={{videourl}} type='video/mp4'>
+													
 													<p class="vjs-no-js">
 														To view this video please enable JavaScript, and consider upgrading to a web browser that
 														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -839,7 +811,7 @@
 							<div class="tablebody">
 								<div class="row">
 									<div class="col-xs-1 ">
-										1
+										{{1}}
 									</div>
 									<div class="col-xs-2">
 										{{title}}
@@ -1106,8 +1078,11 @@
 			</div>
 		</div>
 		
-		<script type="text/javascript" src="../js/myvue.js" ></script>
-		<script>
+		
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		<script src="../js/myvue.js"></script>
+	</body>
+<script>
 			 function calcPageHeight(doc) {
       var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
       var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
@@ -1126,7 +1101,5 @@
       }
       ifr.style.height = height + 'px'
   }
-		</script>
-	</body>
-
+</script>
 </html>

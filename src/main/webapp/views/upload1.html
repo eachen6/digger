@@ -53,38 +53,54 @@ $(function(){
 	
 	<div class="container">
 	<form enctype="multipart/form-data" id="tf">
-	<div class="input-group ">
-	<span class="input-group-addon">游戏名称:</span>
-      <input type="text" class="form-control" id="gname" name="gname">
+	<div class="row">
+		<div class="col-md-6 col-sm-6">
+			<div class="input-group ">
+		<span class="input-group-addon">游戏名称:</span>
+      <input type="text" class="form-control" id="name" name="name"/>
+		</div>
+		</div>
+		<div class="col-md-6 col-sm-6">
+			<div class="input-group">
+            <span class="input-group-addon">游戏属性:</span>
+            <input type="text" class="form-control" id="category" name="category" />
+    
+		</div>
+    </div>
+   </div>
+    <br>
+    <div class="row">
+    	<div class="col-md-6 col-sm-6">
+    	<div class="input-group">
+        <span class="input-group-addon">运行内存:</span>
+        <input type="text" class="form-control" id="momery" name="memory"/>
+    </div>
+    	</div>
+    	<div class="col-md-6 col-sm-6">
+    	<div class="input-group">
+        <span class="input-group-addon">运行显卡:</span>
+        <input type="text" class="form-control" id="grcard" name="grnard" />
+    </div>	
+    	</div>
     </div>
     <br>
-     <div class="input-group">
-    <span class="input-group-addon">游戏属性:</span>
-      <input type="text" class="form-control" id="gname">
+    <div class="row">
+    	<div class="col-md-6 col-sm-6">
+    	<div class="input-group">
+        <span class="input-group-addon">开  发  商:&nbsp;</span>
+        <input type="text" class="form-control" id="open" name="open"/>
+    </div>
+    	</div>
+    	<div class="col-md-6 col-sm-6">
+    	<div class="input-group">
+        <span class="input-group-addon">运  营  商:&nbsp;</span>
+        <input type="text" class="form-control" id="platform" name="platform" />
+    </div>	
+    	</div>
     </div>
     <br>
-     <div class="input-group">
-    <span class="input-group-addon">运行内存:</span>
-      <input type="text" class="form-control" id="gname">
-    </div>
-     <br>
-     <div class="input-group">
-    <span class="input-group-addon">运行显卡:</span>
-      <input type="text" class="form-control" id="gname">
-    </div>
-     <br>
-    <div class="input-group">
-	<span class="input-group-addon">开  发  商:&nbsp;</span>
-      <input type="text" class="form-control" id="gname">
-    </div>
-     <br>
-    <div class="input-group">
-    <span class="input-group-addon">运  营  商:&nbsp;</span>
-      <input type="text" class="form-control" id="gname">
-    </div>
-     <br>
     <div class="form-check form-check-inline">
-      <label class="form-check-label">
+     <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="genres" value="">动作游戏
       </label>
     <label class="form-check-label">
@@ -102,9 +118,7 @@ $(function(){
     <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="genres" value="" >体育类型
       </label>
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
+     <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="genres" value="">射击游戏
       </label>
     <label class="form-check-label">
@@ -123,8 +137,7 @@ $(function(){
     <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="genres" value="" >3 D 游戏
       </label>
-    </div>
-    <div class="form-check form-check-inline">
+  
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="genres" value="">单机游戏
       </label>
@@ -136,6 +149,8 @@ $(function(){
       </label>
     </div>
   </form>
+  <br />
+  <br />
    <div class="summernote"></div>
     <input type="submit" id="up" value="上传" />
     <input type="button" id="et" value="重置" />
