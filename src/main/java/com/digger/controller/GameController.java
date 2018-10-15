@@ -68,10 +68,9 @@ public class GameController {
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
 			HttpServletRequest request) throws IllegalStateException, IOException{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null){
-           return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
-        }
-		System.out.println(files);
+	if(user == null){
+          return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
+      }
 		String name = null;
 		//增加游戏，包括上传视频、图片以及其他信息
 				if (files != null && files.length > 0) {
@@ -140,7 +139,8 @@ public class GameController {
 	@RequestMapping(value = "get_hotsale_carouse", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse hotSaleCarouse()
-	{
+	{ 
+		
 		return gameService.toGetHotSaleCarouse();
 	}
 	

@@ -116,24 +116,18 @@
 <body>
 
 <div class="wrapper">
-    <div class="navbar navbar-default navbar-custom" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="">
-                <!--<img alt="zjk" src="../bootstrap/images/logo.png" height="50">-->
-            </a>
-        </div>
-   </div>
-    <!-- 文件拖拽上传 -->
+ <!-- 文件拖拽上传 -->
     <div class="container kv-main">
         <div class="row ">
             <div style="padding:10px; ">
                 <form enctype="multipart/form-data" id="form">
-                    <input id="file-0a" class="file" name="file" type="file" multiple data-min-file-count="1">
+                    <input id="file-0a" class="file" name="files" type="file" multiple data-min-file-count="1">
                     <br>
+                    
                  </form>
             </div>
         </div>
-       <a type="button" class="btn btn-primary btn-lg btn-block" href="upload1.html">下一步</a>
+       <button type="button" id="tt" class="btn btn-primary btn-lg btn-block" >下一步</button>
      </div>
     <div class="push"></div>
 </div>
@@ -168,7 +162,21 @@
         console.log(event);
         console.log(data);
         });
-   
+   $("#tt").click(function(){
+   	var form = new FormData(document.getElementById("form"));
+   	console.log(form);
+   	$.ajax({
+   		type:"post",
+   		url:"../game/add",
+   		data:form,
+   		processData:false,
+        contentType:false,
+        success:function(res){
+        console.log(res.data);
+        location.href="upload1.html?id="+res.data;
+        }
+   	})
+   })
 </script>
 
 </html>
