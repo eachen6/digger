@@ -26,6 +26,7 @@ $(document).ready(function(){
 		else 
 			history.go(-1);
 	});
+
 	
 	//点击愿望清单的切换
 	$("#btn_wish").click(function(e){
@@ -33,7 +34,7 @@ $(document).ready(function(){
 	    console.log("之后",game.iswish)
     });
 
-    //点击确认购买动作
+    //点击确认购买动
     $("#sureforpay").click(function(e){
         
     })
@@ -86,7 +87,6 @@ var game = new Vue({
 		}
 	},
 	created: function(){
-		
 	}
 })
 
@@ -193,7 +193,7 @@ function gameisbuy(id){
 function gamedetails(id){
 	$.ajax({
 		type:"get",
-		url:"../game/detail/4",
+		url:"../game/detail/"+id,
 		async:true,
 		success: function(res){
 			console.log(res.data)
