@@ -16,6 +16,7 @@ import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GameAuditVO;
 
 @Service("gameService")
 public class GameServiceImpl implements GameService{
@@ -209,7 +210,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse unauditedGamelist() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.unauditedGamelist();
 		if(CollectionUtils.isEmpty(gamelist)){
 			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
