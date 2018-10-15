@@ -356,5 +356,19 @@ public class GameServiceImpl implements GameService{
 		int result = 0;
 		result = gameMapper.addclick(gameid);
 	}
+	
+	/**
+	 * @author eachen
+	 * 更新游戏内容
+	 */
+	public ServerResponse addGameDetails(Game game) {
+		int rowCount = gameMapper.updateByPrimaryKeySelective(game);
+		if(rowCount>0) {
+			return ServerResponse.createBySuccessMessage("上传成功，等待审核");
+		}
+		else {
+			return ServerResponse.createByErrorMessage("上传失败");
+		}
+	}
 
 }

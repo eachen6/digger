@@ -8,7 +8,7 @@ var check = new Vue({
 	},
 	methods:{},
 	created:function(){
-		getCheckList();
+		getCheckList();//掉用函数
 	}
 })
 
@@ -22,7 +22,8 @@ function getCheckList(){
 		url:"../gameaudit/unaudited_gamelist",
 		async:true,
 		success:function(res){
-			check.checks = res.data;
+			console.log(res)//通过打印返回内容确定数据格式，根据数据调整当前页面内容
+			check.checks = res.data;//把值赋给VUE的变量
 			for(var i = 0; i < check.checks.length; i++){
 				check.checks[i].createtime = that.format(check.checks[i].createtime)
 			}

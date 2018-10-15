@@ -71,7 +71,7 @@ public class GameController {
 		if(user == null){
            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
         }
-		System.out.println(files);
+		System.out.println(files.length);
 		String name = null;
 		//增加游戏，包括上传视频、图片以及其他信息
 				if (files != null && files.length > 0) {
@@ -339,10 +339,9 @@ public class GameController {
      */
 	@RequestMapping(value="add1", method=RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse gameExplain(HttpServletRequest request, HttpServletResponse response,@RequestParam Map <String,Object> form) throws IllegalStateException, IOException {
+	public ServerResponse gameExplain(HttpServletRequest request, Game game) throws IllegalStateException, IOException {
 		
-	   System.out.println(form);
-		return null;
+		return gameService.addGameDetails(game);
 	}
 	
 
