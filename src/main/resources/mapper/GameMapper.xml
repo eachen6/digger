@@ -484,9 +484,9 @@
   <!-- 新增方法：獲取游戏详情-->
   <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
     select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,shelftime,discountstate,detailtxt,discount,starttime,deadline
-    from game left join discountlist 
-    on game.id=discountlist.gameid 
-    where gameid = #{id} and now()>starttime and deadline>now() 
+    from game left join (select * from discountlist where now()>starttime and deadline>now()) as a
+    on game.id=a.gameid 
+    where game.id = #{id}
   </select>
   
   <!-- 新增方法：根据关键词提示  -->
