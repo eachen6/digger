@@ -115,7 +115,6 @@ function getWishState(id){
 
 //该游戏加入愿望清单
 function addToWish(id){
-	alert(game.iswish);
 	$.ajax({
 		type:"POST",
 		url:"../wish/add_wishgame",
@@ -131,7 +130,6 @@ function addToWish(id){
 			}
 			else if(res.status==1)
 			{
-				alert(game.iswish);
 				game.iswish = false;
 				console.log(res.msg);
 			}
@@ -164,7 +162,6 @@ function deleteFromWish(id){
 
 //检查游戏是否被用户购买
 function gameisbuy(id){
-	alert(id);
 	$.ajax({
 		type:"POST",
 		url:"../order/isbuy_order",
@@ -173,7 +170,6 @@ function gameisbuy(id){
 		},
 		async:true,
 		success:function(res){
-			alert("444444");
 			console.log(res)
 			if(res.status==0){
 			    game.isbuy = true;

@@ -547,10 +547,10 @@
   </select>
   
   <!-- 新增方法：查找待审核的游戏列表  -->
-  <select id="unauditedGamelist" resultType="com.digger.pojo.Game">
+  <select id="unauditedGamelist" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where state = 0
+      a.*,b.username
+      from game as a,user as b where a.state = 0 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：查找未上架的游戏列表  -->

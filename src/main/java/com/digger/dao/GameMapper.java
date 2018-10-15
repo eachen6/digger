@@ -6,6 +6,7 @@ import com.digger.pojo.Category;
 import com.digger.pojo.Game;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GameAuditVO;
 import com.digger.vo.GamedetailsVO;
 
 public interface GameMapper {
@@ -51,7 +52,7 @@ public interface GameMapper {
 
 	List<Game> pullOffShelvesGamelistByName(String name);
 
-	List<Game> unauditedGamelist();
+	List<GameAuditVO> unauditedGamelist();
 
 	List<Game> notOnTheShelfGamelist();
 

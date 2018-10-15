@@ -17,6 +17,7 @@ import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.pojo.User;
 import com.digger.service.UserService;
+import com.digger.utils.DbUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -55,8 +56,29 @@ public class UserController {
 		ServerResponse<User> response = userService.login(username, password);
 		if (response.isSuccess()) {
 			session.setAttribute(Const.CURRENT_USER, response.getData());
+			/*if(checkSession(username)){ 
+			      //如果该session在此之前已经存在，则将该用户进行退出操作 
+			      DbUtil.userLogout(username);
+			      return ServerResponse.createByErrorMessage("该用户正在上线");
+			    } 
+			    //将新的session存放到map<username,session>中 
+			    DbUtil.mapSession.put(username, session);*/
+			    return response;
 		}
-		return response;
+		return ServerResponse.createByErrorMessage("登陆失败");
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 检查是否已经含有此session
+	 * @return
+	 */
+	private boolean checkSession(String username){ 
+		  HttpSession session = DbUtil.mapSession.get(username); 
+		  if(session!=null){ 
+		    return true; 
+		  } 
+		  return false; 
 	}
 
 	/**
