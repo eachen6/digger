@@ -69,6 +69,7 @@ $(document).ready(function(){
 				else if(res.status == 0)
 				{
 					game.iswish = true;
+					toastr.success(res.msg);
 				}
 			}
 		});

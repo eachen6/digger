@@ -104,14 +104,10 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public ServerResponse isBuy_Order(int gameid,int userid) {
 		Integer resultCount = 0;
-		Integer resultCount1 = 1;
 		System.out.println(gameid+"    "+userid);		
 		resultCount = orderMapper.isBuy_Order(userid, gameid);  //0代表别人赠送过改款游戏给我,1则反之
-		if(resultCount<1){ 
-		  resultCount1 = orderMapper.isBuy_Order1(userid,gameid);  //0代表我自己购买给自己过（非自己购买赠送给别人）
-		}
-		System.out.println(resultCount+"yyyyyyyyyyyyyy"+resultCount1);
-		if(resultCount > 0 || resultCount1==0){
+		System.out.println(resultCount);
+		if(resultCount > 0 ){
             return ServerResponse.createBySuccessMessage("您已购买该游戏！");
         }
         return ServerResponse.createByErrorMessage("您未购买该游戏！");

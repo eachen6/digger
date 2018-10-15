@@ -184,16 +184,12 @@
   
   <!-- 新增方法：检查用户是否购买过该游戏（不包括赠送别人的）--> 
   <select id="isBuy_Order" resultType="Integer">
-    select count(send.id)
-    from `order`,send
-    where gameid=#{gameid} and targetid=#{userid} and `order`.ordernum = send.ordernum 
+      SELECT count(`order`.id) 
+      from `order` left join send on `order`.ordernum = send.ordernum
+      where ((gameid=#{gameid} and userid=#{userid}) OR (gameid=#{gameid} and targetid=#{userid} and issend = 1))
+      and state = 1 
   </select>
   
-  <!-- 新增方法：检查用户是否购买过该游戏（不包括赠送别人的）--> 
-  <select id="isBuy_Order1" resultType="Integer">
-    select count(`order`.id)
-    from `order`,send
-    where gameid=#{gameid} and userid=#{userid} and `order`.ordernum = send.ordernum 
-  </select>
+
  
 </mapper>
