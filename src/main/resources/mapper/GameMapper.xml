@@ -495,7 +495,7 @@
   
   <!-- 新增方法：獲取游戏详情-->
   <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
-    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,shelftime,discountstate,detailtxt,discount,starttime,deadline
+    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,discountstate,detailtxt,discount,starttime,deadline
     from game left join (select * from discountlist where now()>starttime and deadline>now()) as a
     on game.id=a.gameid 
     where game.id = #{id}

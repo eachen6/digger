@@ -63,7 +63,6 @@ public class OrderServiceImpl implements OrderService{
 		if(resultCount>0){
 			return ServerResponse.createBySuccessMessage("已生成订单，请购买");
 		}
-		
 		return ServerResponse.createByErrorMessage("订单生成失败");
 	}
 
