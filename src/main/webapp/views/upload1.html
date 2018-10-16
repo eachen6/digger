@@ -2,218 +2,171 @@
 <!-- release v4.5.0, copyright 2014 - 2018 Kartik Visweswaran -->
 <!--suppress JSUnresolvedLibraryURL -->
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>富文本上传</title>
-   
-   <link rel="stylesheet" type="text/css" href="../richtext/dist/bootstrap.css">
-   <link href="../richtext/dist/summernote.css" rel="stylesheet">
 
-   <script src="../richtext/js/jquery.min.js"></script>
-   <script src="../richtext/js/bootstrap.min.js"></script>
-   <script src="../richtext/dist/summernote.js"></script>
-   <script src="../richtext/dist/lang/summernote-zh-CN.js"></script>  
-   <style >
-   .note-alarm {
-float: right;
-margin-top: 10px;
-margin-right: 10px;
-}
-   
-   </style>
-<script>
-$(function(){
- $('.summernote').summernote({
-        height: 200,
-        tabsize: 2,
-        lang: 'zh-CN',
-        toolbar: [           
-        ['style', ['bold', 'italic', 'underline', 'clear']],          
-        ['fontsize', ['fontsize']],           
-        ['color', ['color']],            
-        ['para', ['ul', 'ol', 'paragraph']],            
-        ['height', ['height']],            
-        ['insert', ['picture', 'video']]        
-        ],        
-        //重写图片上传
-        callbacks: {            
-        	onImageUpload: function(files, editor, $editable) {               
-        		
-        			sendFile(files[0], editor, $editable);
-        		
-        	}      
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<title>富文本上传</title>
 
-    });
-});
-</script>
+		<link rel="stylesheet" type="text/css" href="../richtext/dist/bootstrap.css">
+		<link href="../richtext/dist/summernote.css" rel="stylesheet">
 
-</head>
-<body>
+		<script src="../richtext/js/jquery.min.js"></script>
+		<script src="../richtext/js/bootstrap.min.js"></script>
+		<script src="../richtext/dist/summernote.js"></script>
+		<script src="../richtext/dist/lang/summernote-zh-CN.js"></script>
+		<style>
+			.note-alarm {
+				float: right;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+		</style>
+		<script>
+			$(function() {
+				$('.summernote').summernote({
+					height: 200,
+					tabsize: 2,
+					lang: 'zh-CN',
+					toolbar: [
+						['style', ['bold', 'italic', 'underline', 'clear']],
+						['fontsize', ['fontsize']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['height', ['height']],
+						['insert', ['picture', 'video']]
+					],
+					//重写图片上传
+					callbacks: {
+						onImageUpload: function(files, editor, $editable) {
+
+							sendFile(files[0], editor, $editable);
+
+						}
+					}
+
+				});
+			});
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="container">
+			<form enctype="multipart/form-data" id="tf">
+				<input type="hidden" name="id" id="id" :value="gameid" />
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group ">
+							<span class="input-group-addon">游戏名称:</span>
+							<input type="text" class="form-control" id="name" name="name" />
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">游戏属性:</span>
+							<input type="text" class="form-control" id="category" name="category" />
+
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">运行内存:</span>
+							<input type="text" class="form-control" id="developer" name="developer" />
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">运行显卡:</span>
+							<input type="text" class="form-control" id="grcard" name="grnard" />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">开  发  商:&nbsp;</span>
+							<input type="text" class="form-control" id="open" name="open" />
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">运  营  商:&nbsp;</span>
+							<input type="text" class="form-control" id="platform" name="platform" />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="form-check form-check-inline">
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="action" value="动作">动作
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="adventure" value="冒险">冒险
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="simulation" value="模拟" >模拟
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="cosplay" value="角色扮演">角色扮演
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="strategy" value="策略">策略
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="pe" value="体育" >体育
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="shooting" value="射击">射击
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="puzzle" value="益智">益智
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="chess" value="棋牌" >棋牌
+      </label>
+
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="leisure" value="休闲">休闲
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="immediate" value="即时">即时
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="round" value="回合" >回合
+      </label>
+
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="single" value="单机">单机
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="double" value="双人">双人
+      </label>
+					<label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="genres" id="online" value="网游" >网游
+      </label>
+      <button id="reback">重选</button>
+				</div>
+				<input type="hidden" name="category" id="category" :value="category" />
+			</form>
+			<br />
+			<br />
+			<div class="summernote"></div>
+			<input type="submit" id="up" value="上传" />
+			<input type="button" id="et" value="重置" />
+		</div>
+	</body>
+	<script>
+		 
+
+
+	</script>
+	<script type="text/javascript" src="../vue/vue.min.js"></script>
+	<script type="text/javascript" src="../js/upload1.js"></script>
 	
-	<div class="container">
-	<form enctype="multipart/form-data" id="tf">
-	<div class="row">
-		<div class="col-md-6 col-sm-6">
-			<div class="input-group ">
-		<span class="input-group-addon">游戏名称:</span>
-      <input type="text" class="form-control" id="name" name="name"/>
-		</div>
-		</div>
-		<div class="col-md-6 col-sm-6">
-			<div class="input-group">
-            <span class="input-group-addon">游戏属性:</span>
-            <input type="text" class="form-control" id="category" name="category" />
-    
-		</div>
-    </div>
-   </div>
-    <br>
-    <div class="row">
-    	<div class="col-md-6 col-sm-6">
-    	<div class="input-group">
-        <span class="input-group-addon">运行内存:</span>
-        <input type="text" class="form-control" id="momery" name="memory"/>
-    </div>
-    	</div>
-    	<div class="col-md-6 col-sm-6">
-    	<div class="input-group">
-        <span class="input-group-addon">运行显卡:</span>
-        <input type="text" class="form-control" id="grcard" name="grnard" />
-    </div>	
-    	</div>
-    </div>
-    <br>
-    <div class="row">
-    	<div class="col-md-6 col-sm-6">
-    	<div class="input-group">
-        <span class="input-group-addon">开  发  商:&nbsp;</span>
-        <input type="text" class="form-control" id="open" name="open"/>
-    </div>
-    	</div>
-    	<div class="col-md-6 col-sm-6">
-    	<div class="input-group">
-        <span class="input-group-addon">运  营  商:&nbsp;</span>
-        <input type="text" class="form-control" id="platform" name="platform" />
-    </div>	
-    	</div>
-    </div>
-    <br>
-    <div class="form-check form-check-inline">
-     <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">动作游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">冒险游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="" >模拟游戏
-      </label>
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">角色扮演
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">策略游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="" >体育类型
-      </label>
-     <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">射击游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">益智游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="" >棋牌游戏
-      </label>
-    
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">休闲游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">过关游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="" >3 D 游戏
-      </label>
-  
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">单机游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="">双人游戏
-      </label>
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name="genres" value="" >网页游戏
-      </label>
-    </div>
-  </form>
-  <br />
-  <br />
-   <div class="summernote"></div>
-    <input type="submit" id="up" value="上传" />
-    <input type="button" id="et" value="重置" />
-</div>
-</body>
-<script>
-function sendFile(files, editor, $editable) {
-	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
-	console.log(filename)
-	
-	var data = new FormData();
-        data.append("files", files);
-        $.ajax({
-            data : data,
-            type : "POST",
-            url : "../game/add", //图片上传出来的url，返回的是图片上传后的路径，http格式
-            cache : false,
-            contentType : false,
-            processData : false,
-            dataType : "json",
-            success: function(res) {//data是返回的hash,key之类的值，key是定义的文件名
-            	console.log(res)
-            	$('.summernote').summernote('insertImage', filename);
-            },
-            error:function(){
-                alert("上传失败");
-            }
-        });
-    }
 
-
-$(function(){
-$("#up").click(function(){
-	var code = $('.summernote').summernote('code');
-	var form = new FormData(document.getElementById("tf"));
-	form.append("code",code);
-	$.ajax({
-		url:"../game/add1",
-		 type:"POST",
-         data:form,
-         processData:false,
-         contentType:false,
-         success:function(res){
-             window.clearInterval(timer);
-             console.log("over..");
-	});
-  });
-$("#et").click(function(){
-	 $('.summernote').summernote('reset');
-  });
-});
-/*监听复选框，只能选择4个*/
-$('input[type=checkbox]').click(function(){
-
-if($("input[name='genres']:checked").length >= 5)
-
-{
-
-$(this).removeAttr("checked");
-
-alert("最多选4个!")}
-
-});
-
-</script>
 </html>
