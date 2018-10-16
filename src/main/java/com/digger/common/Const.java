@@ -22,6 +22,7 @@ public class Const {
     public static final String USERNAME = "username";
     
     public static final int gamecount = 3; //每页所显示的游戏数
+    public static final int announcementcount = 5; //每页所显示的公告数
     public static final int pagecount = 5; //显示页码的个数
     
     public static final String IP = "ip";   //记录电脑ip

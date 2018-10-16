@@ -362,6 +362,8 @@ public class GameServiceImpl implements GameService{
 	 * 更新游戏内容
 	 */
 	public ServerResponse addGameDetails(Game game) {
+		game.setState(0);
+		game.setDiscountstate((byte) 0);
 		int rowCount = gameMapper.updateByPrimaryKeySelective(game);
 		if(rowCount>0) {
 			return ServerResponse.createBySuccessMessage("上传成功，等待审核");

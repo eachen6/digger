@@ -11,7 +11,7 @@ public class Announcement {
 
     private String title;
 
-    private Date createtime;
+	private Date createtime;
 
     private Date updatetime;
 
@@ -62,4 +62,5 @@ public class Announcement {
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
     }
+
 }

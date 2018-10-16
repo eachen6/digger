@@ -120,14 +120,14 @@
     <div class="container kv-main">
         <div class="row ">
             <div style="padding:10px; ">
-                <form enctype="multipart/form-data" id="form">
+                <form enctype="multipart/form-data" id="here">
                     <input id="file-0a" class="file" name="files" type="file" multiple data-min-file-count="1">
                     <br>
-                    
+                    <!--<button type="button" id="tt" class="btn btn-primary btn-lg btn-block" >下一步</button>-->
                  </form>
             </div>
         </div>
-       <button type="button" id="tt" class="btn btn-primary btn-lg btn-block" >下一步</button>
+       <button id="tt" class="btn btn-primary btn-lg btn-block" >下一步</button>
      </div>
     <div class="push"></div>
 </div>
@@ -163,17 +163,22 @@
         console.log(data);
         });
    $("#tt").click(function(){
-   	var form = new FormData(document.getElementById("form"));
-   	console.log(form);
+// 	var form = new FormData(document.getElementById("form"));
+	var formdata = new FormData(document.getElementById("here"));
+   	console.log(formdata);
    	$.ajax({
    		type:"post",
    		url:"../game/add",
-   		data:form,
+   		data:formdata,
    		processData:false,
         contentType:false,
         success:function(res){
-        console.log(res.data);
-        location.href="upload1.html?id="+res.data;
+        console.log(res);
+        if(res.status == 0)
+        	window.location.href="upload1.html?id="+res.data;
+        	else if(res.status == 1){
+        		alert(res.msg)
+        	}
         }
    	})
    })

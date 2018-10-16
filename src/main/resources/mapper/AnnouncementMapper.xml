@@ -141,4 +141,10 @@
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 新增方法：获取公告列表-->
+  <select id="getAllAnnouncement"  resultType="com.digger.pojo.AnnouncementWithBLOBs">
+    select id,title,content
+    from announcement
+  </select>
 </mapper>

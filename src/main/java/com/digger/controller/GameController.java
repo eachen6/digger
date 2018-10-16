@@ -73,7 +73,7 @@ public class GameController {
       }
 		String name = null;
 		//增加游戏，包括上传视频、图片以及其他信息
-				if (files != null && files.length > 0) {
+				if (files.length > 0) {
 					//获取视频文件名称
 					for(int j = 0; j < files.length; j++) {
 						String file_name=files[j].getOriginalFilename();
@@ -127,7 +127,10 @@ public class GameController {
 		            	}
 		               
 		            }
+		            if(returnMap.size()>0)
 		            return gameService.toAddGamefile(returnMap,user.getId());
+		            else
+		            	return ServerResponse.createByErrorMessage("上传失败");
 				}
 		
 		return ServerResponse.createByErrorMessage("上传失败");
@@ -340,11 +343,40 @@ public class GameController {
 	@RequestMapping(value="add1", method=RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse gameExplain(HttpServletRequest request, Game game) throws IllegalStateException, IOException {
-		
+	
 		return gameService.addGameDetails(game);
 	}
 	
+	@RequestMapping(value="add_rich_img", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toAddRichImg(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
+			HttpServletRequest request) throws IllegalStateException, IOException{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+	if(user == null){
+          return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
+      }
+		String name = "richtext";
+				if (files != null && files.length > 0) {
+				
+					System.out.println(name);
+		            //循环获取file数组中得文件
+					Map returnMap = new HashMap<>();
+		            for (int i = 0; i < files.length; i++) {
+		            	if(name!=null) {
+		            		 MultipartFile file = files[i];       
 
+				                	Map fileMap = FTPSSMLoad.upload(file, request, "/"+name+"/");
+				                	//return ServerResponse.createBySuccess(fileMap);
+				                	returnMap.put("richimgurl", fileMap.get("http_url"));
+				                
+		            	}
+		               
+		            }
+		            return ServerResponse.createBySuccess(returnMap);
+				}
+		
+		return ServerResponse.createByErrorMessage("上传失败");
+	}
 
 	
 }
