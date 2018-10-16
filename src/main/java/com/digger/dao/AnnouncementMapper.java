@@ -1,5 +1,7 @@
 package com.digger.dao;
 
+import java.util.List;
+
 import com.digger.pojo.Announcement;
 import com.digger.pojo.AnnouncementWithBLOBs;
 
@@ -17,4 +19,6 @@ public interface AnnouncementMapper {
     int updateByPrimaryKeyWithBLOBs(AnnouncementWithBLOBs record);
 
     int updateByPrimaryKey(Announcement record);
+
+	List<AnnouncementWithBLOBs> getAllAnnouncement();
 }

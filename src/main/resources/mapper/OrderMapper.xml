@@ -190,6 +190,18 @@
       and state = 1 
   </select>
   
+  <select id="getOrderByOrdernum" resultType="com.digger.pojo.Order">
+      select ordernum,userid,price,state
+      from `order`
+      where ordernum = #{ordernum}
+  </select>
 
- 
+  <insert id="insertPayinfo" parameterType="com.digger.pojo.Order">
+    insert into Payinfo (userid, ordernum, payplatform, platformnumber,updatetime, createtime)
+    values (#{pay.userid},#{pay.ordernum},#{pay.payplatform},#{pay.platformnumber},now(), now())
+  </insert>
+  
+  <update id="updateOrderStatus">
+      update `order` set state = #{paid},paytime=now() where ordernum=#{ordernum}
+  </update>
 </mapper>

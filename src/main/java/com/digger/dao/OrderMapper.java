@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.digger.pojo.Order;
+import com.digger.pojo.Payinfo;
 import com.digger.vo.OrderVO;
 
 public interface OrderMapper {
@@ -23,5 +24,11 @@ public interface OrderMapper {
 	List<OrderVO> toGetOrder(Integer userid);
 
 	Integer isBuy_Order(@Param("userid")int userid,@Param("gameid")int gameid);
+
+	Order getOrderByOrdernum(String ordernum);
+
+	Integer updateOrderStatus(@Param("paid")int paid, @Param("ordernum")Long ordernum);
+
+	int insertPayinfo(@Param("pay")Payinfo pay);
 
 }
