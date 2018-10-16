@@ -27,8 +27,8 @@ public interface OrderMapper {
 
 	Order getOrderByOrdernum(String ordernum);
 
-	Integer updateOrderStatus(int paid);
+	Integer updateOrderStatus(@Param("paid")int paid, @Param("ordernum")Long ordernum);
 
-	int insertPayinfo(Payinfo pay);
+	int insertPayinfo(@Param("pay")Payinfo pay);
 
 }

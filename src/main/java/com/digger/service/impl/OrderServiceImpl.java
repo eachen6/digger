@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService{
 		Order order = orderMapper.getOrderByOrdernum(out_trade_no);
 		if (order.getState()==Const.WAIT_PAY) {
 			int result = 0;
-			result = orderMapper.updateOrderStatus(Const.PAID);
+			result = orderMapper.updateOrderStatus(Const.PAID,order.getOrdernum());
 			if(result>0){
 			Payinfo pay = new Payinfo();
 			pay.setOrdernum(order.getOrdernum());

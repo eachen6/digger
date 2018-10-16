@@ -108,7 +108,7 @@ public class OrderController {
     * @return
 	 * @throws AlipayApiException 
     */
-	@RequestMapping(value = "goAlipay", method = RequestMethod.GET)
+	@RequestMapping(value = "goAlipay", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String goAlipay(@RequestParam(value="ordernum") String ordernum,HttpSession session) throws AlipayApiException 
 	{
@@ -162,6 +162,7 @@ public class OrderController {
 	 * @version V1.0
 	 */
 	@RequestMapping(value = "/alipayReturnNotice")
+	@ResponseBody
 	public String alipayReturnNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
 
 		System.out.println("支付成功, 进入同步通知接口...");

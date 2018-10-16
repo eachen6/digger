@@ -197,12 +197,11 @@
   </select>
 
   <insert id="insertPayinfo" parameterType="com.digger.pojo.Order">
-    insert into Payinfo (userid, ordernum, payplatform, platformnumber,updatetime, updatetime)
-    values (#{userid,jdbcType=INTEGER},#{ordernum,jdbcType=BIGINT},#{payplatform},#{platformnumber}
-    now(), now())
+    insert into Payinfo (userid, ordernum, payplatform, platformnumber,updatetime, createtime)
+    values (#{pay.userid},#{pay.ordernum},#{pay.payplatform},#{pay.platformnumber},now(), now())
   </insert>
   
   <update id="updateOrderStatus">
-      update Order set state = #{paid}
+      update `order` set state = #{paid},paytime=now() where ordernum=#{ordernum}
   </update>
 </mapper>
