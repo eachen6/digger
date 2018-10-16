@@ -24,5 +24,4 @@ public interface OrderMapper {
 
 	Integer isBuy_Order(@Param("userid")int userid,@Param("gameid")int gameid);
 
-	Integer isBuy_Order1(@Param("userid")int userid,@Param("gameid")int gameid);
 }

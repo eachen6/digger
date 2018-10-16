@@ -26,17 +26,53 @@ $(document).ready(function(){
 		else 
 			history.go(-1);
 	});
-
 	
-	//点击愿望清单的切换
-	$("#btn_wish").click(function(e){
-	    game.iswish = (game.iswish == false) ? true : false
-	    console.log("之后",game.iswish)
-    });
+	//提示框
+	$(function(){
+		toastr.options= {
+		"closeButton":true,//显示关闭按钮
+		"debug":false,//启用debug
+		"positionClass":"toast-top-center",//弹出的位置
+		"showDuration":"300",//显示的时间
+		"hideDuration":"1000",//消失的时间
+		"timeOut":"3000",//停留的时间
+		"extendedTimeOut":"1000",//控制时间
+		"showEasing":"swing",//显示时的动画缓冲方式
+		"hideEasing":"linear",//消失时的动画缓冲方式
+		"showMethod":"fadeIn",//显示时的动画方式
+		"hideMethod":"fadeOut"//消失时的动画方式
+		};
+		});
 
     //点击确认购买动
-    $("#sureforpay").click(function(e){
-        
+    $("#btn_buy").click(function(e){
+    	if(game.discount==null)
+    		price = game.contents.price;
+    	else
+    		price = game.contents.price*game.contents.discount*0.1;
+    	alert(price);
+    	alert(id);
+    	$.ajax({
+			type:"POST",
+			url:"../order/create",
+			data:{
+				gameid:id,
+				price:price
+			},
+			async:true,
+			success: function(res){
+				console.log(res);
+				if(res.status == 1){
+					toastr.info(res.msg);
+					game.iswish = false;
+				}
+				else if(res.status == 0)
+				{
+					game.iswish = true;
+					toastr.success(res.msg);
+				}
+			}
+		});
     })
     
 })
@@ -59,6 +95,7 @@ var game = new Vue({
 //		gamename:"NBA2KOL2",
 		iswish:false,
 		isbuy:false,
+		isshelf:false,
 //		cover_img:"https://cdn.rail.tgp.qq.com/info/games/2000352/2c2dc799c98d1904cd062e60a0924cef.jpg",
 //		video_src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
 		anno:{
@@ -124,13 +161,13 @@ function addToWish(id){
 		async:true,
 		success:function(res){
 			console.log(res)
-			alert(game.iswish);
 			if(res.status==0){
 			    getWishState(id);
 			}
 			else if(res.status==1)
 			{
 				game.iswish = false;
+				toastr.info(res.msg);
 				console.log(res.msg);
 			}
 		}
@@ -154,6 +191,7 @@ function deleteFromWish(id){
 			else if(res.status==1)
 			{				
 				game.iswish = false;
+				toastr.info(res.msg);
 				console.log(res.msg);
 			}
 		}
@@ -196,8 +234,21 @@ function gamedetails(id){
 			if(res.status==0){
 			    game.contents = res.data[0]
 			    game.selective = game.contents.category.split(",");
+			    var a = game.contents.shelftime.split("-");
+			    var shelftime=new Date();
+			    shelftime.setFullYear(a[0],a[1]-1,a[2]);
+			    var today = new Date();
+			    if (today<=shelftime)
+			    {
+			        game.isshelf=true;
+			    }
+			    else
+			    {
+			        game.ishelf=false;
+			    }
 			}
 		}
 	});
 }
+
 
