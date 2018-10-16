@@ -73,7 +73,7 @@ $(function() {
 				console.log(res);
 				if(res.status == 0){
 					alert(res.msg)
-					window.location.href="index.html"
+					window.location.href="upload.html"
 				}
 			}
 		})
