@@ -8,7 +8,7 @@ var check = new Vue({
 	},
 	methods:{},
 	created:function(){
-		getCheckList();//掉用函数
+		getCheckList();//调用函数
 	}
 })
 
@@ -30,18 +30,6 @@ function getCheckList(){
 		}
 	});
 }
-
-/**
- * 获取游戏id查找审核游戏的信息
- */
-$(function(){
-$("#getid").click(function(event){
-	console.log(123)
-    var id= document.getElementById("getid");
-    console.log(id)
-});
-})
-
 /**
  * 未上架模块
  */
@@ -165,10 +153,8 @@ function getguserList(){
 		async:true,
 		success:function(res){
 			guser.gusers = res.data;
-			for(var i = 0; i < guser.gusers.length; i++){
-				guser.gusers[i].shelftime = that.format(guser.gusers[i].shelftime)
 			console.log(789)
-			}
+			
 		}
 	});
 }
@@ -194,18 +180,76 @@ function getgnoticeList(){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../admin/get_total_userlist",
+		url:"../announcement/get_announcement/{1}",
 		async:true,
 		success:function(res){
 			gnotice.gnotices = res.data;
-			for(var i = 0; i < gnotice.gnotices.length; i++){
-				gnotice.gnotices[i].shelftime = that.format(gnotice.gnotices[i].shelftime)
-			console.log(789)
+			console.log(111)
+		}
+	});
+}
+
+/**
+ * 个人信息模块
+ */
+var gr = new Vue({
+	el:"#home",
+	data:{
+		grs:[]
+	},
+	methods:{},
+	created:function(){
+		getgrList();
+	}
+})
+
+/**
+ * 获取个人信息
+ */
+function getgrList(){
+	var that = this;
+	$.ajax({
+		type:"get",
+		url:"../admin/selectuserbyusername",
+		async:true,
+		success:function(res){
+			gr.grs = res.data;
+			for(var i = 0; i < gr.grs.length; i++){
+				gr.grs[i].createtime = that.format(gr.grs[i].createtime)
+			console.log(22)
 			}
 		}
 	});
 }
 
+
+/**
+ * 修改个人信息
+ */
+function updateMessage(){
+	$.ajax({
+		type:"get",
+		url:"../admin/selectuserbyusername",
+		async:true,
+		success:function(res){
+			console.log(1)
+		}
+	});
+}
+
+/**
+ * 修改用户封禁状态
+ */
+function updatestate(){
+	$.ajax({
+		type:"get",
+		url:"../admin/updatestatebyid",
+		async:true,
+		success:function(res){
+			console.log(2)
+		}
+	});
+}
 /**
  * 时间戳装换格式函数
  * @param {Object} m
@@ -223,3 +267,44 @@ function format(shijianchuo)
 	var s = time.getSeconds();
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
+
+//判断老密码
+/*function validatePwd() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
+		document.getElementById("save_button").disabled = false;
+	}
+}*/
+//校验第一次输入的密码
+/*function validatePwd1() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
+		document.getElementById("finish-button").disabled = false;
+	}
+}*/
+
+	//		 对比两次输入的密码 
+/*function validatePwd2() {
+	var pwd1 = document.getElementById("password").value;
+	var pwd2 = document.getElementById("repassword").value;
+	if (pwd2.trim().length == 0) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	} else if (pwd1 == pwd2) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
+		document.getElementById("finish-button").disabled = false;
+	} else {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
+		document.getElementById("finish-button").disabled = true;
+	}
+}*/
