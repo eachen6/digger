@@ -123,7 +123,6 @@
                 <form enctype="multipart/form-data" id="form">
                     <input id="file-0a" class="file" name="files" type="file" multiple data-min-file-count="1">
                     <br>
-                    
                  </form>
             </div>
         </div>
@@ -142,7 +141,7 @@
         showUpload: true, 
         allowedPreviewTypes : ['image', 'html', 'text', 'video', 'audio', 'flash']
     });
-     $('#file-0a').on('fileuploaderror', function(event, data, previewId, index) {
+      $('#file-0a').on('fileuploaderror', function(event, data, previewId, index) {
         var form = data.form, files = data.files, extra = data.extra,
                 response = data.response, reader = data.reader;
         console.log(data);
@@ -162,6 +161,7 @@
         console.log(event);
         console.log(data);
         });
+        
    $("#tt").click(function(){
    	var form = new FormData(document.getElementById("form"));
    	console.log(form);
