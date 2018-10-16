@@ -128,7 +128,7 @@
 							<div class="col-md-3" style="padding: 0px; ">
 								<img :src="game.surfaceurl" style="width: 190px;height: 130px;" />
 							</div>
-							<div class="col-md-7" style="padding-left:30px ;">
+							<div class="col-md-6" style="padding-left:30px ;">
 								<div>
 									<h3 style="color:black;">{{game.name}}</h3>
 									<p style="color:black;">{{game.shelftime}}上线</p>
@@ -140,8 +140,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2" style="margin-top: 50px;padding-left: 35px;">
-								腾讯运营
+							<div class="col-md-3" style="margin-top: 50px;padding-left: 35px;">
+								 <template v-if="game.price==0">
+							        <span class="gamenoticeorig2">免费</span>
+							    </template>    
+							    <template v-else-if="game.discount==null">                              
+                                    <span class="gamenoticeorig2">￥{{game.price}}</span>
+                                </template>
+                                <template v-else>
+                                    <span class="gamenoticeprice1">{{game.discount}}折&nbsp;</span > 
+                                    <span class="gamenoticeorig1">￥{{game.price}}&nbsp;</span>
+                                    <span class="gamenoticeprice1">￥{{game.price*game.discount*0.1}}</span > 
+                                </template>
 							</div>
 						</div>
 						        <!-- 提示分页信息行 -->

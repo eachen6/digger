@@ -7,39 +7,51 @@
 </head>
 
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="../css/etc.css" />
-<link rel="stylesheet" href="../css/home.css" />
+<link rel="stylesheet" href="../css/toastr.min.css" />
 <script type="text/javascript " src="../bootstrap/js/jquery-1.9.1.js"></script>
 <script type="text/javascript " src="../bootstrap/js/bootstrap.js"></script>
-
+<script type="text/javascript " src="../js/toastr.min.js"></script>
 <body>
 
-<button id="btn" onclick="func()">btn</button>
-<script>
-var layer=document.createElement("div");
-layer.id="layer";
-function func()
-{
-    var style=
-    {
-        background:"#f00",
-        position:"absolute",
-        zIndex:10,
-        width:"200px",
-        height:"200px",
-        left:"200px",
-        top:"200px"
-    }
-    for(var i in style)
-        layer.style[i]=style[i];   
-    if(document.getElementById("layer")==null)
-    {
-        document.body.appendChild(layer);
-        setTimeout("document.body.removeChild(layer)",2000)
-    }
-}
- 
+<button class="btn btn-success" name="success"id="success"> 成功 </button>
+<button class="btn btn-info" name="info"id="info">提示</button>
+<button class="btn btn-warning" name="warning"id="warning">警告</button>
+<button class="btn btn-danger" name="error"id="error">错误</button>
+<button class="btn btn-primary" name="clear"id="clear">清除</button>
+
+<script type="text/javascript">
+$(function(){
+toastr.options= {
+"closeButton":true,//显示关闭按钮
+"debug":false,//启用debug
+"positionClass":"toast-top-center",//弹出的位置
+"showDuration":"300",//显示的时间
+"hideDuration":"1000",//消失的时间
+"timeOut":"1000",//停留的时间
+"extendedTimeOut":"1000",//控制时间
+"showEasing":"swing",//显示时的动画缓冲方式
+"hideEasing":"linear",//消失时的动画缓冲方式
+"showMethod":"fadeIn",//显示时的动画方式
+"hideMethod":"fadeOut"//消失时的动画方式
+};
+$("#success").click(function(){
+toastr.success("成功样式");
+})
+$("#info").click(function(){
+toastr.info("提示样式");
+})
+$("#warning").click(function(){
+toastr.warning("警告样式");
+})
+$("#error").click(function(){
+toastr.error("错误样式");
+})
+$("#clear").click(function(){
+toastr.clear();//清楚当前页面弹出框
+})
+});
 </script>
+
 
 		<script type="text/javascript" src="../vue/vue.min.js"></script>
 		<script type="text/javascript" src="../js/etc.js"></script>

@@ -29,12 +29,16 @@ public class OrderController {
      */
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse<String> toCreateOrder(int gameid,float price,HttpSession session) 
+	public ServerResponse toCreateOrder(@RequestParam(value="gameid") int gameid,@RequestParam(value="price") float price,HttpSession session) 
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
+		//重新开始检查一遍是否已购买了该游戏
+		ServerResponse sr = orderService.isBuy_Order(gameid,user.getId());
+		if(sr.getStatus()==0)
+			return ServerResponse.createByErrorMessage("用户已购买该游戏");
 		return orderService.toCreateOrder(user.getId(),gameid,price);
 	}
 	

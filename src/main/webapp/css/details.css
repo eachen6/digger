@@ -81,5 +81,18 @@ body{
 user-select: none;
 }
 
+.gamenoticeorig1{
+	font-size:1.2em;
+	text-decoration:line-through;
+	color:#858585;
+}
 
+.gamenoticeorig2{
+	font-size:1.5em;
+	color:#FF6732;
+}
 
+.gamenoticeprice{
+	font-size:1.5em;
+	color:#FF6732;
+}
