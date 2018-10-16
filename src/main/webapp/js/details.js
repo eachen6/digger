@@ -50,14 +50,15 @@ $(document).ready(function(){
     		price = game.contents.price;
     	else
     		price = game.contents.price*game.contents.discount*0.1;
-    	alert(price);
-    	alert(id);
+    	var ordernum = GetDateNow();
     	$.ajax({
 			type:"POST",
 			url:"../order/create",
 			data:{
 				gameid:id,
-				price:price
+				price:price,
+				ordernum:ordernum,
+				issend:0
 			},
 			async:true,
 			success: function(res){
@@ -70,6 +71,7 @@ $(document).ready(function(){
 				{
 					game.iswish = true;
 					toastr.success(res.msg);
+					window.location.href = "../order/goAlipay?ordernum=" + ordernum;
 				}
 			}
 		});
@@ -251,4 +253,16 @@ function gamedetails(id){
 	});
 }
 
-
+//生成订单号
+function GetDateNow() {
+	var vNow = new Date();
+	var sNow = "";
+	sNow += String(vNow.getFullYear());
+	sNow += String(vNow.getMonth() + 1);
+	sNow += String(vNow.getDate());
+	sNow += String(vNow.getHours());
+	sNow += String(vNow.getMinutes());
+	sNow += String(vNow.getSeconds());
+	sNow += String(vNow.getMilliseconds());
+	return sNow;
+}

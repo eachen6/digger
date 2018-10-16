@@ -9,11 +9,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.dao.OrderMapper;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
+import com.digger.pojo.Payinfo;
 import com.digger.service.OrderService;
 import com.digger.vo.OrderVO;
 
@@ -31,28 +33,22 @@ public class OrderServiceImpl implements OrderService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse<String> toCreateOrder(Integer userid, int gameid, float price)  {
+	public ServerResponse toCreateOrder(Order order)  {
 		// TODO Auto-generated method stub
 		
 		//获取游戏信息
 		String coverimg = null;
-		coverimg = gameMapper.findCoverimg(gameid);
-		long orderNum = 0;
-		Order order = new Order();
-		order.setGameid(gameid);
-		order.setUserid(userid);
+		coverimg = gameMapper.findCoverimg(order.getGameid());
 		order.setCoverimg(coverimg);
 		order.setState((byte) 0);
-		order.setPrice(price);
-		order.setIssend((byte) 0);
 		order.setPaytime(null);
 		//获取流水号
-		int r1=(int)(Math.random()*(10));//产生2个0-9的随机数
+		/*int r1=(int)(Math.random()*(10));//产生2个0-9的随机数
 		int r2=(int)(Math.random()*(10));
 		long timestamp = System.currentTimeMillis();//一个13位的时间戳
 		String timeStamp =String.valueOf(r1)+String.valueOf(r2)+String.valueOf(timestamp);// 订单ID
 		orderNum = Long.parseLong(timeStamp);
-		order.setOrdernum(orderNum);
+		order.setOrdernum(orderNum);*/
 		//获取关闭时间（例如：五分钟）
 		Date now = new Date();
 		Date time = new Date(now.getTime() + 300000);
@@ -111,6 +107,37 @@ public class OrderServiceImpl implements OrderService{
             return ServerResponse.createBySuccessMessage("您已购买该游戏！");
         }
         return ServerResponse.createByErrorMessage("您未购买该游戏！");
+	}
+
+	/* 
+	 * 根据ordernum获取订单详情
+	 * @author 高志劲
+	 */
+	@Override
+	public Order getOrderByOrdernum(String ordernum) {
+		Order order = orderMapper.getOrderByOrdernum(ordernum);
+		return order;
+	}
+
+	/* 
+	 * 修改叮当状态，改为 支付成功，已付款; 同时新增支付流水
+	 * @author 高志劲
+	 */
+	@Override
+	public void updateOrderStatus(String out_trade_no, String trade_no, String total_amount) {
+		Order order = orderMapper.getOrderByOrdernum(out_trade_no);
+		if (order.getState()==Const.WAIT_PAY) {
+			int result = 0;
+			result = orderMapper.updateOrderStatus(Const.PAID);
+			if(result>0){
+			Payinfo pay = new Payinfo();
+			pay.setOrdernum(order.getOrdernum());
+			pay.setPayplatform(Const.PAYWAY_ALI);
+			pay.setPlatformnumber(trade_no);
+			pay.setUserid(order.getUserid());
+			result = orderMapper.insertPayinfo(pay);
+		    }
+	    }
 	}
 	
 }

@@ -24,7 +24,17 @@ public class Const {
     public static final int gamecount = 3; //每页所显示的游戏数
     public static final int pagecount = 5; //显示页码的个数
     
-    public static final String IP = "ip";
+    public static final String IP = "ip";   //记录电脑ip
+    
+    public static final String subject = "游戏消费";   //记录消费商品描述,统一叫"游戏消费"
+    
+    //下面是支付方式，0是支付宝，1是微信
+    public static final byte PAYWAY_ALI = 0;
+    public static final byte PAYWAY_WX = 1;
+    
+    //下面是订单支付状态
+    public static final int WAIT_PAY = 0;   //等待付款
+    public static final int PAID = 1;       //已付款
 
     public interface ProductListOrderBy{
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
