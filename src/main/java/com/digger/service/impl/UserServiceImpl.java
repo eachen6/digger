@@ -15,6 +15,7 @@ import com.digger.dao.UserMapper;
 import com.digger.pojo.Game;
 import com.digger.pojo.User;
 import com.digger.service.UserService;
+import com.digger.utils.DbUtil;
 import com.digger.utils.MD5Util;
 import com.digger.common.TokenCache;
 
@@ -416,6 +417,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
 	@Override
 	public String selectNameByID(Integer id) {
 		return userMapper.selectNameByID(id);

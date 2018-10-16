@@ -17,6 +17,7 @@ import com.digger.pojo.Order;
 import com.digger.service.GameService;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GameAuditVO;
 import com.digger.vo.GamedetailsVO;
 
 @Service("gameService")
@@ -219,7 +220,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public ServerResponse unauditedGamelist() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.unauditedGamelist();
 		if(CollectionUtils.isEmpty(gamelist)){
 			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
@@ -354,6 +355,20 @@ public class GameServiceImpl implements GameService{
 	public void addclick(int gameid) {
 		int result = 0;
 		result = gameMapper.addclick(gameid);
+	}
+	
+	/**
+	 * @author eachen
+	 * 更新游戏内容
+	 */
+	public ServerResponse addGameDetails(Game game) {
+		int rowCount = gameMapper.updateByPrimaryKeySelective(game);
+		if(rowCount>0) {
+			return ServerResponse.createBySuccessMessage("上传成功，等待审核");
+		}
+		else {
+			return ServerResponse.createByErrorMessage("上传失败");
+		}
 	}
 
 }

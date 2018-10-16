@@ -495,7 +495,7 @@
   
   <!-- 新增方法：獲取游戏详情-->
   <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
-    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,shelftime,discountstate,detailtxt,discount,starttime,deadline
+    select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,discountstate,detailtxt,discount,starttime,deadline
     from game left join (select * from discountlist where now()>starttime and deadline>now()) as a
     on game.id=a.gameid 
     where game.id = #{id}
@@ -547,10 +547,10 @@
   </select>
   
   <!-- 新增方法：查找待审核的游戏列表  -->
-  <select id="unauditedGamelist" resultType="com.digger.pojo.Game">
+  <select id="unauditedGamelist" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where state = 0
+      a.*,b.username
+      from game as a,user as b where a.state = 0 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：查找未上架的游戏列表  -->
