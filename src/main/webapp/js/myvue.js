@@ -196,8 +196,8 @@ function getgnoticeList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../announcement/get_announcement",
-		data:{"pn":pn},
+		url:"../announcement/get_announcement/"+pn,
+		/*data:{"pn":pn},*/
 		success:function(res){
 			console.log(res)
 			if(res.status==0)
