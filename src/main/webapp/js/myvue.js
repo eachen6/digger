@@ -81,7 +81,6 @@ var sale = new Vue({
  */
 function getsaleList(){
 	var that = this;
-	console.log(12)
 	$.ajax({
 		type:"get",
 		url:"../gameaudit/onthesshelf_gamelist",
@@ -96,7 +95,7 @@ function getsaleList(){
 }
 
 /**
- * 在销售模块
+ * 下架模块
  */
 var isdown = new Vue({
 	el:"#isdown",
@@ -110,7 +109,7 @@ var isdown = new Vue({
 })
 
 /**
- * 获取在销售列表
+ * 获取下架列表
  */
 function getisdownList(){
 	var that = this;
@@ -122,7 +121,7 @@ function getisdownList(){
 			isdown.isdowns = res.data;
 			for(var i = 0; i < isdown.isdowns.length; i++){
 				isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
-			console.log(456)
+			console.log(1)
 			}
 		}
 	});
@@ -153,8 +152,8 @@ function getguserList(){
 		async:true,
 		success:function(res){
 			guser.gusers = res.data;
-			console.log(789)
-			
+			console.log(2)
+			console.log(11)
 		}
 	});
 }
@@ -163,32 +162,130 @@ function getguserList(){
  * 公告管理模块
  */
 var gnotice = new Vue({
-	el:"#gnotice",
+	el:"#gonggao",
 	data:{
-		gnotices:[]
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
+		list:[]
 	},
-	methods:{},
+	methods:{
+		change:function(pn){
+			alert(pn);
+			getgnoticeList(pn);
+		}
+	},
 	created:function(){
-		getgnoticeList();
+		getgnoticeList(1);
+
 	}
 })
 
 /**
- * 获取用户管理列表
+ * 获取公告管理列表
  */
-function getgnoticeList(){
+function getgnoticeList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../announcement/get_announcement/{1}",
-		async:true,
+		url:"../announcement/get_announcement",
+		data:{"pn":pn},
 		success:function(res){
-			gnotice.gnotices = res.data;
-			console.log(111)
+			console.log(res)
+			if(res.status==0)
+			{
+				gnotice.pageNum = res.data.pageNum;
+				gnotice.total = res.data.total;
+				gnotice.pages = res.data.pages;
+				gnotice.prePage = res.data.prePage;
+				gnotice.nextPage = res.data.nextPage;
+				gnotice.isFirstPage = res.data.isFirstPage;
+				gnotice.isLastPage = res.data.isLastPage;
+				gnotice.hasPreviousPage = res.data.hasPreviousPage;
+				gnotice.hasNextPage = res.data.hasNextPage;
+				gnotice.navigatePages = res.data.navigatePages;
+				gnotice.navigatepageNums = res.data.navigatepageNums;
+				gnotice.list = res.data.list;
+				for(var i = 0; i < gnotice.list.length; i++){
+					gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
+				}
+				//alert(page.total);
+			}
+			
 		}
 	});
 }
 
+/**
+ * 分页模块
+ */
+/*$(document).ready(function(){
+	  mypage(1);
+});
+
+var page = new Vue({
+	el:"#gonggao",
+	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
+		list:[]
+	},
+	methods: {
+		change:function(pn){
+			alert(pn);
+			mypage(pn);
+		}
+	},
+	created: function(){
+		
+	}
+})
+
+function mypage(pn){
+	$.ajax({
+		url: "../user/pagetest",
+		data:{"pn":pn},
+		type:'GET',
+		contentType:"application/json; charset=utf-8",
+		success:function(res){
+			console.log(res);
+			if(res.status==0)
+			{
+				page.pageNum = res.data.pageNum;
+				page.total = res.data.total;
+				page.pages = res.data.pages;
+				page.prePage = res.data.prePage;
+				page.nextPage = res.data.nextPage;
+				page.isFirstPage = res.data.isFirstPage;
+				page.isLastPage = res.data.isLastPage;
+				page.hasPreviousPage = res.data.hasPreviousPage;
+				page.hasNextPage = res.data.hasNextPage;
+				page.navigatePages = res.data.navigatePages;
+				page.navigatepageNums = res.data.navigatepageNums;
+				page.list = res.data.list;
+				//alert(page.total);
+			}
+		}
+	}) 
+}
+*/
 /**
  * 个人信息模块
  */
@@ -216,7 +313,7 @@ function getgrList(){
 			gr.grs = res.data;
 			for(var i = 0; i < gr.grs.length; i++){
 				gr.grs[i].createtime = that.format(gr.grs[i].createtime)
-			console.log(22)
+			console.log(4)
 			}
 		}
 	});
@@ -232,7 +329,7 @@ function updateMessage(){
 		url:"../admin/selectuserbyusername",
 		async:true,
 		success:function(res){
-			console.log(1)
+			console.log(5)
 		}
 	});
 }
@@ -246,7 +343,7 @@ function updatestate(){
 		url:"../admin/updatestatebyid",
 		async:true,
 		success:function(res){
-			console.log(2)
+			console.log(6)
 		}
 	});
 }
@@ -267,6 +364,8 @@ function format(shijianchuo)
 	var s = time.getSeconds();
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
+
+
 
 //判断老密码
 /*function validatePwd() {

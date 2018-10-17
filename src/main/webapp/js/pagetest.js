@@ -1,15 +1,6 @@
 /**
  * 
  */
-$(document).ready(function(){
-    $("#mydiv").hide();
-
-    $("#mybotton").click(function(){
-     $("#mydiv").show();
-	  mypage(1);
-});
-
-});
 
 var page = new Vue({
 	el:"#mydiv",
@@ -34,7 +25,8 @@ var page = new Vue({
 		}
 	},
 	created: function(){
-		
+		mypage(1);
+		console.log(1)
 	}
 })
 

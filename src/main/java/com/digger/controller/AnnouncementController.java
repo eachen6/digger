@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
-import com.digger.pojo.Announcement;
 import com.digger.pojo.AnnouncementWithBLOBs;
 import com.digger.pojo.User;
 import com.digger.service.AnnouncementService;
@@ -32,12 +31,13 @@ public class AnnouncementController {
      * 获取公告列表
      * @return
      */
-	@RequestMapping(value = "get_announcement/{pn}", method = RequestMethod.GET)
+	@RequestMapping(value = "get_announcement", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetAnnouncement(@PathVariable(value="pn") int pn) 
+	public ServerResponse toGetAnnouncement(Integer pn) 
 	{
 		PageHelper.startPage(pn, Const.announcementcount);
 		List<AnnouncementVO> list = announcementService.toGetAnnouncement();
+		System.out.println(list);
 		PageInfo page = new PageInfo(list,Const.pagecount);
         return ServerResponse.createBySuccess(page);
 	}
