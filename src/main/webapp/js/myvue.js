@@ -225,96 +225,36 @@ function getgnoticeList(pn){
 }
 
 /**
- * 分页模块
- */
-/*$(document).ready(function(){
-	  mypage(1);
-});
-
-var page = new Vue({
-	el:"#gonggao",
-	data:{
-		pageNum: "",
-		total: "",
-		pages: "",
-	    prePage:"",
-		nextPage:"",
-		isFirstPage:"",
-		isLastPage:"",
-		hasPreviousPage:"",
-		hasNextPage:"",
-		navigatePages:"",
-		navigatepageNums:[],
-		list:[]
-	},
-	methods: {
-		change:function(pn){
-			alert(pn);
-			mypage(pn);
-		}
-	},
-	created: function(){
-		
-	}
-})
-
-function mypage(pn){
-	$.ajax({
-		url: "../user/pagetest",
-		data:{"pn":pn},
-		type:'GET',
-		contentType:"application/json; charset=utf-8",
-		success:function(res){
-			console.log(res);
-			if(res.status==0)
-			{
-				page.pageNum = res.data.pageNum;
-				page.total = res.data.total;
-				page.pages = res.data.pages;
-				page.prePage = res.data.prePage;
-				page.nextPage = res.data.nextPage;
-				page.isFirstPage = res.data.isFirstPage;
-				page.isLastPage = res.data.isLastPage;
-				page.hasPreviousPage = res.data.hasPreviousPage;
-				page.hasNextPage = res.data.hasNextPage;
-				page.navigatePages = res.data.navigatePages;
-				page.navigatepageNums = res.data.navigatepageNums;
-				page.list = res.data.list;
-				//alert(page.total);
-			}
-		}
-	}) 
-}
-*/
-/**
  * 个人信息模块
  */
 var gr = new Vue({
 	el:"#home",
 	data:{
-		grs:[]
+		usern : "",
+		grs : []
 	},
-	methods:{},
 	created:function(){
-		getgrList();
+		this.usern = getUrlParam("username");
+		getgrList(this.usern);
 	}
 })
 
 /**
  * 获取个人信息
  */
-function getgrList(){
+function getgrList(usern){
 	var that = this;
+	var username = usern;
+	console.log(username)
 	$.ajax({
 		type:"get",
 		url:"../admin/selectuserbyusername",
+		data:{"username":username},
 		async:true,
 		success:function(res){
+			console.log(res)
 			gr.grs = res.data;
-			for(var i = 0; i < gr.grs.length; i++){
-				gr.grs[i].createtime = that.format(gr.grs[i].createtime)
-			console.log(4)
-			}
+			gr.grs.createtime = that.format(gr.grs.createtime)
 		}
 	});
 }
@@ -364,7 +304,16 @@ function format(shijianchuo)
 	var s = time.getSeconds();
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
-
+/*
+ * 获取路径参数
+ */
+function getUrlParam(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if(r != null)
+		return decodeURI(r[2]);
+	return null;
+}
 
 
 //判断老密码

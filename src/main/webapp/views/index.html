@@ -259,14 +259,6 @@
 						</div>
 						<!-- /.modal -->
 					</div>
-
-					<!-- 上传文件模块 -->
-					<div role="tabpanel" class="tab-pane" id="char">
-						<div class="main_page">
-							<iframe scrolling="no" id="main" name="main" frameborder="0" src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
-						</div>
-					</div>
-
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
 						<div class="check-div form-inline">
@@ -338,78 +330,6 @@
 							</ul>
 						</footer>
 					</div>
-
-					<!--游戏下架模块-->
-					<div role="tabpanel" class="tab-pane" id="sitt">
-						<div class="check-div form-inline">
-							
-						</div>
-						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-							<li>
-								<a href="#sour" data-toggle="tab">待审核</a>
-							</li>
-							<li>
-								<a href="#regu" data-toggle="tab">未上架</a>
-							</li>
-							<li>
-								<a href="#stud" data-toggle="tab">在销售</a>
-							</li>
-							<li>
-								<a href="#sitt" data-toggle="tab" style="background: #4B6075;">已下架</a>
-							</li>
-						</ul>
-						<div id="isdown" class="table-responsive">
-							<table class="table">
-								<thead class="table-active">
-									<tr>
-										<th>编码</th>
-										<th>游戏名称</th>
-										<th>上传玩家</th>
-										<th>上架时间</th>
-										<th>游戏类型</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="item in isdowns">
-										<td>{{item.id}}</td>
-										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
-										<td>{{item.updatetime}}</td>
-										<td>{{item.category}}</td>
-										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!--页码块-->
-						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
-						</footer>
-					</div>
-
 					<!--游戏在销售模块-->
 					<div role="tabpanel" class="tab-pane" id="stud">
 						<div class="check-div form-inline">
@@ -481,6 +401,82 @@
 								</li>
 							</ul>
 						</footer>
+					</div>
+					<!--游戏下架模块-->
+					<div role="tabpanel" class="tab-pane" id="sitt">
+						<div class="check-div form-inline">
+							
+						</div>
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+							<li>
+								<a href="#sour" data-toggle="tab">待审核</a>
+							</li>
+							<li>
+								<a href="#regu" data-toggle="tab">未上架</a>
+							</li>
+							<li>
+								<a href="#stud" data-toggle="tab">在销售</a>
+							</li>
+							<li>
+								<a href="#sitt" data-toggle="tab" style="background: #4B6075;">已下架</a>
+							</li>
+						</ul>
+						<div id="isdown" class="table-responsive">
+							<table class="table">
+								<thead class="table-active">
+									<tr>
+										<th>编码</th>
+										<th>游戏名称</th>
+										<th>上传玩家</th>
+										<th>上架时间</th>
+										<th>游戏类型</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in isdowns">
+										<td>{{item.id}}</td>
+										<td>{{item.name}}</td>
+										<td>{{item.uploadid}}</td>
+										<td>{{item.updatetime}}</td>
+										<td>{{item.category}}</td>
+										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
+                            </i>
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
+                            </i>
+								</li>
+							</ul>
+						</footer>
+					</div>
+					<!-- 上传文件模块 -->
+					<div role="tabpanel" class="tab-pane" id="char">
+						<div class="main_page">
+							<iframe scrolling="no" id="main" name="main" frameborder="0" src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
+						</div>
 					</div>
 					<!--用户管理模块-->
 					<div role="tabpanel" class="tab-pane" id="user">
@@ -792,7 +788,7 @@
 										</div>
 										<div class="form-group">
 											<label>创建时间</label>
-											<input type="date" v-model="grs.createtime" class="form-control">
+											<input type="text" v-model="grs.createtime" class="form-control" readonly>
 										</div>
 										<div class="btn-toolbar list-toolbar">
 											<button class="btn btn-primary" onclick="updateMessage()"><i class="fa fa-save"></i> Save</button>
