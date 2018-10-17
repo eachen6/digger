@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.digger.pojo.Announcement;
 import com.digger.pojo.AnnouncementWithBLOBs;
+import com.digger.vo.AnnouncementVO;
 
 public interface AnnouncementMapper {
     int deleteByPrimaryKey(Integer id);
@@ -20,5 +21,5 @@ public interface AnnouncementMapper {
 
     int updateByPrimaryKey(Announcement record);
 
-	List<AnnouncementWithBLOBs> getAllAnnouncement();
+	List<AnnouncementVO> getAllAnnouncement();
 }

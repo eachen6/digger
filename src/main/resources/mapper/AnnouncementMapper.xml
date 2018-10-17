@@ -36,7 +36,7 @@
       title, createtime, updatetime, 
       introduction, content)
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=VARCHAR}, now(), now(), 
       #{introduction,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
@@ -127,7 +127,7 @@
       imgurl = #{imgurl,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      updatetime = now(),
       introduction = #{introduction,jdbcType=LONGVARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -143,8 +143,9 @@
   </update>
   
   <!-- 新增方法：获取公告列表-->
-  <select id="getAllAnnouncement"  resultType="com.digger.pojo.AnnouncementWithBLOBs">
-    select id,title,content
-    from announcement
+  <select id="getAllAnnouncement"  resultType="com.digger.vo.AnnouncementVO">
+    select a.id,a.title,a.content,a.createtime,b.name
+    from announcement as a,game as b
+    where a.gameid = b.id
   </select>
 </mapper>

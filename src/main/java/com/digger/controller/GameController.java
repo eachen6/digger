@@ -67,7 +67,7 @@ public class GameController {
 	@ResponseBody
 	public ServerResponse toAddGame(HttpSession session,@RequestParam(value="files") MultipartFile[] files, 
 			HttpServletRequest request) throws IllegalStateException, IOException{
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
+	    User user = (User) session.getAttribute(Const.CURRENT_USER);
 	if(user == null){
           return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
       }

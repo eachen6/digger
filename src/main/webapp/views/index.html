@@ -90,7 +90,8 @@
 				<div class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
 				<div class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
 				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
-				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">帮助</div>
+				<div class="meun-item" href="#discount" aria-controls="discount" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
+				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">帮助</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -821,6 +822,74 @@
 						</div>
 
 					</div>
+				    <!--商品打折模块-->
+				    <div role="tabpanel" class="tab-pane" id="discount">
+						<div class="check-div form-inline">
+							<div class="col-md-4">
+								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs ">查 询 </button>
+							</div>
+						</div>
+						<!--游戏表单表单-->
+						<div id="gamediscount" class="table-responsive">
+							<table class="table">
+								<thead class="table-active">
+									<tr>
+										<th>游戏ID</th>
+										<th>游戏名称</th>
+										<th>游戏值扣</th>
+										<th>起始时间</th>
+										<th>终止时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in notups">
+										<th>{{item.id}}</th>
+										<td>{{item.name}}</td>
+										<td>{{item.uploadid}}</td>
+										<td>{{item.startime}}</td>
+									    <td>{{item.deadline}}</td>
+									    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">修改</button></td>
+									</tr>
+								</tbody>
+							</table>
+							<!--修改游戏折扣-->
+							<div class="modal fade" id="change" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-sm " role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">折扣修改</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+										<div class="row" style="margin-top:10px ; margin-left: 6px;">
+                                        <input id="" name="" class="hidden" value=""/>
+                                        <label>折扣力度</label>
+										<input type="text" id="" name="" value="" />
+										<label>起始时间</label>
+										<input type="date"  id="" name="" value="" />
+                                        <label>终止时间</label>
+										<input type="date"  id="" name="" value="" />
+										
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -847,6 +916,7 @@
 			}
 			ifr.style.height = height + 'px'
 		}
+		
 	</script>
 
-<!--</html>-->
+</html>
