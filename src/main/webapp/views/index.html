@@ -147,10 +147,7 @@
 					<!--游戏审核模块-->
 					<div role="tabpanel" class="tab-pane active" id="sour">
 						<div class="check-div form-inline">
-							<div class="col-md-4">
-								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
-								<button class="btn btn-white btn-xs ">查 询 </button>
-							</div>
+							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li class="col-md-3 col-xs-3">
@@ -186,7 +183,11 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
+<<<<<<< HEAD
 										<td><button type="submit" id="getid" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+=======
+										<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 									</tr>
 								</tbody>
 							</table>
@@ -227,20 +228,15 @@
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-lg " role="document">
 								<div class="modal-content">
-
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">游戏审核</h4>
+										<h4 class="modal-title" id="gridSystemModalLabel">游戏审核1</h4>
 									</div>
 									<div class="modal-body">
 										<div class="container-fluid">
 											<div class="row">
-
 												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" style="margin-left: 6px;" poster="" data-setup="{}">
-													<div id="check">
-														<source :src="che.videourl" type='video/mp4'>
-													</div>
-
+														<source :src="item.videourl" type='video/mp4'>
 													<p class="vjs-no-js">
 														To view this video please enable JavaScript, and consider upgrading to a web browser that
 														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -250,18 +246,18 @@
 
 											<div class="row">
 												<a href="#" class="thumbnail">
-													<img src="../img/bgimg.PNG" alt="通用的占位符缩略图">
+													<img src="" alt="通用的占位符缩略图">
 												</a>
 											</div>
 											<div class="row">
 												<div class="col-sm-6 col-md-6">
 													<a href="#" class="thumbnail">
-														<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+														<img src="" alt="通用的占位符缩略图">
 													</a>
 												</div>
 												<div class="col-sm-6 col-md-6">
 													<a href="#" class="thumbnail">
-														<img src="../img/cover.jpg" alt="通用的占位符缩略图">
+														<img src="" alt="通用的占位符缩略图">
 													</a>
 												</div>
 											</div>
@@ -311,21 +307,10 @@
 						</div>
 						<!-- /.modal -->
 					</div>
-
-					<!-- 上传文件模块 -->
-					<div role="tabpanel" class="tab-pane" id="char">
-						<div class="main_page">
-							<iframe scrolling="no" id="main" name="main" frameborder="0" src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
-						</div>
-					</div>
-
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
 						<div class="check-div form-inline">
-							<div class="col-md-4">
-								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
-								<button class="btn btn-white btn-xs ">查 询 </button>
-							</div>
+							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li>
@@ -361,7 +346,11 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
+<<<<<<< HEAD
 										<td><button class="btn btn-danger" data-toggle="modal" data-target="#addChar">添加公告</button>&nbsp;<button class="btn btn-info">上架</button></td>
+=======
+										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 									</tr>
 								</tbody>
 							</table>
@@ -376,11 +365,6 @@
 										<option>3</option>
 										<option>4</option>
 										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
 									</select>
 									页
 								</li>
@@ -429,17 +413,82 @@
 						</div>
 						<!-- /.modal -->
 					</div>
-
+					<!--游戏在销售模块-->
+					<div role="tabpanel" class="tab-pane" id="stud">
+						<div class="check-div form-inline">
+							
+						</div>
+						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
+							<li>
+								<a href="#sour" data-toggle="tab">待审核</a>
+							</li>
+							<li>
+								<a href="#regu" data-toggle="tab">未上架</a>
+							</li>
+							<li>
+								<a href="#stud" data-toggle="tab" style="background: #4B6075;">在销售</a>
+							</li>
+							<li>
+								<a href="#sitt" data-toggle="tab">已下架</a>
+							</li>
+						</ul>
+						<div id="sale" class="table-responsive">
+							<table class="table">
+								<thead class="table-active">
+									<tr>
+										<th>编码</th>
+										<th>游戏名称</th>
+										<th>上传玩家</th>
+										<th>上架时间</th>
+										<th>价格</th>
+										<th>游戏类型</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in sales">
+										<td>{{item.id}}</td>
+										<td>{{item.name}}</td>
+										<td>{{item.uploadid}}</td>
+										<td>{{item.shelftime}}</td>
+										<td>{{item.price}}</td>
+										<td>{{item.category}}</td>
+										<td><button class="btn btn-info">下架</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<ul class="pagination">
+								<li>
+									<select>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+									页
+								</li>
+								<li class="gray">
+									共20页
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-left">
+                            </i>
+								</li>
+								<li>
+									<i class="glyphicon glyphicon-menu-right">
+                            </i>
+								</li>
+							</ul>
+						</footer>
+					</div>
 					<!--游戏下架模块-->
 					<div role="tabpanel" class="tab-pane" id="sitt">
 						<div class="check-div form-inline">
-							<div class="col-md-3">
-								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
-							</div>
-							<div class="col-md-4">
-								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
-								<button class="btn btn-white btn-xs ">查 询 </button>
-							</div>
+							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li>
@@ -474,7 +523,12 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
+<<<<<<< HEAD
 										<td><button class="btn btn-info">上架</button></td>
+										<td><button class="btn btn-block"></button></td>
+=======
+										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 									</tr>
 								</tbody>
 							</table>
@@ -489,11 +543,6 @@
 										<option>3</option>
 										<option>4</option>
 										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
 									</select>
 									页
 								</li>
@@ -511,95 +560,15 @@
 							</ul>
 						</footer>
 					</div>
-
-					<!--游戏在销售模块-->
-					<div role="tabpanel" class="tab-pane" id="stud">
-						<div class="check-div form-inline">
-							<div class="col-md-3">
-								<button class="btn btn-yellow btn-xs" href="#sour" data-toggle="tab">返回上一页 </button>
-							</div>
-							<div class="col-md-4">
-								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
-								<button class="btn btn-white btn-xs ">查 询 </button>
-							</div>
+					<!-- 上传文件模块 -->
+					<div role="tabpanel" class="tab-pane" id="char">
+						<div class="main_page">
+							<iframe scrolling="no" id="main" name="main" frameborder="0" src="upload.html" style="min-height:600px;width:100%;height:100%;margin-top: 70px;"></iframe>
 						</div>
-						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
-							<li>
-								<a href="#sour" data-toggle="tab">待审核</a>
-							</li>
-							<li>
-								<a href="#regu" data-toggle="tab">未上架</a>
-							</li>
-							<li>
-								<a href="#stud" data-toggle="tab" style="background: #4B6075;">在销售</a>
-							</li>
-							<li>
-								<a href="#sitt" data-toggle="tab">已下架</a>
-							</li>
-						</ul>
-						<div id="sale" class="table-responsive">
-							<table class="table">
-								<thead class="table-active">
-									<tr>
-										<th>编码</th>
-										<th>游戏名称</th>
-										<th>上传玩家</th>
-										<th>上架时间</th>
-										<th>游戏类型</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="item in sales">
-										<td>{{item.id}}</td>
-										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
-										<td>{{item.shelftime}}</td>
-										<td>{{item.category}}</td>
-										<td><button class="btn btn-info">上架</button></td>
-										<td><button class="btn btn-block"></button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!--页码块-->
-						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
-						</footer>
 					</div>
 					<!--用户管理模块-->
 					<div role="tabpanel" class="tab-pane" id="user">
 						<div class="check-div form-inline">
-							<div class="col-xs-3">
-								<button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addUser">添加用户 </button>
-							</div>
 							<div class="col-xs-4">
 								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
 								<button class="btn btn-white btn-xs ">查 询 </button>
@@ -608,7 +577,6 @@
 								<label for="paixu">排序:&nbsp;</label>
 								<select class=" form-control">
 									<option>用户id</option>
-									<option>用户名</option>
 									<option>状态</option>
 								</select>
 							</div>
@@ -665,98 +633,6 @@
 							</ul>
 						</footer>
 
-						<!--弹出添加用户窗口-->
-						<div class="modal fade" id="addUser" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">添加用户</h4>
-									</div>
-									<div class="modal-body">
-										<div class="container-fluid">
-											<form class="form-horizontal">
-												<div class="form-group ">
-													<label for="sName" class="col-xs-3 control-label">用户id：</label>
-													<div class="col-xs-8 ">
-														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="sLink" class="col-xs-3 control-label">用户名：</label>
-													<div class="col-xs-8 ">
-														<input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="situation" class="col-xs-3 control-label">状态：</label>
-													<div class="col-xs-8">
-														<label class="control-label" for="anniu">
-                                                    <input type="radio" name="situation" id="normal">正常</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<label class="control-label" for="meun">
-                                                    <input type="radio" name="situation" id="forbid"> 禁用</label>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保 存</button>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
-
-						<!--弹出修改用户窗口-->
-						<div class="modal fade" id="reviseUser" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">修改用户</h4>
-									</div>
-									<div class="modal-body">
-										<div class="container-fluid">
-											<form class="form-horizontal">
-												<div class="form-group ">
-													<label for="sName" class="col-xs-3 control-label">用户id：</label>
-													<div class="col-xs-8 ">
-														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="sLink" class="col-xs-3 control-label">用户名：</label>
-													<div class="col-xs-8 ">
-														<input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="situation" class="col-xs-3 control-label">状态：</label>
-													<div class="col-xs-8">
-														<label class="control-label" for="anniu">
-                                                    <input type="radio" name="situation" id="normal">正常</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<label class="control-label" for="meun">
-                                                    <input type="radio" name="situation" id="forbid"> 禁用</label>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保 存</button>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
-
 						<!--弹出删除用户警告窗口-->
 						<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog" role="document">
@@ -784,60 +660,92 @@
 					</div>
 					<!-- 公告管理模块 -->
 					<div role="tabpanel" class="tab-pane" id="gonggao">
+<<<<<<< HEAD
 
+=======
+						<div class="check-div">
+						</div>
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 						<div id="gnotice" class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
-										<th>编码</th>
+										<th>游戏名</th>
 										<th>标题</th>
-										<th>内容</th>
-										<th>状态</th>
+										<th>创建时间</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
+<<<<<<< HEAD
 									<tr v-for="item in gnotices">
 										<td>{{item.id}}</td>
 										<td>{{item.username}}</td>
 										<td>{{item.state}}</td>
 										<td>{{item.state}}</td>
 										<td><button class="btn btn-info" @click="upd(item.id)" data-toggle="modal" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+=======
+									<tr v-for="item in list">
+										<td>{{item.name}}</td>
+										<td>{{item.title}}</td>
+										<td>{{item.createtime}}</td>
+										<td><button class="btn btn-info">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 									</tr>
 								</tbody>
 							</table>
 						</div>
+<<<<<<< HEAD
 
+=======
+						
+>>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共10页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+				                <!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+				                <div class="col-md-6">
+				                  	   当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+				                </div>
+				                <!-- 分页码 -->
+				                <div class="col-md-6">
+				                    <nav aria-label="Page navigation">
+				                      <ul class="pagination">
+				                      <!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+				                       <li>
+				                            <a v-on:click="change(1)" href="javascript:;" >首页</a>
+				                       </li>
+				                       <!-- 如果还有前页就访问当前页码-1的页面， -->
+				                       <template v-if="hasPreviousPage">
+				                         <li>
+				                          <a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+				                            <span aria-hidden="true">&laquo;</span>
+				                          </a>
+				                         </li>
+				                        </template>
+				                        
+				                        <!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+				                          <template  v-for="page_Nums in navigatepageNums">
+				                             <li v-if="page_Nums===pageNum" class="active"><a href="javascript:;">{{page_Nums}}</a></li>
+				                             <li v-else><a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a></li>
+				                          </template>
+				                       
+				                         <!-- 如果还有后页就访问当前页码+1的页面， -->
+				                        <template v-if="hasNextPage">
+				                            <li>
+				                              <a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+				                                <span aria-hidden="true">&raquo;</span>
+				                              </a>
+				                            </li>
+				                        </template>
+				                         <li><a v-on:click="change(pages)" href="javascript:;">末页</a></li>
+				                      </ul>
+				                    </nav>
+				                </div>
+				        	</div>
 						</footer>
 						<!--修改公告-->
 						<div class="modal fade" id="updataChar" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -904,46 +812,31 @@
 								<div id="myTabContent" class="tab-content">
 									<div class="tab-pane active in" id="home">
 										<div class="form-group">
-											<label>用户账号</label>
-											<input type="text" id="employeeID" v-model="userid" class="form-control" readonly>
+											<label>用户id</label>
+											<input type="text" v-model="grs.id" class="form-control" readonly>
 										</div>
 										<div class="form-group">
-											<label>用户姓名</label>
-											<input type="text" id="employeeName" v-model="username" class="form-control">
+											<label>用户名</label>
+											<input type="text" v-model="grs.username" class="form-control">
 										</div>
 										<div class="form-group">
-											<label>性别</label>
-											<input type="text" id="sex" v-model="sex" class="form-control">
+											<label>email</label>
+											<input type="email" v-model="grs.email" class="form-control">
 										</div>
 										<div class="form-group">
-											<label>出生日期</label>
-											<input type="date" id="birthday" v-model="birthday" class="form-control">
+											<label>密保问题</label>
+											<input type="text" v-model="grs.question" class="form-control">
 										</div>
 										<div class="form-group">
-											<label>学历</label>
-											<input type="text" id="education" v-model="education" class="form-control">
+											<label>密保答案</label>
+											<input type="text" v-model="grs.answer" class="form-control">
 										</div>
 										<div class="form-group">
-											<label>用户住址</label>
-											<input type="text" id="address" v-model="address" class="form-control">
+											<label>创建时间</label>
+											<input type="text" v-model="grs.createtime" class="form-control" readonly>
 										</div>
-										<div class="form-group">
-											<label>身份证号</label>
-											<input type="text" id="noCode" v-model="noCode" class="form-control">
-										</div>
-										<div class="form-group">
-											<label>联系电话</label>
-											<input type="text" id="mobile" v-model="mobile" class="form-control">
-										</div>
-
-										<div class="form-group">
-											<label>Email</label>
-											<input type="text" id="email" v-model="email" class="form-control">
-										</div>
-
 										<div class="btn-toolbar list-toolbar">
 											<button class="btn btn-primary" onclick="updateMessage()"><i class="fa fa-save"></i> Save</button>
-
 										</div>
 									</div>
 								</div>
@@ -957,7 +850,6 @@
 					<!--修改密码模块-->
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
-							原始密码为12312313
 						</div>
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
 							<form class="form-horizontal">

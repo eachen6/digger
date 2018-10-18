@@ -12,7 +12,7 @@ var check = new Vue({
 		}
 	},
 	created:function(){
-		getCheckList();//掉用函数
+		getCheckList();//调用函数
 	}
 })
 
@@ -36,6 +36,7 @@ function getCheckList(){
 }
 
 
+
 /**
  * 获取游戏id查找审核游戏的信息
  */
@@ -46,6 +47,7 @@ $("#getid").click(function(event){
     console.log(id)
 });
 })
+
 
 /**
  * 未上架模块
@@ -113,7 +115,7 @@ function getsaleList(){
 }
 
 /**
- * 在销售模块
+ * 下架模块
  */
 var isdown = new Vue({
 	el:"#isdown",
@@ -127,7 +129,7 @@ var isdown = new Vue({
 })
 
 /**
- * 获取在销售列表
+ * 获取下架列表
  */
 function getisdownList(){
 	var that = this;
@@ -139,7 +141,7 @@ function getisdownList(){
 			isdown.isdowns = res.data;
 			for(var i = 0; i < isdown.isdowns.length; i++){
 				isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
-			console.log(3)
+
 			}
 		}
 	});
@@ -170,10 +172,12 @@ function getguserList(){
 		async:true,
 		success:function(res){
 			guser.gusers = res.data;
+
 			for(var i = 0; i < guser.gusers.length; i++){
 				guser.gusers[i].shelftime = that.format(guser.gusers[i].shelftime)
 			console.log(4)
 			}
+
 		}
 	});
 }
@@ -182,13 +186,30 @@ function getguserList(){
  * 公告管理模块
  */
 var gnotice = new Vue({
-	el:"#gnotice",
+	el:"#gonggao",
 	data:{
-		gnotices:[]
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
+		list:[]
 	},
-	methods:{},
+	methods:{
+		change:function(pn){
+			alert(pn);
+			getgnoticeList(pn);
+		}
+	},
 	created:function(){
-		getgnoticeList();
+		getgnoticeList(1);
+
 	}
 })
 
@@ -213,24 +234,111 @@ var note = new Vue({
 })
 
 /**
- * 获取用户管理列表
+ * 获取公告管理列表
  */
-function getgnoticeList(){
+function getgnoticeList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../admin/get_total_userlist",
-		async:true,
+		url:"../announcement/get_announcement/"+pn,
+		/*data:{"pn":pn},*/
 		success:function(res){
+
 			gnotice.gnotices = res.data;
 			for(var i = 0; i < gnotice.gnotices.length; i++){
 				gnotice.gnotices[i].shelftime = that.format(gnotice.gnotices[i].shelftime)
 			console.log(5)
+
+			console.log(res)
+			if(res.status==0)
+			{
+				gnotice.pageNum = res.data.pageNum;
+				gnotice.total = res.data.total;
+				gnotice.pages = res.data.pages;
+				gnotice.prePage = res.data.prePage;
+				gnotice.nextPage = res.data.nextPage;
+				gnotice.isFirstPage = res.data.isFirstPage;
+				gnotice.isLastPage = res.data.isLastPage;
+				gnotice.hasPreviousPage = res.data.hasPreviousPage;
+				gnotice.hasNextPage = res.data.hasNextPage;
+				gnotice.navigatePages = res.data.navigatePages;
+				gnotice.navigatepageNums = res.data.navigatepageNums;
+				gnotice.list = res.data.list;
+				for(var i = 0; i < gnotice.list.length; i++){
+					gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
+				}
+				//alert(page.total);
+
 			}
+			
+		}
 		}
 	});
 }
 
+/**
+ * 个人信息模块
+ */
+var gr = new Vue({
+	el:"#home",
+	data:{
+		usern : "",
+		grs : []
+	},
+	created:function(){
+		this.usern = getUrlParam("username");
+		getgrList(this.usern);
+	}
+})
+
+/**
+ * 获取个人信息
+ */
+function getgrList(usern){
+	var that = this;
+	var username = usern;
+	console.log(username)
+	$.ajax({
+		type:"get",
+		url:"../admin/selectuserbyusername",
+		data:{"username":username},
+		async:true,
+		success:function(res){
+			console.log(res)
+			gr.grs = res.data;
+			gr.grs.createtime = that.format(gr.grs.createtime)
+		}
+	});
+}
+
+
+/**
+ * 修改个人信息
+ */
+function updateMessage(){
+	$.ajax({
+		type:"get",
+		url:"../admin/selectuserbyusername",
+		async:true,
+		success:function(res){
+			console.log(5)
+		}
+	});
+}
+
+/**
+ * 修改用户封禁状态
+ */
+function updatestate(){
+	$.ajax({
+		type:"get",
+		url:"../admin/updatestatebyid",
+		async:true,
+		success:function(res){
+			console.log(6)
+		}
+	});
+}
 /**
  * 时间戳装换格式函数
  * @param {Object} m
@@ -249,6 +357,7 @@ function format(shijianchuo)
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
 /*
+<<<<<<< HEAD
  * 公告富文本添加
  */
 function sendtheFile(files, editor, $editable) {
@@ -367,3 +476,56 @@ function getnonediscountLit(){
 		}
 	});
 }
+/*
+ * 获取路径参数
+ */
+function getUrlParam(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if(r != null)
+		return decodeURI(r[2]);
+	return null;
+}
+
+
+//判断老密码
+/*function validatePwd() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
+		document.getElementById("save_button").disabled = false;
+	}
+}*/
+//校验第一次输入的密码
+/*function validatePwd1() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
+		document.getElementById("finish-button").disabled = false;
+	}
+}*/
+
+	//		 对比两次输入的密码 
+/*function validatePwd2() {
+	var pwd1 = document.getElementById("password").value;
+	var pwd2 = document.getElementById("repassword").value;
+	if (pwd2.trim().length == 0) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	} else if (pwd1 == pwd2) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
+		document.getElementById("finish-button").disabled = false;
+	} else {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
+		document.getElementById("finish-button").disabled = true;
+	}
+}*/
+
