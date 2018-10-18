@@ -215,16 +215,13 @@ function getguserList(){
 		async:true,
 		success:function(res){
 			guser.gusers = res.data;
-<<<<<<< HEAD
 			console.log(2)
-=======
 
 			for(var i = 0; i < guser.gusers.length; i++){
 				guser.gusers[i].shelftime = that.format(guser.gusers[i].shelftime)
 			console.log(4)
 			}
 
->>>>>>> eed78fa51f3a2b28d79909474260cabe0924a564
 		}
 	});
 }
