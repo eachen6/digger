@@ -56,13 +56,18 @@ public class UserController {
 		ServerResponse<User> response = userService.login(username, password);
 		if (response.isSuccess()) {
 			session.setAttribute(Const.CURRENT_USER, response.getData());
-			/*if(checkSession(username)){ 
+			System.out.println(response+"1");
+			
+			if(checkSession(username)){ 
 			      //如果该session在此之前已经存在，则将该用户进行退出操作 
+				System.out.println(response+"2");
 			      DbUtil.userLogout(username);
+			      System.out.println(response+"3");
 			      return ServerResponse.createByErrorMessage("该用户正在上线");
 			    } 
 			    //将新的session存放到map<username,session>中 
-			    DbUtil.mapSession.put(username, session);*/
+			    DbUtil.mapSession.put(username, session);
+			    System.out.println(response+"4");
 			    return response;
 		}
 		return ServerResponse.createByErrorMessage("登陆失败");
@@ -150,7 +155,10 @@ public class UserController {
 	@RequestMapping(value = "logout", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse<String> logout(HttpSession session) {
-		session.removeAttribute(Const.CURRENT_USER);
+		User user = (User)session.getAttribute(Const.CURRENT_USER);
+		String username = user.getUsername();
+		DbUtil.userLogout(username);
+		/*session.removeAttribute(Const.CURRENT_USER);*/
 		return ServerResponse.createBySuccess();
 	}
 	
@@ -206,7 +214,7 @@ public class UserController {
 	@RequestMapping(value = "get_userinfo", method = RequestMethod.GET)
 	@ResponseBody
 	public ServerResponse getUserInfo(HttpSession session){
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		User user = (User)session.getAttribute(Const.CURRENT_USER);
 		if(user == null)
 			return ServerResponse.createByErrorMessage("用户未登录");
 		return userService.getUserInfo(user.getId());

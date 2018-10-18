@@ -574,6 +574,13 @@
       from game where state = 3
   </select>
   
+  <!-- 新增方法：根据id审核游戏  -->
+  <update id="auditGame" parameterType="Integer">
+    update game
+    set state = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
   <!-- 新增方法：根据id上架游戏  -->
   <update id="onTheShelfGame" parameterType="Integer">
     update game

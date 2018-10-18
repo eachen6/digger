@@ -74,4 +74,6 @@ public interface GameMapper {
 
 	int addclick(int gameid);
 
+	int auditGame(Integer id);
+
 }
