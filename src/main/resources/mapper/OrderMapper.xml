@@ -36,7 +36,7 @@
       issend, closetime, ordernum
       )
     values (#{id,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, now(), now(), #{state,jdbcType=TINYINT}, 
+      #{coverimg,jdbcType=VARCHAR}, #{price,jdbcType=FLOAT}, now(), now(), #{state,jdbcType=TINYINT}, 
       #{paytime,jdbcType=TIMESTAMP}, #{issend,jdbcType=TINYINT},
       #{closetime,jdbcType=TIMESTAMP}, #{ordernum,jdbcType=BIGINT}
       )

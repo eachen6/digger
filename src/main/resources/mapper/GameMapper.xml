@@ -454,7 +454,7 @@
   
   <!-- 新增方法：获取所有游戏<折扣促销>集合(待修改)-->
   <select id="toGetMydiscountGameList" resultType="com.digger.vo.CarouseVO">
-    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,DATE_FORMAT(starttime,'%Y-%m-%d') starttime, DATE_FORMAT(deadline,'%Y-%m-%d') deadline,discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
     where state = 1 and discountstate = 1
@@ -496,7 +496,7 @@
   <!-- 新增方法：獲取游戏详情-->
   <select id="toGetDetail" resultType="com.digger.vo.GamedetailsVO">
     select game.id,name,category,bgurl,coverurl,surfaceurl,videourl,opstage,developer,oper,platform,memory,grcard,cd,cpu,system,driver,price,DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,discountstate,detailtxt,discount,starttime,deadline
-    from game left join (select * from discountlist where now()>starttime and deadline>now()) as a
+    from game left join (select * from discountlist where now()>=starttime and deadline>=now()) as a
     on game.id=a.gameid 
     where game.id = #{id}
   </select>
@@ -573,6 +573,13 @@
       *
       from game where state = 3
   </select>
+  
+  <!-- 新增方法：根据id审核游戏  -->
+  <update id="auditGame" parameterType="Integer">
+    update game
+    set state = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
   
   <!-- 新增方法：根据id上架游戏  -->
   <update id="onTheShelfGame" parameterType="Integer">

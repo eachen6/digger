@@ -22,9 +22,11 @@ public interface WishMapper {
 
     Integer selectByGameid(Integer gameid);
 
-	int delete(@Param("gameid")Integer gameid, @Param("userid")Integer userid);
+	int delete(int wishid);
 
 	Integer select(@Param("gameid")Integer gameid, @Param("userid")Integer userid);
 
 	List<WishVO> toGetMyselfWishGame(Integer userid);
+
+	Integer delete(@Param("gameid")int gameid, @Param("userid")Integer userid);
 }

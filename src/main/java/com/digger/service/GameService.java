@@ -63,4 +63,6 @@ public interface GameService {
 	void addclick(int gameid);
 
 	public ServerResponse addGameDetails(Game game);
+
+	ServerResponse auditGame(Integer id);
 }

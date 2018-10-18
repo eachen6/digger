@@ -46,8 +46,9 @@ $(document).ready(function(){
 
     //点击确认购买动
     $("#btn_buy").click(function(e){
-    	if(game.discount==null)
+    	if(game.contents.discount==null||game.contents.discount==0){
     		price = game.contents.price;
+    	}
     	else
     		price = game.contents.price*game.contents.discount*0.1;
     	var ordernum = GetDateNow();
@@ -240,7 +241,7 @@ function gamedetails(id){
 			    var shelftime=new Date();
 			    shelftime.setFullYear(a[0],a[1]-1,a[2]);
 			    var today = new Date();
-			    if (today<=shelftime)
+			    if (today<shelftime)
 			    {
 			        game.isshelf=true;
 			    }

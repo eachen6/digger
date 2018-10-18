@@ -15,6 +15,13 @@ public class CarouseVO {
 	private String category;
 	private String discountstate;
 	private String surfaceurl;
+	private String starttime;
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
 	public int getId() {
 		return id;
 	}

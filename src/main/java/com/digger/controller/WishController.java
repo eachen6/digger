@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.digger.common.Const;
@@ -51,12 +52,12 @@ public class WishController {
 	}
 	
 	/**
-     * 根据游戏id和用户id将游戏从愿望清单删除
+     * 根据用户id和游戏id将游戏从愿望清单删除
      * @return
      */
 	@RequestMapping(value = "delete_wishgame", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse toDeleteWishGame(Integer gameid,HttpSession session) 
+	public ServerResponse toDeleteWishGame(@RequestParam(value="gameid") int gameid,HttpSession session) 
 	{
 		User user = (User) session.getAttribute(Const.CURRENT_USER); 
 		if(user == null){
