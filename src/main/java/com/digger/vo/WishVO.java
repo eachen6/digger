@@ -14,6 +14,14 @@ public class WishVO {
     private Integer userid;
 
     private Date createtime;
+    
+	private Date updatetime;
+    
+    private float price;
+    
+    private byte discountstate;
+    
+    private float discount;
 
     public Integer getId() {
 		return id;
@@ -95,11 +103,4 @@ public class WishVO {
 		this.discount = discount;
 	}
 
-	private Date updatetime;
-    
-    private float price;
-    
-    private byte discountstate;
-    
-    private float discount;
 }

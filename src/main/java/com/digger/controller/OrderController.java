@@ -47,6 +47,7 @@ public class OrderController {
 		if(user == null){
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
+		System.out.println(order.getPrice());
 		order.setUserid(user.getId());
 		//重新开始检查一遍是否已购买了该游戏
 		ServerResponse sr = orderService.isBuy_Order(order.getGameid(),user.getId());

@@ -8,10 +8,10 @@ public interface WishService {
 
 	ServerResponse toAddWishGame(Integer gameid, Integer userid);
 
-	ServerResponse toDeleteWishGame(Integer gameid, Integer userid);
-
 	ServerResponse toGetMyselfWishGame(Integer userid);
 
 	ServerResponse toGetFriendWishGame(Integer userid);
+
+	ServerResponse toDeleteWishGame(int gameid, Integer userid);
 	
 }
