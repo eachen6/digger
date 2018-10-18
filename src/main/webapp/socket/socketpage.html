@@ -10,13 +10,13 @@
 <link rel="stylesheet" type="text/css" href="../socket/plugins/amaze/css/amazeui.min.css"/>
 <link rel="stylesheet" type="text/css" href="../socket/plugins/amaze/css/admin.css"/>
 <link rel="stylesheet" type="text/css" href="../socket/plugins/contextjs/css/context.standalone.css"/>
-<script type="text/javascript" src="../socket/plugins/jquery/jquery-2.1.4.min.js" ></script>
+<!--<script type="text/javascript" src="../socket/plugins/jquery/jquery-2.1.4.min.js" ></script>
 <script type="text/javascript" src="../socket/plugins/amaze/js/amazeui.min.js" ></script>
 <script type="text/javascript" src="../socket/plugins/amaze/js/app.js" ></script>
 <script type="text/javascript" src="../socket/plugins/layer/extend/layer.ext.js" ></script>
 <script type="text/javascript" src="../socket/plugins/laypage/laypage.js" ></script>
 <script type="text/javascript" src="../socket/plugins/contextjs/js/context.js" ></script>
-<script type="text/javascript" src="../socket/plugins/sockjs/sockjs.js" ></script>
+<script type="text/javascript" src="../socket/plugins/sockjs/sockjs.js" ></script>-->
 </head>
 <body>
 
@@ -37,7 +37,7 @@
             </div>
             <!-- 接收者 -->
             <div class="" style="float: left">
-                <p class="am-kai">发送给 : <span id="sendto">全体成员</span><button class="am-btn am-btn-xs am-btn-danger" onclick="$('#sendto').text('全体成员')">复位</button></p>
+                <p class="am-kai">发送给 : <span id="sendto">未选择好友</span><button class="am-btn am-btn-xs am-btn-danger" onclick="$('#sendto').text('未选择好友')">复位</button></p>
             </div>
             <!-- 按钮区 -->
             <div class="am-btn-group am-btn-group-xs" style="float:right;">
@@ -49,11 +49,22 @@
             </div>
         </div>
         <!-- 列表区 -->
-        <div class="am-panel am-panel-default" style="float:left;width: 20%;">
+        <div class="am-panel am-panel-default" style="float:left;width: 20%;" id="friendlist">
             <div class="am-panel-hd">
-                <h3 class="am-panel-title">在线列表 [<span id="onlinenum"></span>]</h3>
+                <h3 class="am-panel-title">好友列表 [<span id="onlinenum">{{friends.length}}</span>]</h3>
+                <br />
+                <div class="row">
+                <input style="float: left;"  type="search" name="searchFriend" id="searchFriend" value="" placeholder="添加好友" />
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
             </div>
-            <ul class="am-list am-list-static am-list-striped" id="list">
+            <!--<ul class="am-list am-list-static am-list-striped" id="list">
+            </ul>-->
+            <ul class="am-list am-list-static am-list-striped">
+            	<li v-for="item in friends">{{item.name}}
+            		<button v-if="item.state == 0" type="button" style="float: right;" class="am-btn am-btn-xs am-btn-primary am-round" @click="addChat(item.name)"><span class="am-icon-phone"><span>聊天</button>
+            		<button v-else-if="item.state == 1" type="button" style="float: right;" class="am-btn am-btn-xs am-btn-primary am-round" ><span class="am-icon-phone"><span>未上线</button>
+            	</li>
             </ul>
         </div>
     </div>
@@ -63,44 +74,39 @@
     <span class="am-icon-btn am-icon-th-list"></span>
 </a>
 
-
 <script>
-    $(function () {
-        context.init({preventDoubleContext: false});
-        context.settings({compress: true});
-        context.attach('#chat-view', [
-            {header: '操作菜单',},
-            {text: '清理', action: clearConsole},
-            {divider: true},
-            {
-                text: '选项', subMenu: [
-                {header: '连接选项'},
-                {text: '检查', action: checkConnection},
-                {text: '连接', action: getConnection},
-                {text: '断开', action: closeConnection}
-            ]
-            },
-            {
-                text: '销毁菜单', action: function (e) {
-                e.preventDefault();
-                context.destroy('#chat-view');
-            }
-            }
-        ]);
-    });
-    if(""){
-        layer.msg('', {
-            offset: 0
-        });
-    }
-    if(""){
-        layer.msg('', {
-            offset: 0,
-            shift: 6
-        });
-    }
+	var friendlist = new Vue({
+		el:"#friendlist",
+		data:{
+			friends:[],
+			onlinePeople:[]
+		},
+		methods:{
+			addChat:function(username){
+				addChat(username);
+			}
+		},
+		created:function(){
+//			var that = this;
+//			$.ajax({
+//				type:"get",
+//				url:"../friend/get_personal_friendlist",
+//				async:true,
+//				success:function(res){
+//					if(res.status == 0){
+//						console.log(res.data)
+//						that.friends = res.data;
+//					}
+//				}
+//			});
+			getCurrentUser();
+		}
+	})
+	
+	
+	
     var showMyFriends = new Array();//接收好友列表的所有信息
-	var friendlist = null;//接收当前用户的好友列表
+	var friendlists = null;//接收当前用户的好友列表
 	var username = null;
     var wsServer = null;
     var ws = null;
@@ -194,7 +200,7 @@
             return;
         }
         var message = $("#message").val();
-        var to = $("#sendto").text() == "全体成员"? "": $("#sendto").text();
+        var to = $("#sendto").text() == "未选择好友"? "": $("#sendto").text();
         console.log("发送给",to)
         console.log("发送人",username)
         if(message == null || message == ""){
@@ -235,24 +241,18 @@
             showNotice(message.message);
         }
         if(message.list != null && message.list != undefined){//在线列表
-        	//将后台返回的list与friendlist进行对比，只允许与在线的好友通话
-//      	for(var i = 0; i < that.friendlist.size(); i++){
-//      		
-//      		for(var j = 0; j < message.list.size(); j++){
-//      			if(that.friendlist[i] == message.list[j]){
-//      				var map = this.getMap();
-//      				map.put("id",that.friendlist.id);
-//      				map.put("name",that.friendlist.name);
-//      				map.put("state","true");
-//      				that.showMyFriends.add(map);
-//      			}
-//      		}
-//      	}
-//      	console.log(that.showMyFriends)
-			//getCurrentUsersFriends();
-			//selectMyFriendsList(message.list)
-			
-            showOnline(message.list);
+        	
+            //showOnline(message.list);
+            getMyFriends();
+            console.log("3",friendlist.friends)
+             console.log("3-1",message.list)
+			for(var i = 0; i < friendlist.friends.length; i++){
+				for(var j = 0; j < message.list.length; j++){
+					if(friendlist.friends[i].name == message.list[j])
+						friendlist.friends[i].state = 0;
+				}
+			}
+            console.log("4",friendlist.friends)
         }
     }
 
@@ -269,7 +269,7 @@
      * 展示会话信息
      */
     function showChat(message){
-        var to = message.to == null || message.to == ""? "全体成员" : message.to;   //获取接收人
+        var to = message.to == null || message.to == ""? "未选择好友" : message.to;   //获取接收人
         var isSef = username == message.from ? "am-comment-flip" : "";   //如果是自己则显示在右边,他人信息显示在左边
         var html = "<li class=\"am-comment "+isSef+" am-comment-primary\"><a href=\"#\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" ></a><div class=\"am-comment-main\">\n" +
                 "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#\">"+message.from+"</a> 发表于<time> "+message.time+"</time> 发送给: "+to+" </div></header><div class=\"am-comment-bd\"> <p>"+message.content+"</p></div></div></li>";
@@ -299,7 +299,7 @@
      */
     function addChat(user){
         var sendto = $("#sendto");
-        var receive = sendto.text() == "全体成员" ? "" : sendto.text() + ",";
+        var receive = sendto.text() == "未选择好友" ? "" : sendto.text() + ",";
         if(receive.indexOf(user) == -1){    //排除重复
             sendto.text(receive + user);
         }
@@ -369,52 +369,25 @@
     	});
     }
     
-    /**
-     * 获取当前用户的好友列表
-     * @param {Object} document
-     */
-    function getCurrentUsersFriends(){
-    	var that = this;
-    	$.ajax({
-    		type:"get",
-    		url:"../friend/get_personal_friendlist",
-    		async:true,
-    		success: function(res){
-    			if(res.status == 0){
-    				//console.log(res.data)
-    				//将好友信息赋给friendlist
-    				that.friendlist = res.data;
-    				console.log(that.friendlist)
-    			}
-    		}
-    	});
-    }
-    
-    function selectMyFriendsList(list){
-    	var that =this;
-    	//将后台返回的list与friendlist进行对比，只允许与在线的好友通话
-//      	for(var i = 0; i < that.friendslist.length; i++){
-//      		
-//      		for(var j = 0; j < list.length; j++){
-//      			if(that.friendlist[i] == message.list[j]){
-//      				var map = this.getMap();
-//      				map.put("id",that.friendlist.id);
-//      				map.put("name",that.friendlist.name);
-//      				map.put("state","true");
-//      				that.showMyFriends.add(map);
-//      			}
-//      		}
-//      	}
-	console.log(list.length)
-	console.log(that.friendlist.length)
-    }
-    
-    $(document).ready(function(){  
-	    getCurrentUser();
-	    //getCurrentUsersFriends();
-	});  
-    
-    
+	function getMyFriends(){
+		var that = this;
+			$.ajax({
+				type:"get",
+				url:"../friend/get_personal_friendlist",
+				async:false,
+				success:function(res){
+					if(res.status == 0){
+						console.log("1",res.data)
+						friendlist.friends = res.data;
+					}
+				}
+			});
+			console.log("2",friendlist.friends)
+	}
+	
+	
+	
+	
 </script>
 </body>
 </html>

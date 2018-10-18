@@ -29,7 +29,7 @@ $(document).ready(function(){
 		else if(name=="order"){
 			$("#frame").load("order.html");
 		}
-		else if(name=="chat"){
+		else if(name=="webchat"){
 			$("#frame").load("../socket/socketpage.html");
 		}
 		else if(name=="wish"){
