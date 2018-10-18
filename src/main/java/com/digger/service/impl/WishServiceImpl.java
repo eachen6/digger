@@ -61,13 +61,14 @@ public class WishServiceImpl implements WishService{
 	}
 	
 	/* 
-	 * 根据游戏id和用户id将游戏从愿望清单删除
+	 * 根据愿望清单id将游戏从愿望清单删除
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse toDeleteWishGame(Integer gameid, Integer userid) {
+	public ServerResponse toDeleteWishGame(int gameid, Integer userid) {
 		// TODO Auto-generated method stub
-		int rowCount = wishMapper.delete(gameid,userid);
+		Integer rowCount = 0;
+		rowCount = wishMapper.delete(gameid,userid);
 		if(rowCount > 0){
             return ServerResponse.createBySuccessMessage("删除成功！");
         }
@@ -84,9 +85,9 @@ public class WishServiceImpl implements WishService{
 		List<WishVO> list = new ArrayList<WishVO>();
 		list = wishMapper.toGetMyselfWishGame(userid);
 		if(CollectionUtils.isEmpty(list)){
-			return ServerResponse.createByErrorMessage("查询失败！");
+			return ServerResponse.createByErrorCodeMessage(2,"您的愿望清单还是空的，快去填充您的愿望清单吧！");
         }
-		return ServerResponse.createBySuccess("查询成功！", list);
+		return ServerResponse.createBySuccess("查询成功！",list);
         
 	}
 
@@ -104,5 +105,6 @@ public class WishServiceImpl implements WishService{
         }
 		return ServerResponse.createBySuccess("查询成功！", list);
 	}
+
 	
 }
