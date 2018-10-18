@@ -105,6 +105,17 @@ public class GameAuditController {
 	}
 	
 	/**
+     * 根据id审核游戏
+     * @return
+     */
+	@RequestMapping(value = "audit_game", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse auditGame(Integer id)
+	{
+		return gameService.auditGame(id);
+	}
+	
+	/**
      * 根据id上架游戏
      * @return
      */

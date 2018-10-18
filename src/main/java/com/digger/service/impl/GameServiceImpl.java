@@ -373,4 +373,18 @@ public class GameServiceImpl implements GameService{
 		}
 	}
 
+	/**
+	 * @author 徐子颖
+	 * 根据id审核游戏
+	 */
+	@Override
+	public ServerResponse auditGame(Integer id) {
+		// TODO Auto-generated method stub
+		int updateCount = gameMapper.auditGame(id);
+		if(updateCount>0){
+			return ServerResponse.createBySuccessMessage("审核成功");
+		}
+		return ServerResponse.createByErrorMessage("审核失败");
+	}
+
 }
