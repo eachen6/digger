@@ -215,11 +215,11 @@ public class GameController {
      */
 	@RequestMapping(value = "get_discount_gamelist/{pn}", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse mydiscountGameList(@PathVariable(value="pn") int pn)
+	public ServerResponse mydiscountGameList(@PathVariable(value="pn") Integer pn)
 	{
         PageHelper.startPage(pn, Const.gamecount);
         List<CarouseVO> list = gameService.toGetMydiscountGameList();
-        System.out.println("4");
+        System.out.println(list);
         PageInfo page = new PageInfo(list,Const.pagecount);
         return ServerResponse.createBySuccess(page);
 	}

@@ -11,7 +11,10 @@
 		<title>Digger游戏平台</title>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
-
+		<link rel="stylesheet" type="text/css" href="../richtext/dist/bootstrap.css">
+		<link href="../richtext/dist/summernote.css" rel="stylesheet">
+		<script src="../richtext/dist/summernote.js"></script>
+		<script src="../richtext/dist/lang/summernote-zh-CN.js"></script>
 		<script>
 			$(function() {
 				$(".meun-item").click(function() {
@@ -45,6 +48,30 @@
 					$("#rightContent").toggleClass("pd0px");
 				})
 			})
+			$(function() {
+				$('.summernote').summernote({
+					height: 200,
+					tabsize: 2,
+					lang: 'zh-CN',
+					toolbar: [
+						['style', ['bold', 'italic', 'underline', 'clear']],
+						['fontsize', ['fontsize']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['height', ['height']],
+						['insert', ['picture', 'video']]
+					],
+					//重写图片上传
+					callbacks: {
+						onImageUpload: function(files, editor, $editable) {
+
+							sendtheFile(files[0], editor, $editable);
+
+						}
+					}
+
+				});
+			});
 		</script>
 		<!--限制文本长度-->
 		<style type="text/css">
@@ -57,6 +84,23 @@
 				/*文字隐藏以后添加省略号*/
 				white-space: nowrap;
 				/*强制不换行*/
+			}
+			
+			.note-alarm {
+				float: right;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+			
+			.LoR {
+				height: auto;
+				width: auto;
+				border: 4px solid #a1a1a1;
+				background-color: rgba(75, 96, 117, 0.8);
+				padding: 20px 15px;
+				border-radius: 15px;
+				box-shadow: 10px 10px 5px #888888;
+				color: #ffffff;
 			}
 		</style>
 		<!--[if lt IE 9]>
@@ -90,7 +134,7 @@
 				<div class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
 				<div class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
 				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
-				<div class="meun-item" href="#discount" aria-controls="discount" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
+				<div class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
 				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">帮助</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
@@ -142,7 +186,7 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-										<td><button type="submit" id="getid"  class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+										<td><button type="submit" id="getid" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -317,7 +361,7 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
-										<td><button class="btn btn-info">上架</button></td>
+										<td><button class="btn btn-danger" data-toggle="modal" data-target="#addChar">添加公告</button>&nbsp;<button class="btn btn-info">上架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -353,6 +397,37 @@
 								</li>
 							</ul>
 						</footer>
+						<!--添加公告-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid" style="margin-left: 6px;">
+											<form class="form-horizontal" id="declared">
+												<div class="row">
+													<input type="text" class="form-control input-lg " id="sName" placeholder="公告标题">
+												</div>
+												<br />
+												<div class="form-group" style="width: 860px">
+													<div class="summernote">公告内容</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green" id="adddeclared">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
 					</div>
 
 					<!--游戏下架模块-->
@@ -482,6 +557,7 @@
 										<td>{{item.shelftime}}</td>
 										<td>{{item.category}}</td>
 										<td><button class="btn btn-info">上架</button></td>
+										<td><button class="btn btn-block"></button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -708,9 +784,7 @@
 					</div>
 					<!-- 公告管理模块 -->
 					<div role="tabpanel" class="tab-pane" id="gonggao">
-						<div class="check-div">
-							<button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addChar">添加公告</button>
-						</div>
+
 						<div id="gnotice" class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
@@ -728,54 +802,12 @@
 										<td>{{item.username}}</td>
 										<td>{{item.state}}</td>
 										<td>{{item.state}}</td>
-										<td><button class="btn btn-info">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+										<td><button class="btn btn-info" @click="upd(item.id)" data-toggle="modal" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="data-div">
-							<div class="row tableHeader">
-								<div class="col-xs-1 ">
-									编码
-								</div>
-								<div class="col-xs-2">
-									标题
-								</div>
-								<div class="col-xs-5">
-									内容
-								</div>
-								<div class="col-lg-2">
-									状态
-								</div>
-								<div class="col-xs-2">
-									操作
-								</div>
-							</div>
-							<div class="tablebody">
-								<div class="row">
-									<div class="col-xs-1 ">
-										{{1}}
-									</div>
-									<div class="col-xs-2">
-										{{title}}
-									</div>
-									<div class="col-xs-5">
-										<div class="line-limit-length">
-											{{content}}
-										</div>
-									</div>
-									<div class="col-lg-2">
-										{{release}}
-									</div>
-									<div class="col-xs-2">
-										<button class="btn btn-default btn-xs">发布</button>
-										<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeChar">修改</button>
-										<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteChar">删除</button>
-									</div>
-								</div>
-							</div>
 
-						</div>
 						<!--页码块-->
 						<footer class="footer">
 							<ul class="pagination">
@@ -807,90 +839,30 @@
 								</li>
 							</ul>
 						</footer>
-						<!--增加权限弹出窗口-->
-						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
-									</div>
-									<div class="modal-body">
-										<div class="container-fluid">
-											<form class="form-horizontal">
-												<div class="form-group ">
-													<label for="sName" class="col-xs-3 control-label">标题：</label>
-													<div class="col-xs-6 ">
-														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="sLink" class="col-xs-3 control-label">内容：</label>
-													<div class="col-xs-6 ">
-														<textarea class="form-control input-sm duiqi"></textarea>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
-													<div class="col-xs-8">
-														<select class=" form-control select-duiqi">
-															<option value="">未发布</option>
-															<option value="">发布</option>
-														</select>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保 存</button>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
-
-						<!--修改权限弹出窗口-->
-						<div class="modal fade" id="changeChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog" role="document">
+						<!--修改公告-->
+						<div class="modal fade" id="updataChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title" id="gridSystemModalLabel">修改公告</h4>
 									</div>
-									<div class="modal-body">
-										<div class="container-fluid">
-											<form class="form-horizontal">
-												<div class="form-group ">
-													<label for="sName" class="col-xs-3 control-label">标题：</label>
-													<div class="col-xs-6 ">
-														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
-													</div>
+									<div id="upgg" class="modal-body">
+										<div class="container-fluid" style="margin-left: 6px;">
+											<form class="form-horizontal" id="declared">
+												<div class="row">
+													<input type="text" class="form-control input-lg " id="sName" v-model="id">
 												</div>
-												<div class="form-group">
-													<label for="sLink" class="col-xs-3 control-label">内容：</label>
-													<div class="col-xs-6 ">
-														<textarea class="form-control input-sm duiqi"></textarea>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
-													<div class="col-xs-8">
-														<select class=" form-control select-duiqi">
-															<option value="">未发布</option>
-															<option value="">发布</option>
-														</select>
-													</div>
+												<br />
+												<div class="form-group" style="width: 860px">
+													<div class="summernote">{{state}}</div>
 												</div>
 											</form>
 										</div>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保 存</button>
+										<button type="button" class="btn btn-xs btn-green" id="adddeclared">保 存</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
@@ -1017,38 +989,70 @@
 						</div>
 
 					</div>
-				    <!--商品打折模块-->
-				    <div role="tabpanel" class="tab-pane" id="discount">
+					<!--商品打折模块-->
+					<div role="tabpanel" class="tab-pane" id="discounts">
 						<div class="check-div form-inline">
 							<div class="col-md-4">
 								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
 								<button class="btn btn-white btn-xs ">查 询 </button>
 							</div>
 						</div>
-						<!--游戏表单表单-->
-						<div id="gamediscount" class="table-responsive">
+						<div class="col-md-4 col-sm-4">
+							<div class="LoR">
+								<!--游戏未打折表单-->
+								<h5 class="text-center">未打折游戏列表</h4>
+						<div id="nonediscount" class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
 										<th>游戏ID</th>
 										<th>游戏名称</th>
-										<th>游戏值扣</th>
-										<th>起始时间</th>
-										<th>终止时间</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in notups">
+									<tr v-for="item in nonediscount">
 										<th>{{item.id}}</th>
 										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
-										<td>{{item.startime}}</td>
-									    <td>{{item.deadline}}</td>
-									    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">修改</button></td>
+									    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">打折</button></td>
 									</tr>
 								</tbody>
 							</table>
+							</div>
+							</div>
+						</div>
+						<div class="col-md-8 col-sm-8" >
+							<div class="LoR">
+								<!--游戏已打折表单-->
+								<h5 class="text-center">已打折游戏列表</h4>
+								<div id="gamediscount" class="table-responsive">
+									<table class="table">
+										<thead class="table-active">
+											<tr>
+												<th>游戏ID</th>
+												<th>游戏名称</th>
+												<th>折扣力度</th>
+												<th>起始时间</th>
+												<th>终止时间</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="item in goods">
+												<th>{{item.id}}</th>
+												<td>{{item.name}}</td>
+												<th>{{item.discount }}折</th>
+												<th>{{item.starttime}}</th>
+												<th>{{item.deadline}}</th>
+											    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">修改</button></td>
+											</tr>
+										</tbody>
+									</table>	
+								</div>
+								
+							</div>
+						</div>
+						
 							<!--修改游戏折扣-->
 							<div class="modal fade" id="change" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-sm " role="document">
@@ -1065,9 +1069,9 @@
                                         <label>折扣力度</label>
 										<input type="text" id="" name="" value="" />
 										<label>起始时间</label>
-										<input type="date"  id="" name="" value="" />
+										<input type="datetime-local" class="form_datetime" id="" name="" value="" />
                                         <label>终止时间</label>
-										<input type="date"  id="" name="" value="" />
+										<input type="text"  id="" name="" value="" />
 										
 											</div>
 										</div>
@@ -1082,7 +1086,7 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
-						</div>
+						
 						
 					</div>
 				</div>
@@ -1093,6 +1097,7 @@
 		<script src="../js/myvue.js"></script>
 	</body>
 	<script>
+		 
 		function calcPageHeight(doc) {
 			var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
 			var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
