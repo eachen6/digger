@@ -9,6 +9,9 @@ var check = new Vue({
 	methods:{
 		shenhe:function(a){
 			console.log(a)
+		},
+		deletegame:function(){
+			console.log(1)
 		}
 	},
 	created:function(){
@@ -34,19 +37,6 @@ function getCheckList(){
 		}
 	});
 }
-
-
-
-/**
- * 获取游戏id查找审核游戏的信息
- */
-$(function(){
-$("#getid").click(function(event){
-	console.log(1)
-    var id= document.getElementById("getid");
-    console.log(id)
-});
-})
 
 
 /**
@@ -130,7 +120,6 @@ var sale = new Vue({
  */
 function getsaleList(){
 	var that = this;
-	console.log(2)
 	$.ajax({
 		type:"get",
 		url:"../gameaudit/onthesshelf_gamelist",
@@ -194,11 +183,44 @@ function getisdownList(){
  * 用户管理模块
  */
 var guser = new Vue({
-	el:"#guser",
+	el:"#user",
 	data:{
 		gusers:[]
 	},
-	methods:{},
+	methods:{
+		updatestate:function(index){
+			var id = guser.gusers[index].id;
+			var state = guser.gusers[index].state;
+			if(state>0){state=0;}
+			else{state=1;}
+			$.ajax({
+				type:"post",
+				url:"../admin/updatestatebyid",
+				data:{
+					"id":id,
+					"state":state
+				},
+				async:true,
+				success:function(res){
+					window.location.reload();
+				}
+			});
+		},
+		deletestate:function(index){
+			guser.id=guser.gusers[index].id;
+		},
+		deluser:function(id){
+			$.ajax({
+				type:"post",
+				url:"../admin/deleteuserbyid",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					window.location.reload();
+				}
+			});
+		}
+	},
 	created:function(){
 		getguserList();
 	}
@@ -212,19 +234,30 @@ function getguserList(){
 	$.ajax({
 		type:"get",
 		url:"../admin/get_total_userlist",
-		async:true,
 		success:function(res){
+			console.log(9998)
 			guser.gusers = res.data;
-			console.log(2)
-
-			for(var i = 0; i < guser.gusers.length; i++){
-				guser.gusers[i].shelftime = that.format(guser.gusers[i].shelftime)
-			console.log(4)
-			}
-
 		}
 	});
 }
+
+/**
+ * 查询用户
+ */
+$(document).ready(function(){
+	$("#selectbyname").click(function(event){
+		var name = $("#select").val();
+		$.ajax({
+			type:"get",
+			url:"../admin/selectuserbyusername",
+			data:{"username":name},
+			async:true,
+			success:function(res){
+				
+			}
+		});
+	})
+})
 
 /**
  * 公告管理模块
@@ -252,28 +285,7 @@ var gnotice = new Vue({
 	},
 	created:function(){
 		getgnoticeList(1);
-
 	}
-})
-
-	
-/**
-   * 公告修改管理模块
-   */
-var note = new Vue({
-	el:"#upgg",
-	data:{
-		id:'',
-		stste:''
-	},
-	methods:{ 
-		upd:function(a){
-		console.log(a)
-	  note.id=a;
-	  note.stste=b;
-	}
-	}
-	
 })
 
 /**
@@ -284,14 +296,7 @@ function getgnoticeList(pn){
 	$.ajax({
 		type:"get",
 		url:"../announcement/get_announcement/"+pn,
-		/*data:{"pn":pn},*/
 		success:function(res){
-
-			gnotice.gnotices = res.data;
-			for(var i = 0; i < gnotice.gnotices.length; i++){
-				gnotice.gnotices[i].shelftime = that.format(gnotice.gnotices[i].shelftime)
-			console.log(5)
-
 			console.log(res)
 			if(res.status==0)
 			{
@@ -310,14 +315,29 @@ function getgnoticeList(pn){
 				for(var i = 0; i < gnotice.list.length; i++){
 					gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
 				}
-				//alert(page.total);
-
 			}
-			
-		}
 		}
 	});
 }
+	
+/**
+   * 公告修改管理模块
+   */
+var note = new Vue({
+	el:"#upgg",
+	data:{
+		id:'',
+		stste:''
+	},
+	methods:{ 
+		upd:function(a){
+			console.log(a)
+		  note.id=a;
+		  note.stste=b;
+		}
+	}
+	
+})
 
 /**
  * 个人信息模块
@@ -364,24 +384,10 @@ function updateMessage(){
 		url:"../admin/selectuserbyusername",
 		async:true,
 		success:function(res){
-			console.log(5)
 		}
 	});
 }
 
-/**
- * 修改用户封禁状态
- */
-function updatestate(){
-	$.ajax({
-		type:"get",
-		url:"../admin/updatestatebyid",
-		async:true,
-		success:function(res){
-			console.log(6)
-		}
-	});
-}
 /**
  * 时间戳装换格式函数
  * @param {Object} m
@@ -463,7 +469,6 @@ function sendtheFile(files, editor, $editable) {
 		}*/
 	},
 	created:function(){
-		console.log(6)
 		getgoodsList(1);
 	}
 })
@@ -482,7 +487,7 @@ function getgoodsList(pn){
 			gamediscount.goods = res.data;
 			for(var i = 0; i < gamediscount.goods.length; i++){
 				gamediscount.goods[i].starttime = that.format(gamediscount.goods[i].starttime)
-				console.log(7)
+				
 			}
 		}
 	});
@@ -511,7 +516,6 @@ function getnonediscountLit(){
 		url:"../gameaudit/onthesshelf_gamelist",
 		async:true,
 		success:function(res){
-			console.log(8)
 			nonediscount.nonediscount = res.data;
 			for(var i = 0; i < nonediscount.nonediscount.length; i++){
 				nonediscount.nonediscount[i].shelftime = that.format(nonediscount.nonediscount[i].shelftime)

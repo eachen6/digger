@@ -147,7 +147,6 @@
 					<!--游戏审核模块-->
 					<div role="tabpanel" class="tab-pane active" id="sour">
 						<div class="check-div form-inline">
-							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li class="col-md-3 col-xs-3">
@@ -183,11 +182,7 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-<<<<<<< HEAD
-										<td><button type="submit" id="getid" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
-=======
-										<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
+										<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button>&nbsp;<button class="btn btn-danger" @click="deletegame()">删除</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -535,8 +530,8 @@
 					<div role="tabpanel" class="tab-pane" id="user">
 						<div class="check-div form-inline">
 							<div class="col-xs-4">
-								<input type="text" class="form-control input-sm" placeholder="输入文字搜索">
-								<button class="btn btn-white btn-xs ">查 询 </button>
+								<input type="text" id="select" name="select" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs" id="selectbyname">查 询 </button>
 							</div>
 							<div class="col-lg-3 col-lg-offset-2 col-xs-4" style=" padding-right: 40px;text-align: right;">
 								<label for="paixu">排序:&nbsp;</label>
@@ -557,11 +552,11 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in gusers">
+									<tr v-for="(item,index) in gusers">
 										<td>{{item.id}}</td>
 										<td>{{item.username}}</td>
 										<td>{{item.state}}</td>
-										<td><button class="btn btn-info">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+										<td><button @click="updatestate(index)" class="btn btn-info">修改状态</button>&nbsp;<button class="btn btn-danger" @click="deletestate(index)" data-toggle="modal" data-target="#deleteUser">删除</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -597,7 +592,7 @@
 								</li>
 							</ul>
 						</footer>
-
+						
 						<!--弹出删除用户警告窗口-->
 						<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog" role="document">
@@ -613,7 +608,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn  btn-xs btn-danger">保 存</button>
+										<button type="button" @click="deluser(guser.id)" class="btn btn-xs btn-danger">保 存</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
@@ -625,12 +620,8 @@
 					</div>
 					<!-- 公告管理模块 -->
 					<div role="tabpanel" class="tab-pane" id="gonggao">
-<<<<<<< HEAD
-
-=======
 						<div class="check-div">
 						</div>
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 						<div id="gnotice" class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
@@ -642,29 +633,16 @@
 									</tr>
 								</thead>
 								<tbody>
-<<<<<<< HEAD
-									<tr v-for="item in gnotices">
-										<td>{{item.id}}</td>
-										<td>{{item.username}}</td>
-										<td>{{item.state}}</td>
-										<td>{{item.state}}</td>
-										<td><button class="btn btn-info" @click="upd(item.id)" data-toggle="modal" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
-=======
 									<tr v-for="item in list">
 										<td>{{item.name}}</td>
 										<td>{{item.title}}</td>
 										<td>{{item.createtime}}</td>
 										<td><button class="btn btn-info">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 									</tr>
 								</tbody>
 							</table>
 						</div>
-<<<<<<< HEAD
-
-=======
 						
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
 						<!--页码块-->
 						<footer class="footer">
 							<div class="row">
@@ -712,30 +690,90 @@
 				                </div>
 				        	</div>
 						</footer>
-						<!--修改公告-->
-						<div class="modal fade" id="updataChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog modal-lg" role="document">
+						<!--增加权限弹出窗口-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">修改公告</h4>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
 									</div>
-									<div id="upgg" class="modal-body">
-										<div class="container-fluid" style="margin-left: 6px;">
-											<form class="form-horizontal" id="declared">
-												<div class="row">
-													<input type="text" class="form-control input-lg " id="sName" v-model="id">
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">标题：</label>
+													<div class="col-xs-6 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
 												</div>
-												<br />
-												<div class="form-group" style="width: 860px">
-													<div class="summernote">{{state}}</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">内容：</label>
+													<div class="col-xs-6 ">
+														<textarea class="form-control input-sm duiqi"></textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<select class=" form-control select-duiqi">
+															<option value="">未发布</option>
+															<option value="">发布</option>
+														</select>
+													</div>
 												</div>
 											</form>
 										</div>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green" id="adddeclared">保 存</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+
+						<!--修改权限弹出窗口-->
+						<div class="modal fade" id="changeChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">修改公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form class="form-horizontal">
+												<div class="form-group ">
+													<label for="sName" class="col-xs-3 control-label">标题：</label>
+													<div class="col-xs-6 ">
+														<input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sLink" class="col-xs-3 control-label">内容：</label>
+													<div class="col-xs-6 ">
+														<textarea class="form-control input-sm duiqi"></textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="sKnot" class="col-xs-3 control-label">状态：</label>
+													<div class="col-xs-8">
+														<select class=" form-control select-duiqi">
+															<option value="">未发布</option>
+															<option value="">发布</option>
+														</select>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" class="btn btn-xs btn-green">保 存</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
