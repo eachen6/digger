@@ -4,8 +4,10 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<!--<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
-		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
 		<script type="text/javascript" src="../bootstrap/js/bootstrap.js" ></script>-->
+		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
+		<link rel="stylesheet" href="../css/toastr.min.css" />
+        <script type="text/javascript" src="../js/toastr.min.js"></script>
 	</head>
 	<body>
 		<div class="container" id="order">
@@ -20,6 +22,7 @@
 				</div>
 				<br />
 				<div class="row">
+				   <a :href="'main.html?location=details&id='+item.gameid" style="text-decoration: none; color:black;">
 					<div class="col-md-2">
 						
 						<div class="" style="margin-left: 50px;">
@@ -30,11 +33,12 @@
 					<div class="col-md-3">
 						<p style="font-size: 35px;">{{item.name}}</p>
 					</div>
+					</a>
 					<div class="col-md-4">
 						<p style="font-size: 25px;float: right;">价格：￥{{item.price}}
 						     <span v-if="item.state==1" style="color:#FF6732;">(交易成功)</span>
 						     <span v-else-if="item.state==0&&!item.closetime" style="color:#FF6732;">(等待交易)</span>
-						     <span v-else-if="(item.state==0&&item.closetime)||state==5" style="color:#FF6732;">(交易失败)</span>
+						     <span v-else-if="(item.state==0&&item.closetime)||item.state==5" style="color:#FF6732;">(交易失败)</span>
 						     <span v-else-if="item.state==2" style="color:#FF6732;">(退款中)</span>
 						     <span v-else-if="item.state==3" style="color:#FF6732;">(退款成功)</span>
 						     <span v-else-if="item.state==4" style="color:#FF6732;">(退款失败)</span> 
@@ -43,17 +47,16 @@
 					<div class="col-md-3" style="padding-top: 150px;">
 						<template v-if="item.state == 1">
 							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
-							<button type="button"  class="btn btn-danger">申请退款</button>
+							<button type="button"  @click="applyrefund(item.id)" class="btn btn-danger">申请退款</button>
 						</template>
 						<template v-else-if="item.state==0&&!item.closetime">
 						    <button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
-							<button type="button" class="btn btn-info">支付</button>
 						</template>
-						<template v-else-if="(item.state==0&&item.closetime)||state==5">
+						<template v-else-if="(item.state==0&&item.closetime)||item.state==5">
 							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
 						</template>
 						<template v-else-if="item.state==2">
-							<button type="button" class="btn btn-info">取消退款</button>
+							<button type="button" @click="cancelit(item.id)" class="btn btn-info">取消退款</button>
 						</template>
 						<template v-else-if="item.state==3">
 							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>						

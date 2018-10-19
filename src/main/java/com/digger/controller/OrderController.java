@@ -88,6 +88,38 @@ public class OrderController {
 	
 	/**
 	 * author 高志劲
+     * 取消订单退款
+     * @return
+     */
+	@RequestMapping(value = "cancel_order", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toCancelOrder(Integer id,HttpSession session)
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toCancelOrder(id);
+	}
+	
+	/**
+	 * author 高志劲
+     * 申请退款
+     * @return
+     */
+	@RequestMapping(value = "apply_refund", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse applyRefund(Integer id,HttpSession session)
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toApplyRefund(id);
+	}
+	
+	/**
+	 * author 高志劲
      * 查询该游戏是否已被用户购买
      * @return
      */

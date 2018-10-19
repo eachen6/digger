@@ -30,5 +30,5 @@ public interface WishMapper {
 
 	Integer delete(@Param("gameid")int gameid, @Param("userid")Integer userid);
 
-	int deleteWish(String ordernum);
+	Integer deleteWish(String ordernum);
 }

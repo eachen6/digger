@@ -26,6 +26,8 @@ public class Order {
     private Date closetime;
 
     private Long ordernum;
+    
+    private Byte deleted;
 
     public Integer getId() {
         return id;
@@ -122,4 +124,12 @@ public class Order {
     public void setOrdernum(Long ordernum) {
         this.ordernum = ordernum;
     }
+
+	public Byte getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Byte deleted) {
+		this.deleted = deleted;
+	}
 }
