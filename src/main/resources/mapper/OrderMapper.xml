@@ -179,7 +179,7 @@
   <select id="toGetOrder" parameterType="java.lang.Integer" resultType="com.digger.vo.OrderVO">
     select a.*,b.name
     from `order` as a,game as b
-    where userid = #{userid} and a.gameid = b.id
+    where userid = #{userid} and a.gameid = b.id and a.state!=6
   </select>
   
   <!-- 新增方法：检查用户是否购买过该游戏（不包括赠送别人的）--> 
@@ -187,7 +187,7 @@
       SELECT count(`order`.id) 
       from `order` left join send on `order`.ordernum = send.ordernum
       where ((gameid=#{gameid} and userid=#{userid}) OR (gameid=#{gameid} and targetid=#{userid} and issend = 1))
-      and state = 1 
+      and (state = 1 or state = 2 or state = 4 or state = 5) 
   </select>
   
   <select id="getOrderByOrdernum" resultType="com.digger.pojo.Order">

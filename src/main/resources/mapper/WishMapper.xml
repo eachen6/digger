@@ -125,4 +125,12 @@
     select wish.gameid,wish.coverimg,game.price,game.discountstate,game.name,discountlist.discount 
     from wish left join (game left join discountlist on game.id=discountlist.gameid and now()>=starttime and deadline>=now()) on wish.gameid = game.id and wish.userid = #{userid}
   </select>
+  
+  
+  <!-- 新增方法：用户购买游戏后删除用户愿望清单的这款游戏-->
+  <delete id="deleteWish">
+   delete from wish,`order` where (state=1 or state=2 or state=5 or state=4) 
+   and ordernum=#{ordernum} and wish.gameid=`order`.gameid 
+   and wish.userid = `order`.userid
+  </delete>
 </mapper>

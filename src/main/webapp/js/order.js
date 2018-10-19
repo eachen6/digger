@@ -14,18 +14,20 @@ var order = new Vue({
 })
 
 function getOrderList(){
-	var that = this;
 	$.ajax({
 		type:"get",
 		url:"../order/get_order",
 		async:true,
 		success:function(res){
+			console.log(res);
 			if(res.status == 0){
 				order.content = res.data;
 				for(var i = 0; i <order.content.length; i++){
-					order.content[i].createtime = that.format(order.content[i].createtime);
+					order.content[i].closetime = comptime(order.content[i].closetime);
+					alert(order.content[i].closetime);
+					order.content[i].createtime = format(order.content[i].createtime);
 				}
-				console.log(order.content)
+				console.log(order.content);
 			}
 			
 		}
@@ -67,4 +69,13 @@ var h = time.getHours();
 var mm = time.getMinutes();
 var s = time.getSeconds();
 return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+}
+
+//比较当前时间和closetime的大小
+function comptime(closetime){
+	var timestamp =  Date.parse(new Date());
+	if(timestamp>closetime)
+		return true;
+	else
+		return false;
 }
