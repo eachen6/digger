@@ -54,6 +54,8 @@ public interface UserMapper {
 
 	String selectNameByID(Integer id);
 
+	int checkState(String username);
+
     
     
 }
