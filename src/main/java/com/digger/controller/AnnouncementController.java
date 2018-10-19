@@ -18,6 +18,7 @@ import com.digger.pojo.AnnouncementWithBLOBs;
 import com.digger.pojo.User;
 import com.digger.service.AnnouncementService;
 import com.digger.vo.AnnouncementVO;
+import com.digger.vo.GameAuditVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -34,12 +35,21 @@ public class AnnouncementController {
      */
 	@RequestMapping(value = "get_announcement/{pn}", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse toGetAnnouncement(@PathVariable(value="pn") int pn) 
+	public ServerResponse toGetAnnouncement(@PathVariable(value="pn") int pn, HttpSession session) 
 	{
-		PageHelper.startPage(pn, Const.announcementcount);
-		List<AnnouncementVO> list = announcementService.toGetAnnouncement();
-		PageInfo page = new PageInfo(list,Const.pagecount);
-        return ServerResponse.createBySuccess(page);
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
+		} else {
+			if (user.getRole() == 1) {
+				PageHelper.startPage(pn, Const.announcementcount);
+				List<AnnouncementVO> list = announcementService.toGetAnnouncement();
+				PageInfo page = new PageInfo(list,Const.pagecount);
+		        return ServerResponse.createBySuccess(page);
+			} else {
+				return ServerResponse.createByErrorMessage("无权限!");
+			}
+		}
 	}
 	
 	/**
