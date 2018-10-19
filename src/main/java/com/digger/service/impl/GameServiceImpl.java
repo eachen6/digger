@@ -363,4 +363,18 @@ public class GameServiceImpl implements GameService{
 		return ServerResponse.createByErrorMessage("审核失败");
 	}
 
+	/**
+	 * @author 徐子颖
+	 * 根据id刪除游戏
+	 */
+	@Override
+	public ServerResponse toDeleteGame(Integer id) {
+		// TODO Auto-generated method stub
+		int rowCount = gameMapper.deleteByPrimaryKey(id);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("删除成功！");
+        }
+        return ServerResponse.createByErrorMessage("删除失败！");
+	}
+
 }

@@ -66,4 +66,6 @@ public interface GameService {
 	public ServerResponse addGameDetails(Game game);
 
 	ServerResponse auditGame(Integer id);
+
+	ServerResponse toDeleteGame(Integer id);
 }
