@@ -46,4 +46,6 @@ public interface UserService {
 			String passwordRepeat);
 	
 	public String selectNameByID(Integer id);
+
+	int checkState(String username);
 }

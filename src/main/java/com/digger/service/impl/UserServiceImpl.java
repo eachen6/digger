@@ -52,6 +52,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 判断封禁功能
+	 * @author 徐子颖
+	 */
+	@Override
+	public int checkState(String username){
+		if(userMapper.checkState(username)==1){
+			return 1;
+		}
+		else
+			return 0;
+	}
+	
+	/**
 	 * 注册功能
 	 * 
 	 * @author 高志劲
