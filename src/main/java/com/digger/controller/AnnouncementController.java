@@ -36,11 +36,9 @@ public class AnnouncementController {
 	@ResponseBody
 	public ServerResponse toGetAnnouncement(@PathVariable(value="pn") int pn) 
 	{
-		System.out.println("进入");
 		PageHelper.startPage(pn, Const.announcementcount);
 		List<AnnouncementVO> list = announcementService.toGetAnnouncement();
 		PageInfo page = new PageInfo(list,Const.pagecount);
-		System.out.println("没问题");
         return ServerResponse.createBySuccess(page);
 	}
 	
