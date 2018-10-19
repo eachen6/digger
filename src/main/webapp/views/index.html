@@ -179,44 +179,68 @@
 									<tr v-for="item in checks">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
+										<td>{{item.username}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-										<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button>&nbsp;<button class="btn btn-danger" @click="deletegame()">删除</button></td>
+										<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button>
+											&nbsp;<button class="btn btn-danger" @click="deletegame()">删除</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
+												<li>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
+												</li>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
+												<li>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
+												</li>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</footer>
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -230,7 +254,7 @@
 										<div class="container-fluid">
 											<div class="row">
 												<video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" style="margin-left: 6px;" poster="" data-setup="{}">
-														<source :src="item.videourl" type='video/mp4'>
+														<source :src="" type='video/mp4'>
 													<p class="vjs-no-js">
 														To view this video please enable JavaScript, and consider upgrading to a web browser that
 														<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -257,11 +281,9 @@
 											</div>
 
 											<div class="row" style="margin-top:10px ; margin-left: 6px;">
-
 												<h5 style="text-align: center;">英雄联盟</h5>
 												<p>《英雄联盟》是由美国拳头游戏(Riot Games)开发、中国大陆地区腾讯游戏代理运营的英雄对战MOBA竞技网游。 游戏里拥有数百个个性英雄，并拥有排位系统、符文系统等特色养成系统。 《英雄联盟》还致力于推动全球电子竞技的发展，除了联动各赛区发展职业联赛、打造电竞体系之外，每年还会举办“季中冠军赛”“全球总决赛”“All Star全明星赛”三大世界级赛事，获得了亿万玩家的喜爱，形成了自己独有的电子竞技文化。
 												</p>
-
 											</div>
 										</div>
 									</div>
@@ -322,29 +344,56 @@
 						</div>
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
+												<li>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
+												</li>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
+												<li>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
+												</li>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</footer>
 						<!--添加公告-->
 						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -425,29 +474,56 @@
 						</div>
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
+												<li>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
+												</li>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
+												<li>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
+												</li>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</footer>
 					</div>
 					<!--游戏下架模块-->
@@ -495,29 +571,56 @@
 						</div>
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共20页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
+												<li>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
+												</li>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
+												<li>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
+												</li>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</footer>
 					</div>
 					<!-- 上传文件模块 -->

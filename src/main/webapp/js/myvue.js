@@ -2,8 +2,19 @@
  * 待审核模块
  */
 var check = new Vue({
-	el:"#check",
+	el:"#sour",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		checks:[]
 	},
 	methods:{
@@ -12,27 +23,44 @@ var check = new Vue({
 		},
 		deletegame:function(){
 			console.log(1)
+		},
+		change:function(pn){
+			getCheckList(pn);
 		}
 	},
 	created:function(){
-		getCheckList();//调用函数
+		getCheckList(1);//调用函数
 	}
 })
 
 /**
  * 获取待审核列表
  */
-function getCheckList(){
+function getCheckList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../gameaudit/unaudited_gamelist",
+		url:"../gameaudit/unaudited_gamelist/"+pn,
 		async:true,
 		success:function(res){
 			console.log(res)//通过打印返回内容确定数据格式，根据数据调整当前页面内容
-			check.checks = res.data;//把值赋给VUE的变量
-			for(var i = 0; i < check.checks.length; i++){
-				check.checks[i].createtime = that.format(check.checks[i].createtime)
+			if(res.status==0)
+			{
+				check.pageNum = res.data.pageNum;
+				check.total = res.data.total;
+				check.pages = res.data.pages;
+				check.prePage = res.data.prePage;
+				check.nextPage = res.data.nextPage;
+				check.isFirstPage = res.data.isFirstPage;
+				check.isLastPage = res.data.isLastPage;
+				check.hasPreviousPage = res.data.hasPreviousPage;
+				check.hasNextPage = res.data.hasNextPage;
+				check.navigatePages = res.data.navigatePages;
+				check.navigatepageNums = res.data.navigatepageNums;
+				check.checks = res.data.list;//把值赋给VUE的变量
+				for(var i = 0; i < check.checks.length; i++){
+					check.checks[i].createtime = that.format(check.checks[i].createtime)
+				}
 			}
 		}
 	});
@@ -43,8 +71,19 @@ function getCheckList(){
  * 未上架模块
  */
 var notup = new Vue({
-	el:"#notup",
+	el:"#regu",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		notups:[]
 	},
 	methods:{
@@ -53,7 +92,7 @@ var notup = new Vue({
 			//console.log(id)
 			$.ajax({
 				type:"post",
-				url:"../gameaudit/onthesshelf_game",
+				url:"../gameaudit/onthesshelf_game/",
 				data:{"id":id},
 				async:true,
 				success:function(res){
@@ -61,26 +100,43 @@ var notup = new Vue({
 					window.location.reload();
 				}
 			});
+		},
+		change:function(pn){
+			getnotupList(pn);
 		}
 	},
 	created:function(){
-		getnotupList();
+		getnotupList(1);
 	}
 })
 
 /**
  * 获取未上架列表
  */
-function getnotupList(){
+function getnotupList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../gameaudit/notonthesshelf_gamelist",
+		url:"../gameaudit/notonthesshelf_gamelist/"+pn,
 		async:true,
 		success:function(res){
-			notup.notups = res.data;
-			for(var i = 0; i < notup.notups.length; i++){
-				notup.notups[i].updatetime = that.format(notup.notups[i].updatetime)
+			if(res.status==0)
+			{
+				notup.pageNum = res.data.pageNum;
+				notup.total = res.data.total;
+				notup.pages = res.data.pages;
+				notup.prePage = res.data.prePage;
+				notup.nextPage = res.data.nextPage;
+				notup.isFirstPage = res.data.isFirstPage;
+				notup.isLastPage = res.data.isLastPage;
+				notup.hasPreviousPage = res.data.hasPreviousPage;
+				notup.hasNextPage = res.data.hasNextPage;
+				notup.navigatePages = res.data.navigatePages;
+				notup.navigatepageNums = res.data.navigatepageNums;
+				notup.notups = res.data.list;
+				for(var i = 0; i < notup.notups.length; i++){
+					notup.notups[i].updatetime = that.format(notup.notups[i].updatetime)
+				}
 			}
 		}
 	});
@@ -90,8 +146,19 @@ function getnotupList(){
  * 在销售模块
  */
 var sale = new Vue({
-	el:"#sale",
+	el:"#stud",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		sales:[]
 	},
 	methods:{
@@ -108,26 +175,43 @@ var sale = new Vue({
 					window.location.reload();
 				}
 			});
+		},
+		change:function(pn){
+			getsaleList(pn);
 		}
 	},
 	created:function(){
-		getsaleList();
+		getsaleList(1);
 	}
 })
 
 /**
  * 获取在销售列表
  */
-function getsaleList(){
+function getsaleList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../gameaudit/onthesshelf_gamelist",
+		url:"../gameaudit/onthesshelf_gamelist/"+pn,
 		async:true,
 		success:function(res){
-			sale.sales = res.data;
-			for(var i = 0; i < sale.sales.length; i++){
-				sale.sales[i].shelftime = that.format(sale.sales[i].shelftime)
+			if(res.status==0)
+			{
+				sale.pageNum = res.data.pageNum;
+				sale.total = res.data.total;
+				sale.pages = res.data.pages;
+				sale.prePage = res.data.prePage;
+				sale.nextPage = res.data.nextPage;
+				sale.isFirstPage = res.data.isFirstPage;
+				sale.isLastPage = res.data.isLastPage;
+				sale.hasPreviousPage = res.data.hasPreviousPage;
+				sale.hasNextPage = res.data.hasNextPage;
+				sale.navigatePages = res.data.navigatePages;
+				sale.navigatepageNums = res.data.navigatepageNums;
+				sale.sales = res.data.list;
+				for(var i = 0; i < sale.sales.length; i++){
+					sale.sales[i].shelftime = that.format(sale.sales[i].shelftime)
+				}
 			}
 		}
 	});
@@ -139,6 +223,17 @@ function getsaleList(){
 var isdown = new Vue({
 	el:"#isdown",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		isdowns:[]
 	},
 	methods:{
@@ -153,27 +248,43 @@ var isdown = new Vue({
 					window.location.reload();
 				}
 			});
+		},
+		change:function(pn){
+			getisdownList(pn);
 		}
 	},
 	created:function(){
-		getisdownList();
+		getisdownList(1);
 	}
 })
 
 /**
  * 获取下架列表
  */
-function getisdownList(){
+function getisdownList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../gameaudit/pulloffshelves_gamelist",
+		url:"../gameaudit/pulloffshelves_gamelist/"+pn,
 		async:true,
 		success:function(res){
-			isdown.isdowns = res.data;
-			for(var i = 0; i < isdown.isdowns.length; i++){
-				isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
-
+			if(res.status==0)
+			{
+				isdown.pageNum = res.data.pageNum;
+				isdown.total = res.data.total;
+				isdown.pages = res.data.pages;
+				isdown.prePage = res.data.prePage;
+				isdown.nextPage = res.data.nextPage;
+				isdown.isFirstPage = res.data.isFirstPage;
+				isdown.isLastPage = res.data.isLastPage;
+				isdown.hasPreviousPage = res.data.hasPreviousPage;
+				isdown.hasNextPage = res.data.hasNextPage;
+				isdown.navigatePages = res.data.navigatePages;
+				isdown.navigatepageNums = res.data.navigatepageNums;
+				isdown.isdowns = res.data.list;
+				for(var i = 0; i < isdown.isdowns.length; i++){
+					isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
+				}
 			}
 		}
 	});
