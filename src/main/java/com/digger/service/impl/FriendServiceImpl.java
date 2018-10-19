@@ -38,6 +38,7 @@ public class FriendServiceImpl implements FriendService{
 			String temp = userMapper.selectNameByID(friend.getFriendint());
 			FriendVO friendVO = new FriendVO();
 			friendVO.setId(friend.getFriendint());
+			friendVO.setState(1);
 			friendVO.setName(temp);
 			friends.add(friendVO);
 		}

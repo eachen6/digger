@@ -78,15 +78,24 @@ public class ChatServer {
         JSONObject chat = JSON.parseObject(_message);
         JSONObject message = JSON.parseObject(chat.get("message").toString());
         if(message.get("to") == null || message.get("to").equals("")){      //如果to为空,则广播;如果不为空,则对指定的用户发送消息
-            broadcast(_message);
-            System.out.println(_message);
+        	String broad_message = getMessage("信息未送达，请选择好友", "notice",  list);
+        	//broadcast(broad_message);
+        	singleSend(broad_message, (Session) routetab.get(message.get("from")));      //发送给自己
+        	System.out.println(_message);
         }else{
             String [] userlist = message.get("to").toString().split(",");
             System.out.println("发送给，"+message.get("to").toString());
             singleSend(_message, (Session) routetab.get(message.get("from")));      //发送给自己,这个别忘了
             for(String username : userlist){
                 if(!user.equals(message.get("from"))){
+                	if(routetab.get(username)!=null) {
                     singleSend(_message, (Session) routetab.get(username));     //分别发送给每个指定用户
+                	}
+                	else {
+                		//String temp_message = "{\"message\":{\"content\":\"好友不在线，稍后再来\",\"from\":\"123\",\"to\":\"\",\"time\":\"2018-10-17 16:23:55\"},\"type\":\"notice\"}";
+                		String temp_message = getMessage("好友不在线，稍后再来", "notice",  list);
+                		singleSend(temp_message, (Session) routetab.get(message.get("from"))); 
+                	}
                 }
             }
         }

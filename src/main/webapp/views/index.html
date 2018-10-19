@@ -223,7 +223,6 @@
 								</li>
 							</ul>
 						</footer>
-
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-lg " role="document">
@@ -282,35 +281,10 @@
 							<!-- /.modal-dialog -->
 						</div>
 						<!-- /.modal -->
-
-						<!--弹出删除用户警告窗口-->
-						<div class="modal fade" id="deleteSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
-									</div>
-									<div class="modal-body">
-										<div class="container-fluid">
-											确定要删除该地区？删除后不可恢复！
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-md btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-md btn-danger">保 存</button>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
 					</div>
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
 						<div class="check-div form-inline">
-							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li>
@@ -340,17 +314,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in notups">
+									<tr v-for="(item,index) in notups">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
-<<<<<<< HEAD
-										<td><button class="btn btn-danger" data-toggle="modal" data-target="#addChar">添加公告</button>&nbsp;<button class="btn btn-info">上架</button></td>
-=======
-										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
+										<td><button class="btn btn-danger" data-toggle="modal" data-target="#addChar">添加公告</button>&nbsp;<button @click="upgame(index)" class="btn btn-info">上架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -446,14 +416,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in sales">
+									<tr v-for="(item,index) in sales">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
 										<td>{{item.uploadid}}</td>
 										<td>{{item.shelftime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
-										<td><button class="btn btn-info">下架</button></td>
+										<td><button @click="downgame(index)" class="btn btn-info">下架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -517,18 +487,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in isdowns">
+									<tr v-for="(item,index) in isdowns">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
-<<<<<<< HEAD
-										<td><button class="btn btn-info">上架</button></td>
-										<td><button class="btn btn-block"></button></td>
-=======
-										<td><button onclick="upgame()" class="btn btn-info">上架</button></td>
->>>>>>> ced1f5322651f84b5ae435ccb4983752f75452e7
+										<td><button @click="upgame(index)" class="btn btn-info">上架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -704,11 +669,11 @@
 						<footer class="footer">
 							<div class="row">
 				                <!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-				                <div class="col-md-6">
+				                <div>
 				                  	   当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 				                </div>
 				                <!-- 分页码 -->
-				                <div class="col-md-6">
+				                <div>
 				                    <nav aria-label="Page navigation">
 				                      <ul class="pagination">
 				                      <!-- 

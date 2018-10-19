@@ -57,7 +57,22 @@ var notup = new Vue({
 	data:{
 		notups:[]
 	},
-	methods:{},
+	methods:{
+		upgame:function(index){
+			var id = notup.notups[index].id;
+			//console.log(id)
+			$.ajax({
+				type:"post",
+				url:"../gameaudit/onthesshelf_game",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					//console.log(res)
+					window.location.reload();
+				}
+			});
+		}
+	},
 	created:function(){
 		getnotupList();
 	}
@@ -89,7 +104,22 @@ var sale = new Vue({
 	data:{
 		sales:[]
 	},
-	methods:{},
+	methods:{
+		downgame:function(index){
+			var id = sale.sales[index].id;
+			//console.log(id)
+			$.ajax({
+				type:"post",
+				url:"../gameaudit/pulloffshelves_game",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					//console.log(res)
+					window.location.reload();
+				}
+			});
+		}
+	},
 	created:function(){
 		getsaleList();
 	}
@@ -122,7 +152,20 @@ var isdown = new Vue({
 	data:{
 		isdowns:[]
 	},
-	methods:{},
+	methods:{
+		upgame:function(index){
+			var id = isdown.isdowns[index].id;
+			$.ajax({
+				type:"post",
+				url:"../gameaudit/onthesshelf_game",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					window.location.reload();
+				}
+			});
+		}
+	},
 	created:function(){
 		getisdownList();
 	}
@@ -172,6 +215,7 @@ function getguserList(){
 		async:true,
 		success:function(res){
 			guser.gusers = res.data;
+			console.log(2)
 
 			for(var i = 0; i < guser.gusers.length; i++){
 				guser.gusers[i].shelftime = that.format(guser.gusers[i].shelftime)
@@ -203,7 +247,6 @@ var gnotice = new Vue({
 	},
 	methods:{
 		change:function(pn){
-			alert(pn);
 			getgnoticeList(pn);
 		}
 	},

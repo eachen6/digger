@@ -256,12 +256,21 @@
     order by state
   </select>
   
+
   <!-- 新增方法:检查封禁状态-->
   <select id="checkState" resultType="int" >
     select
     state
     from user
     where username = #{username}
+    
+  <!-- 根据id获取用户名 -->
+   <!-- 新增方法:根据状态排序-->
+  <select id="selectNameByID"  resultType="String" parameterType="Integer">
+    select
+    username
+    from user
+    where id = #{id}
   </select>
   
 </mapper>
