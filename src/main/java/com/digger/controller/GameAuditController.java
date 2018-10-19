@@ -275,4 +275,25 @@ public class GameAuditController {
 			}
 		}
 	}
+	
+	/**
+     * 根据订单id将游戏删除
+     * @return
+     */
+	@RequestMapping(value = "delete_game", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toDeleteGame(Integer id,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
+		} else {
+			if (user.getRole() == 1) {
+				return gameService.toDeleteGame(id);
+			} else {
+				return ServerResponse.createByErrorMessage("无权限!");
+			}
+		}
+	}
+	
 }
