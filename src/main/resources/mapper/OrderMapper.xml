@@ -179,7 +179,8 @@
   <select id="toGetOrder" parameterType="java.lang.Integer" resultType="com.digger.vo.OrderVO">
     select a.*,b.name
     from `order` as a,game as b
-    where userid = #{userid} and a.gameid = b.id
+    where userid = #{userid} and a.gameid = b.id and deleted=0
+    order by createtime desc 
   </select>
   
   <!-- 新增方法：检查用户是否购买过该游戏（不包括赠送别人的）--> 
@@ -187,7 +188,7 @@
       SELECT count(`order`.id) 
       from `order` left join send on `order`.ordernum = send.ordernum
       where ((gameid=#{gameid} and userid=#{userid}) OR (gameid=#{gameid} and targetid=#{userid} and issend = 1))
-      and state = 1 
+      and (state = 1 or state = 2 or state = 4 or state = 5) 
   </select>
   
   <select id="getOrderByOrdernum" resultType="com.digger.pojo.Order">
@@ -201,7 +202,31 @@
     values (#{pay.userid},#{pay.ordernum},#{pay.payplatform},#{pay.platformnumber},now(), now())
   </insert>
   
-  <update id="updateOrderStatus">
+  <!-- 新增方法：支付成功后更改订单状态--> 
+  <update id="updateOrderStatus" >
       update `order` set state = #{paid},paytime=now() where ordernum=#{ordernum}
+  </update>
+  
+  <!-- 新增方法：更改该游戏《等待交易》的订单的状态--> 
+  <update id="updateOldOrderstatus" >
+     update `order` set state = 5 
+     where gameid in (select gameid from (select a.gameid from `order` as a where a.ordernum=#{ordernum}) as d) 
+     and userid in (select userid from(select b.userid from `order` as b where b.ordernum=#{ordernum}) as e)
+     and state = 0 and closetime>now()  
+  </update>
+  
+  <!-- 新增方法：删除订单--> 
+  <update id="deleteByid" >
+      update `order` set deleted = 1 where id=#{id}
+  </update>
+  
+  <!-- 新增方法：取消订单退款--> 
+  <update id="cancelByid" >
+      update `order` set state = 1 where id=#{id}
+  </update>
+  
+   <!-- 新增方法：申请退款--> 
+  <update id="applyRefundByid" >
+      update `order` set state = 2 where id=#{id}
   </update>
 </mapper>

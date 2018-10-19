@@ -30,7 +30,7 @@ public interface UserService {
 
 	public List<User> getAllUser();
 
-	public ServerResponse getTotalUserList();
+	public List<User> getTotalUserList();
 
 	public ServerResponse updateStateById(Integer id, Integer state);
 
@@ -38,12 +38,14 @@ public interface UserService {
 
 	public ServerResponse selectUserByUsername(String username);
 
-	public ServerResponse sortById();
+	public List<User> sortById();
 
-	public ServerResponse sortByState();
+	public List<User> sortByState();
 
 	public ServerResponse updatePassword(String username, String passwordOld, String passwordNew,
 			String passwordRepeat);
 	
 	public String selectNameByID(Integer id);
+
+	int checkState(String username);
 }

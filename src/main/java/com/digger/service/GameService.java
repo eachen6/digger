@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.digger.common.ServerResponse;
 import com.digger.pojo.Game;
 import com.digger.vo.CarouseVO;
+import com.digger.vo.GameAuditVO;
 
 public interface GameService {
 
@@ -32,21 +33,21 @@ public interface GameService {
 
 	ServerResponse toGetTotalGame();
 
-	ServerResponse unauditedGamelistByName(String name);
+	List<GameAuditVO> unauditedGamelistByName(String name);
 
-	ServerResponse notOnTheShelfGamelistByName(String name);
+	List<GameAuditVO> notOnTheShelfGamelistByName(String name);
 
-	ServerResponse onTheShelfGamelistByName(String name);
+	List<GameAuditVO> onTheShelfGamelistByName(String name);
 
-	ServerResponse pullOffShelvesGamelistByName(String name);
+	List<GameAuditVO> pullOffShelvesGamelistByName(String name);
 
-	ServerResponse unauditedGamelist();
+	List<GameAuditVO> unauditedGamelist();
 
-	ServerResponse notOnTheShelfGamelist();
+	List<GameAuditVO> notOnTheShelfGamelist();
 
-	ServerResponse onTheShelfGamelist();
+	List<GameAuditVO> onTheShelfGamelist();
 
-	ServerResponse pullOffShelvesGamelist();
+	List<GameAuditVO> pullOffShelvesGamelist();
 
 	ServerResponse onThesShelfGame(Integer id);
 
@@ -65,4 +66,6 @@ public interface GameService {
 	public ServerResponse addGameDetails(Game game);
 
 	ServerResponse auditGame(Integer id);
+
+	ServerResponse toDeleteGame(Integer id);
 }

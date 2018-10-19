@@ -52,6 +52,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 判断封禁功能
+	 * @author 徐子颖
+	 */
+	@Override
+	public int checkState(String username){
+		if(userMapper.checkState(username)==1){
+			return 1;
+		}
+		else
+			return 0;
+	}
+	
+	/**
 	 * 注册功能
 	 * 
 	 * @author 高志劲
@@ -301,11 +314,11 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	@Override
-	public ServerResponse getTotalUserList() {
+	public List<User> getTotalUserList() {
 		// TODO Auto-generated method stub
 		List<User> list = new ArrayList<User>();
 		list = userMapper.getTotalUserList();
-		return ServerResponse.createBySuccess(list);
+		return list;
 	}
 
 	/**
@@ -363,11 +376,11 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	@Override
-	public ServerResponse sortById() {
+	public List<User> sortById() {
 		// TODO Auto-generated method stub
 		List<User> list = new ArrayList<User>();
 		list = userMapper.sortById();
-		return ServerResponse.createBySuccess("排序成功",list);
+		return list;
 	}
 
 	/**
@@ -376,11 +389,11 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	@Override
-	public ServerResponse sortByState() {
+	public List<User> sortByState() {
 		// TODO Auto-generated method stub
 		List<User> list = new ArrayList<User>();
 		list = userMapper.sortByState();
-		return ServerResponse.createBySuccess("排序成功",list);
+		return list;
 	}
 
 	/**

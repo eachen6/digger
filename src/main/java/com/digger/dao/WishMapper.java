@@ -29,4 +29,6 @@ public interface WishMapper {
 	List<WishVO> toGetMyselfWishGame(Integer userid);
 
 	Integer delete(@Param("gameid")int gameid, @Param("userid")Integer userid);
+
+	Integer deleteWish(String ordernum);
 }

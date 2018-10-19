@@ -448,7 +448,7 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 1 
     order by shelftime desc 
   </select>
   
@@ -457,7 +457,7 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,DATE_FORMAT(starttime,'%Y-%m-%d') starttime, DATE_FORMAT(deadline,'%Y-%m-%d') deadline,discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1 and discountstate = 1
+    where state = 1 and now()>=starttime and deadline>=now()
     order by sale desc 
   </select>
   
@@ -470,8 +470,8 @@
   <select id="toGetDiscountGameList" resultType="com.digger.vo.CarouseVO">
     select game.id, name, price, coverurl, DATE_FORMAT(deadline,'%Y-%m-%d') deadline, discount, discountstate
     from game left join discountlist 
-    on game.id=discountlist.gameid
-    where discountstate = 1 and state = 1
+    on game.id=discountlist.gameid 
+    where state = 1 and now()>=starttime and deadline>=now()
     order by deadline
   </select>
   
@@ -519,31 +519,35 @@
   </select>
   
   <!-- 新增方法：根据游戏名查找待审核的游戏列表  -->
-  <select id="unauditedGamelistByName" resultType="com.digger.pojo.Game">
+  <select id="unauditedGamelistByName" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where name = #{name} and state = 0
+      a.*,b.username
+      from game as a,user as b 
+      where name = #{name} and a.state = 0 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：根据游戏名查找未上架的游戏列表  -->
-  <select id="notOnTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+  <select id="notOnTheShelfGamelistByName" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where name = #{name} and state = 1
+      a.*,b.username
+      from game as a,user as b 
+      where name = #{name} and a.state = 1 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：根据游戏名查找已上架的游戏列表  -->
-  <select id="onTheShelfGamelistByName" resultType="com.digger.pojo.Game">
+  <select id="onTheShelfGamelistByName" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where name = #{name} and state = 2
+      a.*,b.username
+      from game as a,user as b 
+      where name = #{name} and a.state = 2 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：根据游戏名查找下架的游戏列表  -->
-  <select id="pullOffShelvesGamelistByName" resultType="com.digger.pojo.Game">
+  <select id="pullOffShelvesGamelistByName" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where name = #{name} and state = 3
+      a.*,b.username
+      from game as a,user as b 
+      where name = #{name} and a.state = 3 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：查找待审核的游戏列表  -->
@@ -554,44 +558,47 @@
   </select>
   
   <!-- 新增方法：查找未上架的游戏列表  -->
-  <select id="notOnTheShelfGamelist" resultType="com.digger.pojo.Game">
+  <select id="notOnTheShelfGamelist" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where state = 1
+      a.*,b.username
+      from game as a,user as b 
+      where a.state = 1 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：查找已上架的游戏列表  -->
-  <select id="onTheShelfGamelist" resultType="com.digger.pojo.Game">
+  <select id="onTheShelfGamelist" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where state = 2
+      a.*,b.username
+      from game as a,user as b 
+      where a.state = 2 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：查找下架的游戏列表  -->
-  <select id="pullOffShelvesGamelist" resultType="com.digger.pojo.Game">
+  <select id="pullOffShelvesGamelist" resultType="com.digger.vo.GameAuditVO">
       select  
-      *
-      from game where state = 3
+      a.*,b.username
+      from game as a,user as b 
+      where a.state = 3 and a.uploadid = b.id
   </select>
   
   <!-- 新增方法：根据id审核游戏  -->
   <update id="auditGame" parameterType="Integer">
     update game
-    set state = 1
+    set state = 1,updatetime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
   
   <!-- 新增方法：根据id上架游戏  -->
   <update id="onTheShelfGame" parameterType="Integer">
     update game
-    set state = 2
+    set state = 2,updatetime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
   
   <!-- 新增方法：根据id下架游戏  -->
   <update id="pullOffShelvesGame" parameterType="Integer">
     update game
-    set state = 3
+    set state = 3,updatetime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
   
