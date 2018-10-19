@@ -47,6 +47,7 @@ public class OrderController {
 		if(user == null){
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
+		System.out.println(order.getPrice());
 		order.setUserid(user.getId());
 		//重新开始检查一遍是否已购买了该游戏
 		ServerResponse sr = orderService.isBuy_Order(order.getGameid(),user.getId());
@@ -83,6 +84,38 @@ public class OrderController {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
 		return orderService.toDeleteOrder(id);
+	}
+	
+	/**
+	 * author 高志劲
+     * 取消订单退款
+     * @return
+     */
+	@RequestMapping(value = "cancel_order", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse toCancelOrder(Integer id,HttpSession session)
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toCancelOrder(id);
+	}
+	
+	/**
+	 * author 高志劲
+     * 申请退款
+     * @return
+     */
+	@RequestMapping(value = "apply_refund", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse applyRefund(Integer id,HttpSession session)
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toApplyRefund(id);
 	}
 	
 	/**

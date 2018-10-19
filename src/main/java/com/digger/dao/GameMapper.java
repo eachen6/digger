@@ -44,21 +44,21 @@ public interface GameMapper {
 
 	int toGetTotalGame();
 
-	List<Game> unauditedGamelistByName(String name);
+	List<GameAuditVO> unauditedGamelistByName(String name);
 
-	List<Game> notOnTheShelfGamelistByName(String name);
+	List<GameAuditVO> notOnTheShelfGamelistByName(String name);
 
-	List<Game> onTheShelfGamelistByName(String name);
+	List<GameAuditVO> onTheShelfGamelistByName(String name);
 
-	List<Game> pullOffShelvesGamelistByName(String name);
+	List<GameAuditVO> pullOffShelvesGamelistByName(String name);
 
 	List<GameAuditVO> unauditedGamelist();
 
-	List<Game> notOnTheShelfGamelist();
+	List<GameAuditVO> notOnTheShelfGamelist();
 
-	List<Game> onTheShelfGamelist();
+	List<GameAuditVO> onTheShelfGamelist();
 
-	List<Game> pullOffShelvesGamelist();
+	List<GameAuditVO> pullOffShelvesGamelist();
 
 	int onTheShelfGame(Integer id);
 
@@ -73,5 +73,7 @@ public interface GameMapper {
 	List<CarouseVO> toGetMydiscountGameList();
 
 	int addclick(int gameid);
+
+	int auditGame(Integer id);
 
 }

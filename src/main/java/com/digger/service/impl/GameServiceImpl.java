@@ -157,14 +157,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse unauditedGamelistByName(String name) {
+	public List<GameAuditVO> unauditedGamelistByName(String name) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.unauditedGamelistByName(name);
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 		
 	}
 
@@ -173,14 +170,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse notOnTheShelfGamelistByName(String name) {
+	public List<GameAuditVO> notOnTheShelfGamelistByName(String name) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.notOnTheShelfGamelistByName(name);
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -188,14 +182,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse onTheShelfGamelistByName(String name) {
+	public List<GameAuditVO> onTheShelfGamelistByName(String name) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.onTheShelfGamelistByName(name);
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -203,14 +194,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse pullOffShelvesGamelistByName(String name) {
+	public List<GameAuditVO> pullOffShelvesGamelistByName(String name) {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.pullOffShelvesGamelistByName(name);
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -218,14 +206,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse unauditedGamelist() {
+	public List<GameAuditVO> unauditedGamelist() {
 		// TODO Auto-generated method stub
 		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.unauditedGamelist();
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -233,14 +218,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse notOnTheShelfGamelist() {
+	public List<GameAuditVO> notOnTheShelfGamelist() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.notOnTheShelfGamelist();
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -248,14 +230,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse onTheShelfGamelist() {
+	public List<GameAuditVO> onTheShelfGamelist() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.onTheShelfGamelist();
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -263,14 +242,11 @@ public class GameServiceImpl implements GameService{
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse pullOffShelvesGamelist() {
+	public List<GameAuditVO> pullOffShelvesGamelist() {
 		// TODO Auto-generated method stub
-		List<Game> gamelist = new ArrayList<Game>();
+		List<GameAuditVO> gamelist = new ArrayList<GameAuditVO>();
 		gamelist = gameMapper.pullOffShelvesGamelist();
-		if(CollectionUtils.isEmpty(gamelist)){
-			return ServerResponse.createByErrorMessage("未找到该相关游戏！");
-		}
-		return ServerResponse.createBySuccess(gamelist);
+		return gamelist;
 	}
 
 	/* 
@@ -371,6 +347,34 @@ public class GameServiceImpl implements GameService{
 		else {
 			return ServerResponse.createByErrorMessage("上传失败");
 		}
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 根据id审核游戏
+	 */
+	@Override
+	public ServerResponse auditGame(Integer id) {
+		// TODO Auto-generated method stub
+		int updateCount = gameMapper.auditGame(id);
+		if(updateCount>0){
+			return ServerResponse.createBySuccessMessage("审核成功");
+		}
+		return ServerResponse.createByErrorMessage("审核失败");
+	}
+
+	/**
+	 * @author 徐子颖
+	 * 根据id刪除游戏
+	 */
+	@Override
+	public ServerResponse toDeleteGame(Integer id) {
+		// TODO Auto-generated method stub
+		int rowCount = gameMapper.deleteByPrimaryKey(id);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("删除成功！");
+        }
+        return ServerResponse.createByErrorMessage("删除失败！");
 	}
 
 }

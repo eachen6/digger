@@ -29,7 +29,7 @@ $(document).ready(function(){
 		else if(name=="order"){
 			$("#frame").load("order.html");
 		}
-		else if(name=="chat"){
+		else if(name=="webchat"){
 			$("#frame").load("../socket/socketpage.html");
 		}
 		else if(name=="wish"){
@@ -85,6 +85,7 @@ var main = new Vue({
 			url:"../user/get_userinfo",
 			async:true,
 			success: function(res){
+				console.log(res)
 				if(res.status == 0)
 				that.user = res.data;
 			}
@@ -103,8 +104,9 @@ function dologin(){
 		},
 		method:"POST",
 		success: function(res){
+			console.log(res)
 			if(res.status == 0){
-			//console.log(res.data)
+			console.log(res.data)
 			main.user = res.data
 			location.reload();
 			}

@@ -55,30 +55,37 @@ public class UserController {
 	public ServerResponse<User> login(String username, String password, HttpSession session) {
 		ServerResponse<User> response = userService.login(username, password);
 		if (response.isSuccess()) {
+			if(userService.checkState(username)==1){
+				return ServerResponse.createByErrorMessage("该账号已被封禁！");
+			}
 			session.setAttribute(Const.CURRENT_USER, response.getData());
-			/*if(checkSession(username)){ 
-			      //如果该session在此之前已经存在，则将该用户进行退出操作 
-			      DbUtil.userLogout(username);
-			      return ServerResponse.createByErrorMessage("该用户正在上线");
-			    } 
-			    //将新的session存放到map<username,session>中 
-			    DbUtil.mapSession.put(username, session);*/
-			    return response;
+			System.out.println(response + "1");
+
+			if (checkSession(username)) {
+				// 如果该session在此之前已经存在，则将该用户进行退出操作
+				System.out.println(response + "2");
+				DbUtil.userLogout(username);
+				System.out.println(response + "3");
+				return ServerResponse.createByErrorMessage("该用户正在上线");
+			}
+			// 将新的session存放到map<username,session>中
+			DbUtil.mapSession.put(username, session);
+			System.out.println(response + "4");
+			return response;
 		}
 		return ServerResponse.createByErrorMessage("登陆失败");
 	}
 
 	/**
-	 * @author 徐子颖
-	 * 检查是否已经含有此session
+	 * @author 徐子颖 检查是否已经含有此session
 	 * @return
 	 */
-	private boolean checkSession(String username){ 
-		  HttpSession session = DbUtil.mapSession.get(username); 
-		  if(session!=null){ 
-		    return true; 
-		  } 
-		  return false; 
+	private boolean checkSession(String username) {
+		HttpSession session = DbUtil.mapSession.get(username);
+		if (session != null) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -145,91 +152,91 @@ public class UserController {
 
 	/**
 	 * 注销
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "logout", method = RequestMethod.POST)
 	@ResponseBody
 	public ServerResponse<String> logout(HttpSession session) {
-		session.removeAttribute(Const.CURRENT_USER);
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		String username = user.getUsername();
+		DbUtil.userLogout(username);
+		/* session.removeAttribute(Const.CURRENT_USER); */
 		return ServerResponse.createBySuccess();
 	}
-	
+
 	/**
 	 * 更新用户个人信息
+	 * 
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse<User> update(@RequestBody User user, HttpSession session)
-	{
+	public ServerResponse<User> update(@RequestBody User user, HttpSession session) {
 		/*
-		 * 测试用例User currentUser = new User();
-		currentUser.setId(7);
-		currentUser.setEmail("00");
-		currentUser.setQuestion("00");
-		currentUser.setUsername("00");*/
-		User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
-        if(currentUser == null){
-            return ServerResponse.createByErrorMessage("用户未登录");
-        }
-        user.setId(currentUser.getId());
-        ServerResponse<User> response = userService.updateInformation(user, currentUser);
-        if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getData());
-        }
-        return response;
+		 * 测试用例User currentUser = new User(); currentUser.setId(7);
+		 * currentUser.setEmail("00"); currentUser.setQuestion("00");
+		 * currentUser.setUsername("00");
+		 */
+		User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+		if (currentUser == null) {
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		user.setId(currentUser.getId());
+		ServerResponse<User> response = userService.updateInformation(user, currentUser);
+		if (response.isSuccess()) {
+			session.setAttribute(Const.CURRENT_USER, response.getData());
+		}
+		return response;
 	}
-	
+
 	/**
 	 * 检查用户是否已登录，点击“更新个人信息”之前验证
+	 * 
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "check_state", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse<String> check_state(HttpSession session)
-	{
-		User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorMessage("用户未登录");
-        }
-        return ServerResponse.createBySuccessMessage("用户已登录");
+	public ServerResponse<String> check_state(HttpSession session) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return ServerResponse.createBySuccessMessage("用户已登录");
 	}
-	
+
 	/**
-	 * @author eachen
-	 * 获取用户信息
+	 * @author eachen 获取用户信息
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "get_userinfo", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse getUserInfo(HttpSession session){
+	public ServerResponse getUserInfo(HttpSession session) {
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null)
+		if (user == null)
 			return ServerResponse.createByErrorMessage("用户未登录");
 		return userService.getUserInfo(user.getId());
 	}
-	
-	
+
 	/**
-	 * @author gzj
-	 * 分页测试
+	 * @author gzj 分页测试
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "pagetest", method = RequestMethod.GET)
 	@ResponseBody
-	public ServerResponse getUser(@RequestParam(value="pn",defaultValue="1") Integer pn){
-		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
-        PageHelper.startPage(pn, 2);
-        //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
-        List<User> allUser = userService.getAllUser();
-        System.out.println(allUser);
-        //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
-        PageInfo page = new PageInfo(allUser,5);
-        return ServerResponse.createBySuccess(page);
+	public ServerResponse getUser(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		// startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
+		PageHelper.startPage(pn, 2);
+		// 从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
+		List<User> allUser = userService.getAllUser();
+		System.out.println(allUser);
+		// 使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
+		PageInfo page = new PageInfo(allUser, 5);
+		return ServerResponse.createBySuccess(page);
 	}
-	
+
 }
