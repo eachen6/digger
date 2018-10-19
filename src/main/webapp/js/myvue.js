@@ -2,13 +2,18 @@
  * 待审核模块
  */
 var check = new Vue({
-	el:"#check",
+	el:"#asd",
 	data:{
-		checks:[]
+		checks:[],
+		upcheck:[]
 	},
 	methods:{
-		shenhe:function(a){
-			console.log(a)
+		getcheckId:function(index){
+		check.upcheck = check.checks[index];
+		    console.log(check.upcheck)
+		},
+		pass:function(id){
+			gamepass(id);
 		}
 	},
 	created:function(){
@@ -34,19 +39,21 @@ function getCheckList(){
 		}
 	});
 }
-
-
-
-/**
- * 获取游戏id查找审核游戏的信息
+/*
+ * 游戏审核通过
  */
-$(function(){
-$("#getid").click(function(event){
-	console.log(1)
-    var id= document.getElementById("getid");
-    console.log(id)
-});
-})
+function gamepass(id){
+	console.log(id+111111)
+	$.ajax({
+		type:"post",
+		data:{"id":id},
+		url:"../gameaudit/onthesshelf_game",
+		async:true,
+		success:function(res){
+			console.log(res)
+		}
+	});
+}
 
 
 /**
@@ -55,9 +62,20 @@ $("#getid").click(function(event){
 var notup = new Vue({
 	el:"#notup",
 	data:{
-		notups:[]
+		notups:[],
+		mo_noticeId:""
 	},
-	methods:{},
+	methods:{
+		upstock:function(id){
+			uptheStock(id);
+		},
+		pass:function(id){
+			notup.mo_noticeId=id;
+		},
+		 mo_upstock:function(){
+		 	passtheNotic(notup.mo_noticeId);
+		 }
+	},
 	created:function(){
 		getnotupList();
 	}
@@ -79,6 +97,73 @@ function getnotupList(){
 			}
 		}
 	});
+}
+/**
+ * 上架游戏
+ */
+function uptheStock(id){
+	$.ajax({
+		type:"post",
+		data:{"id":id},
+		url:"../gameaudit/onthesshelf_game",
+		async:true,
+		success:function(res){
+			console.log(res)
+			
+		}
+	});
+}
+/**
+ * 上传公告图片并回调
+ */
+function sendFile(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
+
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('.summernote').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+
+/**
+ * 添加公告发布
+ */
+function passtheNotic(id){
+	var code = $('.summernote').summernote('code');
+		var form = new FormData(document.getElementById("addnotice"));
+		form.append("content", code);
+		form.append("gameid", id);
+		
+		$.ajax({
+			url: "../announcement/add_announcement",
+			type: "POST",
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				//window.clearInterval(timer);
+				console.log(res);
+				if(res.status == 0){
+					alert(res.msg)
+					
+				}
+			}
+		})
 }
 
 /**
@@ -138,6 +223,8 @@ function getisdownList(){
 		url:"../gameaudit/pulloffshelves_gamelist",
 		async:true,
 		success:function(res){
+			console.log(1213435)
+			console.log(res)
 			isdown.isdowns = res.data;
 			for(var i = 0; i < isdown.isdowns.length; i++){
 				isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
@@ -155,7 +242,11 @@ var guser = new Vue({
 	data:{
 		gusers:[]
 	},
-	methods:{},
+	methods:{
+		changeuser:function(index){
+			console.log(index)
+		}
+	},
 	created:function(){
 		getguserList();
 	}
@@ -199,12 +290,23 @@ var gnotice = new Vue({
 		hasNextPage:"",
 		navigatePages:"",
 		navigatepageNums:[],
-		list:[]
+		list:[],
+		oldtitle:"",
+		oldcontent:"",
+		syid:""
 	},
 	methods:{
 		change:function(pn){
-			alert(pn);
 			getgnoticeList(pn);
+		},
+		mo_update:function(index){
+		gnotice.syid=gnotice.list[index].id;
+		gnotice.oldtitle=gnotice.list[index].title;
+		gnotice.oldcontent=gnotice.list[index].content;
+		console.log(233333333333)
+		console.log(gnotice.syid)
+		console.log(gnotice.oldtitle)
+		console.log(gnotice.oldcontent)
 		}
 	},
 	created:function(){
@@ -214,6 +316,40 @@ var gnotice = new Vue({
 })
 
 	
+/**
+ * 获取公告管理列表
+ */
+function getgnoticeList(pn){
+	console.log(1111111111111)
+	var that = this;
+	$.ajax({
+		type:"get",
+		url:"../announcement/get_announcement/"+pn,
+		success:function(res){
+				console.log(res)
+				if(res.status==0)
+				{
+					gnotice.pageNum = res.data.pageNum;
+					gnotice.total = res.data.total;
+					gnotice.pages = res.data.pages;
+					gnotice.prePage = res.data.prePage;
+					gnotice.nextPage = res.data.nextPage;
+					gnotice.isFirstPage = res.data.isFirstPage;
+					gnotice.isLastPage = res.data.isLastPage;
+					gnotice.hasPreviousPage = res.data.hasPreviousPage;
+					gnotice.hasNextPage = res.data.hasNextPage;
+					gnotice.navigatePages = res.data.navigatePages;
+					gnotice.navigatepageNums = res.data.navigatepageNums;
+					gnotice.list = res.data.list;
+					for(var i = 0; i < gnotice.list.length; i++){
+						gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
+					}
+				}
+		}
+	});
+}
+
+
 /**
    * 公告修改管理模块
    */
@@ -232,49 +368,6 @@ var note = new Vue({
 	}
 	
 })
-
-/**
- * 获取公告管理列表
- */
-function getgnoticeList(pn){
-	var that = this;
-	$.ajax({
-		type:"get",
-		url:"../announcement/get_announcement/"+pn,
-		/*data:{"pn":pn},*/
-		success:function(res){
-
-			gnotice.gnotices = res.data;
-			for(var i = 0; i < gnotice.gnotices.length; i++){
-				gnotice.gnotices[i].shelftime = that.format(gnotice.gnotices[i].shelftime)
-			console.log(5)
-
-			console.log(res)
-			if(res.status==0)
-			{
-				gnotice.pageNum = res.data.pageNum;
-				gnotice.total = res.data.total;
-				gnotice.pages = res.data.pages;
-				gnotice.prePage = res.data.prePage;
-				gnotice.nextPage = res.data.nextPage;
-				gnotice.isFirstPage = res.data.isFirstPage;
-				gnotice.isLastPage = res.data.isLastPage;
-				gnotice.hasPreviousPage = res.data.hasPreviousPage;
-				gnotice.hasNextPage = res.data.hasNextPage;
-				gnotice.navigatePages = res.data.navigatePages;
-				gnotice.navigatepageNums = res.data.navigatepageNums;
-				gnotice.list = res.data.list;
-				for(var i = 0; i < gnotice.list.length; i++){
-					gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
-				}
-				//alert(page.total);
-
-			}
-			
-		}
-		}
-	});
-}
 
 /**
  * 个人信息模块
@@ -412,15 +505,26 @@ function sendtheFile(files, editor, $editable) {
 	var gamediscount = new Vue({
 	el:"#gamediscount",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		goods:[]
+		
 	},
 	methods:{
-		/*change:function(){
-			
-		}*/
+		change:function(pn){
+			getgoodsList(pn);
+		}
 	},
 	created:function(){
-		console.log(6)
 		getgoodsList(1);
 	}
 })
@@ -430,13 +534,25 @@ function sendtheFile(files, editor, $editable) {
  */
 function getgoodsList(pn){
 	var that = this;
+	console.log(pn)
 	$.ajax({
 		type:"post",
-		url:"../game/get_discount_gamelist"+pn,
+		url:"../game/get_discount_gamelist/"+pn,
 		async:true,
 		success:function(res){
 			console.log(res.data)
-			gamediscount.goods = res.data;
+			gamediscount.goods = res.data.list;
+		    gamediscount.pageNum = res.data.pageNum;
+			gamediscount.total = res.data.total;
+			gamediscount.pages = res.data.pages;
+			gamediscount.prePage = res.data.prePage;
+			gamediscount.nextPage = res.data.nextPage;
+			gamediscount.isFirstPage = res.data.isFirstPage;
+			gamediscount.isLastPage = res.data.isLastPage;
+			gamediscount.hasPreviousPage = res.data.hasPreviousPage;
+			gamediscount.hasNextPage = res.data.hasNextPage;
+			gamediscount.navigatePages = res.data.navigatePages;
+			gamediscount.navigatepageNums = res.data.navigatepageNums;
 			for(var i = 0; i < gamediscount.goods.length; i++){
 				gamediscount.goods[i].starttime = that.format(gamediscount.goods[i].starttime)
 				console.log(7)
@@ -488,6 +604,18 @@ function getUrlParam(name) {
 }
 
 
+/**
+ * 公告发布
+ */
+$(function() {
+	$("#up").click(function() {
+		
+	})
+
+	$("#et").click(function() {
+		$('.summernote').summernote('reset');
+	})
+})
 //判断老密码
 /*function validatePwd() {
 	var pwd1 = document.getElementById("password").value;

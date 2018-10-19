@@ -112,6 +112,7 @@ public class GameAuditController {
 	@ResponseBody
 	public ServerResponse onThesShelfGame(Integer id)
 	{
+		System.out.println(id);
 		return gameService.onThesShelfGame(id);
 	}
 	
