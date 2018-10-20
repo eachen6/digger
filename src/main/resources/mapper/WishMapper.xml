@@ -119,12 +119,17 @@
   
   <!-- 新增方法：获取该游戏是否被当前用户加入愿望清单-->
   <select id="toGetMyselfWishGame" parameterType="java.lang.Integer" resultType="com.digger.vo.WishVO">
-    <!-- select c.*,game.price,game.discountstate,game.name,discountlist.discount 
-    from game left join discountlist on game.id=discountlist.gameid and now()>starttime and deadline>now(),wish as c 
-    where c.userid = #{userid} and c.gameid = game.id -->
-    select wish.gameid,wish.coverimg,game.price,game.discountstate,game.name,discountlist.discount 
-    from wish left join (game left join discountlist on game.id=discountlist.gameid and now()>=starttime and deadline>=now()) on wish.gameid = game.id and wish.userid = #{userid}
-  </select>
+   <!--  select 
+    wish.gameid,wish.coverimg,game.price,game.discountstate,game.name,discountlist.discount 
+    from wish 
+    left join (game left join discountlist on game.id=discountlist.gameid and now()>=starttime and deadline>=now()) on wish.gameid = game.id and wish.userid = #{userid}
+   -->
+    select 
+    wish.gameid,wish.coverimg,price,discountstate,name,discount 
+    from wish,
+    (select game.id,price,discountstate,name,discount from game left join discountlist on game.id=discountlist.gameid where now()>=starttime and deadline>=now()) as a 
+    where wish.gameid = a.id and wish.userid = #{userid}
+   </select>
   
   
   <!-- 新增方法：用户购买游戏后删除用户愿望清单的这款游戏-->
