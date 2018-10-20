@@ -195,7 +195,6 @@ public class OrderController {
 	 * @version V1.0
 	 */
 	@RequestMapping(value = "/alipayReturnNotice")
-	@ResponseBody
 	public String alipayReturnNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
 
 		System.out.println("支付成功, 进入同步通知接口...");
@@ -251,7 +250,6 @@ public class OrderController {
 	 * @version V1.0
 	 */
 	@RequestMapping(value = "/alipayNotifyNotice")
-	@ResponseBody
 	public String alipayNotifyNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
 
 		System.out.println("支付成功, 进入异步通知接口...");
@@ -329,7 +327,7 @@ public class OrderController {
 			System.out.println("支付, 验签失败...");
 		}
 
-		return "success";
+		return "paysuccess";
 	}
 	
 	

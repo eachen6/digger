@@ -35,7 +35,9 @@ $(document).ready(function(){
 		else if(name=="wish"){
 			$("#frame").load("wish.html")
 		}
-		
+		else if(name=="paysuccess"){
+			$("#frame").load("paysuccess.html")
+		}
 		$(".loading").fadeOut(500);
 	})
 	
