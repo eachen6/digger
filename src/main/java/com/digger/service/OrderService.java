@@ -19,5 +19,9 @@ public interface OrderService {
 
 	void updateOrderStatus(String out_trade_no, String trade_no, String total_amount);
 
+	ServerResponse toCancelOrder(Integer id);
+
+	ServerResponse toApplyRefund(Integer id);
+
 
 }

@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService{
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		list = orderMapper.toGetOrder(userid);
 		if(CollectionUtils.isEmpty(list)){
-			return ServerResponse.createByErrorCodeMessage(2,"查看订单失败");
+			return ServerResponse.createByErrorCodeMessage(1,"您还没有订单，快去下订单吧");
 		}
 		return ServerResponse.createBySuccess("查看订单成功", list);
 		
@@ -89,12 +89,43 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public ServerResponse toDeleteOrder(Integer id) {
 		// TODO Auto-generated method stub
-		int rowCount = orderMapper.deleteByPrimaryKey(id);
+		Integer rowCount = 0;
+		rowCount = orderMapper.deleteByid(id);
 		System.out.println(rowCount);
 		if(rowCount>0){
             return ServerResponse.createBySuccessMessage("删除成功！");
         }
         return ServerResponse.createByErrorMessage("删除失败！");
+	}
+	
+	
+	/* 
+	 * 取消订单退款
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse toCancelOrder(Integer id) {
+		Integer rowCount = 0;
+		rowCount = orderMapper.cancelByid(id);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("取消成功！");
+        }
+        return ServerResponse.createByErrorMessage("取消失败！");
+	}
+	
+	
+	/* 
+	 * 申请退款
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse toApplyRefund(Integer id) {
+		Integer rowCount = 0;
+		rowCount = orderMapper.applyRefundByid(id);
+		if(rowCount>0){
+            return ServerResponse.createBySuccessMessage("取消成功！");
+        }
+        return ServerResponse.createByErrorMessage("取消失败！");
 	}
 
 	/* 
@@ -131,9 +162,11 @@ public class OrderServiceImpl implements OrderService{
 	public void updateOrderStatus(String out_trade_no, String trade_no, String total_amount) {
 		Order order = orderMapper.getOrderByOrdernum(out_trade_no);
 		if (order.getState()==Const.WAIT_PAY) {
-			int result1 = 0;
+			Integer result1 = 0;
 			result1 = wishMapper.deleteWish(out_trade_no);
-			int result = 0;
+			Integer result2 = 0;
+			result2 = orderMapper.updateOldOrderstatus(out_trade_no);
+			Integer result = 0;
 			result = orderMapper.updateOrderStatus(Const.PAID,order.getOrdernum());
 			if(result>0){
 			Payinfo pay = new Payinfo();
@@ -144,6 +177,6 @@ public class OrderServiceImpl implements OrderService{
 			result = orderMapper.insertPayinfo(pay);
 		    }
 	    }
-	}
+	}	
 	
 }

@@ -9,7 +9,7 @@ import com.digger.pojo.Payinfo;
 import com.digger.vo.OrderVO;
 
 public interface OrderMapper {
-    int deleteByPrimaryKey(Integer id);
+    Integer deleteByid(Integer id);
 
     int insert(Order order);
 
@@ -30,5 +30,11 @@ public interface OrderMapper {
 	Integer updateOrderStatus(@Param("paid")int paid, @Param("ordernum")Long ordernum);
 
 	int insertPayinfo(@Param("pay")Payinfo pay);
+
+	Integer updateOldOrderstatus(String ordernum);
+
+	Integer cancelByid(Integer id);
+
+	Integer applyRefundByid(Integer id);
 
 }
