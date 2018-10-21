@@ -33,22 +33,25 @@ public class SendServiceImpl implements SendService {
 	 * @author 徐子颖
 	 */
 	@Override
-	public ServerResponse<String> toSendGame(Integer gameid, Integer id, int targetid, float price, String message) {
+	public ServerResponse<String> toSendGame(Integer gameid, Integer id, int targetid, float price, String message,String ordernum) {
 		// TODO Auto-generated method stub
-
+		Integer count = 0;
+        count = sendMapper.isbuyforit(ordernum, gameid, targetid,id);
+        if(count>0)
+        	return  ServerResponse.createByErrorMessage("您已经为该好友购买过改款游戏");
 		//生成赠送记录
 		Send send = new Send();
 		send.setTargetid(targetid);
 		send.setMessage(message);
-		// 获取流水号
+		/*// 获取流水号
 		long orderNum = 0;
 		int r1 = (int) (Math.random() * (10));// 产生2个0-9的随机数
 		int r2 = (int) (Math.random() * (10));
 		long timestamp = System.currentTimeMillis();// 一个13位的时间戳
 		String timeStamp = String.valueOf(r1) + String.valueOf(r2) + String.valueOf(timestamp);// 订单ID
-		orderNum = Long.parseLong(timeStamp);
-		send.setOrdernum(orderNum);
-		
+		orderNum = Long.parseLong(timeStamp);*/
+		send.setOrdernum(Long.parseLong(ordernum));
+		System.out.println(Long.parseLong(ordernum));
 		int resultCount = 0;
 		resultCount = sendMapper.insert(send);
 		if(resultCount>0){
@@ -64,7 +67,7 @@ public class SendServiceImpl implements SendService {
 			order.setPrice(price);
 			order.setIssend((byte) 1);
 			order.setPaytime(null);
-			order.setOrdernum(orderNum);
+			order.setOrdernum(Long.parseLong(ordernum));
 			//获取关闭时间（例如：五分钟）
 			Date now = new Date();
 			Date time = new Date(now.getTime() + 300000);

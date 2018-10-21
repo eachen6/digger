@@ -38,7 +38,9 @@ $(document).ready(function(){
 		else if(name=="friends_wish"){
 			$("#frame").load("friends_wish.html");
 		}
-		
+		else if(name=="paysuccess"){
+			$("#frame").load("paysuccess.html")
+		}
 		$(".loading").fadeOut(500);
 	})
 	

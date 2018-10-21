@@ -30,12 +30,8 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.digger.pojo.Send">
-    insert into send (id, targetid, createtime, 
-      updatetime, ordernum, message
-      )
-    values (#{id,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, now(), 
-      now(), #{ordernum,jdbcType=BIGINT}, #{message,jdbcType=LONGVARCHAR}
-      )
+    insert into send (targetid, createtime, updatetime, ordernum, message)
+    values (#{send.targetid},now(), now(), #{send.ordernum}, #{send.message})
   </insert>
   <insert id="insertSelective" parameterType="com.digger.pojo.Send">
     insert into send
@@ -118,4 +114,20 @@
       ordernum = #{ordernum,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+   <!-- 新增方法:根据ordernum找到用户id-->
+  <select id="findtargetid"  resultType="String">
+    select targetid
+    from send
+    where ordernum = #{ordernum}
+  </select>
+  
+   <!-- 新增方法:根据ordernum找到用户id-->
+  <select id="isbuyforit" resultType="Integer">
+    select count(send.id)
+    from send,`order`
+    where issend = 1 and targetid = #{targetid} and gameid=#{gameid}
+    and send.ordernum = `order`.ordernum and `order`.userid=#{id} and
+     (state = 1 or state = 2 or state = 4 or state = 5)
+  </select>
 </mapper>
