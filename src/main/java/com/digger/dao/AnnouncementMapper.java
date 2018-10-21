@@ -22,4 +22,6 @@ public interface AnnouncementMapper {
     int updateByPrimaryKey(Announcement record);
 
 	List<AnnouncementVO> getAllAnnouncement();
+
+	List<Announcement> toGetAnnouncementByGameid(Integer gameid);
 }

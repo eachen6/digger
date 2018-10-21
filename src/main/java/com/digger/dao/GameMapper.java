@@ -2,7 +2,10 @@ package com.digger.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.digger.pojo.Category;
+import com.digger.pojo.Discountlist;
 import com.digger.pojo.Game;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
@@ -81,5 +84,11 @@ public interface GameMapper {
 	List<CarouseVO> togetNotDiscount();
 
 	List<CarouseVO> togetDiscount();
+
+	Integer add_Discount(@Param("dl")Discountlist dl);
+
+	Integer update_Discount(@Param("dl")Discountlist dl);
+
+	Integer delete_Discount(Integer id);
 
 }

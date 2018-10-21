@@ -45,8 +45,9 @@ function pay(gameid,price,discount){
 	alert(gameid+" "+price+" "+discount+" "+ordernum);
 	$.ajax({
 		type:"POST",
-		url:"../order/create",
+		url:"../send/gift",
 		data:{
+			username:wish.friendname,
 			gameid:gameid,
 			price:price,
 			ordernum:ordernum,

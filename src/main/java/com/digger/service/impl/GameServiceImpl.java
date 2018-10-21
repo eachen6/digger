@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.pojo.Category;
+import com.digger.pojo.Discountlist;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.GameService;
@@ -387,7 +388,7 @@ public class GameServiceImpl implements GameService{
 		List<CarouseVO> list = new ArrayList<CarouseVO>();
 		list = gameMapper.togetNotDiscount();
 		if(CollectionUtils.isEmpty(list)){
-			return ServerResponse.createBySuccessMessage("暂时还没有未打折商品");
+			return ServerResponse.createByErrorMessage("暂时还没有未打折商品");
 		}
 		return ServerResponse.createBySuccess(list);
 	}
@@ -401,9 +402,51 @@ public class GameServiceImpl implements GameService{
 		List<CarouseVO> list = new ArrayList<CarouseVO>();
 		list = gameMapper.togetDiscount();
 		if(CollectionUtils.isEmpty(list)){
-			return ServerResponse.createBySuccessMessage("暂时还没有打折商品");
+			return ServerResponse.createByErrorMessage("暂时还没有打折商品");
 		}
 		return ServerResponse.createBySuccess(list);
+	}
+
+	/**
+	 * @author 高志劲
+	 * 增加折扣
+	 */
+	@Override
+	public ServerResponse add_Discount(Discountlist dl) {
+		Integer result = 0;
+		result = gameMapper.add_Discount(dl);
+		if(result>0)
+			return ServerResponse.createBySuccessMessage("折扣添加成功!");
+		else
+			return ServerResponse.createByErrorMessage("折扣添加失败!");
+	}
+
+	/**
+	 * @author 高志劲
+	 * 更新折扣
+	 */
+	@Override
+	public ServerResponse update_Discount(Discountlist dl) {
+		Integer result = 0;
+		result = gameMapper.update_Discount(dl);
+		if(result>0)
+			return ServerResponse.createBySuccessMessage("折扣更新成功!");
+		else
+			return ServerResponse.createByErrorMessage("折扣更新失败!");
+	}
+
+	/**
+	 * @author 高志劲
+	 * 删除折扣
+	 */
+	@Override
+	public ServerResponse delete_Discount(Integer id) {
+		Integer result = 0;
+		result = gameMapper.delete_Discount(id);
+		if(result>0)
+			return ServerResponse.createBySuccessMessage("删除折扣成功!");
+		else
+			return ServerResponse.createByErrorMessage("删除折扣失败!");
 	}
 
 }

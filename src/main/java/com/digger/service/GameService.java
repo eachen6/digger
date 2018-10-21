@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.digger.common.ServerResponse;
+import com.digger.pojo.Discountlist;
 import com.digger.pojo.Game;
 import com.digger.vo.CarouseVO;
 import com.digger.vo.GameAuditVO;
@@ -72,4 +73,10 @@ public interface GameService {
 	ServerResponse getNotDiscount();
 
 	ServerResponse getDiscount();
+
+	ServerResponse add_Discount(Discountlist dl);
+
+	ServerResponse update_Discount(Discountlist dl);
+
+	ServerResponse delete_Discount(Integer id);
 }
