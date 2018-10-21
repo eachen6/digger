@@ -244,7 +244,7 @@
   </select>
   
   <!-- 新增方法:管理员根据用户名模糊查找用户-->
-  <select id="selectUserByUsername" resultType="com.digger.pojo.User" parameterType="String">
+  <select id="selectUserLikeUsername" resultType="com.digger.pojo.User" parameterType="String">
     select
     *
     from user
