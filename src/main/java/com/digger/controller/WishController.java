@@ -91,4 +91,5 @@ public class WishController {
 	{
 		return wishService.toGetFriendWishGame(userid);
 	}
+	
 }

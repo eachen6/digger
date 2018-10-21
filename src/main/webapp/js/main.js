@@ -33,9 +33,14 @@ $(document).ready(function(){
 			$("#frame").load("../socket/socketpage.html");
 		}
 		else if(name=="wish"){
-			$("#frame").load("wish.html")
+			$("#frame").load("wish.html");
 		}
-		
+		else if(name=="friends_wish"){
+			$("#frame").load("friends_wish.html");
+		}
+		else if(name=="paysuccess"){
+			$("#frame").load("paysuccess.html")
+		}
 		$(".loading").fadeOut(500);
 	})
 	

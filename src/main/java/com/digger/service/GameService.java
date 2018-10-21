@@ -68,4 +68,8 @@ public interface GameService {
 	ServerResponse auditGame(Integer id);
 
 	ServerResponse toDeleteGame(Integer id);
+
+	ServerResponse getNotDiscount();
+
+	ServerResponse getDiscount();
 }

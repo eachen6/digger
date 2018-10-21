@@ -78,6 +78,7 @@ $(document).ready(function(){
 		});
     })
     
+    
 })
 
 /*
@@ -110,7 +111,9 @@ var game = new Vue({
 		selective:[
 		],
 		id:null,
-		contents:""
+		contents:"",
+		sendusername:"",
+		sendmessage:""
 	},
 	methods:{
 		addToWish:function(){
@@ -124,12 +127,48 @@ var game = new Vue({
 			this.id = id;
 			deleteFromWish(this.id)
 			console.log("执行了从愿望清单中取消的功能")
+		},
+		send:function(){
+			sendgame(this.sendusername,this.sendmessage);
 		}
 	},
 	created: function(){
 	}
 })
 
+//送游戏给朋友
+function sendgame(username,message){
+	var ordernum = GetDateNow();
+	var price = 0;
+	if(game.contents.discount==null||game.contents.discount==0){
+		price = game.contents.price;
+	}
+	else
+		price = game.contents.price*game.contents.discount*0.1;
+	var gameid = game.contents.id;
+	$.ajax({
+		type:"POST",
+		url:"../send/gift",
+		data:{
+			username:username,
+			message:message,
+			price:price,
+			ordernum:ordernum,
+			gameid:gameid
+		},
+		async:true,
+		success: function(res){
+			console.log(res);
+			if(res.status == 1){
+				alert(res.msg);
+			}
+			else if(res.status == 0)
+			{
+				window.location.href = "../order/goAlipay?ordernum=" + ordernum  ;
+			}
+		}
+	});
+}
 
 //获取该游戏的愿望清单状态
 function getWishState(id){

@@ -436,4 +436,16 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectNameByID(id);
 	}
 
+	/**
+	 * @author 高志劲
+	 * 根据username找到用户id
+	 * @return
+	 */
+	@Override
+	public String findIdByName(String username) {
+		String targetid = null;
+		targetid = userMapper.findIdByName(username);
+		return targetid;
+	}
+
 }

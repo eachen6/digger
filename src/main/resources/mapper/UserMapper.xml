@@ -275,4 +275,11 @@
     where id = #{id}
   </select>
   
+   <!-- 新增方法:根据username找到用户id-->
+  <select id="findIdByName"  resultType="String">
+    select id
+    from user
+    where username = #{username}
+  </select>
+  
 </mapper>
