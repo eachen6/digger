@@ -73,6 +73,29 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 		}
 		return ServerResponse.createByErrorMessage("公告增加失败！");
 	}
+
+	/* 
+	 * 根據游戲id获取公告列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public List<Announcement> toGetAnnouncementByGameid(Integer gameid) {
+		// TODO Auto-generated method stub
+		List<Announcement> list = new ArrayList<Announcement>();
+		list = announcementMapper.toGetAnnouncementByGameid(gameid);
+		return list;
+	}
+
+	/* 
+	 * 根據公告id获取公告列表
+	 * @author 徐子颖
+	 */
+	@Override
+	public AnnouncementWithBLOBs toGetAnnouncementById(Integer id) {
+		// TODO Auto-generated method stub
+		AnnouncementWithBLOBs announcement = announcementMapper.selectByPrimaryKey(id);
+		return announcement;
+	}
 	
 	
 }

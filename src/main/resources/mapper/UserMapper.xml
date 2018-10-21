@@ -122,6 +122,9 @@
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
         updatetime = now(),
+      <if test="password != null">
+        password
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

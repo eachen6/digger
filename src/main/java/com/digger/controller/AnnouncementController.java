@@ -120,4 +120,48 @@ public class AnnouncementController {
 		}
 		
 	}
+	
+	/**
+     * 根據游戲id获取公告列表
+     * @return
+     */
+	@RequestMapping(value = "get_announcementbygameid/{pn}", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetAnnouncement(@PathVariable(value="pn") int pn, Integer gameid, HttpSession session) 
+	{
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
+		} else {
+			if (user.getRole() == 1) {
+				PageHelper.startPage(pn, Const.announcementcount);
+				List<Announcement> list = announcementService.toGetAnnouncementByGameid(gameid);
+				PageInfo page = new PageInfo(list,Const.pagecount);
+		        return ServerResponse.createBySuccess(page);
+			} else {
+				return ServerResponse.createByErrorMessage("无权限!");
+			}
+		}
+	}
+	
+	/**
+     * 根據公告id获取公告列表
+     * @return
+     */
+	@RequestMapping(value = "get_announcementbyid", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetAnnouncementById(Integer id, HttpSession session) 
+	{
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
+		} else {
+			if (user.getRole() == 1) { 
+				AnnouncementWithBLOBs announcement = announcementService.toGetAnnouncementById(id);
+				return ServerResponse.createBySuccess(announcement);
+			} else {
+				return ServerResponse.createByErrorMessage("无权限!");
+			}
+		}
+	}
 }

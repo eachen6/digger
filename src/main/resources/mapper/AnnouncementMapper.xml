@@ -148,4 +148,11 @@
     from announcement as a,game as b
     where a.gameid = b.id
   </select>
+  
+  <!-- 新增方法：根據游戲id获取公告列表-->
+  <select id="toGetAnnouncementByGameid" parameterType="java.lang.Integer" resultType="com.digger.pojo.Announcement">
+    select 
+    id,title,createtime
+    from announcement where gameid = #{gameid}
+  </select>
 </mapper>
