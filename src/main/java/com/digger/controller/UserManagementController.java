@@ -92,32 +92,7 @@ public class UserManagementController {
 	}
 
 	/**
-	 * 按照輸入框模糊查詢
-	 * 
-	 * @param username
-	 * @return
-	 */
-	@RequestMapping(value = "selectuserlikeusername/{pn}", method = RequestMethod.GET)
-	@ResponseBody
-	public ServerResponse selectUserLikeUsername(@PathVariable(value = "pn") int pn, String username, HttpSession session) {
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if (user == null) {
-			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
-		} else {
-			if (user.getRole() == 1) {
-				PageHelper.startPage(pn, Const.gamecount);
-				List<User> list = userService.selectUserLikeUsername(username);
-				PageInfo page = new PageInfo(list, Const.pagecount);
-				return ServerResponse.createBySuccess(page);
-			} else {
-				return ServerResponse.createByErrorMessage("无权限!");
-			}
-		}
-
-	}
-	
-	/**
-	 * 按照用户名查詢
+	 * 按照用户名搜索
 	 * 
 	 * @param username
 	 * @return
