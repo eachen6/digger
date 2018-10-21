@@ -4,6 +4,8 @@
 var check = new Vue({
 	el:"#sour",
 	data:{
+		checks:[],
+		upcheck:[],
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -14,15 +16,14 @@ var check = new Vue({
 		hasPreviousPage:"",
 		hasNextPage:"",
 		navigatePages:"",
-		navigatepageNums:[],
-		checks:[]
+		navigatepageNums:[]
 	},
 	methods:{
-		shenhe:function(a){
-			console.log(a)
+		getcheckId:function(index){
+			check.upcheck = check.checks[index];
 		},
-		deletegame:function(){
-			console.log(1)
+		pass:function(id){
+			gamepass(id);
 		},
 		change:function(pn){
 			getCheckList(pn);
@@ -37,13 +38,14 @@ var check = new Vue({
  * 获取待审核列表
  */
 function getCheckList(pn){
+	console.log("测试审核列表")
 	var that = this;
 	$.ajax({
 		type:"get",
 		url:"../gameaudit/unaudited_gamelist/"+pn,
 		async:true,
 		success:function(res){
-			console.log(res)//通过打印返回内容确定数据格式，根据数据调整当前页面内容
+			//console.log(res)//通过打印返回内容确定数据格式，根据数据调整当前页面内容
 			if(res.status==0)
 			{
 				check.pageNum = res.data.pageNum;
@@ -65,7 +67,21 @@ function getCheckList(pn){
 		}
 	});
 }
-
+/*
+ * 游戏审核通过
+ */
+function gamepass(id){
+	console.log(id)
+	$.ajax({
+		type:"post",
+		data:{"id":id},
+		url:"../gameaudit/onthesshelf_game",
+		async:true,
+		success:function(res){
+			//console.log(res)
+		}
+	});
+}
 
 /**
  * 未上架模块
@@ -73,6 +89,8 @@ function getCheckList(pn){
 var notup = new Vue({
 	el:"#regu",
 	data:{
+		notups:[],
+		mo_noticeId:"",
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -83,23 +101,19 @@ var notup = new Vue({
 		hasPreviousPage:"",
 		hasNextPage:"",
 		navigatePages:"",
-		navigatepageNums:[],
-		notups:[]
+		navigatepageNums:[]
 	},
 	methods:{
-		upgame:function(index){
-			var id = notup.notups[index].id;
-			//console.log(id)
-			$.ajax({
-				type:"post",
-				url:"../gameaudit/onthesshelf_game/",
-				data:{"id":id},
-				async:true,
-				success:function(res){
-					//console.log(res)
-					window.location.reload();
-				}
-			});
+		upstock:function(id){
+			uptheStock(id);
+		},
+		pass:function(id){
+			notup.mo_noticeId=id;
+			var info ="公告内容";
+            $('#one').summernote('code', info)
+		},
+		mo_upstock:function(){
+			passtheNotic(notup.mo_noticeId);
 		},
 		change:function(pn){
 			getnotupList(pn);
@@ -140,6 +154,72 @@ function getnotupList(pn){
 			}
 		}
 	});
+}
+/**
+ * 上架游戏
+ */
+function uptheStock(id){
+	$.ajax({
+		type:"post",
+		data:{"id":id},
+		url:"../gameaudit/onthesshelf_game",
+		async:true,
+		success:function(res){
+			//console.log(res)
+			window.location.reload();
+		}
+	});
+}
+/**
+ * 上传公告图片并回调
+ */
+function sendFile1(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('#one').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+
+/**
+ * 添加公告发布
+ */
+function passtheNotic(id){
+	var code = $('#one').summernote('code');
+		var form = new FormData(document.getElementById("addnotice"));
+		form.append("content", code);
+		form.append("gameid", id);
+		console.log(form)
+		$.ajax({
+			url: "../announcement/add_announcement",
+			type: "POST",
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				//window.clearInterval(timer);
+				console.log(res);
+				if(res.status == 0){
+					alert(res.msg)
+					
+				}
+			}
+		})
 }
 
 /**
@@ -221,7 +301,7 @@ function getsaleList(pn){
  * 下架模块
  */
 var isdown = new Vue({
-	el:"#isdown",
+	el:"#sitt",
 	data:{
 		pageNum: "",
 		total: "",
@@ -268,6 +348,8 @@ function getisdownList(pn){
 		url:"../gameaudit/pulloffshelves_gamelist/"+pn,
 		async:true,
 		success:function(res){
+			console.log("下架测试")
+			console.log(res)
 			if(res.status==0)
 			{
 				isdown.pageNum = res.data.pageNum;
@@ -296,6 +378,17 @@ function getisdownList(pn){
 var guser = new Vue({
 	el:"#user",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		gusers:[]
 	},
 	methods:{
@@ -330,24 +423,41 @@ var guser = new Vue({
 					window.location.reload();
 				}
 			});
+		},
+		change:function(pn){
+			getguserList(pn);
 		}
 	},
 	created:function(){
-		getguserList();
+		getguserList(1);
 	}
 })
 
 /**
  * 获取用户管理列表
  */
-function getguserList(){
+function getguserList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
-		url:"../admin/get_total_userlist",
+		url:"../admin/get_total_userlist/"+pn,
 		success:function(res){
-			console.log(9998)
-			guser.gusers = res.data;
+			console.log(res);
+			if(res.status==0)
+			{
+				guser.pageNum = res.data.pageNum;
+				guser.total = res.data.total;
+				guser.pages = res.data.pages;
+				guser.prePage = res.data.prePage;
+				guser.nextPage = res.data.nextPage;
+				guser.isFirstPage = res.data.isFirstPage;
+				guser.isLastPage = res.data.isLastPage;
+				guser.hasPreviousPage = res.data.hasPreviousPage;
+				guser.hasNextPage = res.data.hasNextPage;
+				guser.navigatePages = res.data.navigatePages;
+				guser.navigatepageNums = res.data.navigatepageNums;
+				guser.gusers = res.data.list;
+			}
 		}
 	});
 }
@@ -387,9 +497,21 @@ var gnotice = new Vue({
 		hasNextPage:"",
 		navigatePages:"",
 		navigatepageNums:[],
-		list:[]
+		list:[],
+		oldtitle:"",
+		oldcontent:"",
+		syid:""
 	},
 	methods:{
+		mo_updategg:function(index){
+			gnotice.syid=gnotice.list[index].id;
+			gnotice.oldtitle=gnotice.list[index].title;
+			var info =gnotice.list[index].content;
+	        $('#two').summernote('code', info)
+		},
+		savenew:function(){
+			asavenew(gnotice.syid);
+		},
 		change:function(pn){
 			getgnoticeList(pn);
 		}
@@ -403,6 +525,7 @@ var gnotice = new Vue({
  * 获取公告管理列表
  */
 function getgnoticeList(pn){
+	console.log("测试公告")
 	var that = this;
 	$.ajax({
 		type:"get",
@@ -424,32 +547,62 @@ function getgnoticeList(pn){
 				gnotice.navigatepageNums = res.data.navigatepageNums;
 				gnotice.list = res.data.list;
 				for(var i = 0; i < gnotice.list.length; i++){
-					gnotice.list[i].createtime = that.format(gnotice.list[i].createtime)
+					gnotice.list[i].updatetime = that.format(gnotice.list[i].updatetime)
 				}
 			}
 		}
 	});
 }
-	
 /**
-   * 公告修改管理模块
-   */
-var note = new Vue({
-	el:"#upgg",
-	data:{
-		id:'',
-		stste:''
-	},
-	methods:{ 
-		upd:function(a){
-			console.log(a)
-		  note.id=a;
-		  note.stste=b;
-		}
-	}
-	
-})
+ * 上传公告图片并回调
+ */
+function sendFile2(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
 
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('#tow').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+/**
+ * 保存修改公告
+ */
+function asavenew(id){
+	console.log(id)
+	var code = $('#two').summernote('code');
+	var form = new FormData(document.getElementById("updatenotice"));
+	form.append("content", code);
+	form.append("id", id);
+	console.log("保存修改")
+	console.log(form)
+	$.ajax({
+		type:"POST",
+		data:form,
+		url:"../announcement/update_announcement",
+		async:true,
+		processData: false,
+		contentType: false,
+		success:function(res){
+			console.log(res)
+			window.location.reload();
+		}
+	});
+}
 /**
  * 个人信息模块
  */
@@ -517,7 +670,6 @@ function format(shijianchuo)
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
 /*
-<<<<<<< HEAD
  * 公告富文本添加
  */
 function sendtheFile(files, editor, $editable) {
@@ -572,12 +724,24 @@ function sendtheFile(files, editor, $editable) {
 	var gamediscount = new Vue({
 	el:"#gamediscount",
 	data:{
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[],
 		goods:[]
+		
 	},
 	methods:{
-		/*change:function(){
-			
-		}*/
+		change:function(pn){
+			getgoodsList(pn);
+		}
 	},
 	created:function(){
 		getgoodsList(1);
@@ -589,13 +753,25 @@ function sendtheFile(files, editor, $editable) {
  */
 function getgoodsList(pn){
 	var that = this;
+	console.log(pn)
 	$.ajax({
 		type:"post",
-		url:"../game/get_discount_gamelist"+pn,
+		url:"../game/get_discount_gamelist/"+pn,
 		async:true,
 		success:function(res){
 			console.log(res.data)
-			gamediscount.goods = res.data;
+			gamediscount.goods = res.data.list;
+		    gamediscount.pageNum = res.data.pageNum;
+			gamediscount.total = res.data.total;
+			gamediscount.pages = res.data.pages;
+			gamediscount.prePage = res.data.prePage;
+			gamediscount.nextPage = res.data.nextPage;
+			gamediscount.isFirstPage = res.data.isFirstPage;
+			gamediscount.isLastPage = res.data.isLastPage;
+			gamediscount.hasPreviousPage = res.data.hasPreviousPage;
+			gamediscount.hasNextPage = res.data.hasNextPage;
+			gamediscount.navigatePages = res.data.navigatePages;
+			gamediscount.navigatepageNums = res.data.navigatepageNums;
 			for(var i = 0; i < gamediscount.goods.length; i++){
 				gamediscount.goods[i].starttime = that.format(gamediscount.goods[i].starttime)
 				
@@ -621,7 +797,6 @@ var nonediscount = new Vue({
 
 function getnonediscountLit(){
 	var that = this;
-	
 	$.ajax({
 		type:"get",
 		url:"../gameaudit/onthesshelf_gamelist",
@@ -646,6 +821,18 @@ function getUrlParam(name) {
 }
 
 
+/**
+ * 公告发布
+ */
+$(function() {
+	$("#up").click(function() {
+		
+	})
+
+	$("#et").click(function() {
+		$('.summernote').summernote('reset');
+	})
+})
 //判断老密码
 /*function validatePwd() {
 	var pwd1 = document.getElementById("password").value;
@@ -686,4 +873,38 @@ function getUrlParam(name) {
 		document.getElementById("finish-button").disabled = true;
 	}
 }*/
+
+/**
+ * 密码修改模块
+ */
+var updatapw = new Vue({
+	el:"#updatapw",
+	data:{
+		username:"",
+		oldpassword:"",
+		newpassword:""
+	},
+	methods:{
+		updatapassword:function(){
+			var that = this;
+			var oldpassword = $("#oldpassword").val();
+			var newpassword = $("#newpassword").val();
+			$.ajax({
+				type:"post",
+				url:"../user/updatePassword",
+				data:{
+					"passwordOld":oldpassword,
+					"passwordNew":newpassword
+				},
+				async:true,
+				success:function(res){
+					console.log(res)
+				}
+			});
+		}
+	},
+	created:function(){
+		this.username = getUrlParam("username");
+	}
+})
 
