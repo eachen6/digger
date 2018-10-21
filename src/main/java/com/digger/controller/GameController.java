@@ -378,6 +378,29 @@ public class GameController {
 		return ServerResponse.createByErrorMessage("上传失败");
 	}
 
+	/**
+	 * author 高志劲
+	 * 查找未打折游戏
+	 * @return
+	 */
+	@RequestMapping(value="get_notdiscount", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse getNotDiscount()
+	{
+		return gameService.getNotDiscount();
+	}
+	
+	/**
+	 * author 高志劲
+	 * 查找已打折游戏
+	 * @return
+	 */
+	@RequestMapping(value="get_discount", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse getDiscount()
+	{
+		return gameService.getDiscount();
+	}
 	
 }
    

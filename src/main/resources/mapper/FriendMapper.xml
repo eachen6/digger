@@ -42,7 +42,7 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.digger.pojo.Friend">
     select *
     from friend
-    where userid = #{id,jdbcType=INTEGER}
+    where userid = #{id,jdbcType=INTEGER} and state = 1
   </select>
   
    <select id="selectByUserId" parameterType="java.lang.Integer" >
@@ -50,5 +50,27 @@
     from friend
     where userid = #{id,jdbcType=INTEGER} and state = 1
   </select>
+  
+  <select id="selectByDoubleId" resultType="com.digger.pojo.Friend">
+  select userid,friendint,state
+  from friend where userid=#{userid} and friendint = #{friendid}
+  </select>
+  
+  <select id="selectByFriendid" parameterType="java.lang.Integer" resultType="com.digger.pojo.Friend">
+    select userid,friendint,state
+    from friend
+    where friendint = #{id,jdbcType=INTEGER} and state = 0
+  </select>
+  
+  <update id="updateState" parameterType="com.digger.pojo.Friend">
+  update friend
+  set state = 1
+  where userid = #{userid} and friendint = #{friendint}
+  </update>
+  
+  <delete id="deleteByRecord" parameterType="com.digger.pojo.Friend">
+  	delete from friend
+  	where userid = #{userid} and friendint = #{friendint}
+  </delete>
   
 </mapper>

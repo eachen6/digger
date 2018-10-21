@@ -4,6 +4,6 @@ import com.digger.common.ServerResponse;
 
 public interface SendService {
 
-	ServerResponse<String> toSendGame(Integer gameid, Integer id, int targetid, float price, String message);
+	ServerResponse<String> toSendGame(Integer gameid, Integer id, int targetid, float price, String message,String ordernum);
 
 }

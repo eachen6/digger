@@ -243,7 +243,7 @@ public class GameAuditController {
 	 */
 	@RequestMapping(value = "onthesshelf_game", method = RequestMethod.POST)
 	@ResponseBody
-	public ServerResponse onThesShelfGame(Integer id, HttpSession session) {
+    public ServerResponse onThesShelfGame(Integer id, HttpSession session) {
 		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if (user == null) {
 			return ServerResponse.createByErrorCodeMessage(1, "用户未登录"); // 返回一个1代表用户未登陆
@@ -274,6 +274,7 @@ public class GameAuditController {
 				return ServerResponse.createByErrorMessage("无权限!");
 			}
 		}
+
 	}
 	
 	/**

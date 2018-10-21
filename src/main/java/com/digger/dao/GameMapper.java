@@ -76,4 +76,10 @@ public interface GameMapper {
 
 	int auditGame(Integer id);
 
+	void deleteOldDiscount();
+
+	List<CarouseVO> togetNotDiscount();
+
+	List<CarouseVO> togetDiscount();
+
 }

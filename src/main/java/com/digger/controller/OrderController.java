@@ -1,6 +1,7 @@
 package com.digger.controller;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,7 +20,11 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayTradeFastpayRefundQueryRequest;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeFastpayRefundQueryResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.digger.common.AlipayConfig;
 import com.digger.common.Const;
 import com.digger.common.ServerResponse;
@@ -195,7 +200,6 @@ public class OrderController {
 	 * @version V1.0
 	 */
 	@RequestMapping(value = "/alipayReturnNotice")
-	@ResponseBody
 	public String alipayReturnNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
 
 		System.out.println("支付成功, 进入同步通知接口...");
@@ -251,7 +255,6 @@ public class OrderController {
 	 * @version V1.0
 	 */
 	@RequestMapping(value = "/alipayNotifyNotice")
-	@ResponseBody
 	public String alipayNotifyNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
 
 		System.out.println("支付成功, 进入异步通知接口...");
@@ -329,8 +332,96 @@ public class OrderController {
 			System.out.println("支付, 验签失败...");
 		}
 
-		return "success";
+		return "paysuccess";
 	}
 	
+	
+	/**
+	 * author 高志劲
+    * 进行支付宝退款
+    * @return
+	 * @throws AlipayApiException 
+	 * @throws UnsupportedEncodingException 
+    */
+	@RequestMapping(value = "goRefund", produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public ServerResponse goRefund(HttpSession session) throws AlipayApiException, UnsupportedEncodingException 
+	{
+		String ordernum = "20181019112854703";
+		String price = "0.4";
+		String reason = "就是想退款";		
+	/*	//获得初始化的AlipayClient
+		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+		
+		//设置请求参数
+		AlipayTradeFastpayRefundQueryRequest  alipayRequest = new AlipayTradeFastpayRefundQueryRequest ();
+		
+		//商户订单号，商户网站订单系统中唯一订单号
+		String out_trade_no = new String(ordernum.getBytes("ISO-8859-1"),"UTF-8");
+		//支付宝交易号
+		//String trade_no = new String(request.getParameter("WIDTRtrade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//请二选一设置
+		//需要退款的金额，该金额不能大于订单金额，必填
+		String refund_amount = new String(price.getBytes("ISO-8859-1"),"UTF-8");
+		//退款的原因说明
+		String refund_reason = new String(reason.getBytes("ISO-8859-1"),"UTF-8");
+		//标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
+		//String out_request_no = new String(request.getParameter("WIDTRout_request_no").getBytes("ISO-8859-1"),"UTF-8");
+		
+		alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\"," 
+				+ "\"trade_no\":\""+ trade_no +"\"," 
+				+ "\"refund_amount\":\""+ refund_amount +"\"," 
+				+ "\"refund_reason\":\""+ refund_reason +"\"," 
+				+ "\"out_request_no\":\""+ out_request_no +"\"}");
+		
+		alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\"," 
+				+ "\"refund_amount\":\""+ refund_amount +"\"," 
+				+ "\"refund_reason\":\""+ refund_reason +"\"}");
+		
+		AlipayTradeFastpayRefundQueryResponse response = alipayClient.execute(alipayRequest);
+		if(response.isSuccess()){
+		   System.out.println("调用成功");
+		   return ServerResponse.createBySuccessMessage("退款成功");
+		} else {
+		   System.out.println("调用失败");
+		   return ServerResponse.createByErrorMessage("退款失败");
+		}
+		//请求
+		String result = alipayClient.execute(alipayRequest).getBody();
+		
+		//输出
+		return result;*/
+		//获得初始化的AlipayClient
+		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+		
+		//设置请求参数
+		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+		
+		//商户订单号，商户网站订单系统中唯一订单号
+		String out_trade_no = new String(ordernum.getBytes("ISO-8859-1"),"UTF-8");
+		//支付宝交易号
+		//String trade_no = new String(request.getParameter("WIDTRtrade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//请二选一设置
+		//需要退款的金额，该金额不能大于订单金额，必填
+		String refund_amount = new String(price.getBytes("ISO-8859-1"),"UTF-8");
+		//退款的原因说明
+		String refund_reason = new String(reason.getBytes("ISO-8859-1"),"UTF-8");
+		//标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
+		//String out_request_no = new String(request.getParameter("WIDTRout_request_no").getBytes("ISO-8859-1"),"UTF-8");
+		
+		request.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\"," 
+				+ "\"refund_amount\":\""+ refund_amount +"\"," 
+				+ "\"refund_reason\":\""+ refund_reason +"\"}");
+		
+		AlipayTradeRefundResponse response = alipayClient.execute(request);
+		if(response.isSuccess()){
+		System.out.println("调用成功");
+		return ServerResponse.createBySuccessMessage("退款成功"); 
+		} else {
+		System.out.println("调用失败");
+		   return ServerResponse.createByErrorMessage("退款失败");
+
+		}
+	}
 	
 }

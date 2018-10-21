@@ -377,4 +377,33 @@ public class GameServiceImpl implements GameService{
         return ServerResponse.createByErrorMessage("删除失败！");
 	}
 
+	/**
+	 * @author 高志劲
+	 * 先删除过时折扣记录，再查找未打折游戏
+	 */
+	@Override
+	public ServerResponse getNotDiscount() {
+		gameMapper.deleteOldDiscount(); //删除过时折扣记录
+		List<CarouseVO> list = new ArrayList<CarouseVO>();
+		list = gameMapper.togetNotDiscount();
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createBySuccessMessage("暂时还没有未打折商品");
+		}
+		return ServerResponse.createBySuccess(list);
+	}
+
+	/**
+	 * @author 高志劲
+	 * 查找打折游戏
+	 */
+	@Override
+	public ServerResponse getDiscount() {
+		List<CarouseVO> list = new ArrayList<CarouseVO>();
+		list = gameMapper.togetDiscount();
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createBySuccessMessage("暂时还没有打折商品");
+		}
+		return ServerResponse.createBySuccess(list);
+	}
+
 }

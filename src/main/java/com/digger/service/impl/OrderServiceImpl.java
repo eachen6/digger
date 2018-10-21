@@ -13,6 +13,7 @@ import com.digger.common.Const;
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
 import com.digger.dao.OrderMapper;
+import com.digger.dao.SendMapper;
 import com.digger.dao.WishMapper;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
@@ -31,6 +32,9 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
 	WishMapper wishMapper;
+	
+	@Autowired
+	SendMapper sendMapper;
 	
 	/* 
 	 * 生成订单
@@ -162,8 +166,15 @@ public class OrderServiceImpl implements OrderService{
 	public void updateOrderStatus(String out_trade_no, String trade_no, String total_amount) {
 		Order order = orderMapper.getOrderByOrdernum(out_trade_no);
 		if (order.getState()==Const.WAIT_PAY) {
+			String targetid = null;
+			targetid = sendMapper.findtargetid(out_trade_no);
 			Integer result1 = 0;
-			result1 = wishMapper.deleteWish(out_trade_no);
+			if(targetid == null){
+			     result1 = wishMapper.deleteWish(out_trade_no);
+			}
+			else{
+				 result1 = wishMapper.deleteWish1(out_trade_no,targetid);
+			}
 			Integer result2 = 0;
 			result2 = orderMapper.updateOldOrderstatus(out_trade_no);
 			Integer result = 0;
