@@ -22,6 +22,7 @@ $(document).ready(function(){
 			gamedetails(id); //获取游戏属性
 			getWishState(id); //获取该游戏的愿望清单状态
 			gameisbuy(id);   //判断这款游戏是否已被用户购买过了 
+			getAnno(id);//获取该游戏的公告
 		}
 		else 
 			history.go(-1);
@@ -102,12 +103,7 @@ var game = new Vue({
 		isshelf:false,
 //		cover_img:"https://cdn.rail.tgp.qq.com/info/games/2000352/2c2dc799c98d1904cd062e60a0924cef.jpg",
 //		video_src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
-		anno:{
-			img:"https://shp.qpic.cn/tgp_hpic/0/1534348829368_articleCover_e88348b8-0da0-40e0-accf-ceaea3b56d4e/0",
-			title:"8月16日停机更新公告",
-			part:"60祯、球员数据更新来啦",
-			createdtime:"2018-08-16 00:01:41"
-		},
+		anno:[],
 		selective:[
 		],
 		id:null,
@@ -305,4 +301,38 @@ function GetDateNow() {
 	sNow += String(vNow.getSeconds());
 	sNow += String(vNow.getMilliseconds());
 	return sNow;
+}
+
+
+function getAnno(id){
+	var that = this;
+	$.ajax({
+		type:"get",
+		url:"../announcement/get_announcementbygameid/1",
+		async:true,
+		data:{
+			gameid:id
+		},
+		success:function(res){
+			game.anno = res.data.list
+			for(var i = 0; i < game.anno.length; i++){
+				game.anno[i].createtime = that.format(game.anno[i].createtime)
+			}
+		}
+	});
+}
+
+
+function add0(m){return m<10?'0'+m:m }
+function format(shijianchuo)
+{
+//shijianchuo是整数，否则要parseInt转换
+var time = new Date(shijianchuo);
+var y = time.getFullYear();
+var m = time.getMonth()+1;
+var d = time.getDate();
+var h = time.getHours();
+var mm = time.getMinutes();
+var s = time.getSeconds();
+return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }

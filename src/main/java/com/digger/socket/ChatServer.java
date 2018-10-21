@@ -52,8 +52,8 @@ public class ChatServer {
         //list = this.getFriends(user.getId());
         System.out.println(list);
         routetab.put(user.getUsername(), session);   //将用户名和session绑定到路由表
-        //String message = getMessage("[" + user.getUsername() + "]加入聊天室,当前在线人数为"+getOnlineCount()+"位", "notice",  list);
-        //broadcast(message);     //广播
+        String message = getMessage("", "notice",  list);
+        broadcast(message);     //广播
     }
 
     /**

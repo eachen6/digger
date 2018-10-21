@@ -41,6 +41,10 @@ $(document).ready(function(){
 		else if(name=="paysuccess"){
 			$("#frame").load("paysuccess.html")
 		}
+		else if(name=="anno"){
+			$("#frame").load("anno.html")
+		}
+		
 		$(".loading").fadeOut(500);
 	})
 	
