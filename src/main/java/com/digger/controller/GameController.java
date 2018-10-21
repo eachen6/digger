@@ -40,6 +40,7 @@ import com.github.pagehelper.PageInfo;
 import com.digger.common.Const;
 import com.digger.common.ResponseCode;
 import com.digger.common.ServerResponse;
+import com.digger.pojo.Discountlist;
 import com.digger.pojo.Game;
 import com.digger.pojo.User;
 
@@ -400,6 +401,42 @@ public class GameController {
 	public ServerResponse getDiscount()
 	{
 		return gameService.getDiscount();
+	}
+	
+	/**
+	 * author 高志劲
+	 * 增加折扣
+	 * @return
+	 */
+	@RequestMapping(value="add_discount", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse add_Discount(Discountlist dl)
+	{
+		return gameService.add_Discount(dl);
+	}
+	
+	/**
+	 * author 高志劲
+	 * 更新折扣
+	 * @return
+	 */
+	@RequestMapping(value="update_discount", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse update_Discount(Discountlist dl)
+	{
+		return gameService.update_Discount(dl);
+	}
+	
+	/**
+	 * author 高志劲
+	 * 删除折扣
+	 * @return
+	 */
+	@RequestMapping(value="delete_discount", method=RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse delete_Discount(Integer id)  //传入折扣表的id
+	{
+		return gameService.delete_Discount(id);
 	}
 	
 }

@@ -643,4 +643,23 @@
     order by game.createtime desc 
   </select>
   
+  <!-- 新增方法：新增折扣  -->
+  <insert id="add_Discount" >
+    insert into discountlist (gameid,discount,deadline,starttime,createtime,updatetime) 
+    values (#{dl.gameid}, #{dl.discount}, #{dl.deadline}, #{dl.starttime}, now(), now())
+  </insert>
+  
+   <!-- 新增方法：更新折扣  -->
+  <update id="update_Discount" >
+    update discountlist
+    set discount = #{dl.discount}, deadline = #{dl.discount}, starttime = #{dl.starttime}
+    where id = #{dl.id}
+  </update>
+  
+   <!-- 新增方法：删除折扣  -->
+  <delete id="delete_Discount" >
+    delete from discountlist
+    where id = #{id}
+  </delete>
+  
 </mapper>
