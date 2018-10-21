@@ -1,23 +1,4 @@
 /**
- * 退出登录模块
- */
-new Vue({
-	el:"#personInfor",
-	methods:{
-		logout:function(){
-			$.ajax({
-				type:"post",
-				url:"../user/logout",
-				async:true,
-				success:function(res){
-					window.location.href = "admin.html";
-				}
-			});
-		}
-	}
-})
-
-/**
  * 待审核模块
  */
 var check = new Vue({
@@ -408,8 +389,7 @@ var guser = new Vue({
 		hasNextPage:"",
 		navigatePages:"",
 		navigatepageNums:[],
-		gusers:[],
-		username:""
+		gusers:[]
 	},
 	methods:{
 		updatestate:function(index){
@@ -446,38 +426,6 @@ var guser = new Vue({
 		},
 		change:function(pn){
 			getguserList(pn);
-		},
-		//查询用户
-		selectbyname:function(){
-			var username = guser.username;
-			console.log(username);
-			var that = this;
-			$.ajax({
-				type:"get",
-				url:"../admin/selectuserbyusername",
-				data:{"username":username},
-				async:true,
-				success:function(res){
-					console.log(res);
-					if(res.status==0)
-					{
-						that.pageNum = res.data.pageNum;
-						that.total = res.data.total;
-						that.pages = res.data.pages;
-						that.prePage = res.data.prePage;
-						that.nextPage = res.data.nextPage;
-						that.isFirstPage = res.data.isFirstPage;
-						that.isLastPage = res.data.isLastPage;
-						that.hasPreviousPage = res.data.hasPreviousPage;
-						that.hasNextPage = res.data.hasNextPage;
-						that.navigatePages = res.data.navigatePages;
-						that.navigatepageNums = res.data.navigatepageNums;
-						that.gusers = res.data.list;
-						
-					}
-					alert(that.navigatepageNums);
-				}
-			});
 		}
 	},
 	created:function(){
@@ -513,6 +461,24 @@ function getguserList(pn){
 		}
 	});
 }
+
+/**
+ * 查询用户
+ */
+$(document).ready(function(){
+	$("#selectbyname").click(function(event){
+		var name = $("#select").val();
+		$.ajax({
+			type:"get",
+			url:"../admin/selectuserbyusername",
+			data:{"username":name},
+			async:true,
+			success:function(res){
+				
+			}
+		});
+	})
+})
 
 /**
  * 公告管理模块
@@ -646,28 +612,6 @@ var gr = new Vue({
 		usern : "",
 		grs : []
 	},
-	methods:{
-		updateMessage:function(){
-			var user = {
-				username:gr.grs.username,
-				email:gr.grs.email,
-				question:gr.grs.question,
-				answer:gr.grs.answer
-			}
-			$.ajax({
-				type:"post",
-				url:"../user/update",
-				data:JSON.stringify(user),
-				dataType:"json",
-        		contentType:"application/json",
-				async:true,
-				success:function(res){
-					console.log("修改个人信息成功")
-					//window.location.reload();
-				}
-			});
-		}
-	},
 	created:function(){
 		this.usern = getUrlParam("username");
 		getgrList(this.usern);
@@ -690,6 +634,20 @@ function getgrList(usern){
 			console.log(res)
 			gr.grs = res.data;
 			gr.grs.createtime = that.format(gr.grs.createtime)
+		}
+	});
+}
+
+
+/**
+ * 修改个人信息
+ */
+function updateMessage(){
+	$.ajax({
+		type:"get",
+		url:"../admin/selectuserbyusername",
+		async:true,
+		success:function(res){
 		}
 	});
 }

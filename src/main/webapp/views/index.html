@@ -53,7 +53,7 @@
 					height: 200,
 					tabsize: 2,
 					lang: 'zh-CN',
-
+				
 					//重写图片上传
 					callbacks: {
 						onImageUpload: function(files, editor, $editable) {
@@ -70,7 +70,7 @@
 					height: 200,
 					tabsize: 2,
 					lang: 'zh-CN',
-
+				
 					//重写图片上传
 					callbacks: {
 						onImageUpload: function(files, editor, $editable) {
@@ -134,7 +134,7 @@
 				</div>
 				<div id="personInfor">
 					<p>
-						<button class="btn btn-primary" @click="logout()">退出登录</button>
+						<a>退出登录</a>
 					</p>
 				</div>
 				<div class="meun-title">账号管理</div>
@@ -146,7 +146,6 @@
 				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
 				<div class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
 				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
-				<div class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -173,7 +172,7 @@
 								<a href="#sitt" data-toggle="tab">已下架</a>
 							</li>
 						</ul>
-
+					
 						<!--审核表单-->
 						<div class="table-responsive">
 							<table class="table">
@@ -195,11 +194,11 @@
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
 										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
-									</tr>
+                                    </tr>
 								</tbody>
 							</table>
-						</div>
-
+						 </div>
+						
 						<!--页码块-->
 						<footer class="footer">
 							<div class="row">
@@ -226,7 +225,7 @@
 													</a>
 												</li>
 											</template>
-
+				
 											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
 											<template v-for="page_Nums in navigatepageNums">
 												<li v-if="page_Nums===pageNum" class="active">
@@ -236,7 +235,7 @@
 													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
 												</li>
 											</template>
-
+				
 											<!-- 如果还有后页就访问当前页码+1的页面， -->
 											<template v-if="hasNextPage">
 												<li>
@@ -253,7 +252,7 @@
 								</div>
 							</div>
 						</footer>
-
+						
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-lg " role="document">
@@ -265,7 +264,7 @@
 									<div class="modal-body">
 										<div class="container-fluid">
 											<div class="row">
-												<video id="my-video" width="100%" height="360" controls="controls" :src="upcheck.videourl"></video>
+											<video id="my-video" width="100%" height="360" controls="controls" :src="upcheck.videourl"></video>
 											</div>
 											<div class="row">
 												<a href="#" class="thumbnail">
@@ -298,7 +297,7 @@
 											</div>
 
 											<div class="row" style="margin-top:10px ; margin-left: 6px;">
-												<div v-html="upcheck.detailtxt"></div>
+												  <div v-html="upcheck.detailtxt"></div>
 											</div>
 										</div>
 									</div>
@@ -313,7 +312,7 @@
 							<!-- /.modal-dialog -->
 						</div>
 						<!-- /.modal -->
-
+                   
 					</div>
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
@@ -335,113 +334,113 @@
 						</ul>
 						<!--未上架表单-->
 						<div id="notup">
-							<div class="table-responsive">
-								<table class="table">
-									<thead class="table-active">
-										<tr>
-											<th>编码</th>
-											<th>游戏名称</th>
-											<th>上传玩家</th>
-											<th>审核时间</th>
-											<th>游戏类型</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="(item,index) in notups">
-											<td>{{item.id}}</td>
-											<td>{{item.name}}</td>
-											<td>{{item.uploadid}}</td>
-											<td>{{item.updatetime}}</td>
-											<td>{{item.category}}</td>
-											<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>&nbsp;<button v-on:click="upstock(item.id)" class="btn btn-info">上架</button></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<!--页码块-->
-							<footer class="footer">
-								<div class="row">
-									<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-									<div class="col-md-6">
-										当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
-									</div>
-									<!-- 分页码 -->
-									<div class="col-md-6">
-										<nav aria-label="Page navigation">
-											<ul class="pagination">
-												<!-- 
+						<div  class="table-responsive">
+							<table class="table">
+								<thead class="table-active">
+									<tr>
+										<th>编码</th>
+										<th>游戏名称</th>
+										<th>上传玩家</th>
+										<th>审核时间</th>
+										<th>游戏类型</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(item,index) in notups">
+										<td>{{item.id}}</td>
+										<td>{{item.name}}</td>
+										<td>{{item.uploadid}}</td>
+										<td>{{item.updatetime}}</td>
+										<td>{{item.category}}</td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>&nbsp;<button v-on:click="upstock(item.id)" class="btn btn-info">上架</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--页码块-->
+						<footer class="footer">
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
 				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
 				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
 				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
 												<li>
-													<a v-on:click="change(1)" href="javascript:;">首页</a>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
 												</li>
-												<!-- 如果还有前页就访问当前页码-1的页面， -->
-												<template v-if="hasPreviousPage">
-													<li>
-														<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
-															<span aria-hidden="true">&laquo;</span>
-														</a>
-													</li>
-												</template>
-
-												<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
-												<template v-for="page_Nums in navigatepageNums">
-													<li v-if="page_Nums===pageNum" class="active">
-														<a href="javascript:;">{{page_Nums}}</a>
-													</li>
-													<li v-else>
-														<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
-													</li>
-												</template>
-
-												<!-- 如果还有后页就访问当前页码+1的页面， -->
-												<template v-if="hasNextPage">
-													<li>
-														<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
-															<span aria-hidden="true">&raquo;</span>
-														</a>
-													</li>
-												</template>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
 												<li>
-													<a v-on:click="change(pages)" href="javascript:;">末页</a>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
 												</li>
-											</ul>
-										</nav>
-									</div>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
 								</div>
-							</footer>
-							<!--弹出添加公告窗口-->
-							<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid">
-												<form id="addnotice">
-													<input name="title" class="input-lg" placeholder="公告标题" />
-
-													<br />
-													<br />
-													<div class="summernote" id="one"></div>
-												</form>
-											</div>
-										</div>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-											<button type="button" v-on:click="mo_upstock" class="btn btn-xs btn-green">发布</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
 							</div>
-							<!-- /.modal -->
+						</footer>
+							<!--弹出添加公告窗口-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form id="addnotice">
+												<input name="title" class="input-lg" placeholder="公告标题" />
+												
+												<br />
+												<br />
+												<div class="summernote" id="one"></div>
+											</form>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" v-on:click="mo_upstock" class="btn btn-xs btn-green" >发布</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
 						</div>
 					</div>
 					<!--游戏在销售模块-->
@@ -514,7 +513,7 @@
 													</a>
 												</li>
 											</template>
-
+				
 											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
 											<template v-for="page_Nums in navigatepageNums">
 												<li v-if="page_Nums===pageNum" class="active">
@@ -524,7 +523,7 @@
 													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
 												</li>
 											</template>
-
+				
 											<!-- 如果还有后页就访问当前页码+1的页面， -->
 											<template v-if="hasNextPage">
 												<li>
@@ -560,7 +559,7 @@
 								<a href="#sitt" data-toggle="tab" style="background: #4B6075;">已下架</a>
 							</li>
 						</ul>
-
+						
 						<div class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
@@ -611,7 +610,7 @@
 													</a>
 												</li>
 											</template>
-
+				
 											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
 											<template v-for="page_Nums in navigatepageNums">
 												<li v-if="page_Nums===pageNum" class="active">
@@ -621,7 +620,7 @@
 													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
 												</li>
 											</template>
-
+				
 											<!-- 如果还有后页就访问当前页码+1的页面， -->
 											<template v-if="hasNextPage">
 												<li>
@@ -649,8 +648,8 @@
 					<div role="tabpanel" class="tab-pane" id="user">
 						<div class="check-div form-inline">
 							<div class="col-xs-4">
-								<input type="text" id="select1" v-model="username" name="select" class="form-control input-sm" placeholder="输入文字搜索">
-								<button @click="selectbyname()" class="btn btn-white btn-xs">查 询 </button>
+								<input type="text" id="select" name="select" class="form-control input-sm" placeholder="输入文字搜索">
+								<button class="btn btn-white btn-xs" id="selectbyname">查 询 </button>
 							</div>
 							<div class="col-lg-3 col-lg-offset-2 col-xs-4" style=" padding-right: 40px;text-align: right;">
 								<label for="paixu">排序:&nbsp;</label>
@@ -706,7 +705,7 @@
 													</a>
 												</li>
 											</template>
-
+				
 											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
 											<template v-for="page_Nums in navigatepageNums">
 												<li v-if="page_Nums===pageNum" class="active">
@@ -716,7 +715,7 @@
 													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
 												</li>
 											</template>
-
+				
 											<!-- 如果还有后页就访问当前页码+1的页面， -->
 											<template v-if="hasNextPage">
 												<li>
@@ -733,7 +732,7 @@
 								</div>
 							</div>
 						</footer>
-
+						
 						<!--弹出删除用户警告窗口-->
 						<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog" role="document">
@@ -783,59 +782,53 @@
 								</tbody>
 							</table>
 						</div>
-
+						
 						<!--页码块-->
 						<footer class="footer">
 							<div class="row">
-								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div>
-									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
-								</div>
-								<!-- 分页码 -->
-								<div>
-									<nav aria-label="Page navigation">
-										<ul class="pagination">
-											<!-- 
+				                <!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+				                <div>
+				                  	   当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+				                </div>
+				                <!-- 分页码 -->
+				                <div>
+				                    <nav aria-label="Page navigation">
+				                      <ul class="pagination">
+				                      <!-- 
 				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
 				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
 				                      -->
-											<li>
-												<a v-on:click="change(1)" href="javascript:;">首页</a>
-											</li>
-											<!-- 如果还有前页就访问当前页码-1的页面， -->
-											<template v-if="hasPreviousPage">
-												<li>
-													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
-														<span aria-hidden="true">&laquo;</span>
-													</a>
-												</li>
-											</template>
-
-											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
-											<template v-for="page_Nums in navigatepageNums">
-												<li v-if="page_Nums===pageNum" class="active">
-													<a href="javascript:;">{{page_Nums}}</a>
-												</li>
-												<li v-else>
-													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
-												</li>
-											</template>
-
-											<!-- 如果还有后页就访问当前页码+1的页面， -->
-											<template v-if="hasNextPage">
-												<li>
-													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
-														<span aria-hidden="true">&raquo;</span>
-													</a>
-												</li>
-											</template>
-											<li>
-												<a v-on:click="change(pages)" href="javascript:;">末页</a>
-											</li>
-										</ul>
-									</nav>
-								</div>
-							</div>
+				                       <li>
+				                            <a v-on:click="change(1)" href="javascript:;" >首页</a>
+				                       </li>
+				                       <!-- 如果还有前页就访问当前页码-1的页面， -->
+				                       <template v-if="hasPreviousPage">
+				                         <li>
+				                          <a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+				                            <span aria-hidden="true">&laquo;</span>
+				                          </a>
+				                         </li>
+				                        </template>
+				                        
+				                        <!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+				                          <template  v-for="page_Nums in navigatepageNums">
+				                             <li v-if="page_Nums===pageNum" class="active"><a href="javascript:;">{{page_Nums}}</a></li>
+				                             <li v-else><a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a></li>
+				                          </template>
+				                       
+				                         <!-- 如果还有后页就访问当前页码+1的页面， -->
+				                        <template v-if="hasNextPage">
+				                            <li>
+				                              <a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+				                                <span aria-hidden="true">&raquo;</span>
+				                              </a>
+				                            </li>
+				                        </template>
+				                         <li><a v-on:click="change(pages)" href="javascript:;">末页</a></li>
+				                      </ul>
+				                    </nav>
+				                </div>
+				        	</div>
 						</footer>
 						<!--弹出修改公告窗口-->
 						<div class="modal fade" id="updataChar" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -848,19 +841,19 @@
 									<div class="modal-body">
 										<div class="container-fluid">
 											<form id="updatenotice">
-												<input name="title" class="input-lg" v-model="gnotice.oldtitle" />
+												<input name="title" class="input-lg"  v-model="gnotice.oldtitle"/>
 												<br />
 												<br />
 												<div class="summernote" id="two"></div>
 											</form>
 										</div>
 									</div>
-									<div class="modal-footer">
+								    <div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
 										<button type="button" v-on:click="savenew" class="btn btn-xs btn-green">保 存</button>
-									</div>
-
 								</div>
+								
+                                </div>									
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
@@ -899,7 +892,7 @@
 											<input type="text" v-model="grs.createtime" class="form-control" readonly>
 										</div>
 										<div class="btn-toolbar list-toolbar">
-											<button class="btn btn-primary" @click="updateMessage()"><i class="fa fa-save"></i> Save</button>
+											<button class="btn btn-primary" onclick="updateMessage()"><i class="fa fa-save"></i> Save</button>
 										</div>
 									</div>
 								</div>
@@ -914,13 +907,13 @@
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
 						</div>
-
+						
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
 							<form class="form-horizontal">
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">用户名：</label>
 									<div class="col-xs-5">
-										<input type="text" class="form-control input-sm duiqi" id="username" v-model="username" style="margin-top: 7px;" readonly>
+										<input type="text" class="form-control input-sm duiqi" id="username" v-model="username"  style="margin-top: 7px;" readonly>
 									</div>
 								</div>
 								<div class="form-group">
@@ -1066,23 +1059,26 @@
 							<div class="modal fade" id="change" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-sm " role="document">
 								<div class="modal-content">
+
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title" id="gridSystemModalLabel">折扣修改</h4>
 									</div>
 									<div class="modal-body">
 										<div class="container-fluid">
-											<div class="row" style="margin-top:10px ; margin-left: 6px;">
-		                                        
-		                                        <label>折扣力度</label>
-												<input type="text" id="" name="" value="" />
-												<label>起始时间</label>
-												<input type="datetime-local" class="form_datetime" id="" name="" value="" />
-		                                        <label>终止时间</label>
-												<input type="datetime-local" class="form_datetime" id="" name="" value="" />
+										<div class="row" style="margin-top:10px ; margin-left: 6px;">
+                                        <input id="" name="" class="hidden" value=""/>
+                                        <label>折扣力度</label>
+										<input type="text" id="" name="" value="" />
+										<label>起始时间</label>
+										<input type="datetime-local" class="form_datetime" id="" name="" value="" />
+                                        <label>终止时间</label>
+										<input type="datetime-local" class="form_datetime" id="" name="" value="" />
+										
 											</div>
 										</div>
 									</div>
+
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
 										<button type="button" class="btn btn-xs btn-green">保存</button>
@@ -1092,85 +1088,8 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
-					</div>
-					<!-- 退款审核模块 -->
-					<div role="tabpanel" class="tab-pane" id="refund">
-						<div class="check-div">
-						</div>
-						<div id="gnotice" class="table-responsive">
-							<table class="table">
-								<thead class="table-active">
-									<tr>
-										<th>游戏名</th>
-										<th>标题</th>
-										<th>上次更改时间</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(item,index) in list">
-										<td>{{item.name}}</td>
-										<td>{{item.title}}</td>
-										<td>{{item.updatetime}}</td>
-										<button class="btn btn-danger">退款</button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-						<!--页码块-->
-						<footer class="footer">
-							<div class="row">
-								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div>
-									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
-								</div>
-								<!-- 分页码 -->
-								<div>
-									<nav aria-label="Page navigation">
-										<ul class="pagination">
-											<!-- 
-				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
-				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
-				                      -->
-											<li>
-												<a v-on:click="change(1)" href="javascript:;">首页</a>
-											</li>
-											<!-- 如果还有前页就访问当前页码-1的页面， -->
-											<template v-if="hasPreviousPage">
-												<li>
-													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
-														<span aria-hidden="true">&laquo;</span>
-													</a>
-												</li>
-											</template>
-
-											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
-											<template v-for="page_Nums in navigatepageNums">
-												<li v-if="page_Nums===pageNum" class="active">
-													<a href="javascript:;">{{page_Nums}}</a>
-												</li>
-												<li v-else>
-													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
-												</li>
-											</template>
-
-											<!-- 如果还有后页就访问当前页码+1的页面， -->
-											<template v-if="hasNextPage">
-												<li>
-													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
-														<span aria-hidden="true">&raquo;</span>
-													</a>
-												</li>
-											</template>
-											<li>
-												<a v-on:click="change(pages)" href="javascript:;">末页</a>
-											</li>
-										</ul>
-									</nav>
-								</div>
-							</div>
-						</footer>
+						
+						
 					</div>
 				</div>
 			</div>
