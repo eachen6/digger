@@ -137,4 +137,10 @@
    DELETE from wish where gameid in (select gameid from `order` where ordernum=#{ordernum}) 
    and userid in (select userid from `order` WHERE ordernum = #{ordernum})
   </delete>
+  
+   <!-- 新增方法：用户购买游戏后删除用户愿望清单的这款游戏-->
+  <delete id="deleteWish1">
+   DELETE from wish where gameid in (select gameid from `order` where ordernum=#{ordernum}) 
+   and userid = #{targetid}
+  </delete>
 </mapper>

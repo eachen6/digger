@@ -290,13 +290,13 @@
 
 										<div class="row">
 
-												<input type="text" id="email_input" value="" placeholder="请输入好友账号" class="form-control" />
+												<input type="text" id="email_input" v-model="sendusername" placeholder="请输入好友账号" class="form-control" />
 																						
 										</div>
 										<div class="row" style="margin-top: 20px;">
 											<div class="form-group">
 													<label for="name">顺便说两句</label>
-													<textarea class="form-control" rows="3" placeholder="快来一起冲锋陷阵······"></textarea>
+													<textarea class="form-control" v-model="sendmessage" rows="3" placeholder="快来一起冲锋陷阵······"></textarea>
 												</div>
 										</div>
 
@@ -307,7 +307,7 @@
 									<button type="button" class="btn btn-default" data-dismiss="modal">
 										取消
 									</button>
-									<button class="btn btn-primary" id="sureforpay" data-dismiss="modal">
+									<button class="btn btn-primary" @click="send()" data-dismiss="modal">
 										确认购买
 									</button>
 								</div>

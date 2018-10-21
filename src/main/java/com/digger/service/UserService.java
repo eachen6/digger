@@ -48,4 +48,6 @@ public interface UserService {
 	public String selectNameByID(Integer id);
 
 	int checkState(String username);
+
+	public String findIdByName(String username);
 }

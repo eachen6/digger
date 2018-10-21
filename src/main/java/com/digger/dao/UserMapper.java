@@ -56,6 +56,8 @@ public interface UserMapper {
 
 	int checkState(String username);
 
+	String findIdByName(String username);
+
     
     
 }

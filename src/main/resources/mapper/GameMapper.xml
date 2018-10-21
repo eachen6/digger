@@ -414,7 +414,7 @@
     select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 2
     order by sale desc limit 0,3
   </select>
   
@@ -423,6 +423,7 @@
     select
     id,name,label,coverurl,opstage,price
     from game
+    where state = 2
   </select>
   
   <!-- 新增方法：获取所有游戏<火爆新品>集合(待修改)-->
@@ -430,7 +431,7 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 2
     order by sale desc 
   </select>
   
@@ -439,7 +440,7 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 2
     order by sale desc 
   </select>
   
@@ -448,7 +449,7 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1 
+    where state = 2 
     order by shelftime desc 
   </select>
   
@@ -457,13 +458,13 @@
     select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,DATE_FORMAT(starttime,'%Y-%m-%d') starttime, DATE_FORMAT(deadline,'%Y-%m-%d') deadline,discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1 and now()>=starttime and deadline>=now()
+    where state = 2 and now()>=starttime and deadline>=now()
     order by sale desc 
   </select>
   
   <!-- 新增方法：獲取游戲总数-->
   <select id="toGetTotalGame" resultType="int">
-    select count(id) from game
+    select count(id) from game where state = 2
   </select>
   
   <!-- 新增方法：获取特惠游戲集合-->
@@ -471,7 +472,7 @@
     select game.id, name, price, coverurl, DATE_FORMAT(deadline,'%Y-%m-%d') deadline, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid 
-    where state = 1 and now()>=starttime and deadline>=now()
+    where state = 2 and now()>=starttime and deadline>=now()
     order by deadline
   </select>
   
@@ -480,7 +481,7 @@
     select game.id, name, price, carouseurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 2
     order by shelftime desc limit 0,3
   </select>
   
@@ -489,7 +490,7 @@
     select game.id, name, price, coverurl, DATE_FORMAT(shelftime,'%m月') shelftime, discount, discountstate
     from game left join discountlist 
     on game.id=discountlist.gameid
-    where state = 1
+    where state = 2
     order by shelftime desc 
   </select>
   
@@ -505,7 +506,7 @@
   <select id="searchGamewByword" resultType="com.digger.pojo.Game">
       select id, name
       from game
-      where name LIKE "%"#{keyword}"%" and state = 1
+      where name LIKE "%"#{keyword}"%" and state = 2
       order by sale desc limit 0, 5
   </select>
   
@@ -514,7 +515,7 @@
       select  game.id, name, price, surfaceurl, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime, discount, discountstate,category
       from game left join discountlist 
       on game.id=discountlist.gameid
-      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 1
+      where (name LIKE "%"#{name}"%" or category LIKE "%"#{name}"%") and state = 2
       order by sale desc 
   </select>
   
@@ -615,5 +616,31 @@
     set click = click+1
     where id = #{gameid}
   </update>
+  
+  <!-- 新增方法：删除过时的折扣记录 -->
+  <delete id="deleteOldDiscount">
+    delete from discountlist
+    where now()>deadline 
+  </delete>
+  
+ <!-- 新增方法：查找未打折游戏  -->
+  <select id="togetNotDiscount" resultType="com.digger.vo.CarouseVO">
+      SELECT DISTINCT game.id,game.name,price
+      FROM game, discountlist 
+      where state = 2 and price!=0 and game.id not in 
+      (SELECT game.id from game, discountlist 
+      where game.id=discountlist.gameid 
+      and (starttime>=now() 
+      or (deadline>=now() and now()>=starttime)))
+      order by game.createtime desc
+  </select>
+  
+  <!-- 新增方法：查找打折游戏  -->
+  <select id="togetDiscount" resultType="com.digger.vo.CarouseVO">
+    select game.id, name, price, surfaceurl,category, DATE_FORMAT(shelftime,'%Y-%m-%d') shelftime,DATE_FORMAT(starttime,'%Y-%m-%d') starttime, DATE_FORMAT(deadline,'%Y-%m-%d') deadline,discount, discountstate
+    from game, discountlist 
+    where state = 2 and game.id=discountlist.gameid
+    order by game.createtime desc 
+  </select>
   
 </mapper>
