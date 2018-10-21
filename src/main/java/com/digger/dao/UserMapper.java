@@ -58,6 +58,8 @@ public interface UserMapper {
 
 	String findIdByName(String username);
 
+	List<User> selectUserLikeUsername(String username);
+
     
     
 }
