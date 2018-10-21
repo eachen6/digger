@@ -49,16 +49,33 @@
 				})
 			})
 			$(function() {
-				$('.summernote').summernote({
+				$('#one').summernote({
 					height: 200,
 					tabsize: 2,
 					lang: 'zh-CN',
-					
+				
 					//重写图片上传
 					callbacks: {
 						onImageUpload: function(files, editor, $editable) {
 
-							sendtheFile(files[0], editor, $editable);
+							sendFile1(files[0], editor, $editable);
+
+						}
+					}
+
+				});
+			});
+			$(function() {
+				$('#two').summernote({
+					height: 200,
+					tabsize: 2,
+					lang: 'zh-CN',
+				
+					//重写图片上传
+					callbacks: {
+						onImageUpload: function(files, editor, $editable) {
+
+							sendFile2(files[0], editor, $editable);
 
 						}
 					}
@@ -122,13 +139,13 @@
 				</div>
 				<div class="meun-title">账号管理</div>
 				<div class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
-				<div class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">上传游戏</div>
+				<div class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">游戏上传</div>
 				<div class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
 				<div class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
 				<div class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
 				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
 				<div class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
-				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">帮助</div>
+				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -155,9 +172,9 @@
 								<a href="#sitt" data-toggle="tab">已下架</a>
 							</li>
 						</ul>
-					<div id="asd">
+					
 						<!--审核表单-->
-						<div id="check" class="table-responsive">
+						<div class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
@@ -176,11 +193,12 @@
 										<td>{{item.username}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-										<td><button type="submit" id="getid" v-on:click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
                                     </tr>
 								</tbody>
 							</table>
 						 </div>
+						
 						<!--页码块-->
 						<footer class="footer">
 							<div class="row">
@@ -234,6 +252,7 @@
 								</div>
 							</div>
 						</footer>
+						
 						<!--弹出审核游戏窗口-->
 						<div class="modal fade" id="reviseSchool" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-lg " role="document">
@@ -293,8 +312,7 @@
 							<!-- /.modal-dialog -->
 						</div>
 						<!-- /.modal -->
-                    </div>
-						
+                   
 					</div>
 					<!--游戏未上架模块-->
 					<div role="tabpanel" class="tab-pane" id="regu">
@@ -408,7 +426,7 @@
 												
 												<br />
 												<br />
-												<div class="summernote">公告内容</div>
+												<div class="summernote" id="one"></div>
 											</form>
 										</div>
 									</div>
@@ -428,7 +446,6 @@
 					<!--游戏在销售模块-->
 					<div role="tabpanel" class="tab-pane" id="stud">
 						<div class="check-div form-inline">
-							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li>
@@ -527,7 +544,6 @@
 					<!--游戏下架模块-->
 					<div role="tabpanel" class="tab-pane" id="sitt">
 						<div class="check-div form-inline">
-							
 						</div>
 						<ul class="nav nav-tabs nav-justified" style="margin-bottom: 30px;">
 							<li>
@@ -543,7 +559,8 @@
 								<a href="#sitt" data-toggle="tab" style="background: #4B6075;">已下架</a>
 							</li>
 						</ul>
-						<div id="isdown" class="table-responsive">
+						
+						<div class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
@@ -664,34 +681,56 @@
 						</div>
 						<!--页码块-->
 						<footer class="footer">
-							<ul class="pagination">
-								<li>
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-									</select>
-									页
-								</li>
-								<li class="gray">
-									共10页
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-left">
-                            </i>
-								</li>
-								<li>
-									<i class="glyphicon glyphicon-menu-right">
-                            </i>
-								</li>
-							</ul>
+							<div class="row">
+								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
+								<div class="col-md-6">
+									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
+								</div>
+								<!-- 分页码 -->
+								<div class="col-md-6">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- 
+				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
+				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
+				                      -->
+											<li>
+												<a v-on:click="change(1)" href="javascript:;">首页</a>
+											</li>
+											<!-- 如果还有前页就访问当前页码-1的页面， -->
+											<template v-if="hasPreviousPage">
+												<li>
+													<a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
+														<span aria-hidden="true">&laquo;</span>
+													</a>
+												</li>
+											</template>
+				
+											<!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
+											<template v-for="page_Nums in navigatepageNums">
+												<li v-if="page_Nums===pageNum" class="active">
+													<a href="javascript:;">{{page_Nums}}</a>
+												</li>
+												<li v-else>
+													<a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a>
+												</li>
+											</template>
+				
+											<!-- 如果还有后页就访问当前页码+1的页面， -->
+											<template v-if="hasNextPage">
+												<li>
+													<a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
+														<span aria-hidden="true">&raquo;</span>
+													</a>
+												</li>
+											</template>
+											<li>
+												<a v-on:click="change(pages)" href="javascript:;">末页</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</footer>
 						
 						<!--弹出删除用户警告窗口-->
@@ -738,7 +777,7 @@
 										<td>{{item.name}}</td>
 										<td>{{item.title}}</td>
 										<td>{{item.updatetime}}</td>
-										<td><button class="btn btn-info" data-toggle="modal"v-on:click="mo_update(index)" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -801,20 +840,20 @@
 									</div>
 									<div class="modal-body">
 										<div class="container-fluid">
-											<form id="addnotice">
-												<input name="title" class="input-lg" placeholder="公告标题" />
+											<form id="updatenotice">
+												<input name="title" class="input-lg"  v-model="gnotice.oldtitle"/>
 												<br />
 												<br />
-												<div class="summernote">公告内容</div>
+												<div class="summernote" id="two"></div>
 											</form>
 										</div>
 									</div>
-								</div>
-
-								<div class="modal-footer">
+								    <div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保 存</button>
+										<button type="button" v-on:click="savenew" class="btn btn-xs btn-green">保 存</button>
 								</div>
+								
+                                </div>									
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
@@ -868,30 +907,37 @@
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
 						</div>
+						
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
 							<form class="form-horizontal">
 								<div class="form-group">
+									<label for="sKnot" class="col-xs-4 control-label">用户名：</label>
+									<div class="col-xs-5">
+										<input type="text" class="form-control input-sm duiqi" id="username" v-model="username"  style="margin-top: 7px;" readonly>
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">原密码：</label>
 									<div class="col-xs-5">
-										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="oldpassword" placeholder="" style="margin-top: 7px;">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">新密码：</label>
 									<div class="col-xs-5">
-										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="newpassword" placeholder="" style="margin-top: 7px;">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">重复密码：</label>
 									<div class="col-xs-5">
-										<input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="repassword" placeholder="" style="margin-top: 7px;">
 									</div>
 								</div>
 								<div class="form-group text-right">
 									<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
 										<button type="reset" class="btn btn-xs btn-white">取 消</button>
-										<button type="submit" class="btn btn-xs btn-green">保存</button>
+										<button type="submit" @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
 									</div>
 								</div>
 							</form>
