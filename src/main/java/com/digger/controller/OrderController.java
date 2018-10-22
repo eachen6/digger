@@ -4,7 +4,6 @@ package com.digger.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,10 +31,6 @@ import com.digger.common.ServerResponse;
 import com.digger.pojo.Order;
 import com.digger.pojo.User;
 import com.digger.service.OrderService;
-import com.digger.vo.CarouseVO;
-import com.digger.vo.OrderVO;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 @Controller
 @RequestMapping("/order")
@@ -364,21 +358,13 @@ public class OrderController {
 	 * @throws AlipayApiException 
 	 * @throws UnsupportedEncodingException 
     */
-	@RequestMapping(value = "goRefund")
+	@RequestMapping(value = "goRefund", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public ServerResponse goRefund(String ordernum, String price, HttpSession session) throws AlipayApiException, UnsupportedEncodingException 
+	public ServerResponse goRefund(HttpSession session) throws AlipayApiException, UnsupportedEncodingException 
 	{
-		/*String ordernum = "20181019112854703";
-		String price = "0.4";*/
-		String reason = "就是想退款";	
-		System.out.println(reason);
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
-		}
-		if(!orderService.goRefund(ordernum))
-		    return ServerResponse.createByErrorMessage("退款失败");
-		
+		String ordernum = "20181019112854703";
+		String price = "0.4";
+		String reason = "就是想退款";		
 	/*	//获得初始化的AlipayClient
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 		
@@ -451,45 +437,6 @@ public class OrderController {
 		   return ServerResponse.createByErrorMessage("退款失败");
 
 		}
-	}
-	
-	/**
-	 * author 高志劲
-     * 取消订单退款
-     * @return
-     */
-	@RequestMapping(value = "getrefund/{pn}", method = RequestMethod.POST)
-	@ResponseBody
-	public ServerResponse toGetRefund(@PathVariable(value="pn") int pn,HttpSession session)
-	{
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
-		}	
-		//startPage是PageHelper的静态方法，参数1：默认开始页面，参数2：每页显示数据的条数
-        PageHelper.startPage(pn, Const.gamecount);
-        //从当前类下注入的业务层实现类userService中调用方法，该方法所在类利用注入的userDao来调用真正的查询方法查询数据库信息。
-        List<OrderVO> list = orderService.toGetRefund();
-        //使用PageInfo包装查询页面，封装了详细的分页信息.第二个参数表示连续显示的页数
-        PageInfo page = new PageInfo(list,Const.pagecount);
-        return ServerResponse.createBySuccess(page);
-	}
-	
-	/**
-	 * author 高志劲
-     * 不同意退款
-     * @return
-     */
-	@RequestMapping(value = "disagreerefund", method = RequestMethod.POST)
-	@ResponseBody
-	public ServerResponse disagreeRefund(String ordernum,HttpSession session)
-	{
-		System.out.println(ordernum+"yyyyyyyyyyyyyyyyyyy");
-		User user = (User) session.getAttribute(Const.CURRENT_USER);
-		if(user == null){
-			return ServerResponse.createByErrorMessage("用户未登录");
-		}	
-        return orderService.disagreeRefund(ordernum);
 	}
 	
 }

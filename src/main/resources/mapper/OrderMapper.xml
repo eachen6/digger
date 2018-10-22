@@ -227,24 +227,7 @@
   
    <!-- 新增方法：申请退款--> 
   <update id="applyRefundByid" >
-      update `order` set state = 2,updatetime = now() where id=#{id}
-  </update>
-  
-  <!-- 新增方法：获取退款中列表--> 
-   <select id="toGetRefund" resultType="com.digger.vo.OrderVO">
-      select ordernum,userid,`order`.price,username,`order`.updatetime, game.name
-      from `order`,user,game
-      where `order`.state = 2 and `order`.userid = user.id and `order`.gameid = game.id
-  </select>
-  
-    <!-- 新增方法：退款成功更改state=3--> 
-  <update id="goRefund" >
-      update `order` set state = 3,updatetime = now() where ordernum=#{ordernum}
-  </update>
-  
-   <!-- 新增方法：不同意退款更改state=4--> 
-  <update id="disagreeRefund" >
-      update `order` set state = 4 where ordernum=#{ordernum}
+      update `order` set state = 2 where id=#{id}
   </update>
   
   <!-- 新增方法：查看我的游戏--> 

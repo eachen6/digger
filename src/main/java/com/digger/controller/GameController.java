@@ -439,26 +439,5 @@ public class GameController {
 		return gameService.delete_Discount(id);
 	}
 	
-	/**
-	 * @author eachen
-	 * @param response
-	 * @param session
-	 * @param path
-	 * @param filename
-	 * 下载游戏
-	 * @return
-	 */
-	@RequestMapping(value = "download_document.do")
-    @ResponseBody
-    public ServerResponse downDocument(HttpServletResponse response, HttpSession session, String path,
-            String filename) {
-		User user = (User)session.getAttribute(Const.CURRENT_USER);
-		if(user == null) {
-			return ServerResponse.createByErrorMessage("用户未登录");
-		}
-        FTPSSMLoad.download(response, path, filename);
-        return ServerResponse.createBySuccess("下载成功");
-    }
-	
 }
    

@@ -6,8 +6,6 @@ public class OrderVO {
 	private Integer id;
 
     private Integer gameid;
-    
-    private String username;
 
     private Integer userid;
 
@@ -27,7 +25,7 @@ public class OrderVO {
 
     private Date closetime;
 
-    private String ordernum;
+    private Long ordernum;
     
     private String name;
     
@@ -127,21 +125,11 @@ public class OrderVO {
         this.closetime = closetime;
     }
 
- 
+    public Long getOrdernum() {
+        return ordernum;
+    }
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getOrdernum() {
-		return ordernum;
-	}
-
-	public void setOrdernum(String ordernum) {
-		this.ordernum = ordernum;
-	}
+    public void setOrdernum(Long ordernum) {
+        this.ordernum = ordernum;
+    }
 }

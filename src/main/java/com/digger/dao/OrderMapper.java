@@ -40,10 +40,4 @@ public interface OrderMapper {
 
 	List<FindMyGameVO> toGetMyGame(Integer userid);
 
-	List<OrderVO> toGetRefund();
-
-	Integer goRefund(String ordernum);
-
-	Integer disagreeRefund(String ordernum);
-
 }
