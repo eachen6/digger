@@ -23,5 +23,7 @@ public interface OrderService {
 
 	ServerResponse toApplyRefund(Integer id);
 
+	ServerResponse toGetMyGame(Integer userid);
+
 
 }

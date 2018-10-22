@@ -19,6 +19,7 @@ import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.pojo.Payinfo;
 import com.digger.service.OrderService;
+import com.digger.vo.FindMyGameVO;
 import com.digger.vo.OrderVO;
 
 @Service("orderService")
@@ -188,6 +189,21 @@ public class OrderServiceImpl implements OrderService{
 			result = orderMapper.insertPayinfo(pay);
 		    }
 	    }
+	}
+
+	/* 
+	 * 查看我的游戏包含别人赠送的
+	 * @author 徐子颖
+	 */
+	@Override
+	public ServerResponse toGetMyGame(Integer userid) {
+		// TODO Auto-generated method stub
+		List<FindMyGameVO> list = new ArrayList<FindMyGameVO>();
+		list = orderMapper.toGetMyGame(userid);
+		if(CollectionUtils.isEmpty(list)){
+			return ServerResponse.createByErrorCodeMessage(1,"未拥有任何游戏！");
+		}
+		return ServerResponse.createBySuccess("成功查看我的游戏", list);
 	}	
 	
 }
