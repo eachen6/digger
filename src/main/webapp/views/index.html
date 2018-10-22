@@ -653,7 +653,7 @@
 						<div class="check-div form-inline">
 							<div class="col-xs-4">
 								<input type="text" id="select1" v-model="username" name="select" class="form-control input-sm" placeholder="输入文字搜索">
-								<button @click="selectbyname()" class="btn btn-white btn-xs">查 询 </button>
+								<button @click="selectbyinput()" class="btn btn-white btn-xs">查 询 </button>
 							</div>
 						</div>
 						<div id="guser" class="table-responsive">
@@ -920,13 +920,13 @@
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">原密码：</label>
 									<div class="col-xs-5">
-										<input type="password" class="form-control input-sm duiqi" id="oldpassword" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="oldpassword" v-model="oldpassword" placeholder="" style="margin-top: 7px;">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">新密码：</label>
 									<div class="col-xs-5">
-										<input type="password" class="form-control input-sm duiqi" id="newpassword" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="newpassword" v-model="newpassword" placeholder="" style="margin-top: 7px;">
 									</div>
 								</div>
 								<div class="form-group">
@@ -938,7 +938,7 @@
 								<div class="form-group text-right">
 									<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
 										<button type="reset" class="btn btn-xs btn-white">取 消</button>
-										<button type="submit" @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
+										<button @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
 									</div>
 								</div>
 							</form>

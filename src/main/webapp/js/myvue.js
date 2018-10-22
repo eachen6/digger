@@ -447,39 +447,11 @@ var guser = new Vue({
 			});
 		},*/
 		change:function(pn){
-			getguserList(pn);
+				inputselect(pn);
 		},
 		//查询用户
-		selectbyname:function(){
-			var username = guser.username;
-			console.log(username);
-			var pn = 1;
-			var that = this;
-			$.ajax({
-				type:"get",
-				url:"../admin/selectuserlikeusername/"+pn,
-				data:{"username":username},
-				async:true,
-				success:function(res){
-					console.log(res);
-					if(res.status==0)
-					{
-						that.pageNum = res.data.pageNum;
-						that.total = res.data.total;
-						that.pages = res.data.pages;
-						that.prePage = res.data.prePage;
-						that.nextPage = res.data.nextPage;
-						that.isFirstPage = res.data.isFirstPage;
-						that.isLastPage = res.data.isLastPage;
-						that.hasPreviousPage = res.data.hasPreviousPage;
-						that.hasNextPage = res.data.hasNextPage;
-						that.navigatePages = res.data.navigatePages;
-						that.navigatepageNums = res.data.navigatepageNums;
-						that.gusers = res.data.list;
-					}
-					alert(that.navigatepageNums);
-				}
-			});
+		selectbyinput:function(){
+			inputselect(1);
 		}
 	},
 	created:function(){
@@ -515,7 +487,37 @@ function getguserList(pn){
 		}
 	});
 }
-
+//
+function inputselect(pn){
+	var username = guser.username;
+	console.log(username);
+	var that = this;
+	$.ajax({
+		type: "get",
+		url: "../admin/selectuserlikeusername/" + pn,
+		data: {
+			"username": username
+		},
+		async: true,
+		success: function(res) {
+			console.log(res);
+			if(res.status == 0) {
+				guser.pageNum = res.data.pageNum;
+				guser.total = res.data.total;
+				guser.pages = res.data.pages;
+				guser.prePage = res.data.prePage;
+				guser.nextPage = res.data.nextPage;
+				guser.isFirstPage = res.data.isFirstPage;
+				guser.isLastPage = res.data.isLastPage;
+				guser.hasPreviousPage = res.data.hasPreviousPage;
+				guser.hasNextPage = res.data.hasNextPage;
+				guser.navigatePages = res.data.navigatePages;
+				guser.navigatepageNums = res.data.navigatepageNums;
+				guser.gusers = res.data.list;
+			}
+		}
+	});
+}
 /**
  * 公告管理模块
  */
@@ -931,8 +933,8 @@ var updatapw = new Vue({
 	methods:{
 		updatapassword:function(){
 			var that = this;
-			var oldpassword = $("#oldpassword").val();
-			var newpassword = $("#newpassword").val();
+			var oldpassword = updatapw.oldpassword;
+			var newpassword = updatapw.newpassword;
 			$.ajax({
 				type:"post",
 				url:"../user/updatePassword",
