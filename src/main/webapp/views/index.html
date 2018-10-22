@@ -305,7 +305,7 @@
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green" v-on:click="pass(upcheck.id)">通过</button>
+										<button type="button" class="btn btn-xs btn-green" data-dismiss="modal" v-on:click="pass(upcheck.id,pageNum)">通过</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
@@ -354,7 +354,8 @@
 											<td>{{item.uploadid}}</td>
 											<td>{{item.updatetime}}</td>
 											<td>{{item.category}}</td>
-											<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>&nbsp;<button v-on:click="upstock(item.id)" class="btn btn-info">上架</button></td>
+											<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>
+												&nbsp;<button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -434,7 +435,7 @@
 
 										<div class="modal-footer">
 											<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-											<button type="button" v-on:click="mo_upstock" class="btn btn-xs btn-green">发布</button>
+											<button type="button" v-on:click="mo_upstock" data-dismiss="modal" class="btn btn-xs btn-green">发布</button>
 										</div>
 									</div>
 									<!-- /.modal-content -->
@@ -483,7 +484,7 @@
 										<td>{{item.shelftime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="downgame(index)" class="btn btn-info">下架</button></td>
+										<td><button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -580,7 +581,7 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="upgame(index)" class="btn btn-info">上架</button></td>
+										<td><button @click="upgame(index,pageNum)" class="btn btn-info">上架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -675,7 +676,8 @@
 										<td>{{item.id}}</td>
 										<td>{{item.username}}</td>
 										<td>{{item.state}}</td>
-										<td><button @click="updatestate(index)" class="btn btn-info">修改状态</button>&nbsp;<button class="btn btn-danger" @click="deletestate(index)" data-toggle="modal" data-target="#deleteUser">删除</button></td>
+										<td><button @click="updatestate(index,pageNum)" class="btn btn-info">修改状态</button>
+											<!--&nbsp;<button class="btn btn-danger" @click="deletestate(index)" data-toggle="modal" data-target="#deleteUser">删除</button>--></td>
 									</tr>
 								</tbody>
 							</table>
@@ -733,9 +735,8 @@
 								</div>
 							</div>
 						</footer>
-
 						<!--弹出删除用户警告窗口-->
-						<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+						<!--<div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -752,12 +753,9 @@
 										<button type="button" @click="deluser(guser.id)" class="btn btn-xs btn-danger">保 存</button>
 									</div>
 								</div>
-								<!-- /.modal-content -->
 							</div>
-							<!-- /.modal-dialog -->
-						</div>
+						</div>-->
 						<!-- /.modal -->
-
 					</div>
 					<!-- 公告管理模块 -->
 					<div role="tabpanel" class="tab-pane" id="gonggao">
@@ -778,7 +776,8 @@
 										<td>{{item.name}}</td>
 										<td>{{item.title}}</td>
 										<td>{{item.updatetime}}</td>
-										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button>
+											&nbsp;<button class="btn btn-danger">删除</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -857,7 +856,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" v-on:click="savenew" class="btn btn-xs btn-green">保 存</button>
+										<button type="button" v-on:click="savenew(pageNum)"  data-dismiss="modal" class="btn btn-xs btn-green">保 存</button>
 									</div>
 
 								</div>
