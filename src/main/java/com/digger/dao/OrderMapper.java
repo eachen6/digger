@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.digger.pojo.Order;
 import com.digger.pojo.Payinfo;
+import com.digger.vo.FindMyGameVO;
 import com.digger.vo.OrderVO;
 
 public interface OrderMapper {
@@ -37,10 +38,6 @@ public interface OrderMapper {
 
 	Integer applyRefundByid(Integer id);
 
-	List<OrderVO> toGetRefund();
-
-	Integer goRefund(String ordernum);
-
-	Integer disagreeRefund(String ordernum);
+	List<FindMyGameVO> toGetMyGame(Integer userid);
 
 }

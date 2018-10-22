@@ -19,6 +19,7 @@ import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.pojo.Payinfo;
 import com.digger.service.OrderService;
+import com.digger.vo.FindMyGameVO;
 import com.digger.vo.OrderVO;
 
 @Service("orderService")
@@ -191,47 +192,18 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	/* 
-	 * 获取退款列表
-	 * @author 高志劲
+	 * 查看我的游戏包含别人赠送的
+	 * @author 徐子颖
 	 */
 	@Override
-	public List<OrderVO> toGetRefund() {
-		List<OrderVO> list = new ArrayList<OrderVO>();
-		list = orderMapper.toGetRefund();
+	public ServerResponse toGetMyGame(Integer userid) {
+		// TODO Auto-generated method stub
+		List<FindMyGameVO> list = new ArrayList<FindMyGameVO>();
+		list = orderMapper.toGetMyGame(userid);
 		if(CollectionUtils.isEmpty(list)){
-			System.out.println("暂时还没有未打折商品");
+			return ServerResponse.createByErrorCodeMessage(1,"未拥有任何游戏！");
 		}
-		return list;
+		return ServerResponse.createBySuccess("成功查看我的游戏", list);
 	}
-
-	/* 
-	 * 同意退款（将state该为2）
-	 * @author 高志劲
-	 */
-	@Override
-	public boolean goRefund(String ordernum) {
-		Integer result = 0;
-		result = orderMapper.goRefund(ordernum);
-		System.out.println(result+"--------------------------------");
-		if(result>0)
-			return true;
-		else 
-			return false;
-	}
-
-	/* 
-	 * 不同意退款（将state该为4）
-	 * @author 高志劲
-	 */
-	@Override
-	public ServerResponse disagreeRefund(String ordernum) {
-		Integer result = 0;
-		System.out.println(ordernum+"kkkkkkkkkkkkkkkk");
-		result = orderMapper.disagreeRefund(ordernum);
-		if(result>0)
-			return ServerResponse.createBySuccessMessage("已不同意退款！");
-		else 
-			return ServerResponse.createByErrorMessage("不同意退款失败！");
-	}	
 	
 }
