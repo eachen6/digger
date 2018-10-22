@@ -188,6 +188,50 @@ public class OrderServiceImpl implements OrderService{
 			result = orderMapper.insertPayinfo(pay);
 		    }
 	    }
+	}
+
+	/* 
+	 * 获取退款列表
+	 * @author 高志劲
+	 */
+	@Override
+	public List<OrderVO> toGetRefund() {
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		list = orderMapper.toGetRefund();
+		if(CollectionUtils.isEmpty(list)){
+			System.out.println("暂时还没有未打折商品");
+		}
+		return list;
+	}
+
+	/* 
+	 * 同意退款（将state该为2）
+	 * @author 高志劲
+	 */
+	@Override
+	public boolean goRefund(String ordernum) {
+		Integer result = 0;
+		result = orderMapper.goRefund(ordernum);
+		System.out.println(result+"--------------------------------");
+		if(result>0)
+			return true;
+		else 
+			return false;
+	}
+
+	/* 
+	 * 不同意退款（将state该为4）
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse disagreeRefund(String ordernum) {
+		Integer result = 0;
+		System.out.println(ordernum+"kkkkkkkkkkkkkkkk");
+		result = orderMapper.disagreeRefund(ordernum);
+		if(result>0)
+			return ServerResponse.createBySuccessMessage("已不同意退款！");
+		else 
+			return ServerResponse.createByErrorMessage("不同意退款失败！");
 	}	
 	
 }

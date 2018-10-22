@@ -146,7 +146,7 @@
 				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
 				<div class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
 				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
-				<div class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
+				<div class="meun-item" id="getrefund" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -1095,18 +1095,23 @@
 							<table class="table">
 								<thead class="table-active">
 									<tr>
+									    <th>订单号</th>
 										<th>游戏名</th>
-										<th>标题</th>
-										<th>上次更改时间</th>
+										<th>价格</th>
+										<th>退款人</th>
+										<th>退款时间</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(item,index) in list">
+									<tr v-for="(item,index) in order">
+									    <td>{{item.ordernum}}</td>
 										<td>{{item.name}}</td>
-										<td>{{item.title}}</td>
+										<td>{{item.price}}</td>
+										<td>{{item.username}}</td>
 										<td>{{item.updatetime}}</td>
-										<button class="btn btn-danger">退款</button></td>
+										<td><button class="btn btn-danger" @click="agreerefund(item.ordernum,item.price)">通过退款</button>
+										<button class="btn btn-danger" @click="disagreerefund(item.ordernum)">不通过退款</button></td>
 									</tr>
 								</tbody>
 							</table>
