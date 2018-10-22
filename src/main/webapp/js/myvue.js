@@ -46,9 +46,6 @@ var check = new Vue({
 		},
 		change:function(pn){
 			getCheckList(pn);
-		},
-		delcheck:function(id,pageNum){
-			deletegame(id,pageNum);
 		}
 	},
 	created:function(){
@@ -106,17 +103,6 @@ function gamepass(id,pageNum){
 		}
 	});
 }
-function deletegame(id,pageNum){
-	$.ajax({
-		type:"post",
-		url:"../gameaudit/delete_game",
-		data:{"id":id},
-		async:true,
-		success:function(res){
-			getCheckList(pageNum);
-		}
-	});
-}
 
 /**
  * 未上架模块
@@ -125,6 +111,7 @@ var notup = new Vue({
 	el:"#regu",
 	data:{
 		notups:[],
+		mo_noticeId:"",
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -140,6 +127,14 @@ var notup = new Vue({
 	methods:{
 		upstock:function(id,pageNum){
 			uptheStock(id,pageNum);
+		},
+		pass:function(id){
+			notup.mo_noticeId=id;
+			var info ="公告内容";
+            $('#one').summernote('code', info)
+		},
+		mo_upstock:function(){
+			passtheNotic(notup.mo_noticeId);
 		},
 		change:function(pn){
 			getnotupList(pn);
@@ -195,6 +190,58 @@ function uptheStock(id,pageNum){
 		}
 	});
 }
+/**
+ * 上传公告图片并回调
+ */
+function sendFile1(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('#one').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+
+/**
+ * 添加公告发布
+ */
+function passtheNotic(id){
+	var code = $('#one').summernote('code');
+	console.log(code)
+		var form = new FormData(document.getElementById("addnotice"));
+		form.append("content", code);
+		form.append("gameid", id);
+		//console.log(form)
+		$.ajax({
+			url: "../announcement/add_announcement",
+			type: "POST",
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				//window.clearInterval(timer);
+				console.log(res);
+				if(res.status == 0){
+					alert(res.msg)
+					
+				}
+			}
+		})
+}
 
 /**
  * 在销售模块
@@ -202,7 +249,6 @@ function uptheStock(id,pageNum){
 var sale = new Vue({
 	el:"#stud",
 	data:{
-		mo_noticeId:"",
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -230,14 +276,6 @@ var sale = new Vue({
 					getsaleList(pageNum);
 				}
 			});
-		},
-		pass:function(id){
-			notup.mo_noticeId=id;
-			var info ="公告内容";
-            $('#one').summernote('code', info)
-		},
-		mo_upstock:function(){
-			passtheNotic(notup.mo_noticeId);
 		},
 		change:function(pn){
 			getsaleList(pn);
@@ -279,58 +317,6 @@ function getsaleList(pn){
 		}
 	});
 }
-/**
- * 上传公告图片并回调
- */
-function sendFile1(files, editor, $editable) {
-	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
-	console.log(filename)
-	var data = new FormData();
-	data.append("files", files);
-	$.ajax({
-		data: data,
-		type: "POST",
-		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
-			console.log(res)
-			$('#one').summernote('insertImage', res.data.richimgurl);
-		},
-		error: function() {
-			alert("上传失败");
-		}
-	});
-}
-
-/**
- * 添加公告发布
- */
-function passtheNotic(id){
-	var code = $('#one').summernote('code');
-	console.log(code)
-	var form = new FormData(document.getElementById("addnotice"));
-	form.append("content", code);
-	form.append("gameid", id);
-	//console.log(form)
-	$.ajax({
-		url: "../announcement/add_announcement",
-		type: "POST",
-		data: form,
-		processData: false,
-		contentType: false,
-		success: function(res) {
-			//window.clearInterval(timer);
-			console.log(res);
-			if(res.status == 0) {
-				alert(res.msg)
-			}
-		}
-	})
-}
-
 
 /**
  * 下架模块
@@ -446,12 +432,54 @@ var guser = new Vue({
 				}
 			});
 		},
+/*		deletestate:function(index){
+			guser.id=guser.gusers[index].id;
+		},
+		deluser:function(id){
+			$.ajax({
+				type:"post",
+				url:"../admin/deleteuserbyid",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					getguserList(1);
+				}
+			});
+		},*/
 		change:function(pn){
-				inputselect(pn);
+			getguserList(pn);
 		},
 		//查询用户
-		selectbyinput:function(){
-			inputselect(1);
+		selectbyname:function(){
+			var username = guser.username;
+			console.log(username);
+			var pn = 1;
+			var that = this;
+			$.ajax({
+				type:"get",
+				url:"../admin/selectuserlikeusername/"+pn,
+				data:{"username":username},
+				async:true,
+				success:function(res){
+					console.log(res);
+					if(res.status==0)
+					{
+						that.pageNum = res.data.pageNum;
+						that.total = res.data.total;
+						that.pages = res.data.pages;
+						that.prePage = res.data.prePage;
+						that.nextPage = res.data.nextPage;
+						that.isFirstPage = res.data.isFirstPage;
+						that.isLastPage = res.data.isLastPage;
+						that.hasPreviousPage = res.data.hasPreviousPage;
+						that.hasNextPage = res.data.hasNextPage;
+						that.navigatePages = res.data.navigatePages;
+						that.navigatepageNums = res.data.navigatepageNums;
+						that.gusers = res.data.list;
+					}
+					alert(that.navigatepageNums);
+				}
+			});
 		}
 	},
 	created:function(){
@@ -487,37 +515,7 @@ function getguserList(pn){
 		}
 	});
 }
-//
-function inputselect(pn){
-	var username = guser.username;
-	console.log(username);
-	var that = this;
-	$.ajax({
-		type: "get",
-		url: "../admin/selectuserlikeusername/" + pn,
-		data: {
-			"username": username
-		},
-		async: true,
-		success: function(res) {
-			console.log(res);
-			if(res.status == 0) {
-				guser.pageNum = res.data.pageNum;
-				guser.total = res.data.total;
-				guser.pages = res.data.pages;
-				guser.prePage = res.data.prePage;
-				guser.nextPage = res.data.nextPage;
-				guser.isFirstPage = res.data.isFirstPage;
-				guser.isLastPage = res.data.isLastPage;
-				guser.hasPreviousPage = res.data.hasPreviousPage;
-				guser.hasNextPage = res.data.hasNextPage;
-				guser.navigatePages = res.data.navigatePages;
-				guser.navigatepageNums = res.data.navigatepageNums;
-				guser.gusers = res.data.list;
-			}
-		}
-	});
-}
+
 /**
  * 公告管理模块
  */
@@ -538,13 +536,9 @@ var gnotice = new Vue({
 		list:[],
 		oldtitle:"",
 		oldcontent:"",
-		syid:"",
-		del:[]
+		syid:""
 	},
 	methods:{
-		getnoticeId:function(index){
-			gnotice.del = gnotice.list[index];
-		},
 		mo_updategg:function(index){
 			gnotice.syid=gnotice.list[index].id;
 			gnotice.oldtitle=gnotice.list[index].title;
@@ -553,9 +547,6 @@ var gnotice = new Vue({
 		},
 		savenew:function(pageNum){
 			asavenew(gnotice.syid,pageNum);
-		},
-		delnotice:function(id,pageNum){
-			deletenotice(id,pageNum);
 		},
 		change:function(pn){
 			getgnoticeList(pn);
@@ -648,20 +639,6 @@ function asavenew(id,pageNum){
 		}
 	});
 }
-//删除公告
-function deletenotice(id,pageNum){
-	$.ajax({
-		type:"post",
-		url:"../announcement/delete_announcement",
-		data:{"id":id},
-		async:true,
-		success:function(res){
-			getgnoticeList(pageNum);
-		}
-	});
-}
-
-
 /**
  * 个人信息模块
  */
@@ -900,7 +877,46 @@ $(function() {
 		$('.summernote').summernote('reset');
 	})
 })
+//判断老密码
+/*function validatePwd() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
+		document.getElementById("save_button").disabled = false;
+	}
+}*/
+//校验第一次输入的密码
+/*function validatePwd1() {
+	var pwd1 = document.getElementById("password").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if (pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	}else {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
+		document.getElementById("finish-button").disabled = false;
+	}
+}*/
 
+	//		 对比两次输入的密码 
+/*function validatePwd2() {
+	var pwd1 = document.getElementById("password").value;
+	var pwd2 = document.getElementById("repassword").value;
+	if (pwd2.trim().length == 0) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("finish-button").disabled = true;
+	} else if (pwd1 == pwd2) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
+		document.getElementById("finish-button").disabled = false;
+	} else {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
+		document.getElementById("finish-button").disabled = true;
+	}
+}*/
 
 /**
  * 密码修改模块
@@ -915,8 +931,8 @@ var updatapw = new Vue({
 	methods:{
 		updatapassword:function(){
 			var that = this;
-			var oldpassword = updatapw.oldpassword;
-			var newpassword = updatapw.newpassword;
+			var oldpassword = $("#oldpassword").val();
+			var newpassword = $("#newpassword").val();
 			$.ajax({
 				type:"post",
 				url:"../user/updatePassword",
@@ -926,11 +942,7 @@ var updatapw = new Vue({
 				},
 				async:true,
 				success:function(res){
-					if(res.status==0){
-						window.location.href= "/digger/views/index.html?username="+updatapw.username+'&password='+newpassword;						
-					}else if(res.status==1){
-						alert(res.msg)
-					}
+					console.log(res)
 				}
 			});
 		}
@@ -939,51 +951,6 @@ var updatapw = new Vue({
 		this.username = getUrlParam("username");
 	}
 })
-
-
-//校验旧密码
-function validatePwd() {
-	var pwd1 = document.getElementById("oldpassword").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
-	if(pwd1.trim().length == 0 || pwd1 == "") {
-		document.getElementById("tishiPwd").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
-	}
-	else {
-		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
-		document.getElementById("uppw").disabled = false;
-	}
-}
-//校验第一次输入的密码
-function validatePwd1() {
-	var pwd1 = document.getElementById("newpassword").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
-	if(pwd1.trim().length == 0 || pwd1 == "") {
-		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
-	}
-	else {
-		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
-		document.getElementById("uppw").disabled = false;
-	}
-}
-
-function validatePwd2() {
-	var pwd1 = document.getElementById("newpassword").value;
-	var pwd2 = document.getElementById("repassword").value;
-	//		 对比两次输入的密码 
-	if(pwd2.trim().length == 0) {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
-	} else if(pwd1 == pwd2) {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
-		document.getElementById("uppw").disabled = false;
-	} else {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
-		document.getElementById("uppw").disabled = true;
-	}
-}
-
 
 //退款审核
 var refund = new Vue({
