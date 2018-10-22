@@ -55,7 +55,7 @@ public class UserController {
 	public ServerResponse<User> login(String username, String password, HttpSession session) {
 		ServerResponse<User> response = userService.login(username, password);
 		if (response.isSuccess()) {
-			if(userService.checkState(username)==1){
+			if (userService.checkState(username) == 1) {
 				return ServerResponse.createByErrorMessage("该账号已被封禁！");
 			}
 			session.setAttribute(Const.CURRENT_USER, response.getData());
@@ -67,6 +67,13 @@ public class UserController {
 				DbUtil.userLogout(username);
 				System.out.println(response + "3");
 				return ServerResponse.createByErrorMessage("该用户正在上线");
+			}
+			User user = response.getData();
+			if (user.getRole() == 1) {
+				// 将新的session存放到map<username,session>中
+				DbUtil.mapSession.put(username, session);
+				System.out.println(response + "1");
+				return response;
 			}
 			// 将新的session存放到map<username,session>中
 			DbUtil.mapSession.put(username, session);

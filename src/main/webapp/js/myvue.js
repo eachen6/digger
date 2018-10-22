@@ -41,8 +41,8 @@ var check = new Vue({
 		getcheckId:function(index){
 			check.upcheck = check.checks[index];
 		},
-		pass:function(id){
-			gamepass(id);
+		pass:function(id,pageNum){
+			gamepass(id,pageNum);
 		},
 		change:function(pn){
 			getCheckList(pn);
@@ -89,15 +89,17 @@ function getCheckList(pn){
 /*
  * 游戏审核通过
  */
-function gamepass(id){
+function gamepass(id,pageNum){
 	console.log(id)
 	$.ajax({
 		type:"post",
 		data:{"id":id},
-		url:"../gameaudit/onthesshelf_game",
+		url:"../gameaudit/audit_game",
 		async:true,
 		success:function(res){
 			//console.log(res)
+			console.log("审核成功")
+			getCheckList(pageNum);
 		}
 	});
 }
@@ -123,8 +125,8 @@ var notup = new Vue({
 		navigatepageNums:[]
 	},
 	methods:{
-		upstock:function(id){
-			uptheStock(id);
+		upstock:function(id,pageNum){
+			uptheStock(id,pageNum);
 		},
 		pass:function(id){
 			notup.mo_noticeId=id;
@@ -177,15 +179,14 @@ function getnotupList(pn){
 /**
  * 上架游戏
  */
-function uptheStock(id){
+function uptheStock(id,pageNum){
 	$.ajax({
 		type:"post",
 		data:{"id":id},
 		url:"../gameaudit/onthesshelf_game",
 		async:true,
 		success:function(res){
-			//console.log(res)
-			window.location.reload();
+			getnotupList(pageNum);
 		}
 	});
 }
@@ -220,10 +221,11 @@ function sendFile1(files, editor, $editable) {
  */
 function passtheNotic(id){
 	var code = $('#one').summernote('code');
+	console.log(code)
 		var form = new FormData(document.getElementById("addnotice"));
 		form.append("content", code);
 		form.append("gameid", id);
-		console.log(form)
+		//console.log(form)
 		$.ajax({
 			url: "../announcement/add_announcement",
 			type: "POST",
@@ -261,7 +263,7 @@ var sale = new Vue({
 		sales:[]
 	},
 	methods:{
-		downgame:function(index){
+		downgame:function(index,pageNum){
 			var id = sale.sales[index].id;
 			//console.log(id)
 			$.ajax({
@@ -271,7 +273,7 @@ var sale = new Vue({
 				async:true,
 				success:function(res){
 					//console.log(res)
-					window.location.reload();
+					getsaleList(pageNum);
 				}
 			});
 		},
@@ -336,7 +338,7 @@ var isdown = new Vue({
 		isdowns:[]
 	},
 	methods:{
-		upgame:function(index){
+		upgame:function(index,pageNum){
 			var id = isdown.isdowns[index].id;
 			$.ajax({
 				type:"post",
@@ -344,7 +346,7 @@ var isdown = new Vue({
 				data:{"id":id},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getisdownList(pageNum);
 				}
 			});
 		},
@@ -412,7 +414,7 @@ var guser = new Vue({
 		username:""
 	},
 	methods:{
-		updatestate:function(index){
+		updatestate:function(index,pageNum){
 			var id = guser.gusers[index].id;
 			var state = guser.gusers[index].state;
 			if(state>0){state=0;}
@@ -426,11 +428,11 @@ var guser = new Vue({
 				},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getguserList(pageNum);
 				}
 			});
 		},
-		deletestate:function(index){
+/*		deletestate:function(index){
 			guser.id=guser.gusers[index].id;
 		},
 		deluser:function(id){
@@ -440,10 +442,10 @@ var guser = new Vue({
 				data:{"id":id},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getguserList(1);
 				}
 			});
-		},
+		},*/
 		change:function(pn){
 			getguserList(pn);
 		},
@@ -451,10 +453,11 @@ var guser = new Vue({
 		selectbyname:function(){
 			var username = guser.username;
 			console.log(username);
+			var pn = 1;
 			var that = this;
 			$.ajax({
 				type:"get",
-				url:"../admin/selectuserbyusername",
+				url:"../admin/selectuserlikeusername/"+pn,
 				data:{"username":username},
 				async:true,
 				success:function(res){
@@ -473,7 +476,6 @@ var guser = new Vue({
 						that.navigatePages = res.data.navigatePages;
 						that.navigatepageNums = res.data.navigatepageNums;
 						that.gusers = res.data.list;
-						
 					}
 					alert(that.navigatepageNums);
 				}
@@ -543,8 +545,8 @@ var gnotice = new Vue({
 			var info =gnotice.list[index].content;
 	        $('#two').summernote('code', info)
 		},
-		savenew:function(){
-			asavenew(gnotice.syid);
+		savenew:function(pageNum){
+			asavenew(gnotice.syid,pageNum);
 		},
 		change:function(pn){
 			getgnoticeList(pn);
@@ -606,7 +608,7 @@ function sendFile2(files, editor, $editable) {
 		dataType: "json",
 		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
 			console.log(res)
-			$('#tow').summernote('insertImage', res.data.richimgurl);
+			$('#two').summernote('insertImage', res.data.richimgurl);
 		},
 		error: function() {
 			alert("上传失败");
@@ -616,7 +618,7 @@ function sendFile2(files, editor, $editable) {
 /**
  * 保存修改公告
  */
-function asavenew(id){
+function asavenew(id,pageNum){
 	console.log(id)
 	var code = $('#two').summernote('code');
 	var form = new FormData(document.getElementById("updatenotice"));
@@ -633,7 +635,7 @@ function asavenew(id){
 		contentType: false,
 		success:function(res){
 			console.log(res)
-			window.location.reload();
+			getgnoticeList(pageNum);
 		}
 	});
 }
@@ -950,3 +952,130 @@ var updatapw = new Vue({
 	}
 })
 
+//退款审核
+var refund = new Vue({
+	el:"#refund",
+	data:{
+		order: [],
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[]
+	},
+	methods: {
+		agreerefund:function(ordernum,price){
+			agreerefund(ordernum,price);
+		},
+		disagreerefund:function(ordernum){
+			disagreerefund(ordernum);
+		},
+		change:function(pn){
+			change(pn);
+		}
+	},
+	created: function(){
+		
+	}
+})
+
+$("#getrefund").click(function(e){
+	change(1);
+})
+
+function change(pn){
+	$.ajax({
+		type:"POST",
+		url:"../order/getrefund/"+pn,
+		async:true,
+		success: function(res){	
+			console.log("eee",res);
+			if(res.status == 0)
+			{
+				refund.order = res.data.list;
+				refund.pageNum = res.data.pageNum;
+				refund.total = res.data.total;				
+				refund.pages = res.data.pages;
+				refund.prePage = res.data.prePage;
+				refund.nextPage = res.data.nextPage;
+				refund.isFirstPage = res.data.isFirstPage;
+				refund.isLastPage = res.data.isLastPage;				
+				refund.hasPreviousPage = res.data.hasPreviousPage;			
+				refund.hasNextPage = res.data.hasNextPage;
+				refund.navigatePages = res.data.navigatePages;
+				refund.navigatepageNums = res.data.navigatepageNums;
+				for(var i = 0; i < refund.order.length; i++){
+					refund.order[i].updatetime = format(refund.order[i].updatetime);
+				}
+			}
+			else if(res.status==1)
+				alert(res.msg);
+		}
+	});
+}
+
+function agreerefund(ordernum,price){
+	$.ajax({
+		type:"POST",
+		url:"../order/goRefund",
+		data:{
+			ordernum:ordernum,
+			price:price
+		},
+		async:true,
+		success: function(res){
+			console.log(res);
+			if(res.status == 1){
+				alert(res.msg);
+			}
+			else if(res.status == 0)
+			{
+				alert(res.msg);
+			}
+			change(1);
+		}
+	});
+}
+
+function disagreerefund(ordernum){
+	alert(ordernum);
+	$.ajax({
+		type:"POST",
+		url:"../order/disagreerefund",
+		data:{
+			ordernum:ordernum
+		},
+		async:true,
+		success: function(res){
+			console.log(res);
+			if(res.status == 1){
+				alert(res.msg);
+			}
+			else if(res.status == 0)
+			{
+				alert(res.msg);
+			}
+			change(1);
+		}
+	});
+}
+
+function add0(m){return m<10?'0'+m:m }
+function format(shijianchuo)
+{
+//shijianchuo是整数，否则要parseInt转换
+var time = new Date(shijianchuo);
+var y = time.getFullYear();
+var m = time.getMonth()+1;
+var d = time.getDate();
+var h = time.getHours();
+var mm = time.getMinutes();
+var s = time.getSeconds();
+return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+}

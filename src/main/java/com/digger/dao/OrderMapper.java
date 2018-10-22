@@ -37,4 +37,10 @@ public interface OrderMapper {
 
 	Integer applyRefundByid(Integer id);
 
+	List<OrderVO> toGetRefund();
+
+	Integer goRefund(String ordernum);
+
+	Integer disagreeRefund(String ordernum);
+
 }
