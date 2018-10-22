@@ -49,6 +49,7 @@
 						<template v-if="item.state == 1">
 							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
 							<button type="button"  @click="applyrefund(item.id)" class="btn btn-danger">申请退款</button>
+							<a :href="'../game/download?gameid='+item.gameid" v-if="item.issend == 0" class="btn btn-info">下载</a>
 						</template>
 						<template v-else-if="item.state==0&&!item.closetime">
 						    <button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
@@ -63,7 +64,8 @@
 							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>						
 						</template>
 						<template v-else-if="item.state==4">
-							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>						
+							<button type="button"  @click="deleteit(item.id)" class="btn btn-danger">删除订单</button>
+							<a :href="'../game/download?gameid='+item.gameid" v-if="item.issend == 0" class="btn btn-info">下载</a>
 						</template>   
 					</div>
 				</div>

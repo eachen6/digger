@@ -448,16 +448,16 @@ public class GameController {
 	 * 下载游戏
 	 * @return
 	 */
-	@RequestMapping(value = "download_document.do")
+	@RequestMapping(value = "download",method=RequestMethod.GET)
     @ResponseBody
-    public ServerResponse downDocument(HttpServletResponse response, HttpSession session, String path,
-            String filename) {
+    public ServerResponse downDocument(HttpServletResponse response,HttpSession session, Integer gameid) {
 		User user = (User)session.getAttribute(Const.CURRENT_USER);
 		if(user == null) {
 			return ServerResponse.createByErrorMessage("用户未登录");
 		}
-        FTPSSMLoad.download(response, path, filename);
-        return ServerResponse.createBySuccess("下载成功");
+		//传进游戏ID，通过游戏ID判断该游戏是否被当前用户购买，是，则允许下载，反之不允许
+        //FTPSSMLoad.download(response, path, filename);
+        return gameService.download(user.getId(), gameid, response);
     }
 	
 }
