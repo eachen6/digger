@@ -123,7 +123,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.digger.pojo.AnnouncementWithBLOBs">
     update announcement
-    set gameid = #{gameid,jdbcType=INTEGER},
+    set
       imgurl = #{imgurl,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},

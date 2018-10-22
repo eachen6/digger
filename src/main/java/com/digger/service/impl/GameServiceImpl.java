@@ -5,17 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digger.common.ServerResponse;
 import com.digger.dao.GameMapper;
+import com.digger.dao.OrderMapper;
 import com.digger.pojo.Category;
 import com.digger.pojo.Discountlist;
 import com.digger.pojo.Game;
 import com.digger.pojo.Order;
 import com.digger.service.GameService;
+import com.digger.utils.FTPSSMLoad;
 import com.digger.vo.GamelistVO;
 import com.digger.vo.CarouseVO;
 import com.digger.vo.GameAuditVO;
@@ -26,6 +30,8 @@ public class GameServiceImpl implements GameService{
 	
 	@Autowired
 	GameMapper gameMapper;
+	@Autowired
+	OrderMapper orderMapper;
 	
 	/* 
 	 * 增加游戏文件
@@ -447,6 +453,16 @@ public class GameServiceImpl implements GameService{
 			return ServerResponse.createBySuccessMessage("删除折扣成功!");
 		else
 			return ServerResponse.createByErrorMessage("删除折扣失败!");
+	}
+	
+	public ServerResponse  download(Integer myID,Integer gameid,HttpServletResponse response) {
+		//查询判断该游戏是否已被购买
+		int roweCount =  orderMapper.isBuy_Order(myID, gameid);
+		if(roweCount > 0) {
+			FTPSSMLoad.download(response, "ftp://10.71.98.95/game.zip", "game.zip");
+			return ServerResponse.createBySuccessMessage("下载完成");
+		}
+		return ServerResponse.createByErrorMessage("您并没有购买此游戏，无法下载");
 	}
 
 }

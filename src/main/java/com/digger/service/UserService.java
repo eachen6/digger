@@ -50,4 +50,6 @@ public interface UserService {
 	int checkState(String username);
 
 	public String findIdByName(String username);
+
+	public List<User> selectUserLikeUsername(String username);
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.digger.common.ServerResponse;
@@ -79,4 +81,6 @@ public interface GameService {
 	ServerResponse update_Discount(Discountlist dl);
 
 	ServerResponse delete_Discount(Integer id);
+	
+	ServerResponse  download(Integer myID,Integer gameid,HttpServletResponse response);
 }

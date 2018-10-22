@@ -103,6 +103,7 @@ function gamepass(id,pageNum){
 			//console.log(res)
 			console.log("审核成功")
 			getCheckList(pageNum);
+
 		}
 	});
 }
@@ -140,6 +141,14 @@ var notup = new Vue({
 	methods:{
 		upstock:function(id,pageNum){
 			uptheStock(id,pageNum);
+		},
+		pass:function(id){
+			notup.mo_noticeId=id;
+			var info ="公告内容";
+            $('#one').summernote('code', info)
+		},
+		mo_upstock:function(){
+			passtheNotic(notup.mo_noticeId);
 		},
 		change:function(pn){
 			getnotupList(pn);
@@ -194,6 +203,58 @@ function uptheStock(id,pageNum){
 			getnotupList(pageNum);
 		}
 	});
+}
+/**
+ * 上传公告图片并回调
+ */
+function sendFile1(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('#one').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+
+/**
+ * 添加公告发布
+ */
+function passtheNotic(id){
+	var code = $('#one').summernote('code');
+	console.log(code)
+		var form = new FormData(document.getElementById("addnotice"));
+		form.append("content", code);
+		form.append("gameid", id);
+		//console.log(form)
+		$.ajax({
+			url: "../announcement/add_announcement",
+			type: "POST",
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				//window.clearInterval(timer);
+				console.log(res);
+				if(res.status == 0){
+					alert(res.msg)
+					
+				}
+			}
+		})
 }
 
 /**
@@ -443,15 +504,63 @@ var guser = new Vue({
 				async:true,
 				success:function(res){
 					getguserList(pageNum);
+
 				}
 			});
 		},
+/*		deletestate:function(index){
+			guser.id=guser.gusers[index].id;
+		},
+		deluser:function(id){
+			$.ajax({
+				type:"post",
+				url:"../admin/deleteuserbyid",
+				data:{"id":id},
+				async:true,
+				success:function(res){
+					getguserList(1);
+				}
+			});
+		},*/
 		change:function(pn){
 				inputselect(pn);
 		},
 		//查询用户
 		selectbyinput:function(){
 			inputselect(1);
+			getguserList(pn);
+		},
+		//查询用户
+		selectbyname:function(){
+			var username = guser.username;
+			console.log(username);
+			var pn = 1;
+			var that = this;
+			$.ajax({
+				type:"get",
+				url:"../admin/selectuserlikeusername/"+pn,
+				data:{"username":username},
+				async:true,
+				success:function(res){
+					console.log(res);
+					if(res.status==0)
+					{
+						that.pageNum = res.data.pageNum;
+						that.total = res.data.total;
+						that.pages = res.data.pages;
+						that.prePage = res.data.prePage;
+						that.nextPage = res.data.nextPage;
+						that.isFirstPage = res.data.isFirstPage;
+						that.isLastPage = res.data.isLastPage;
+						that.hasPreviousPage = res.data.hasPreviousPage;
+						that.hasNextPage = res.data.hasNextPage;
+						that.navigatePages = res.data.navigatePages;
+						that.navigatepageNums = res.data.navigatepageNums;
+						that.gusers = res.data.list;
+					}
+					alert(that.navigatepageNums);
+				}
+			});
 		}
 	},
 	created:function(){
@@ -487,7 +596,7 @@ function getguserList(pn){
 		}
 	});
 }
-//
+
 function inputselect(pn){
 	var username = guser.username;
 	console.log(username);

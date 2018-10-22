@@ -21,8 +21,6 @@ import com.digger.common.*;
 
 /**
  * FTP文件服务器工具类
- * 
- * @author Lee
  *
  */
 public class FTPUtil {

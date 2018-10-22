@@ -448,4 +448,17 @@ public class UserServiceImpl implements UserService {
 		return targetid;
 	}
 
+	/**
+	 * @author 徐子颖
+	 * 根据username模糊查询用户
+	 * @return
+	 */
+	@Override
+	public List<User> selectUserLikeUsername(String username) {
+		// TODO Auto-generated method stub
+		List<User> list = new ArrayList<User>();
+		list = userMapper.selectUserLikeUsername(username);
+		return list;
+	}
+
 }
