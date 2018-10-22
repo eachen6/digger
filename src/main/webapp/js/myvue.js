@@ -41,8 +41,8 @@ var check = new Vue({
 		getcheckId:function(index){
 			check.upcheck = check.checks[index];
 		},
-		pass:function(id){
-			gamepass(id);
+		pass:function(id,pageNum){
+			gamepass(id,pageNum);
 		},
 		change:function(pn){
 			getCheckList(pn);
@@ -89,15 +89,17 @@ function getCheckList(pn){
 /*
  * 游戏审核通过
  */
-function gamepass(id){
+function gamepass(id,pageNum){
 	console.log(id)
 	$.ajax({
 		type:"post",
 		data:{"id":id},
-		url:"../gameaudit/onthesshelf_game",
+		url:"../gameaudit/audit_game",
 		async:true,
 		success:function(res){
 			//console.log(res)
+			console.log("审核成功")
+			getCheckList(pageNum);
 		}
 	});
 }
@@ -123,8 +125,8 @@ var notup = new Vue({
 		navigatepageNums:[]
 	},
 	methods:{
-		upstock:function(id){
-			uptheStock(id);
+		upstock:function(id,pageNum){
+			uptheStock(id,pageNum);
 		},
 		pass:function(id){
 			notup.mo_noticeId=id;
@@ -177,15 +179,14 @@ function getnotupList(pn){
 /**
  * 上架游戏
  */
-function uptheStock(id){
+function uptheStock(id,pageNum){
 	$.ajax({
 		type:"post",
 		data:{"id":id},
 		url:"../gameaudit/onthesshelf_game",
 		async:true,
 		success:function(res){
-			//console.log(res)
-			window.location.reload();
+			getnotupList(pageNum);
 		}
 	});
 }
@@ -220,10 +221,11 @@ function sendFile1(files, editor, $editable) {
  */
 function passtheNotic(id){
 	var code = $('#one').summernote('code');
+	console.log(code)
 		var form = new FormData(document.getElementById("addnotice"));
 		form.append("content", code);
 		form.append("gameid", id);
-		console.log(form)
+		//console.log(form)
 		$.ajax({
 			url: "../announcement/add_announcement",
 			type: "POST",
@@ -261,7 +263,7 @@ var sale = new Vue({
 		sales:[]
 	},
 	methods:{
-		downgame:function(index){
+		downgame:function(index,pageNum){
 			var id = sale.sales[index].id;
 			//console.log(id)
 			$.ajax({
@@ -271,7 +273,7 @@ var sale = new Vue({
 				async:true,
 				success:function(res){
 					//console.log(res)
-					window.location.reload();
+					getsaleList(pageNum);
 				}
 			});
 		},
@@ -336,7 +338,7 @@ var isdown = new Vue({
 		isdowns:[]
 	},
 	methods:{
-		upgame:function(index){
+		upgame:function(index,pageNum){
 			var id = isdown.isdowns[index].id;
 			$.ajax({
 				type:"post",
@@ -344,7 +346,7 @@ var isdown = new Vue({
 				data:{"id":id},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getisdownList(pageNum);
 				}
 			});
 		},
@@ -412,7 +414,7 @@ var guser = new Vue({
 		username:""
 	},
 	methods:{
-		updatestate:function(index){
+		updatestate:function(index,pageNum){
 			var id = guser.gusers[index].id;
 			var state = guser.gusers[index].state;
 			if(state>0){state=0;}
@@ -426,11 +428,11 @@ var guser = new Vue({
 				},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getguserList(pageNum);
 				}
 			});
 		},
-		deletestate:function(index){
+/*		deletestate:function(index){
 			guser.id=guser.gusers[index].id;
 		},
 		deluser:function(id){
@@ -440,10 +442,10 @@ var guser = new Vue({
 				data:{"id":id},
 				async:true,
 				success:function(res){
-					window.location.reload();
+					getguserList(1);
 				}
 			});
-		},
+		},*/
 		change:function(pn){
 			getguserList(pn);
 		},
@@ -543,8 +545,8 @@ var gnotice = new Vue({
 			var info =gnotice.list[index].content;
 	        $('#two').summernote('code', info)
 		},
-		savenew:function(){
-			asavenew(gnotice.syid);
+		savenew:function(pageNum){
+			asavenew(gnotice.syid,pageNum);
 		},
 		change:function(pn){
 			getgnoticeList(pn);
@@ -606,7 +608,7 @@ function sendFile2(files, editor, $editable) {
 		dataType: "json",
 		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
 			console.log(res)
-			$('#tow').summernote('insertImage', res.data.richimgurl);
+			$('#two').summernote('insertImage', res.data.richimgurl);
 		},
 		error: function() {
 			alert("上传失败");
@@ -616,7 +618,7 @@ function sendFile2(files, editor, $editable) {
 /**
  * 保存修改公告
  */
-function asavenew(id){
+function asavenew(id,pageNum){
 	console.log(id)
 	var code = $('#two').summernote('code');
 	var form = new FormData(document.getElementById("updatenotice"));
@@ -633,7 +635,7 @@ function asavenew(id){
 		contentType: false,
 		success:function(res){
 			console.log(res)
-			window.location.reload();
+			getgnoticeList(pageNum);
 		}
 	});
 }
