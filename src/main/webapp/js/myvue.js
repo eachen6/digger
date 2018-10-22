@@ -453,10 +453,11 @@ var guser = new Vue({
 		selectbyname:function(){
 			var username = guser.username;
 			console.log(username);
+			var pn = 1;
 			var that = this;
 			$.ajax({
 				type:"get",
-				url:"../admin/selectuserbyusername",
+				url:"../admin/selectuserlikeusername/"+pn,
 				data:{"username":username},
 				async:true,
 				success:function(res){
@@ -475,7 +476,6 @@ var guser = new Vue({
 						that.navigatePages = res.data.navigatePages;
 						that.navigatepageNums = res.data.navigatepageNums;
 						that.gusers = res.data.list;
-						
 					}
 					alert(that.navigatepageNums);
 				}
