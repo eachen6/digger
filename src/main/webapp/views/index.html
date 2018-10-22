@@ -194,7 +194,9 @@
 										<td>{{item.username}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button>
+											&nbsp;<button  @click="getcheckId(index)" class="btn btn-danger" data-toggle="modal" data-target="#deleteCheck">删除</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -204,11 +206,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -297,7 +299,18 @@
 												</div>
 											</div>
 											<div class="row">
-												<p>{{}}</p>
+												<p>游戏名称：{{upcheck.name}}</p>
+												<p>系统要求：{{upcheck.system}}</p>
+												<p>开发商：{{upcheck.developer}}</p>
+												<p>运行显卡：{{upcheck.grcard}}</p>
+												<p>运营商：{{upcheck.oper}}</p>
+												<p>发行平台：{{upcheck.platform}}</p>
+												<p>CD：{{upcheck.cd}}</p>
+												<p>CPU：{{upcheck.cpu}}</p>
+												<p>Driver：{{upcheck.driver}}</p>
+												<p>价格：{{upcheck.price}}</p>
+												<p>运营阶段：{{upcheck.opstage}}</p>
+												<p>内存：{{upcheck.memory}}</p>
 											</div>
 											<div class="row" style="margin-top:10px ; margin-left: 6px;">
 												<div v-html="upcheck.detailtxt"></div>
@@ -313,6 +326,27 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deleteCheck" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该游戏？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" @click="delcheck(upcheck.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- /.modal -->
 
@@ -356,8 +390,7 @@
 											<td>{{item.uploadid}}</td>
 											<td>{{item.updatetime}}</td>
 											<td>{{item.category}}</td>
-											<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>
-												&nbsp;<button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
+											<td><button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -366,11 +399,11 @@
 							<footer class="footer">
 								<div class="row">
 									<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-									<div class="col-md-6">
+									<div>
 										当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 									</div>
 									<!-- 分页码 -->
-									<div class="col-md-6">
+									<div>
 										<nav aria-label="Page navigation">
 											<ul class="pagination">
 												<!-- 
@@ -415,36 +448,7 @@
 									</div>
 								</div>
 							</footer>
-							<!--弹出添加公告窗口-->
-							<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid">
-												<form id="addnotice">
-													<input name="title" class="input-lg" placeholder="公告标题" />
-
-													<br />
-													<br />
-													<div class="summernote" id="one"></div>
-												</form>
-											</div>
-										</div>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-											<button type="button" v-on:click="mo_upstock" data-dismiss="modal" class="btn btn-xs btn-green">发布</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-							<!-- /.modal -->
+							
 						</div>
 					</div>
 					<!--游戏在销售模块-->
@@ -486,7 +490,8 @@
 										<td>{{item.shelftime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>
+											&nbsp;<button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -495,11 +500,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -544,6 +549,36 @@
 								</div>
 							</div>
 						</footer>
+						<!--弹出添加公告窗口-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form id="addnotice">
+												<input name="title" class="input-lg" placeholder="公告标题" />
+						
+												<br />
+												<br />
+												<div class="summernote" id="one"></div>
+											</form>
+										</div>
+									</div>
+						
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" v-on:click="mo_upstock" data-dismiss="modal" class="btn btn-xs btn-green">发布</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
 					</div>
 					<!--游戏下架模块-->
 					<div role="tabpanel" class="tab-pane" id="sitt">
@@ -592,11 +627,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -653,7 +688,7 @@
 						<div class="check-div form-inline">
 							<div class="col-xs-4">
 								<input type="text" id="select1" v-model="username" name="select" class="form-control input-sm" placeholder="输入文字搜索">
-								<button @click="selectbyname()" class="btn btn-white btn-xs">查 询 </button>
+								<button @click="selectbyinput()" class="btn btn-white btn-xs">查 询 </button>
 							</div>
 						</div>
 						<div id="guser" class="table-responsive">
@@ -681,11 +716,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -772,7 +807,8 @@
 										<td>{{item.title}}</td>
 										<td>{{item.updatetime}}</td>
 										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button>
-											&nbsp;<button class="btn btn-danger">删除</button></td>
+											&nbsp;<button  @click="getnoticeId(index)" class="btn btn-danger" data-toggle="modal" data-target="#deletenotice">删除</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -860,6 +896,27 @@
 							<!-- /.modal-dialog -->
 						</div>
 						<!-- /.modal -->
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deletenotice" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该公告？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" @click="delnotice(del.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.modal -->
 					</div>
 					<!--个人信息模块-->
 					<div role="tabpanel" class="tab-pane" id="self">
@@ -908,9 +965,8 @@
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
 						</div>
-
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
-							<form class="form-horizontal">
+							<div class="form-horizontal">
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">用户名：</label>
 									<div class="col-xs-5">
@@ -920,28 +976,31 @@
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">原密码：</label>
 									<div class="col-xs-5">
-										<input type="password" class="form-control input-sm duiqi" id="oldpassword" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="oldpassword" v-model="oldpassword" onblur="validatePwd()" style="margin-top: 7px;">
+										<div style="margin-top: 5px; margin-bottom: 5px;" id="tishiPwd"></div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="sKnot" class="col-xs-4 control-label">新密码：</label>
 									<div class="col-xs-5">
-										<input type="password" class="form-control input-sm duiqi" id="newpassword" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="newpassword" v-model="newpassword" onblur="validatePwd1()" style="margin-top: 7px;">
+										<div style="margin-top: 5px; margin-bottom: 5px;" id="tishiPwd1"></div>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="sKnot" class="col-xs-4 control-label">重复密码：</label>
+									<label for="sKnot" class="col-xs-4 control-label">确定密码：</label>
 									<div class="col-xs-5">
-										<input type="password" class="form-control input-sm duiqi" id="repassword" placeholder="" style="margin-top: 7px;">
+										<input type="password" class="form-control input-sm duiqi" id="repassword" onblur="validatePwd2()" style="margin-top: 7px;">
+										<div style="margin-top: 5px; margin-bottom: 5px;" id="tishiPwd2"></div>
 									</div>
 								</div>
 								<div class="form-group text-right">
 									<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
 										<button type="reset" class="btn btn-xs btn-white">取 消</button>
-										<button type="submit" @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
+										<button id="uppw" @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
 									</div>
 								</div>
-							</form>
+							</div>
 						</div>
 
 					</div>
