@@ -61,7 +61,17 @@ public class GameAuditVO {
 
     private String username;
     
-    public String getUsername() {
+    private String surfaceurl;
+    
+    public String getSurfaceurl() {
+		return surfaceurl;
+	}
+
+	public void setSurfaceurl(String surfaceurl) {
+		this.surfaceurl = surfaceurl;
+	}
+
+	public String getUsername() {
 		return username;
 	}
 
