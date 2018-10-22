@@ -6,11 +6,12 @@
 		<!--<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
 		<script type="text/javascript" src="../bootstrap/js/bootstrap.js" ></script>-->
 		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
-		<link rel="stylesheet" href="../css/toastr.min.css" />
-        <script type="text/javascript" src="../js/toastr.min.js"></script>
 	</head>
 	<body>
 		<div class="container" id="order">
+			<div class="container-fluid" v-if="content == ''">
+				<img height="530" src="../img/nothing.jpg" />
+			</div>
 			<div class="container-fluid" v-for="item in content" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
 				<div class="row" v-if="item.issend == 1">
 					<img style="float: left;" src="../img/isSend.png"/>

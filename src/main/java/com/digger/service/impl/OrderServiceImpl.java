@@ -203,7 +203,7 @@ public class OrderServiceImpl implements OrderService{
 		if(CollectionUtils.isEmpty(list)){
 			return ServerResponse.createByErrorCodeMessage(1,"未拥有任何游戏！");
 		}
-		return ServerResponse.createBySuccess("成功查看我的游戏", list);
+		return ServerResponse.createBySuccess("查看我的游戏成功", list);
 	}	
 	
 }

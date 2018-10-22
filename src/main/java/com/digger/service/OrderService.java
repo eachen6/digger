@@ -2,8 +2,11 @@ package com.digger.service;
 
 
 
+import java.util.List;
+
 import com.digger.common.ServerResponse;
 import com.digger.pojo.Order;
+import com.digger.vo.OrderVO;
 
 public interface OrderService {
 
@@ -24,6 +27,12 @@ public interface OrderService {
 	ServerResponse toApplyRefund(Integer id);
 
 	ServerResponse toGetMyGame(Integer userid);
+
+	List<OrderVO> toGetRefund();
+
+	boolean goRefund(String ordernum);
+
+	ServerResponse disagreeRefund(String ordernum);
 
 
 }

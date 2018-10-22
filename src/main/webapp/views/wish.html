@@ -8,13 +8,15 @@
 		<script type="text/javascript" src="../bootstrap/js/bootstrap.js" ></script>-->
 		<script type="text/javascript" src="../bootstrap/js/jquery-1.9.1.js" ></script>
 		<link rel="stylesheet" type="text/css" href="../css/wish.css"/>
-		 <link rel="stylesheet" href="../css/toastr.min.css" />
-        <script type="text/javascript" src="../js/toastr.min.js"></script>
 	</head>
 	<body>
 		<div class="container" id="wish">
 			<div class="row">
-				<div class="container-fluid" v-if="" v-for="item in contents" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
+				<div class="container-fluid" v-if="contents == ''||contents == null">
+					<img height="530" src="../img/nothing.jpg" />
+				</div>
+				
+				<div class="container-fluid" v-for="item in contents" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
 				
 					<!-- <div class="row" style="padding-left: 20px;">
 						<span style="color: #098DDF;">添加时间：</span>{{item.createtime}}
