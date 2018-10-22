@@ -7,150 +7,201 @@
   <meta name="Keywords" content="">
   <meta name="Description" content="">
   <style type="text/css">
-	body{background-image: url(../echarts/images/nybj.png);background-size:100% 100%;font-weight:bold;font-family:苹方;overflow: hidden;}
-	.main{width:1024px;height:768px;position:relative;margin:auto;}
-	div{border:0px solid white;margin:1px;}
-	.layer{position:relative;width:100%;}
-	#layer01{}
-	#layer01 img{text-align: center;display: block;height: 35px;padding-top: 35px;margin: auto;}
-	#layer02 > div{height:100%;float:left;position:relative;}
-	.layer02-data{position: absolute;width: auto;height: 100px;color: white;top: 45px;left: 65px;}
-	.layer03-panel{height:100%;position:relative;float:left;}
-	.layer03-left-label{position:absolute;}
-	#layer03_left_label01{top:10px;left:10px;color:white;height:20px;width:200px;font-weight: bold;}
-	#layer03_left_label02{right:10px;top:10px;color:#036769;height:20px;width:200px;}
-	.layer03-left-chart{position:relative;float:left;height:100%;}
-	#layer03_right_label{position:absolute;top:10px;left:10px;color:white;height:20px;width:100px;}
-	.layer03-right-chart{position:relative;float:left;height:100%;width:32%;}
-	.layer03-right-chart-label{color: white;text-align: center;position: absolute;bottom: 60px;width: 100%;}
-	.layer04-panel{position:relative;float:left;height:100%;width:48%;}
-	.layer04-panel-label{width:100%;height:15%;color:white;padding-top:5px;}
-	.layer04-panel-chart{width:100%;height:85%;}
+  #ecm1{width: 100%;height:300px;}
+  #ecm2{width: 100%;height:300px;}
+ 
   </style>
+  <link type="text/css" href="../css/bootstrap.css" />
+  <script src="../js/bootstrap.min.js"></script>
   <script src="../js/jquery-1.9.1.js"></script>
   <script src="../echarts/echarts_4.1.0.rc2_echarts.min.js"></script>
   <script src="../echarts/monitor.js"></script>
-  <script type="text/javascript">
-	$(function(){
-		drawLayer02Label($("#layer02_01 canvas").get(0),"接入终端数量",80,200);
-		drawLayer02Label($("#layer02_02 canvas").get(0),"今日接入数据数量",80,300);
-		drawLayer02Label($("#layer02_03 canvas").get(0),"今日新增存储数据",80,400);
-		drawLayer02Label($("#layer02_04 canvas").get(0),"总存储数据",50,200);
-		drawLayer02Label($("#layer02_05 canvas").get(0),"当前任务个数",40,200);
-		drawLayer02Label($("#layer02_06 canvas").get(0),"当前集群数",50,200);
-		
-		renderLegend();
-
-		//饼状图
-		renderChartBar01();
-		//renderChartBar02();
-
-		//存储
-		renderLayer03Right();
-
-		//30天日均线流量趋势
-		renderLayer04Left();
-
-		//集群性能
-		renderLayer04Right();
-	});
-	
-	var randomScalingFactor = function() {
-			return Math.round(Math.random() * 100);
-		};
-  </script>
+  <script src="https://cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.js"></script>
   <title>TIZA STAR大数据运维总览图</title>
  </head>
  <body>
-	 <div class="main">
 	
-		<div id="layer02" class="layer" style="height:15%;">
-			<div id="layer02_01" style="width:20%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">60000</span>
-					<span style="font-size:16px;">台</span>
-				</div>
-				<canvas width="200" height="100"></canvas>
-			</div>
-			<div id="layer02_02" style="width:20%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">400000</span>
-					<span style="font-size:16px;">KB</span>
-				</div>
-				<canvas width="200" height="100"></canvas>
-			</div>
-			<div id="layer02_03" style="width:21%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">31457280</span>
-					<span style="font-size:16px;">MB</span>
-				</div>
-				<canvas width="200" height="100"></canvas>
-			</div>
-			<div id="layer02_04" style="width:12%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">50</span>
-					<span style="font-size:16px;">PB</span>
-				</div>
-				<canvas width="120" height="100"></canvas>
-			</div>
-			<div id="layer02_05" style="width:12%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">25</span>
-					<span style="font-size:16px;">个</span>
-				</div>
-				<canvas width="120" height="100"></canvas>
-			</div>
-			<div id="layer02_06" style="width:12%;">
-				<div class="layer02-data">
-					<span style="font-size:26px;">5</span>
-					<span style="font-size:16px;">个</span>
-				</div>
-				<canvas width="120" height="100"></canvas>
-			</div>
-		</div>
-		<div id="layer03" class="layer" style="height:40%;">
-			<div id="layer03_left" style="width:48%;" class="layer03-panel">
-				<div id="layer03_left_label01" class="layer03-left-label">接入机型占比</div>
-				<!--
-				<div id="layer03_left_label02" class="layer03-left-label">(左)在线数量 (右)上线率</div>
-				-->
-				<div id="layer03_left_01" class="layer03-left-chart" style="width:16%;">
-					<canvas width="100" height="200" style="margin:30px 0 0 20px;"></canvas>
-				</div>
-				
-				<div id="layer03_left_02" class="layer03-left-chart" style="width:80%;"></div>
-				<!--
-				<div id="layer03_left_03" class="layer03-left-chart" style="width:80%;"></div>
-				-->
-			</div>
-			<div id="layer03_right" style="width:50%;" class="layer03-panel">
-				<div id="layer03_right_label">存储</div>
-				<div id="layer03_right_chart01" class="layer03-right-chart">
-					<canvas width="130" height="150" style="margin:40px 0 0 20px;"></canvas>
-					<div class="layer03-right-chart-label">Hdfs</div>
-				</div>
-				<div id="layer03_right_chart02" class="layer03-right-chart">
-					<canvas width="130" height="150" style="margin:40px 0 0 20px;"></canvas>
-					<div class="layer03-right-chart-label">Rdbms</div>
-				</div>
-				<div id="layer03_right_chart03" class="layer03-right-chart">
-					<canvas width="130" height="150" style="margin:40px 0 0 20px;"></canvas>
-					<div class="layer03-right-chart-label">Rdies</div>
-				</div>
-			</div>
-		</div>
-		<div id="layer04" class="layer" style="height:30%;">
-			<div id="layer04_left" class="layer04-panel">
-				<div id="layer04_left_label" class="layer04-panel-label">30天日均线流量趋势</div>
-				<div id="layer04_left_chart" class="layer04-panel-chart"></div>
-			</div>
-			<div id="layer04_right" class="layer04-panel">
-				<div id="layer04_right_label" class="layer04-panel-label">
-					<span>集群性能/</span><span style="color:#00A09A;">近一个小时</span>
-				</div>
-				<div id="layer04_right_chart" class="layer04-panel-chart"></div>
-			</div>
-		</div>
-	</div>
+	
+       
+        <div class="fields">
+          <select name="color" class="change" tabindex="4">
+            <option value="">Please select a color</option>
+            <option value="#0084c7">Blue</option>
+            <option value="#E15A01">Orange</option>
+            <option value="#604A42">Brown</option>
+          </select>
+        </div>
+     <br />
+    <div id="ecm1" ></div>
+    <div id="ecm2" ></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('ecm1'));
+        var swChart = echarts.init(document.getElementById('ecm2'));
+        // 指定图表的配置项和数据
+        var option1 = {
+            title: {
+                text: '游戏销量'
+            },
+            color:['#3398DB'],
+            tooltip: {
+            trigger:'axis',
+             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                 }
+            },
+            grid: {
+            left: '15%',
+            right: '15%',
+            bottom: '15%',
+            top:'15%',
+            containLabel: true
+    },
+            legend: {
+            	top:25,
+            	left:5,
+                data:['销量']
+            },
+            xAxis: [
+            {
+            	type : 'category',
+                data: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+            }
+            ],
+            yAxis : [
+                {
+            type : 'value'
+                }
+            ],
+            series: [{
+                name: '销量',
+                type: 'bar',
+                barWidth: '80%',
+                data: [5, 20, 36, 10, 10, 20, 48, 63, 42, 14, 35, 34]
+            }]
+        };
+   
+  
+	 var option2 = {
+			title: {
+				text: '热销趋势图'
+			},
+			tooltip: {
+				trigger: 'axis'
+			},
+			legend: {
+				top:20,
+				left:5,
+				textStyle:{
+					color:'black'
+				},
+				orient:'vertical',
+				data:[
+						{name:'英雄联盟',icon:'circle'},
+						{name:'荒野行动',icon:'circle'},
+						{name:'地下城与勇士',icon:'circle'}
+					]
+			},
+			grid: {
+				left: '15%',
+				right: '15%',
+				bottom: '20%',
+				top: '15%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				axisLine:{
+					show:true,
+					lineStyle:{
+						color: '#0B3148',
+						width: 1,
+						type: 'solid'
+					}
+				},
+				data: ['周一','周二','周三','周四','周五','周六','周日']
+			},
+			yAxis: {
+				type: 'value',
+				axisLine:{
+					show:true,
+					lineStyle:{
+						color: '#0B3148',
+						width: 1,
+						type: 'solid'
+					}
+				},
+				splitLine:{
+					show:false
+				}
+			},
+			series: [
+						{
+							name:'英雄联盟',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#F3891B'
+								},
+								lineStyle:{
+									normal:{
+									color:'#F3891B',
+									opacity:1
+										}
+								}
+							},  
+							data:[120, 132, 101, 134, 90, 230, 210]
+						},
+						{
+							name:'荒野行动',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#006AD4'
+								},
+								lineStyle:{
+									normal:{
+									color:'#F3891B',
+									opacity:1
+										}
+								}
+							},
+							data:[220, 182, 191, 234, 290, 330, 310]
+						},
+						{
+							name:'地下城与勇士',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#009895'
+								},
+								lineStyle:{
+									normal:{
+									color:'#009895',
+									opacity:1
+										}
+								}
+							},
+							data:[150, 232, 201, 154, 190, 330, 410]
+						}
+					]
+		}	
+
+
+   
+   
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option1);
+        swChart.setOption(option2);
+     setTimeout(function (){
+    window.onresize = function () {
+        myChart.resize();
+        swChart.resize();
+    }
+},200)
+          
+    </script>
+
  </body>
 </html>

@@ -412,6 +412,7 @@ public class GameController {
 	@ResponseBody
 	public ServerResponse add_Discount(Discountlist dl)
 	{
+		System.out.println(dl.getGameid()+""+dl.getStarttime());
 		return gameService.add_Discount(dl);
 	}
 	
@@ -436,6 +437,7 @@ public class GameController {
 	@ResponseBody
 	public ServerResponse delete_Discount(Integer id)  //传入折扣表的id
 	{
+		System.out.println(id);
 		return gameService.delete_Discount(id);
 	}
 	

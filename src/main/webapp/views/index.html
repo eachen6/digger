@@ -952,40 +952,40 @@
 								<button class="btn btn-white btn-xs ">查 询 </button>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-4">
+						<div id="nonediscount" class="col-md-4 col-sm-4">
 							<div class="LoR">
 								<!--游戏未打折表单-->
 								<h5 class="text-center">未打折游戏列表</h4>
-						<div id="nonediscount" class="table-responsive">
+						<div class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
-										<th>游戏ID</th>
 										<th>游戏名称</th>
+										<th>游戏价格</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in nonediscount">
-										<th>{{item.id}}</th>
+									<tr v-for="item in nonediscounts">
 										<td>{{item.name}}</td>
-									    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">打折</button></td>
+										<td>{{item.price}}</td>
+									    <td><button type="submit" v-on:click="cut_price(item.id)" class="btn btn-info" data-toggle="modal" data-target="#downprice">打折</button></td>
 									</tr>
 								</tbody>
 							</table>
 							</div>
 							</div>
 						</div>
-						<div class="col-md-8 col-sm-8" >
+						<div id="gamediscount" class="col-md-8 col-sm-8" >
 							<div class="LoR">
 								<!--游戏已打折表单-->
 								<h5 class="text-center">已打折游戏列表</h4>
-								<div id="gamediscount" class="table-responsive">
+								<div  class="table-responsive">
 									<table class="table">
 										<thead class="table-active">
 											<tr>
-												<th>游戏ID</th>
 												<th>游戏名称</th>
+												<th>游戏价格</th>
 												<th>折扣力度</th>
 												<th>起始时间</th>
 												<th>终止时间</th>
@@ -993,70 +993,57 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr v-for="item in goods">
-												<th>{{item.id}}</th>
+											<tr v-for="(item,index) in goods">
 												<td>{{item.name}}</td>
-												<th>{{item.discount }}折</th>
-												<th>{{item.starttime}}</th>
-												<th>{{item.deadline}}</th>
-											    <td><button type="submit" id="getdiscount"  class="btn btn-info" data-toggle="modal" data-target="#change">修改</button></td>
+												<td>{{item.price}}</td>
+												<td>{{item.discount}}折</td>
+												<td>{{item.starttime}}</td>
+												<td>{{item.deadline}}</td>
+											    <td><button type="submit" v-on:click="getdiscount(index)"  class="btn btn-info" data-toggle="modal" data-target="#changeprice">修改</button>
+											    	<button class="btn btn-danger" v-on:click="deletediscount(index)">删除</button>
+											    </td>
 											</tr>
 										</tbody>
 									</table>	
-								
-								<!--页码块-->
-						<footer class="footer" >
-							<div class="row">
-				                <!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-				                <!--<div class="row">
-				                  	   当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
-				                </div>-->
-				                <!-- 分页码 -->
-				                <div class="row">
-				                    <nav aria-label="Page navigation">
-				                      <ul class="pagination">
-				                      <!-- 
-				                        1.pageContext.request.contextPath表示当前项目路径，采用的是绝对路径表达方式。一般为http:localhost:8080/项目名 。
-				                        2.首页，末页的逻辑：pn=1访问第一次，pn=${pageInfo.pages}访问最后一页
-				                      -->
-				                       <li>
-				                            <a v-on:click="change(1)" href="javascript:;" >首页</a>
-				                       </li>
-				                       <!-- 如果还有前页就访问当前页码-1的页面， -->
-				                       <template v-if="hasPreviousPage">
-				                         <li>
-				                          <a v-on:click="change(pageNum-1)" href="javascript:;" aria-label="Previous">
-				                            <span aria-hidden="true">&laquo;</span>
-				                          </a>
-				                         </li>
-				                        </template>
-				                        
-				                        <!--遍历所有导航页码，如果遍历的页码页当前页码相等就高亮显示，如果相等就普通显示  -->
-				                          <template  v-for="page_Nums in navigatepageNums">
-				                             <li v-if="page_Nums===pageNum" class="active"><a href="javascript:;">{{page_Nums}}</a></li>
-				                             <li v-else><a v-on:click="change(page_Nums)" href="javascript:;">{{page_Nums}}</a></li>
-				                          </template>
-				                       
-				                         <!-- 如果还有后页就访问当前页码+1的页面， -->
-				                        <template v-if="hasNextPage">
-				                            <li>
-				                              <a v-on:click="change(pageNum+1)" href="javascript:;" aria-label="Next">
-				                                <span aria-hidden="true">&raquo;</span>
-				                              </a>
-				                            </li>
-				                        </template>
-				                         <li><a v-on:click="change(pages)" href="javascript:;">末页</a></li>
-				                      </ul>
-				                    </nav>
-				                </div>
-				        	</div>
-						</footer>
-							</div>
+						     </div>
 							</div>
 						</div>
 						
-							<!--修改游戏折扣-->
-							<div class="modal fade" id="change" role="dialog" aria-labelledby="gridSystemModalLabel">
+						<!--开始给没有折扣的游戏打折扣窗口-->
+							<div class="modal fade" id="downprice" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-sm " role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">赋予折扣</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+										<div class="row" style="margin-top:10px ; margin-left: 6px;">
+                                        <form id="firstdiscount">
+                                        <label>折扣力度</label>
+										<input type="text" name="discount"  />
+										<label>起始时间</label>
+										<input type="date" name="starttime"  />
+                                        <label>终止时间</label>
+										<input type="date" name="deadline"  />
+										</form>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" v-on:click="savefirstdiscount" class="btn btn-xs btn-green" data-dismiss="modal">保存</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!--修改折扣信息窗口-->
+						<div class="modal fade" id="changeprice" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-sm " role="document">
 								<div class="modal-content">
 
@@ -1067,29 +1054,27 @@
 									<div class="modal-body">
 										<div class="container-fluid">
 										<div class="row" style="margin-top:10px ; margin-left: 6px;">
-                                        <input id="" name="" class="hidden" value=""/>
+                                        <form id="updateprice">
                                         <label>折扣力度</label>
-										<input type="text" id="" name="" value="" />
+										<input type="text" name="discount" v-model="olddiscount" />
 										<label>起始时间</label>
-										<input type="datetime-local" class="form_datetime" id="" name="" value="" />
+										<input type="date" name="starttime" v-model="oldstarttime" />
                                         <label>终止时间</label>
-										<input type="datetime-local" class="form_datetime" id="" name="" value="" />
-										
+										<input type="date" name="deadline" v-model="olddeadline" />
+										</form>
 											</div>
 										</div>
 									</div>
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green">保存</button>
+										<button type="button" v-on:click="saveupdateprice" class="btn btn-xs btn-green" data-dismiss="modal">保存</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
-						
-						
 					</div>
 				</div>
 			</div>
@@ -1113,8 +1098,8 @@
 			ifr.style.height = '0px';
 			var iDoc = ifr.contentDocument || ifr.document
 			var height = calcPageHeight(iDoc)
-			if(height < 850) {
-				height = 850;
+			if(height < 900) {
+				height = 900;
 			}
 			ifr.style.height = height + 'px'
 		}
