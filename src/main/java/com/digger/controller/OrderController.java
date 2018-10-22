@@ -77,6 +77,21 @@ public class OrderController {
 	}
 	
 	/**
+     * 查看我的游戏包含别人赠送的
+     * @return
+     */
+	@RequestMapping(value = "get_mygame", method = RequestMethod.GET)
+	@ResponseBody
+	public ServerResponse toGetMyGame(HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorMessage("用户未登录");
+		}
+		return orderService.toGetMyGame(user.getId());
+	}
+	
+	/**
      * 根据订单id将订单删除
      * @return
      */

@@ -229,4 +229,13 @@
   <update id="applyRefundByid" >
       update `order` set state = 2 where id=#{id}
   </update>
+  
+  <!-- 新增方法：查看我的游戏--> 
+  <select id="toGetMyGame" resultType="com.digger.vo.FindMyGameVO">
+      SELECT game.id,game.name,game.coverurl
+      FROM `order` left join send on send.ordernum = `order`.ordernum,game
+      where (`order`.userid=#{userid} and `order`.issend=0 and (`order`.state=1 or `order`.state=2 or `order`.state=4) and `order`.gameid = game.id) 
+      or (`order`.userid=#{userid} and `order`.issend=1 and (`order`.state=1 or `order`.state=2 or `order`.state=4) 
+      and `order`.gameid = game.id and send.targetid=#{userid}) 
+  </select>
 </mapper>
