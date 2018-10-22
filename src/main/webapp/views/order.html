@@ -11,6 +11,9 @@
 	</head>
 	<body>
 		<div class="container" id="order">
+			<div class="container-fluid" v-if="content == ''">
+				<img height="530" src="../img/nothing.jpg" />
+			</div>
 			<div class="container-fluid" v-for="item in content" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
 				<div class="row" v-if="item.issend == 1">
 					<img style="float: left;" src="../img/isSend.png"/>
