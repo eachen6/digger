@@ -185,7 +185,7 @@
   
   <!-- 新增方法：检查用户是否购买过该游戏（不包括赠送别人的）--> 
   <select id="isBuy_Order" resultType="Integer">
-      SELECT count(`order`.id) i
+      SELECT count(`order`.id) 
       from `order` left join send on `order`.ordernum = send.ordernum
       where ((gameid=#{gameid} and userid=#{userid}) OR (gameid=#{gameid} and targetid=#{userid} and issend = 1))
       and (state = 1 or state = 2 or state = 4 or state = 5) 
@@ -229,13 +229,4 @@
   <update id="applyRefundByid" >
       update `order` set state = 2 where id=#{id}
   </update>
-  
-  <!-- 新增方法：查看我的游戏--> 
-  <select id="toGetMyGame" resultType="com.digger.vo.FindMyGameVO">
-      SELECT game.id,game.name,game.coverurl
-      FROM `order` left join send on send.ordernum = `order`.ordernum,game
-      where (`order`.userid=#{userid} and `order`.issend=0 and (`order`.state=1 or `order`.state=2 or `order`.state=4) and `order`.gameid = game.id) 
-      or (`order`.userid=#{userid} and `order`.issend=1 and (`order`.state=1 or `order`.state=2 or `order`.state=4) 
-      and `order`.gameid = game.id and send.targetid=#{userid}) 
-  </select>
 </mapper>
