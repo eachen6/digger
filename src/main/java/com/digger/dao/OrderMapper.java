@@ -49,4 +49,6 @@ public interface OrderMapper {
 
 	Integer disagreeRefund(String ordernum);
 
+	List<StatisticsVO> gameSaleStatistics(@Param("date1")String date1, @Param("date2")String date2);
+
 }

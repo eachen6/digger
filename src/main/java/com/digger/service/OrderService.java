@@ -36,5 +36,7 @@ public interface OrderService {
 
 	ServerResponse disagreeRefund(String ordernum);
 
+	ServerResponse gameSaleStatistics(String date1, String date2);
+
 
 }

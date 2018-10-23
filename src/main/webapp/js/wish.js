@@ -23,10 +23,11 @@ var wish = new Vue({
 })
 
 function pay(gameid,price,discount){
-	if(discount!=null||discount!=0)
+	alert(discount);
+	if(discount!=null&&discount!=0){
 		price = price*discount*0.1;
+	}
 	var ordernum = GetDateNow();
-	alert(gameid+" "+price+" "+discount+" "+ordernum);
 	$.ajax({
 		type:"POST",
 		url:"../order/create",

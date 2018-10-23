@@ -242,6 +242,17 @@
       GROUP BY year(createtime), month(createtime)
   </select>
   
+  <!-- 新增方法：各游戏统计销量--> 
+  <select id="gameSaleStatistics" resultType="com.digger.vo.StatisticsVO">
+      select game.name as name, sum(`order`.price) as Ssum
+      from `order`, game
+      where game.id = `order`.gameid and 
+      DATE(`order`.createtime) BETWEEN #{date1} AND #{date2}
+      GROUP BY game.id
+      ORDER BY SUM(`order`.price) 
+      LIMIT 0,5
+  </select>
+  
    <!-- 新增方法：申请退款--> 
   <update id="applyRefundByid" >
       update `order` set state = 2,updatetime = now() where id=#{id}

@@ -168,11 +168,28 @@ public class OrderController {
 	@ResponseBody
 	public ServerResponse SaleStatistics(@RequestParam(value="year") String year,HttpSession session) 
 	{
-		/*User user = (User) session.getAttribute(Const.CURRENT_USER);
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
 		if(user == null){
 			return ServerResponse.createByErrorCodeMessage(1,"用户未登录");
-		}*/
+		}
 		return orderService.saleStatistics(year);
+	}
+	
+	/**
+	 * author 高志劲
+     * 热门游戏销量统计
+     * @return
+     */
+	@RequestMapping(value = "gamesalestatistics", method = RequestMethod.POST)
+	@ResponseBody
+	public ServerResponse GameSaleStatistics(@RequestParam(value="date1") String date1,@RequestParam(value="date2") String date2,HttpSession session) 
+	{
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if(user == null){
+			return ServerResponse.createByErrorCodeMessage(1,"用户未登录");
+		}
+		System.out.println(date1);
+		return orderService.gameSaleStatistics(date1,date2);
 	}
 	
 	

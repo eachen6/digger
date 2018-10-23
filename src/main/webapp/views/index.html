@@ -907,7 +907,7 @@
 					</div>
 					<!--数据统计模块-->
 					<div role="tabpanel" class="tab-pane" id="shuju">
-						<iframe scrolling="no" id="main" name="main" frameborder="0" src="data1.html" style="min-height:600px;width:100%;height:100%;"></iframe>
+						<iframe scrolling="no" id="main" name="main" frameborder="0" src="NewFile.html" style="min-height:800px;width:100%;height:100%;"></iframe>
 					</div>
 					<!--修改密码模块-->
 					<div role="tabpanel" class="tab-pane" id="updatapw">
@@ -1174,22 +1174,22 @@
 	<script>
 		 
 		function calcPageHeight(doc) {
-			var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
-			var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
-			var height = Math.max(cHeight, sHeight)
-			return height
+			var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight);
+			var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+			var height = Math.max(cHeight, sHeight);
+			return height;
 		}
 		//根据ID获取iframe对象
-		var ifr = document.getElementById('main')
+		var ifr = document.getElementById('main');
 		ifr.onload = function() {
 			//解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
 			ifr.style.height = '0px';
-			var iDoc = ifr.contentDocument || ifr.document
-			var height = calcPageHeight(iDoc)
+			var iDoc = ifr.contentDocument || ifr.document;
+			var height = calcPageHeight(iDoc);
 			if(height < 900) {
 				height = 900;
 			}
-			ifr.style.height = height + 'px'
+			ifr.style.height = height + 'px';
 		}
 		
 	</script>

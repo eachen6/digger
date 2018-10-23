@@ -6,6 +6,8 @@ public class StatisticsVO {
     private String Syear;
     
     private String Smonth;
+    
+    private String name;
 
 	public String getSsum() {
 		return Ssum;
@@ -29,5 +31,13 @@ public class StatisticsVO {
 
 	public void setSmonth(String smonth) {
 		Smonth = smonth;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

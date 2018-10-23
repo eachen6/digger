@@ -1177,7 +1177,6 @@ var refund = new Vue({
 })
 
 $("#getrefund").click(function(e){
-	alert("nimei");
 	change(1);
 })
 
@@ -1236,7 +1235,6 @@ function agreerefund(ordernum,price){
 }
 
 function disagreerefund(ordernum){
-	alert(ordernum);
 	$.ajax({
 		type:"POST",
 		url:"../order/disagreerefund",

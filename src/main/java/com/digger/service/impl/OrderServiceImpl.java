@@ -129,9 +129,9 @@ public class OrderServiceImpl implements OrderService{
 		Integer rowCount = 0;
 		rowCount = orderMapper.applyRefundByid(id);
 		if(rowCount>0){
-            return ServerResponse.createBySuccessMessage("取消成功！");
+            return ServerResponse.createBySuccessMessage("已申请退款！");
         }
-        return ServerResponse.createByErrorMessage("取消失败！");
+        return ServerResponse.createByErrorMessage("申请退款失败！");
 	}
 
 	/* 
@@ -209,16 +209,26 @@ public class OrderServiceImpl implements OrderService{
 
 	/* 
 	 * 销量统计
-	 * @author 徐子颖
+	 * @author 高志劲
 	 */
 	@Override
 	public ServerResponse saleStatistics(String year) {
-		// TODO Auto-generated method stub
 		List<StatisticsVO> list = new ArrayList<StatisticsVO>();
 		list = orderMapper.saleStatistics(year);
 		return ServerResponse.createBySuccess(list);
 	}
 	
+	/* 
+	 * 各游戏销量统计
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse gameSaleStatistics(String date1, String date2) {
+		List<StatisticsVO> list = new ArrayList<StatisticsVO>();
+		System.out.println(date2);
+		list = orderMapper.gameSaleStatistics(date1, date2);
+		return ServerResponse.createBySuccess(list);
+	}	
 	
 	/* 
 	 * 获取退款列表
@@ -261,5 +271,7 @@ public class OrderServiceImpl implements OrderService{
 			return ServerResponse.createBySuccessMessage("已不同意退款！");
 		else 
 			return ServerResponse.createByErrorMessage("不同意退款失败！");
-	}	
+	}
+
+
 }

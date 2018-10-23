@@ -21,6 +21,7 @@
  </head>
  <body>
         <div class="fields">
+        时间：
           <select id="mySelect" name="color" class="change" tabindex="4">
             <option value="2018" selected="selected">2018</option>
             <option value="2019">2019</option>
@@ -28,25 +29,55 @@
         </div>
      <br />
     <div id="ecm1" ></div>
+    <div class="fields">
+    时间范围：<input type="date" id="date1" /> <input type="date" id="date2" />
+        </div>
+     <br />
     <div id="ecm2" ></div>
     <script type="text/javascript">
     
     $(document).ready(function(){
     	$(function(){
-    		getData(2018);
+    		 // 给input  date设置默认值
+    		var now = new Date();
+    		//格式化日，如果小于9，前面补0
+    		var day = ("0" + now.getDate()).slice(-2);
+    		//格式化月，如果小于9，前面补0
+    		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    		//拼装完整日期格式
+    		var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    		var oneday = (now.getFullYear()-1)+"-"+(month)+"-"+(day) ;
+    		//完成赋值
+    		$('#date1').val(oneday);
+    		$('#date2').val(today);
+    		getData($('#mySelect').children('option:selected').val());
+    		getData1('2018-01-01','2019-01-31');
     	});
     	
     	$('#mySelect').change(function(){
-    		alert($(this).children('option:selected').val());
     		var p1=$(this).children('option:selected').val();//这就是selected的值
     		getData(p1);
     		})
+    		
+    		$('#date1').change(function(){
+    		    var date1=$("#date1").val();
+    		    var date2=$("#date2").val();
+    		    getData1(date1, date2);
+    		})
+    		
+    		$('#date2').change(function(){ 
+    			var date1=$("#date1").val();
+     		    var date2=$("#date2").val();
+     		    getData1(date1, date2);
+    		})
         
     })
-    var y=new Array(13);
-    
+    var y=new Array();
+    var option1;
+    var option2;
+    var swChart;
+    var myChart;
     function getData(year){
-    	alert(444);
     	$.ajax({
     		type:"POST",
     		url:"../order/salestatistics",
@@ -68,10 +99,10 @@
     				console.log(y);
     				// 基于准备好的dom，初始化echarts实例
     		        var a1 = 500;
-    		        var myChart = echarts.init(document.getElementById('ecm1'));
+    		        myChart = echarts.init(document.getElementById('ecm1'));
     		    
     		        // 指定图表的配置项和数据
-    		        var option1 = {
+    		        option1 = {
     		            title: {
     		                text: '游戏销售额'
     		            },
@@ -113,178 +144,101 @@
     		            }]
     		        };
     		        
-    		        // 使用刚指定的配置项和数据显示图表。
-    		        myChart.setOption(option1);
-    		    
-    		   
+    		          // 使用刚指定的配置项和数据显示图表。
+    		            myChart.setOption(option1);
+    		    	 
+    		       }
+    			else if(res.state==1){
+    				alert(res.msg);
     			}
     		}
     	});
     }
-    var swChart = echarts.init(document.getElementById('ecm2'));
-       /*  // 基于准备好的dom，初始化echarts实例
-        var a1 = 500;
-        var myChart = echarts.init(document.getElementById('ecm1'));
-        var swChart = echarts.init(document.getElementById('ecm2'));
-        // 指定图表的配置项和数据
-        var option1 = {
-            title: {
-                text: '游戏销售额'
-            },
-            color:['#3398DB'],
-            tooltip: {
-            trigger:'axis',
-             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                 }
-            },
-            grid: {
-            left: '10%',
-            right: '10%',
-            bottom: '3%',
-           
-            containLabel: true
-    },
-            legend: {
-            	top:25,
-            	left:5,
-                data:['销量']
-            },
-            xAxis: [
-            {
-            	type : 'category',
-                data: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
-            }
-            ],
-            yAxis : [
-                {
-            type : 'value'
-                }
-            ],
-            series: [{
-                name: '销量',
-                type: 'bar',
-                barWidth: '80%',
-                data: [y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7], y[8], y[9], y[10], y[11]]
-            }]
-        }; */
+    
+    var game=new Array();
+    var sum=new Array();
+    function getData1(date1, date2){
+    	$.ajax({
+    		type:"POST",
+    		url:"../order/gamesalestatistics",
+    		data:{
+    			date1:date1,
+    			date2:date2
+    		},
+    		async:true,
+    		success: function(res){
+    			console.log(res);
+    			if(res.status == 0)
+    			{   
+    				if(res.data.length==0)
+    				   {
+    					  sum = new Array();
+    					  game = new Array();
+    				   }
+    				for(var i = 0; i < res.data.length; i++){
+    					game[i] = res.data[i].name;
+    					sum[i] = res.data[i].ssum;
+    				}
+    				console.log("game",game);
+    				console.log("sum",sum);
+    				swChart = echarts.init(document.getElementById('ecm2'));
+    				option2 = {
+    						title: {
+    							text: '热销趋势图'
+    						},
+    						 title: {
+    						        text: '热销游戏销售额'
+    						    },
+    						    color:['#51616D'],
+    						    tooltip: {
+    						        trigger: 'axis',
+    						        axisPointer: {
+    						            type: 'shadow'
+    						        }
+    						    },
+    						   
+    						    grid: {
+    						        left: '7%',
+    						        right: '4%',
+    						        bottom: '3%',
+    						        containLabel: true
+    						    },
+    						    xAxis: {
+    						        type: 'value',
+    						        boundaryGap: [0, 0.01]
+    						    },
+    						    yAxis: {
+    						        type: 'category',
+    						        data: game
+    						    },
+    						    series: [
+    						       
+    						        {
+    						        	name: '销量',
+    						            type: 'bar',
+    						            data: sum
+    						        }
+    						    ]
+    					}	
+    				 swChart.setOption(option2);
+    					
+    			}
+    			else if(res.state==1){
+    				alert(res.msg);
+    			}
+    			 
+    		}
+    	});
+    }
    
-  
-	 var option2 = {
-			title: {
-				text: '热销趋势图'
-			},
-			tooltip: {
-				trigger: 'axis'
-			},
-			legend: {
-				top:20,
-				left:5,
-				textStyle:{
-					color:'black'
-				},
-				orient:'vertical',
-				data:[
-						{name:'英雄联盟',icon:'circle'},
-						{name:'荒野行动',icon:'circle'},
-						{name:'地下城与勇士',icon:'circle'}
-					]
-			},
-			grid: {
-				left: '10%',
-				right: '10%',
-				bottom: '3%',
-				
-				containLabel: true
-			},
-			xAxis: {
-				type: 'category',
-				boundaryGap: false,
-				axisLine:{
-					show:true,
-					lineStyle:{
-						color: '#0B3148',
-						width: 1,
-						type: 'solid'
-					}
-				},
-				data: ['周一','周二','周三','周四','周五','周六','周日']
-			},
-			yAxis: {
-				type: 'value',
-				axisLine:{
-					show:true,
-					lineStyle:{
-						color: '#0B3148',
-						width: 1,
-						type: 'solid'
-					}
-				},
-				splitLine:{
-					show:false
-				}
-			},
-			series: [
-						{
-							name:'英雄联盟',
-							type:'line',
-							itemStyle : {  
-									normal : {  
-									color:'#F3891B'
-								},
-								lineStyle:{
-									normal:{
-									color:'#F3891B',
-									opacity:1
-										}
-								}
-							},  
-							data:[120, 132, 101, 134, 90, 230, 210]
-						},
-						{
-							name:'荒野行动',
-							type:'line',
-							itemStyle : {  
-									normal : {  
-									color:'#006AD4'
-								},
-								lineStyle:{
-									normal:{
-									color:'#F3891B',
-									opacity:1
-										}
-								}
-							},
-							data:[220, 182, 191, 234, 290, 330, 310]
-						},
-						{
-							name:'地下城与勇士',
-							type:'line',
-							itemStyle : {  
-									normal : {  
-									color:'#009895'
-								},
-								lineStyle:{
-									normal:{
-									color:'#009895',
-									opacity:1
-										}
-								}
-							},
-							data:[150, 232, 201, 154, 190, 330, 410]
-						}
-					]
-		}	
+ // 使用刚指定的配置项和数据显示图表。
 
-
-        swChart.setOption(option2);
-	     setTimeout(function (){
-	    window.onresize = function () {
-	        myChart.resize();
-	        swChart.resize();
-	    }
-	},200)
-   
+setTimeout(function (){
+window.onresize = function () {
+    myChart.resize();
+    swChart.resize();
+}
+},200)
        
           
     </script>
