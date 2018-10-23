@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService {
 		String md5Password = MD5Util.MD5EncodeUtf8(user.getPassword());
 		System.out.println(md5Password);
 		user.setPassword(md5Password);
+		user.setState((byte) 0);
 		int resultCount = 0;
 		resultCount = userMapper.insert(user);
 		// System.out.println(resultCount+"uuuuuuuuuuuuuuuuuuuuuuuuu");
