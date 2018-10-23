@@ -112,9 +112,7 @@
 				box-shadow: 10px 10px 5px #888888;
 				color: #ffffff;
 			}
-			/*.footer .row .pagination{
-				color: #008000;	
-			}*/
+			
 		</style>
 		<!--[if lt IE 9]>
   <script src="js/html5shiv.min.js"></script>
@@ -141,15 +139,15 @@
 					</p>
 				</div>
 				<div class="meun-title">账号管理</div>
-				<div  id="but_1" class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
-				<div  id="but_2" class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">游戏上传</div>
-				<div  id="but_3" class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
-				<div  id="but_4" class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
-				<div  id="but_5" class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
-				<div  id="but_6" class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
-				<div  id="but_7" class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
-				<div  id="but_8" class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
-				<div  id="but_9" class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
+				<div id="but_1" class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
+				<div id="but_2" class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">游戏上传</div>
+				<div id="but_3" class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
+				<div id="but_4" class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
+				<div id="but_5" class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
+				<div id="but_6" class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
+				<div id="but_7" class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
+				<div id="but_8" class="meun-item" href="#updatepw" aria-controls="updatepw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
+				<div id="but_9" class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -317,7 +315,7 @@
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" class="btn btn-xs btn-green" data-dismiss="modal" v-on:click="pass(upcheck.id,pageNum)">通过</button>
+										<button type="button" class="btn btn-xs btn-green" data-dismiss="modal" v-on:click="pass(upcheck.id)">通过</button>
 									</div>
 								</div>
 								<!-- /.modal-content -->
@@ -340,7 +338,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" @click="delcheck(upcheck.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+										<button type="button" @click="delcheck(upcheck.id)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
 									</div>
 								</div>
 							</div>
@@ -387,7 +385,7 @@
 											<td>{{item.username}}</td>
 											<td>{{item.updatetime}}</td>
 											<td>{{item.category}}</td>
-											<td><button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
+											<td><button v-on:click="upstock(item.id)" class="btn btn-info">上架</button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -484,11 +482,11 @@
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
 										<td>{{item.username}}</td>
-										<td>{{item.shelftime}}</td>
+										<td>{{item.updatetime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
 										<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button> &nbsp;
-											<button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
+											<button @click="downgame(index)" class="btn btn-info">下架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -616,8 +614,8 @@
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
 										<td>
-											<button @click="updatagame(index)" class="btn btn-confirm" >修改信息</button>
-											<button @click="upgame(index,pageNum)" class="btn btn-info">上架</button>
+											<button @click="updategame(index)" class="btn btn-confirm" >修改信息</button>
+											<button @click="upgame(index)" class="btn btn-info">上架</button>
 										</td>
 									</tr>
 								</tbody>
@@ -705,7 +703,8 @@
 									<tr v-for="(item,index) in gusers">
 										<td>{{item.id}}</td>
 										<td>{{item.username}}</td>
-										<td>{{item.state}}</td>
+										<td v-if="item.state===0">正常</td>
+										<td v-else>封禁</td>
 										<td><button @click="updatestate(index,pageNum)" class="btn btn-info">修改状态</button>
 											<!--&nbsp;<button class="btn btn-danger" @click="deletestate(index)" data-toggle="modal" data-target="#deleteUser">删除</button>--></td>
 									</tr>
@@ -806,7 +805,7 @@
 										<td>{{item.name}}</td>
 										<td>{{item.title}}</td>
 										<td>{{item.updatetime}}</td>
-										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button> &nbsp;
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updateChar">修改</button> &nbsp;
 											<button @click="getnoticeId(index)" class="btn btn-danger" data-toggle="modal" data-target="#deletenotice">删除</button>
 										</td>
 									</tr>
@@ -868,7 +867,7 @@
 							</div>
 						</footer>
 						<!--弹出修改公告窗口-->
-						<div class="modal fade" id="updataChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+						<div class="modal fade" id="updateChar" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -878,7 +877,7 @@
 									<div class="modal-body">
 										<div class="container-fluid">
 											<form id="updatenotice">
-												<input name="title" class="input-lg" v-model="gnotice.oldtitle" />
+												<input name="title" class="input-lg" v-model="oldtitle" />
 												<br />
 												<br />
 												<div class="summernote" id="two"></div>
@@ -911,7 +910,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" @click="delnotice(del.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+										<button type="button" @click="delnotice(del.id)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
 									</div>
 								</div>
 							</div>
@@ -962,7 +961,7 @@
 						<iframe scrolling="no" id="main" name="main" frameborder="0" src="NewFile.html" style="min-height:800px;width:100%;height:100%;"></iframe>
 					</div>
 					<!--修改密码模块-->
-					<div role="tabpanel" class="tab-pane" id="updatapw">
+					<div role="tabpanel" class="tab-pane" id="updatepw">
 						<div class="check-div">
 						</div>
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
@@ -994,7 +993,7 @@
 								<div class="form-group text-right">
 									<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
 										<button type="reset" class="btn btn-xs btn-white">取 消</button>
-										<button type="submit" @click="updatapassword()" class="btn btn-xs btn-green">保存</button>
+										<button type="submit" @click="updatepassword()" class="btn btn-xs btn-green">保存</button>
 									</div>
 								</div>
 							</form>

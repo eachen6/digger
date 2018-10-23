@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="ch">
+
+	<head>
+		<meta charset="utf-8">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>Digger游戏平台</title>
+		<script src="../js/jquery.min.js"></script>
+		<!--<script src="../js/bootstrap.min.js"></script>-->
+		<!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../css/slide.css" />
+		<link rel="stylesheet" type="text/css" href="../css/flat-ui.min.css" />
+		</head>
+	<body>
+		<div id="">
+			<!--修改密码模块-->
+			<div role="tabpanel" class="tab-pane" id="upda">
+				<div class="check-div">
+				</div>
+				<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label for="sKnot" class="col-xs-4 control-label">用户id：</label>
+							<div class="col-xs-5">
+								<input type="text" class="form-control input-sm duiqi" v-model="news.id" style="margin-top: 7px;" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sKnot" class="col-xs-4 control-label">用户名：</label>
+							<div class="col-xs-5">
+								<input type="text" class="form-control input-sm duiqi" v-model="news.username" style="margin-top: 7px;" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sKnot" class="col-xs-4 control-label">email：</label>
+							<div class="col-xs-5">
+								<input type="text" class="form-control input-sm duiqi" onblur="validateEmail()" v-model="news.email" style="margin-top: 7px;">
+								<div style="margin-top: 5px;margin-bottom: 5px;" id="tishiEmail"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sKnot" class="col-xs-4 control-label">密保问题：</label>
+							<div class="col-xs-5">
+								<input type="text" class="form-control input-sm duiqi" v-model="news.question" style="margin-top: 7px;">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sKnot" class="col-xs-4 control-label">密保答案：</label>
+							<div class="col-xs-5">
+								<input type="text" class="form-control input-sm duiqi" v-model="news.answer" style="margin-top: 7px;">
+							</div>
+						</div>
+						<div class="form-group text-right">
+							<div class="col-xs-offset-4 col-xs-5" style="margin-left: 169px;">
+								<button type="submit" @click="updatenews()" class="btn btn-xs btn-green">保存</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../vue/vue.min.js" ></script>
+		<script type="text/javascript" src="../js/updatenews.js" ></script>
+	</body>
+
+</html>

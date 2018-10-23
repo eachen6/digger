@@ -50,7 +50,8 @@ $(document).ready(function() {
 				success: function(res) {
 					console.log(res)
 					if(res.status == 0) {
-						window.location.href= "/digger/views/index.html?username="+username+'&password='+password;
+						//window.location.href= "/digger/views/index.html?username="+username+'&password='+password;
+						window.location.href= "updatenews.html?username="+username+'&password='+password;
 					}
 				}
 			})

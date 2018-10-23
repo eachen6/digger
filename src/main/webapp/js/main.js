@@ -50,6 +50,12 @@ $(document).ready(function(){
 		else if(name=="mygame"){
 			$("#frame").load("mygame.html")
 		}
+		else if(name=="update_mine"){
+			$("#frame").load("updatenews.html")
+		}
+		else if(name=="update_pwd"){
+			$("#frame").load("setNewPwd.html")
+		}
 		
 		$(".loading").fadeOut(500);
 	})

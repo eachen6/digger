@@ -1,9 +1,42 @@
+/*
+ * 登录校验
+ */
+//new Vue({
+//	el:"#wrap",
+//	data:{
+//		
+//	},
+//	methods:{},
+//	created:function(){
+//		checklogin();	
+//	}
+//})
+/*
+ * 登录校验方法
+ */
+//$(document).ready(function(){
+//	function checklogin(){
+//		console.log("测试用户是否有登录")
+//		$.ajax({
+//			    type:"get",
+//				url:"../user/get_userinfo",
+//				async:true,
+//				success: function(res){
+//					console.log(res)
+//					console.log("测试用户是否有登录aaaa")
+//					
+//				}
+//		});
+//	}
+//})
+
+
 /**
  * 退出登录模块
  */
 new Vue({
 	el:"#personInfor",
-	methods:{
+	methods:{	
 		logout:function(){
 			$.ajax({
 				type:"post",
@@ -44,14 +77,14 @@ var check = new Vue({
 		getcheckId:function(index){
 			check.upcheck = check.checks[index];
 		},
-		pass:function(id,pageNum){
-			gamepass(id,pageNum);
+		pass:function(id){
+			gamepass(id);
 		},
 		change:function(pn){
 			getCheckList(pn);
 		},
-		delcheck:function(id,pageNum){
-			deletegame(id,pageNum);
+		delcheck:function(id){
+			deletegame(id);
 		}
 	},
 	created:function(){
@@ -95,7 +128,7 @@ function getCheckList(pn){
 /*
  * 游戏审核通过
  */
-function gamepass(id,pageNum){
+function gamepass(id){
 	console.log(id)
 	$.ajax({
 		type:"post",
@@ -105,7 +138,7 @@ function gamepass(id,pageNum){
 		success:function(res){
 			//console.log(res)
 			console.log("审核成功")
-			getCheckList(pageNum);
+			getCheckList(1);
 			getnotupList(1);
 		}
 	});
@@ -113,14 +146,14 @@ function gamepass(id,pageNum){
 /**
  * 删除审核未通过的游戏
  */
-function deletegame(id,pageNum){
+function deletegame(id){
 	$.ajax({
 		type:"post",
 		url:"../gameaudit/delete_game",
 		data:{"id":id},
 		async:true,
 		success:function(res){
-			getCheckList(pageNum);
+			getCheckList(1);
 		}
 	});
 }
@@ -145,8 +178,8 @@ var notup = new Vue({
 		navigatepageNums:[]
 	},
 	methods:{
-		upstock:function(id,pageNum){
-			uptheStock(id,pageNum);
+		upstock:function(id){
+			uptheStock(id);
 		},
 		change:function(pn){
 			getnotupList(pn);
@@ -191,14 +224,14 @@ function getnotupList(pn){
 /**
  * 上架游戏
  */
-function uptheStock(id,pageNum){
+function uptheStock(id){
 	$.ajax({
 		type:"post",
 		data:{"id":id},
 		url:"../gameaudit/onthesshelf_game",
 		async:true,
 		success:function(res){
-			getnotupList(pageNum);
+			getnotupList(1);
 			getsaleList(1);
 		}
 	});
@@ -225,7 +258,7 @@ var sale = new Vue({
 		sales:[]
 	},
 	methods:{
-		downgame:function(index,pageNum){
+		downgame:function(index){
 			var id = sale.sales[index].id;
 			//console.log(id)
 			$.ajax({
@@ -235,7 +268,7 @@ var sale = new Vue({
 				async:true,
 				success:function(res){
 					//console.log(res)
-					getsaleList(pageNum);
+					getsaleList(1);
 					getisdownList(1);
 				}
 			});
@@ -282,7 +315,7 @@ function getsaleList(pn){
 				sale.navigatepageNums = res.data.navigatepageNums;
 				sale.sales = res.data.list;
 				for(var i = 0; i < sale.sales.length; i++){
-					sale.sales[i].shelftime = that.format(sale.sales[i].shelftime)
+					sale.sales[i].updatetime = that.format(sale.sales[i].updatetime)
 				}
 			}
 		}
@@ -361,7 +394,7 @@ var isdown = new Vue({
 		isdowns:[]
 	},
 	methods:{
-		upgame:function(index,pageNum){
+		upgame:function(index){
 			var id = isdown.isdowns[index].id;
 			$.ajax({
 				type:"post",
@@ -369,7 +402,7 @@ var isdown = new Vue({
 				data:{"id":id},
 				async:true,
 				success:function(res){
-					getisdownList(pageNum);
+					getisdownList(1);
 					getsaleList(1);
 				}
 			});
@@ -377,7 +410,7 @@ var isdown = new Vue({
 		change:function(pn){
 			getisdownList(pn);
 		},
-		updatagame:function(index){
+		updategame:function(index){
 			var id = isdown.isdowns[index].id;
 			window.location.href = 'upload1.html?id='+id;
 		}
@@ -414,7 +447,7 @@ function getisdownList(pn){
 				isdown.navigatepageNums = res.data.navigatepageNums;
 				isdown.isdowns = res.data.list;
 				for(var i = 0; i < isdown.isdowns.length; i++){
-					isdown.isdowns[i].shelftime = that.format(isdown.isdowns[i].shelftime)
+					isdown.isdowns[i].updatetime = that.format(isdown.isdowns[i].updatetime)
 				}
 			}
 		}
@@ -445,8 +478,13 @@ var guser = new Vue({
 		updatestate:function(index,pageNum){
 			var id = guser.gusers[index].id;
 			var state = guser.gusers[index].state;
-			if(state>0){state=0;}
-			else{state=1;}
+			if(state>0){
+				state=0;
+			}
+			else{
+				state=1;
+			}
+			
 			$.ajax({
 				type:"post",
 				url:"../admin/updatestatebyid",
@@ -494,6 +532,7 @@ function getguserList(pn){
 				guser.navigatePages = res.data.navigatePages;
 				guser.navigatepageNums = res.data.navigatepageNums;
 				guser.gusers = res.data.list;
+				
 			}
 		}
 	});
@@ -565,12 +604,15 @@ var gnotice = new Vue({
 		savenew:function(pageNum){
 			asavenew(gnotice.syid,pageNum);
 		},
-		delnotice:function(id,pageNum){
-			deletenotice(id,pageNum);
+		delnotice:function(id){
+			deletenotice(id);
 		},
 		change:function(pn){
 			getgnoticeList(pn);
 		}
+	},
+	created:function(){
+		getgnoticeList(1);
 	}
 })
 
@@ -657,14 +699,14 @@ function asavenew(id,pageNum){
 	});
 }
 //删除公告
-function deletenotice(id,pageNum){
+function deletenotice(id){
 	$.ajax({
 		type:"post",
 		url:"../announcement/delete_announcement",
 		data:{"id":id},
 		async:true,
 		success:function(res){
-			getgnoticeList(pageNum);
+			getgnoticeList(1);
 		}
 	});
 }
@@ -750,7 +792,6 @@ function format(shijianchuo)
 function sendtheFile(files, editor, $editable) {
 	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
 	console.log(filename)
-
 	var data = new FormData();
 	data.append("files", files);
 	$.ajax({
@@ -771,7 +812,7 @@ function sendtheFile(files, editor, $editable) {
 	});
 }
 
-	$("#adddeclared").click(function() {
+$("#adddeclared").click(function() {
 	var code = $('.summernote').summernote('code');
 	var form = new FormData(document.getElementById("declared"));
 	form.append("detailtxt", code);
@@ -799,7 +840,6 @@ function sendtheFile(files, editor, $editable) {
 	var gamediscount = new Vue({
 	el:"#discounts",
 	data:{
-		
 		goods:[],
 		nonediscounts:[],
 		newid:"",
@@ -811,27 +851,24 @@ function sendtheFile(files, editor, $editable) {
 	},
 	methods:{
 		cut_price:function(id){ 
-		gamediscount.newid = id ;
+			gamediscount.newid = id ;
 		},
 		savefirstdiscount:function(){
 			save_firstdiscount();
-			
 		},
 		getdiscount:function(index){
-		gamediscount.olddiscountid = gamediscount.goods[index].discountid ;	
-		console.log(gamediscount.olddiscountid)
-		gamediscount.olddiscount=gamediscount.goods[index].discount;
-		gamediscount.oldstarttime=gamediscount.goods[index].starttime;
-		gamediscount.olddeadline=gamediscount.goods[index].olddeadline;
+			gamediscount.olddiscountid = gamediscount.goods[index].discountid ;	
+			console.log(gamediscount.olddiscountid)
+			gamediscount.olddiscount=gamediscount.goods[index].discount;
+			gamediscount.oldstarttime=gamediscount.goods[index].starttime;
+			gamediscount.olddeadline=gamediscount.goods[index].olddeadline;
 		},
 		saveupdateprice:function(){
 			save_updateprice();
-			
 		},
 		deletediscount:function(index){
 			gamediscount.deleteid=gamediscount.goods[index].discountid
 			delete_discounts();
-			
 		}
 	}
 })
@@ -851,7 +888,6 @@ function getgoodsList(){
 			console.log(gamediscount.goods)
 		}
 	});
-	
 }
 /**
  * 获取未打折商品详情
@@ -867,7 +903,6 @@ function getnonediscountLit(){
 			gamediscount.nonediscounts = res.data;
 		}
 	});
-	
 }
 
 function save_firstdiscount(){
@@ -887,7 +922,6 @@ function save_firstdiscount(){
 		    getnonediscountLit();
 		}
 	});
-	
 }
 
 function save_updateprice(){
@@ -910,7 +944,6 @@ function save_updateprice(){
 		    getnonediscountLit();
 		}
 	});
-	
 }
 
 function delete_discounts(){
@@ -939,7 +972,6 @@ function getUrlParam(name) {
 	return null;
 }
 
-
 /**
  * 公告发布
  */
@@ -957,18 +989,18 @@ $(function() {
 /**
  * 密码修改模块
  */
-var updatapw = new Vue({
-	el:"#updatapw",
+var updatepw = new Vue({
+	el:"#updatepw",
 	data:{
 		username:"",
 		oldpassword:"",
 		newpassword:""
 	},
 	methods:{
-		updatapassword:function(){
+		updatepassword:function(){
 			var that = this;
-			var oldpassword = updatapw.oldpassword;
-			var newpassword = updatapw.newpassword;
+			var oldpassword = updatepw.oldpassword;
+			var newpassword = updatepw.newpassword;
 			$.ajax({
 				type:"post",
 				url:"../user/updatePassword",
@@ -979,7 +1011,7 @@ var updatapw = new Vue({
 				async:true,
 				success:function(res){
 					if(res.status==0){
-						window.location.href= "/digger/views/index.html?username="+updatapw.username+'&password='+newpassword;						
+						window.location.href= "/digger/views/index.html?username="+updatepw.username+'&password='+newpassword;						
 					}else if(res.status==1){
 						alert(res.msg)
 					}
@@ -1146,41 +1178,23 @@ function disagreerefund(ordernum){
 	});
 }
 
-function add0(m){return m<10?'0'+m:m }
-function format(shijianchuo)
-{
-//shijianchuo是整数，否则要parseInt转换
-var time = new Date(shijianchuo);
-var y = time.getFullYear();
-var m = time.getMonth()+1;
-var d = time.getDate();
-var h = time.getHours();
-var mm = time.getMinutes();
-var s = time.getSeconds();
-return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-}
-
 
 $(function(){
-$("#but_9").click(function(e){
-	change(1);
-})
-
-$("#but_1").click(function(e){
-	getCheckList(1);
-})
-
-$("#but_3").click(function(e){
-	getguserList(1);
-})
-
-$("#but_4").click(function(e){
-	getgnoticeList(1);
-})
-
-$("#but_7").click(function(e){
-	getgoodsList();
-	getnonediscountLit();
-})
-
+	$("#but_9").click(function(e){
+		change(1);
+	})
+	
+	$("#but_1").click(function(e){
+		getCheckList(1);
+	})
+	
+	$("#but_3").click(function(e){
+		getguserList(1);
+	})
+	
+	
+	$("#but_7").click(function(e){
+		getgoodsList();
+		getnonediscountLit();
+	})
 })
