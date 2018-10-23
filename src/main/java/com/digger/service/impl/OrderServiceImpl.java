@@ -21,6 +21,7 @@ import com.digger.pojo.Payinfo;
 import com.digger.service.OrderService;
 import com.digger.vo.FindMyGameVO;
 import com.digger.vo.OrderVO;
+import com.digger.vo.StatisticsVO;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
@@ -128,9 +129,9 @@ public class OrderServiceImpl implements OrderService{
 		Integer rowCount = 0;
 		rowCount = orderMapper.applyRefundByid(id);
 		if(rowCount>0){
-            return ServerResponse.createBySuccessMessage("取消成功！");
+            return ServerResponse.createBySuccessMessage("已申请退款！");
         }
-        return ServerResponse.createByErrorMessage("取消失败！");
+        return ServerResponse.createByErrorMessage("申请退款失败！");
 	}
 
 	/* 
@@ -205,5 +206,72 @@ public class OrderServiceImpl implements OrderService{
 		}
 		return ServerResponse.createBySuccess("成功查看我的游戏", list);
 	}
+
+	/* 
+	 * 销量统计
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse saleStatistics(String year) {
+		List<StatisticsVO> list = new ArrayList<StatisticsVO>();
+		list = orderMapper.saleStatistics(year);
+		return ServerResponse.createBySuccess(list);
+	}
 	
+	/* 
+	 * 各游戏销量统计
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse gameSaleStatistics(String date1, String date2) {
+		List<StatisticsVO> list = new ArrayList<StatisticsVO>();
+		System.out.println(date2);
+		list = orderMapper.gameSaleStatistics(date1, date2);
+		return ServerResponse.createBySuccess(list);
+	}	
+	
+	/* 
+	 * 获取退款列表
+	 * @author 高志劲
+	 * 查看我的游戏包含别人赠送的
+	 * @author 徐子颖
+	 */
+	@Override
+	public List<OrderVO> toGetRefund() {
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		list = orderMapper.toGetRefund();
+		return list;
+	}
+
+	/* 
+	 * 同意退款（将state该为2）
+	 * @author 高志劲
+	 */
+	@Override
+	public boolean goRefund(String ordernum) {
+		Integer result = 0;
+		result = orderMapper.goRefund(ordernum);
+		System.out.println(result+"--------------------------------");
+		if(result>0)
+			return true;
+		else 
+			return false;
+	}
+
+	/* 
+	 * 不同意退款（将state该为4）
+	 * @author 高志劲
+	 */
+	@Override
+	public ServerResponse disagreeRefund(String ordernum) {
+		Integer result = 0;
+		System.out.println(ordernum+"kkkkkkkkkkkkkkkk");
+		result = orderMapper.disagreeRefund(ordernum);
+		if(result>0)
+			return ServerResponse.createBySuccessMessage("已不同意退款！");
+		else 
+			return ServerResponse.createByErrorMessage("不同意退款失败！");
+	}
+
+
 }

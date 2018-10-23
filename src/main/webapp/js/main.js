@@ -44,6 +44,12 @@ $(document).ready(function(){
 		else if(name=="anno"){
 			$("#frame").load("anno.html")
 		}
+		else if(name=="toupload"){
+			$("#frame").load("upload.html")
+		}
+		else if(name=="mygame"){
+			$("#frame").load("mygame.html")
+		}
 		
 		$(".loading").fadeOut(500);
 	})

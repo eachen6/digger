@@ -225,11 +225,6 @@
       update `order` set state = 1 where id=#{id}
   </update>
   
-   <!-- 新增方法：申请退款--> 
-  <update id="applyRefundByid" >
-      update `order` set state = 2 where id=#{id}
-  </update>
-  
   <!-- 新增方法：查看我的游戏--> 
   <select id="toGetMyGame" resultType="com.digger.vo.FindMyGameVO">
       SELECT game.id,game.name,game.coverurl
@@ -238,4 +233,45 @@
       or (`order`.userid=#{userid} and `order`.issend=1 and (`order`.state=1 or `order`.state=2 or `order`.state=4) 
       and `order`.gameid = game.id and send.targetid=#{userid}) 
   </select>
+  
+  <!-- 新增方法：统计销量--> 
+  <select id="saleStatistics" resultType="com.digger.vo.StatisticsVO">
+      select year(createtime) Syear,month(createtime) Smonth,sum(price) Ssum
+      from `order`
+      where year(createtime) = #{myyear}
+      GROUP BY year(createtime), month(createtime)
+  </select>
+  
+  <!-- 新增方法：各游戏统计销量--> 
+  <select id="gameSaleStatistics" resultType="com.digger.vo.StatisticsVO">
+      select game.name as name, sum(`order`.price) as Ssum
+      from `order`, game
+      where game.id = `order`.gameid and 
+      DATE(`order`.createtime) BETWEEN #{date1} AND #{date2}
+      GROUP BY game.id
+      ORDER BY SUM(`order`.price) 
+      LIMIT 0,5
+  </select>
+  
+   <!-- 新增方法：申请退款--> 
+  <update id="applyRefundByid" >
+      update `order` set state = 2,updatetime = now() where id=#{id}
+  </update>
+  
+  <!-- 新增方法：获取退款中列表--> 
+   <select id="toGetRefund" resultType="com.digger.vo.OrderVO">
+      select ordernum,userid,`order`.price,username,`order`.updatetime, game.name
+      from `order`,user,game
+      where `order`.state = 2 and `order`.userid = user.id and `order`.gameid = game.id
+  </select>
+  
+    <!-- 新增方法：退款成功更改state=3--> 
+  <update id="goRefund" >
+      update `order` set state = 3,updatetime = now() where ordernum=#{ordernum}
+  </update>
+  
+   <!-- 新增方法：不同意退款更改state=4--> 
+  <update id="disagreeRefund" >
+      update `order` set state = 4 where ordernum=#{ordernum}
+  </update>
 </mapper>

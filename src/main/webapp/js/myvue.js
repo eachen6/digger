@@ -1125,7 +1125,6 @@ function agreerefund(ordernum,price){
 }
 
 function disagreerefund(ordernum){
-	alert(ordernum);
 	$.ajax({
 		type:"POST",
 		url:"../order/disagreerefund",

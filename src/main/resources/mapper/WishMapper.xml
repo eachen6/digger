@@ -129,6 +129,7 @@
     from wish,
     (select game.id,price,discountstate,name,discount from game left join discountlist on game.id=discountlist.gameid and now()>=starttime and deadline>=now()) as a 
     where wish.gameid = a.id and wish.userid = #{userid}
+    order by createtime desc
    </select>
   
   
