@@ -384,7 +384,7 @@
 										<tr v-for="(item,index) in notups">
 											<td>{{item.id}}</td>
 											<td>{{item.name}}</td>
-											<td>{{item.uploadid}}</td>
+											<td>{{item.username}}</td>
 											<td>{{item.updatetime}}</td>
 											<td>{{item.category}}</td>
 											<td><button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
@@ -483,7 +483,7 @@
 									<tr v-for="(item,index) in sales">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
+										<td>{{item.username}}</td>
 										<td>{{item.shelftime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
@@ -612,7 +612,7 @@
 									<tr v-for="(item,index) in isdowns">
 										<td>{{item.id}}</td>
 										<td>{{item.name}}</td>
-										<td>{{item.uploadid}}</td>
+										<td>{{item.username}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
 										<td>

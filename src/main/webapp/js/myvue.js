@@ -379,7 +379,7 @@ var isdown = new Vue({
 		},
 		updatagame:function(index){
 			var id = isdown.isdowns[index].id;
-			window.location.href = 'upload1.html'+id;
+			window.location.href = 'upload1.html?id='+id;
 		}
 	},
 	created:function(){
