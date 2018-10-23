@@ -112,6 +112,9 @@
 				box-shadow: 10px 10px 5px #888888;
 				color: #ffffff;
 			}
+			/*.footer .row .pagination{
+				color: #008000;	
+			}*/
 		</style>
 		<!--[if lt IE 9]>
   <script src="js/html5shiv.min.js"></script>
@@ -138,15 +141,15 @@
 					</p>
 				</div>
 				<div class="meun-title">账号管理</div>
-				<div class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
-				<div class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">游戏上传</div>
-				<div class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
-				<div class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
-				<div class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
-				<div class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
-				<div class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
-				<div class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
-				<div class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
+				<div  id="but_1" class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="../img/icon1_grey.png">游戏审核</div>
+				<div  id="but_2" class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="../img/icon2_grey.png">游戏上传</div>
+				<div  id="but_3" class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">用户管理</div>
+				<div  id="but_4" class="meun-item" href="#gonggao" aria-controls="gonggao" role="tab" data-toggle="tab"><img src="../img/icon4_grey.png">公告管理</div>
+				<div  id="but_5" class="meun-item" href="#self" aria-controls="self" role="tab" data-toggle="tab"><img src="../img/icon5_grey.png">个人信息</div>
+				<div  id="but_6" class="meun-item" href="#shuju" aria-controls="shuju" role="tab" data-toggle="tab"><img src="../img/icon6_grey.png">数据统计</div>
+				<div  id="but_7" class="meun-item" href="#discounts" aria-controls="discounts" role="tab" data-toggle="tab"><img src="../img/icon7_grey.png">商品打折</div>
+				<div  id="but_8" class="meun-item" href="#updatapw" aria-controls="updatapw" role="tab" data-toggle="tab"><img src="../img/icon8_grey.png">密码修改</div>
+				<div  id="but_9" class="meun-item" href="#refund" aria-controls="refund" role="tab" data-toggle="tab"><img src="../img/icon3_grey.png">退款审核</div>
 			</div>
 			<!-- 右侧具体内容栏目 -->
 			<div id="rightContent">
@@ -194,21 +197,22 @@
 										<td>{{item.username}}</td>
 										<td>{{item.createtime}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button></td>
+										<td><button @click="getcheckId(index)" class="btn btn-info" data-toggle="modal" data-target="#reviseSchool">审核</button> &nbsp;
+											<button @click="getcheckId(index)" class="btn btn-danger" data-toggle="modal" data-target="#deleteCheck">删除</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-
 						<!--页码块-->
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -287,16 +291,24 @@
 											<div class="row">
 												<div class="col-sm-6 col-md-6">
 													<a href="#" class="thumbnail">
-														<img :src="upcheck.coverurl" alt="通用的占位符缩略图">
-													</a>
-												</div>
-												<div class="col-sm-6 col-md-6">
-													<a href="#" class="thumbnail">
-														<img :src="upcheck.carouseurl" alt="通用的占位符缩略图">
+														<img :src="upcheck.surfaceurl" alt="通用的占位符缩略图">
 													</a>
 												</div>
 											</div>
-
+											<div class="row">
+												<p>游戏名称：{{upcheck.name}}</p>
+												<p>系统要求：{{upcheck.system}}</p>
+												<p>开发商：{{upcheck.developer}}</p>
+												<p>运行显卡：{{upcheck.grcard}}</p>
+												<p>运营商：{{upcheck.oper}}</p>
+												<p>发行平台：{{upcheck.platform}}</p>
+												<p>CD：{{upcheck.cd}}</p>
+												<p>CPU：{{upcheck.cpu}}</p>
+												<p>Driver：{{upcheck.driver}}</p>
+												<p>价格：{{upcheck.price}}</p>
+												<p>运营阶段：{{upcheck.opstage}}</p>
+												<p>内存：{{upcheck.memory}}</p>
+											</div>
 											<div class="row" style="margin-top:10px ; margin-left: 6px;">
 												<div v-html="upcheck.detailtxt"></div>
 											</div>
@@ -311,6 +323,27 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deleteCheck" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该游戏？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" @click="delcheck(upcheck.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- /.modal -->
 
@@ -354,8 +387,7 @@
 											<td>{{item.uploadid}}</td>
 											<td>{{item.updatetime}}</td>
 											<td>{{item.category}}</td>
-											<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button>
-												&nbsp;<button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
+											<td><button v-on:click="upstock(item.id,pageNum)" class="btn btn-info">上架</button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -364,11 +396,11 @@
 							<footer class="footer">
 								<div class="row">
 									<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-									<div class="col-md-6">
+									<div>
 										当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 									</div>
 									<!-- 分页码 -->
-									<div class="col-md-6">
+									<div>
 										<nav aria-label="Page navigation">
 											<ul class="pagination">
 												<!-- 
@@ -413,36 +445,7 @@
 									</div>
 								</div>
 							</footer>
-							<!--弹出添加公告窗口-->
-							<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid">
-												<form id="addnotice">
-													<input name="title" class="input-lg" placeholder="公告标题" />
 
-													<br />
-													<br />
-													<div class="summernote" id="one"></div>
-												</form>
-											</div>
-										</div>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-											<button type="button" v-on:click="mo_upstock" data-dismiss="modal" class="btn btn-xs btn-green">发布</button>
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-							<!-- /.modal -->
 						</div>
 					</div>
 					<!--游戏在销售模块-->
@@ -484,7 +487,8 @@
 										<td>{{item.shelftime}}</td>
 										<td>{{item.price}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="pass(item.id)" data-target="#addChar">添加公告</button> &nbsp;
+											<button @click="downgame(index,pageNum)" class="btn btn-info">下架</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -493,11 +497,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -542,6 +546,36 @@
 								</div>
 							</div>
 						</footer>
+						<!--弹出添加公告窗口-->
+						<div class="modal fade" id="addChar" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">添加公告</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											<form id="addnotice">
+												<input name="title" class="input-lg" placeholder="公告标题" />
+
+												<br />
+												<br />
+												<div class="summernote" id="one"></div>
+											</form>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" v-on:click="mo_upstock" data-dismiss="modal" class="btn btn-xs btn-green">发布</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
 					</div>
 					<!--游戏下架模块-->
 					<div role="tabpanel" class="tab-pane" id="sitt">
@@ -581,7 +615,10 @@
 										<td>{{item.uploadid}}</td>
 										<td>{{item.updatetime}}</td>
 										<td>{{item.category}}</td>
-										<td><button @click="upgame(index,pageNum)" class="btn btn-info">上架</button></td>
+										<td>
+											<button @click="updatagame(index)" class="btn btn-confirm" >修改信息</button>
+											<button @click="upgame(index,pageNum)" class="btn btn-info">上架</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -590,11 +627,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -651,14 +688,7 @@
 						<div class="check-div form-inline">
 							<div class="col-xs-4">
 								<input type="text" id="select1" v-model="username" name="select" class="form-control input-sm" placeholder="输入文字搜索">
-								<button @click="selectbyname()" class="btn btn-white btn-xs">查 询 </button>
-							</div>
-							<div class="col-lg-3 col-lg-offset-2 col-xs-4" style=" padding-right: 40px;text-align: right;">
-								<label for="paixu">排序:&nbsp;</label>
-								<select class=" form-control">
-									<option>用户id</option>
-									<option>状态</option>
-								</select>
+								<button @click="selectbyinput()" class="btn btn-white btn-xs">查 询 </button>
 							</div>
 						</div>
 						<div id="guser" class="table-responsive">
@@ -686,11 +716,11 @@
 						<footer class="footer">
 							<div class="row">
 								<!-- 分页文字信息 ：拿到控制器处理请求时封装在pageInfo里面的分页信息-->
-								<div class="col-md-6">
+								<div>
 									当前{{pageNum}}页,共{{pages}}页,总{{total}}条记录
 								</div>
 								<!-- 分页码 -->
-								<div class="col-md-6">
+								<div>
 									<nav aria-label="Page navigation">
 										<ul class="pagination">
 											<!-- 
@@ -776,8 +806,9 @@
 										<td>{{item.name}}</td>
 										<td>{{item.title}}</td>
 										<td>{{item.updatetime}}</td>
-										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button>
-											&nbsp;<button class="btn btn-danger">删除</button></td>
+										<td><button class="btn btn-info" data-toggle="modal" v-on:click="mo_updategg(index)" data-target="#updataChar">修改</button> &nbsp;
+											<button @click="getnoticeId(index)" class="btn btn-danger" data-toggle="modal" data-target="#deletenotice">删除</button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -856,13 +887,34 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-										<button type="button" v-on:click="savenew(pageNum)"  data-dismiss="modal" class="btn btn-xs btn-green">保 存</button>
+										<button type="button" v-on:click="savenew(pageNum)" data-dismiss="modal" class="btn btn-xs btn-green">保 存</button>
 									</div>
 
 								</div>
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+						<!--弹出删除用户警告窗口-->
+						<div class="modal fade" id="deletenotice" role="dialog" aria-labelledby="gridSystemModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container-fluid">
+											确定要删除该公告？删除后不可恢复！
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+										<button type="button" @click="delnotice(del.id,pageNum-1)" class="btn btn-xs btn-danger" data-dismiss="modal">确 定</button>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- /.modal -->
 					</div>
@@ -913,7 +965,6 @@
 					<div role="tabpanel" class="tab-pane" id="updatapw">
 						<div class="check-div">
 						</div>
-
 						<div style="padding: 50px 0;margin-top: 50px;background-color: #fff; text-align: right;width: 420px;margin: 50px auto;">
 							<form class="form-horizontal">
 								<div class="form-group">
@@ -1052,6 +1103,7 @@
 						<div class="modal fade" id="changeprice" role="dialog" aria-labelledby="gridSystemModalLabel">
 							<div class="modal-dialog modal-sm " role="document">
 								<div class="modal-content">
+
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title" id="gridSystemModalLabel">折扣修改</h4>
@@ -1067,17 +1119,10 @@
                                         <label>终止时间</label>
 										<input type="date" name="deadline" v-model="olddeadline" />
 										</form>
-											<div class="row" style="margin-top:10px ; margin-left: 6px;">
-		                                        
-		                                        <label>折扣力度</label>
-												<input type="text" id="" name="" value="" />
-												<label>起始时间</label>
-												<input type="datetime-local" class="form_datetime" id="" name="" value="" />
-		                                        <label>终止时间</label>
-												<input type="datetime-local" class="form_datetime" id="" name="" value="" />
 											</div>
 										</div>
 									</div>
+
 									<div class="modal-footer">
 										<button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
 										<button type="button" v-on:click="saveupdateprice" class="btn btn-xs btn-green" data-dismiss="modal">保存</button>
@@ -1092,22 +1137,27 @@
 					<div role="tabpanel" class="tab-pane" id="refund">
 						<div class="check-div">
 						</div>
-						<div id="gnotice" class="table-responsive">
+						<div id="" class="table-responsive">
 							<table class="table">
 								<thead class="table-active">
 									<tr>
+									    <th>订单号</th>
 										<th>游戏名</th>
-										<th>标题</th>
-										<th>上次更改时间</th>
+										<th>价格</th>
+										<th>退款人</th>
+										<th>退款时间</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(item,index) in list">
+									<tr v-for="(item,index) in order">
+									    <td>{{item.ordernum}}</td>
 										<td>{{item.name}}</td>
-										<td>{{item.title}}</td>
+										<td>{{item.price}}</td>
+										<td>{{item.username}}</td>
 										<td>{{item.updatetime}}</td>
-										<button class="btn btn-danger">退款</button></td>
+										<td><button class="btn btn-danger" @click="agreerefund(item.ordernum,item.price)">通过退款</button>
+										<button class="btn btn-danger" @click="disagreerefund(item.ordernum)">不通过退款</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1168,7 +1218,6 @@
 						</footer>
 					</div>
 				</div>
-			</div>
 		</div>
 
 		<script type="text/javascript" src="../vue/vue.min.js"></script>

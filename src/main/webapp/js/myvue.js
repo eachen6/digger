@@ -11,6 +11,9 @@ new Vue({
 				async:true,
 				success:function(res){
 					window.location.href = "admin.html";
+				},
+				error:function(){
+					window.location.href = "admin.html";
 				}
 			});
 		}
@@ -103,10 +106,13 @@ function gamepass(id,pageNum){
 			//console.log(res)
 			console.log("审核成功")
 			getCheckList(pageNum);
-
+			getnotupList(1);
 		}
 	});
 }
+/**
+ * 删除审核未通过的游戏
+ */
 function deletegame(id,pageNum){
 	$.ajax({
 		type:"post",
@@ -142,20 +148,12 @@ var notup = new Vue({
 		upstock:function(id,pageNum){
 			uptheStock(id,pageNum);
 		},
-		pass:function(id){
-			notup.mo_noticeId=id;
-			var info ="公告内容";
-            $('#one').summernote('code', info)
-		},
-		mo_upstock:function(){
-			passtheNotic(notup.mo_noticeId);
-		},
 		change:function(pn){
 			getnotupList(pn);
 		}
 	},
 	created:function(){
-		getnotupList(1);
+		getnotupList(1);//调用函数
 	}
 })
 
@@ -201,60 +199,9 @@ function uptheStock(id,pageNum){
 		async:true,
 		success:function(res){
 			getnotupList(pageNum);
+			getsaleList(1);
 		}
 	});
-}
-/**
- * 上传公告图片并回调
- */
-function sendFile1(files, editor, $editable) {
-	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
-	console.log(filename)
-	var data = new FormData();
-	data.append("files", files);
-	$.ajax({
-		data: data,
-		type: "POST",
-		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
-			console.log(res)
-			$('#one').summernote('insertImage', res.data.richimgurl);
-		},
-		error: function() {
-			alert("上传失败");
-		}
-	});
-}
-
-/**
- * 添加公告发布
- */
-function passtheNotic(id){
-	var code = $('#one').summernote('code');
-	console.log(code)
-		var form = new FormData(document.getElementById("addnotice"));
-		form.append("content", code);
-		form.append("gameid", id);
-		//console.log(form)
-		$.ajax({
-			url: "../announcement/add_announcement",
-			type: "POST",
-			data: form,
-			processData: false,
-			contentType: false,
-			success: function(res) {
-				//window.clearInterval(timer);
-				console.log(res);
-				if(res.status == 0){
-					alert(res.msg)
-					
-				}
-			}
-		})
 }
 
 /**
@@ -289,6 +236,7 @@ var sale = new Vue({
 				success:function(res){
 					//console.log(res)
 					getsaleList(pageNum);
+					getisdownList(1);
 				}
 			});
 		},
@@ -305,7 +253,7 @@ var sale = new Vue({
 		}
 	},
 	created:function(){
-		getsaleList(1);
+		getsaleList(1);//调用函数
 	}
 })
 
@@ -422,11 +370,16 @@ var isdown = new Vue({
 				async:true,
 				success:function(res){
 					getisdownList(pageNum);
+					getsaleList(1);
 				}
 			});
 		},
 		change:function(pn){
 			getisdownList(pn);
+		},
+		updatagame:function(index){
+			var id = isdown.isdowns[index].id;
+			window.location.href = 'upload1.html'+id;
 		}
 	},
 	created:function(){
@@ -504,67 +457,16 @@ var guser = new Vue({
 				async:true,
 				success:function(res){
 					getguserList(pageNum);
-
 				}
 			});
 		},
-/*		deletestate:function(index){
-			guser.id=guser.gusers[index].id;
-		},
-		deluser:function(id){
-			$.ajax({
-				type:"post",
-				url:"../admin/deleteuserbyid",
-				data:{"id":id},
-				async:true,
-				success:function(res){
-					getguserList(1);
-				}
-			});
-		},*/
 		change:function(pn){
 				inputselect(pn);
 		},
 		//查询用户
 		selectbyinput:function(){
 			inputselect(1);
-			getguserList(pn);
-		},
-		//查询用户
-		selectbyname:function(){
-			var username = guser.username;
-			console.log(username);
-			var pn = 1;
-			var that = this;
-			$.ajax({
-				type:"get",
-				url:"../admin/selectuserlikeusername/"+pn,
-				data:{"username":username},
-				async:true,
-				success:function(res){
-					console.log(res);
-					if(res.status==0)
-					{
-						that.pageNum = res.data.pageNum;
-						that.total = res.data.total;
-						that.pages = res.data.pages;
-						that.prePage = res.data.prePage;
-						that.nextPage = res.data.nextPage;
-						that.isFirstPage = res.data.isFirstPage;
-						that.isLastPage = res.data.isLastPage;
-						that.hasPreviousPage = res.data.hasPreviousPage;
-						that.hasNextPage = res.data.hasNextPage;
-						that.navigatePages = res.data.navigatePages;
-						that.navigatepageNums = res.data.navigatepageNums;
-						that.gusers = res.data.list;
-					}
-					alert(that.navigatepageNums);
-				}
-			});
 		}
-	},
-	created:function(){
-		getguserList(1);
 	}
 })
 
@@ -596,7 +498,7 @@ function getguserList(pn){
 		}
 	});
 }
-
+//
 function inputselect(pn){
 	var username = guser.username;
 	console.log(username);
@@ -669,9 +571,6 @@ var gnotice = new Vue({
 		change:function(pn){
 			getgnoticeList(pn);
 		}
-	},
-	created:function(){
-		getgnoticeList(1);
 	}
 })
 
@@ -873,26 +772,26 @@ function sendtheFile(files, editor, $editable) {
 }
 
 	$("#adddeclared").click(function() {
-		var code = $('.summernote').summernote('code');
-		var form = new FormData(document.getElementById("declared"));
-		form.append("detailtxt", code);
-		console.log(form)
-		$.ajax({
-			url: "../game/add1",
-			type: "POST",
-			data: form,
-			processData: false,
-			contentType: false,
-			success: function(res) {
-				//window.clearInterval(timer);
-				console.log(res)
-				if(res.status == 0){
-					alert(res.msg)
-					window.location.href="upload.html"
-				}
+	var code = $('.summernote').summernote('code');
+	var form = new FormData(document.getElementById("declared"));
+	form.append("detailtxt", code);
+	console.log(form)
+	$.ajax({
+		url: "../game/add1",
+		type: "POST",
+		data: form,
+		processData: false,
+		contentType: false,
+		success: function(res) {
+			//window.clearInterval(timer);
+			console.log(res)
+			if(res.status == 0) {
+				alert(res.msg)
+				window.location.href = "upload.html"
 			}
-		})
+		}
 	})
+})
 
 /*
  * 商品打折
@@ -934,10 +833,6 @@ function sendtheFile(files, editor, $editable) {
 			delete_discounts();
 			
 		}
-	},
-	created:function(){
-		getgoodsList();
-		getnonediscountLit();
 	}
 })
 
@@ -1032,7 +927,6 @@ function delete_discounts(){
 		    getnonediscountLit();
 		}
 	});
-	
 }
 /*
  * 获取路径参数
@@ -1176,10 +1070,6 @@ var refund = new Vue({
 	}
 })
 
-$("#getrefund").click(function(e){
-	change(1);
-})
-
 function change(pn){
 	$.ajax({
 		type:"POST",
@@ -1270,3 +1160,28 @@ var mm = time.getMinutes();
 var s = time.getSeconds();
 return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
+
+
+$(function(){
+$("#but_9").click(function(e){
+	change(1);
+})
+
+$("#but_1").click(function(e){
+	getCheckList(1);
+})
+
+$("#but_3").click(function(e){
+	getguserList(1);
+})
+
+$("#but_4").click(function(e){
+	getgnoticeList(1);
+})
+
+$("#but_7").click(function(e){
+	getgoodsList();
+	getnonediscountLit();
+})
+
+})

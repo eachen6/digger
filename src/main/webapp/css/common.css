@@ -185,7 +185,8 @@ body {
 }
 .footer {
 	float: right;
-	margin-right: 20px
+	margin-right: 200px;
+	margin-top: 40px;
 }
 .modal-header {
 	/*background-color: #e3e8ee;*/
