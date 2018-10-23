@@ -952,3 +952,132 @@ var updatapw = new Vue({
 	}
 })
 
+
+//退款审核
+var refund = new Vue({
+	el:"#refund",
+	data:{
+		order: [],
+		pageNum: "",
+		total: "",
+		pages: "",
+	    prePage:"",
+		nextPage:"",
+		isFirstPage:"",
+		isLastPage:"",
+		hasPreviousPage:"",
+		hasNextPage:"",
+		navigatePages:"",
+		navigatepageNums:[]
+	},
+	methods: {
+		agreerefund:function(ordernum,price){
+			agreerefund(ordernum,price);
+		},
+		disagreerefund:function(ordernum){
+			disagreerefund(ordernum);
+		},
+		change:function(pn){
+			change(pn);
+		}
+	},
+	created: function(){
+		
+	}
+})
+
+$("#getrefund").click(function(e){
+	alert("nimei");
+	change(1);
+})
+
+function change(pn){
+	$.ajax({
+		type:"POST",
+		url:"../order/getrefund/"+pn,
+		async:true,
+		success: function(res){	
+			console.log("eee",res);
+			if(res.status == 0)
+			{
+				refund.order = res.data.list;
+				refund.pageNum = res.data.pageNum;
+				refund.total = res.data.total;				
+				refund.pages = res.data.pages;
+				refund.prePage = res.data.prePage;
+				refund.nextPage = res.data.nextPage;
+				refund.isFirstPage = res.data.isFirstPage;
+				refund.isLastPage = res.data.isLastPage;				
+				refund.hasPreviousPage = res.data.hasPreviousPage;			
+				refund.hasNextPage = res.data.hasNextPage;
+				refund.navigatePages = res.data.navigatePages;
+				refund.navigatepageNums = res.data.navigatepageNums;
+				for(var i = 0; i < refund.order.length; i++){
+					refund.order[i].updatetime = format(refund.order[i].updatetime);
+				}
+			}
+			else if(res.status==1)
+				alert(res.msg);
+		}
+	});
+}
+
+function agreerefund(ordernum,price){
+	$.ajax({
+		type:"POST",
+		url:"../order/goRefund",
+		data:{
+			ordernum:ordernum,
+			price:price
+		},
+		async:true,
+		success: function(res){
+			console.log(res);
+			if(res.status == 1){
+				alert(res.msg);
+			}
+			else if(res.status == 0)
+			{
+				alert(res.msg);
+			}
+			change(1);
+		}
+	});
+}
+
+function disagreerefund(ordernum){
+	alert(ordernum);
+	$.ajax({
+		type:"POST",
+		url:"../order/disagreerefund",
+		data:{
+			ordernum:ordernum
+		},
+		async:true,
+		success: function(res){
+			console.log(res);
+			if(res.status == 1){
+				alert(res.msg);
+			}
+			else if(res.status == 0)
+			{
+				alert(res.msg);
+			}
+			change(1);
+		}
+	});
+}
+
+function add0(m){return m<10?'0'+m:m }
+function format(shijianchuo)
+{
+//shijianchuo是整数，否则要parseInt转换
+var time = new Date(shijianchuo);
+var y = time.getFullYear();
+var m = time.getMonth()+1;
+var d = time.getDate();
+var h = time.getHours();
+var mm = time.getMinutes();
+var s = time.getSeconds();
+return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+}

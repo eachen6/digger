@@ -1,59 +1,293 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus?">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <style type="text/css">
+  #ecm1{width: 100%;height:300px;}
+  #ecm2{width: 100%;height:300px;}
+ 
+  </style>
+  <link type="text/css" href="../css/bootstrap.css" />
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/jquery-1.9.1.js"></script>
+  <script src="../echarts/echarts_4.1.0.rc2_echarts.min.js"></script>
+  <script src="../echarts/monitor.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.js"></script>
+  <title>TIZA STAR大数据运维总览图</title>
+ </head>
+ <body>
+        <div class="fields">
+          <select id="mySelect" name="color" class="change" tabindex="4">
+            <option value="2018" selected="selected">2018</option>
+            <option value="2019">2019</option>
+          </select>
+        </div>
+     <br />
+    <div id="ecm1" ></div>
+    <div id="ecm2" ></div>
+    <script type="text/javascript">
+    
+    $(document).ready(function(){
+    	$(function(){
+    		getData(2018);
+    	});
+    	
+    	$('#mySelect').change(function(){
+    		alert($(this).children('option:selected').val());
+    		var p1=$(this).children('option:selected').val();//这就是selected的值
+    		getData(p1);
+    		})
+        
+    })
+    var y=new Array(13);
+    
+    function getData(year){
+    	alert(444);
+    	$.ajax({
+    		type:"POST",
+    		url:"../order/salestatistics",
+    		data:{
+    			year:year
+    		},
+    		async:true,
+    		success: function(res){
+    			console.log(res);
+    			if(res.status == 0)
+    			{
+    				for(var i = 0; i < 12; i++){
+    						y[i] = 0;
+    				}
+    				for(var i = 0; i < res.data.length; i++){
+    					y[res.data[i].smonth-1] = res.data[i].ssum;
+    					
+    				}
+    				console.log(y);
+    				// 基于准备好的dom，初始化echarts实例
+    		        var a1 = 500;
+    		        var myChart = echarts.init(document.getElementById('ecm1'));
+    		    
+    		        // 指定图表的配置项和数据
+    		        var option1 = {
+    		            title: {
+    		                text: '游戏销售额'
+    		            },
+    		            color:['#3398DB'],
+    		            tooltip: {
+    		            trigger:'axis',
+    		             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+    		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    		                 }
+    		            },
+    		            grid: {
+    		            left: '10%',
+    		            right: '10%',
+    		            bottom: '3%',
+    		           
+    		            containLabel: true
+    		    },
+    		            legend: {
+    		            	top:25,
+    		            	left:5,
+    		                data:['销量']
+    		            },
+    		            xAxis: [
+    		            {
+    		            	type : 'category',
+    		                data: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+    		            }
+    		            ],
+    		            yAxis : [
+    		                {
+    		            type : 'value'
+    		                }
+    		            ],
+    		            series: [{
+    		                name: '销量',
+    		                type: 'bar',
+    		                barWidth: '80%',
+    		                data: [y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7], y[8], y[9], y[10], y[11]]
+    		            }]
+    		        };
+    		        
+    		        // 使用刚指定的配置项和数据显示图表。
+    		        myChart.setOption(option1);
+    		    
+    		   
+    			}
+    		}
+    	});
+    }
+    var swChart = echarts.init(document.getElementById('ecm2'));
+       /*  // 基于准备好的dom，初始化echarts实例
+        var a1 = 500;
+        var myChart = echarts.init(document.getElementById('ecm1'));
+        var swChart = echarts.init(document.getElementById('ecm2'));
+        // 指定图表的配置项和数据
+        var option1 = {
+            title: {
+                text: '游戏销售额'
+            },
+            color:['#3398DB'],
+            tooltip: {
+            trigger:'axis',
+             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                 }
+            },
+            grid: {
+            left: '10%',
+            right: '10%',
+            bottom: '3%',
+           
+            containLabel: true
+    },
+            legend: {
+            	top:25,
+            	left:5,
+                data:['销量']
+            },
+            xAxis: [
+            {
+            	type : 'category',
+                data: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+            }
+            ],
+            yAxis : [
+                {
+            type : 'value'
+                }
+            ],
+            series: [{
+                name: '销量',
+                type: 'bar',
+                barWidth: '80%',
+                data: [y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7], y[8], y[9], y[10], y[11]]
+            }]
+        }; */
+   
+  
+	 var option2 = {
+			title: {
+				text: '热销趋势图'
+			},
+			tooltip: {
+				trigger: 'axis'
+			},
+			legend: {
+				top:20,
+				left:5,
+				textStyle:{
+					color:'black'
+				},
+				orient:'vertical',
+				data:[
+						{name:'英雄联盟',icon:'circle'},
+						{name:'荒野行动',icon:'circle'},
+						{name:'地下城与勇士',icon:'circle'}
+					]
+			},
+			grid: {
+				left: '10%',
+				right: '10%',
+				bottom: '3%',
+				
+				containLabel: true
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				axisLine:{
+					show:true,
+					lineStyle:{
+						color: '#0B3148',
+						width: 1,
+						type: 'solid'
+					}
+				},
+				data: ['周一','周二','周三','周四','周五','周六','周日']
+			},
+			yAxis: {
+				type: 'value',
+				axisLine:{
+					show:true,
+					lineStyle:{
+						color: '#0B3148',
+						width: 1,
+						type: 'solid'
+					}
+				},
+				splitLine:{
+					show:false
+				}
+			},
+			series: [
+						{
+							name:'英雄联盟',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#F3891B'
+								},
+								lineStyle:{
+									normal:{
+									color:'#F3891B',
+									opacity:1
+										}
+								}
+							},  
+							data:[120, 132, 101, 134, 90, 230, 210]
+						},
+						{
+							name:'荒野行动',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#006AD4'
+								},
+								lineStyle:{
+									normal:{
+									color:'#F3891B',
+									opacity:1
+										}
+								}
+							},
+							data:[220, 182, 191, 234, 290, 330, 310]
+						},
+						{
+							name:'地下城与勇士',
+							type:'line',
+							itemStyle : {  
+									normal : {  
+									color:'#009895'
+								},
+								lineStyle:{
+									normal:{
+									color:'#009895',
+									opacity:1
+										}
+								}
+							},
+							data:[150, 232, 201, 154, 190, 330, 410]
+						}
+					]
+		}	
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title></title>
-</head>
 
-<link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="../css/toastr.min.css" />
-<script type="text/javascript " src="../bootstrap/js/jquery-1.9.1.js"></script>
-<script type="text/javascript " src="../bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript " src="../js/toastr.min.js"></script>
-<body>
+        swChart.setOption(option2);
+	     setTimeout(function (){
+	    window.onresize = function () {
+	        myChart.resize();
+	        swChart.resize();
+	    }
+	},200)
+   
+       
+          
+    </script>
 
-<button class="btn btn-success" name="success"id="success"> 成功 </button>
-<button class="btn btn-info" name="info"id="info">提示</button>
-<button class="btn btn-warning" name="warning"id="warning">警告</button>
-<button class="btn btn-danger" name="error"id="error">错误</button>
-<button class="btn btn-primary" name="clear"id="clear">清除</button>
-
-<script type="text/javascript">
-$(function(){
-toastr.options= {
-"closeButton":true,//显示关闭按钮
-"debug":false,//启用debug
-"positionClass":"toast-top-center",//弹出的位置
-"showDuration":"300",//显示的时间
-"hideDuration":"1000",//消失的时间
-"timeOut":"1000",//停留的时间
-"extendedTimeOut":"1000",//控制时间
-"showEasing":"swing",//显示时的动画缓冲方式
-"hideEasing":"linear",//消失时的动画缓冲方式
-"showMethod":"fadeIn",//显示时的动画方式
-"hideMethod":"fadeOut"//消失时的动画方式
-};
-$("#success").click(function(){
-toastr.success("成功样式");
-})
-$("#info").click(function(){
-toastr.info("提示样式");
-})
-$("#warning").click(function(){
-toastr.warning("警告样式");
-})
-$("#error").click(function(){
-toastr.error("错误样式");
-})
-$("#clear").click(function(){
-toastr.clear();//清楚当前页面弹出框
-})
-});
-</script>
-
-
-		<script type="text/javascript" src="../vue/vue.min.js"></script>
-		<script type="text/javascript" src="../js/etc.js"></script>
-</body>
+ </body>
 </html>
