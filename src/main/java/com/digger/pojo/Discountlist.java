@@ -2,15 +2,19 @@ package com.digger.pojo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Discountlist {
     private Integer id;
 
     private Integer gameid;
 
     private Float discount;
-
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date deadline;
-
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date starttime;
 
     private Date createtime;

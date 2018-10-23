@@ -5,6 +5,7 @@ import java.util.Date;
 //獲取熱銷輪播圖
 public class CarouseVO {
 	private int id;
+	private int discountid;
 	private String carouseurl;
 	private String name;
 	private String price;
@@ -87,6 +88,12 @@ public class CarouseVO {
 	}
 	public void setSurfaceurl(String surfaceurl) {
 		this.surfaceurl = surfaceurl;
+	}
+	public int getDiscountid() {
+		return discountid;
+	}
+	public void setDiscountid(int discountid) {
+		this.discountid = discountid;
 	}
 
 }

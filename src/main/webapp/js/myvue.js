@@ -46,6 +46,9 @@ var check = new Vue({
 		},
 		change:function(pn){
 			getCheckList(pn);
+		},
+		delcheck:function(id,pageNum){
+			deletegame(id,pageNum);
 		}
 	},
 	created:function(){
@@ -100,6 +103,18 @@ function gamepass(id,pageNum){
 			//console.log(res)
 			console.log("审核成功")
 			getCheckList(pageNum);
+
+		}
+	});
+}
+function deletegame(id,pageNum){
+	$.ajax({
+		type:"post",
+		url:"../gameaudit/delete_game",
+		data:{"id":id},
+		async:true,
+		success:function(res){
+			getCheckList(pageNum);
 		}
 	});
 }
@@ -111,7 +126,6 @@ var notup = new Vue({
 	el:"#regu",
 	data:{
 		notups:[],
-		mo_noticeId:"",
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -249,6 +263,7 @@ function passtheNotic(id){
 var sale = new Vue({
 	el:"#stud",
 	data:{
+		mo_noticeId:"",
 		pageNum: "",
 		total: "",
 		pages: "",
@@ -276,6 +291,14 @@ var sale = new Vue({
 					getsaleList(pageNum);
 				}
 			});
+		},
+		pass:function(id){
+			notup.mo_noticeId=id;
+			var info ="公告内容";
+            $('#one').summernote('code', info)
+		},
+		mo_upstock:function(){
+			passtheNotic(notup.mo_noticeId);
 		},
 		change:function(pn){
 			getsaleList(pn);
@@ -317,6 +340,58 @@ function getsaleList(pn){
 		}
 	});
 }
+/**
+ * 上传公告图片并回调
+ */
+function sendFile1(files, editor, $editable) {
+	var filename = String(files.name).replace(/\.[^.\/]+$/, "");
+	console.log(filename)
+	var data = new FormData();
+	data.append("files", files);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "../game/add_rich_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(res) { //data是返回的hash,key之类的值，key是定义的文件名
+			console.log(res)
+			$('#one').summernote('insertImage', res.data.richimgurl);
+		},
+		error: function() {
+			alert("上传失败");
+		}
+	});
+}
+
+/**
+ * 添加公告发布
+ */
+function passtheNotic(id){
+	var code = $('#one').summernote('code');
+	console.log(code)
+	var form = new FormData(document.getElementById("addnotice"));
+	form.append("content", code);
+	form.append("gameid", id);
+	//console.log(form)
+	$.ajax({
+		url: "../announcement/add_announcement",
+		type: "POST",
+		data: form,
+		processData: false,
+		contentType: false,
+		success: function(res) {
+			//window.clearInterval(timer);
+			console.log(res);
+			if(res.status == 0) {
+				alert(res.msg)
+			}
+		}
+	})
+}
+
 
 /**
  * 下架模块
@@ -429,6 +504,7 @@ var guser = new Vue({
 				async:true,
 				success:function(res){
 					getguserList(pageNum);
+
 				}
 			});
 		},
@@ -447,6 +523,11 @@ var guser = new Vue({
 			});
 		},*/
 		change:function(pn){
+				inputselect(pn);
+		},
+		//查询用户
+		selectbyinput:function(){
+			inputselect(1);
 			getguserList(pn);
 		},
 		//查询用户
@@ -516,6 +597,36 @@ function getguserList(pn){
 	});
 }
 
+function inputselect(pn){
+	var username = guser.username;
+	console.log(username);
+	var that = this;
+	$.ajax({
+		type: "get",
+		url: "../admin/selectuserlikeusername/" + pn,
+		data: {
+			"username": username
+		},
+		async: true,
+		success: function(res) {
+			console.log(res);
+			if(res.status == 0) {
+				guser.pageNum = res.data.pageNum;
+				guser.total = res.data.total;
+				guser.pages = res.data.pages;
+				guser.prePage = res.data.prePage;
+				guser.nextPage = res.data.nextPage;
+				guser.isFirstPage = res.data.isFirstPage;
+				guser.isLastPage = res.data.isLastPage;
+				guser.hasPreviousPage = res.data.hasPreviousPage;
+				guser.hasNextPage = res.data.hasNextPage;
+				guser.navigatePages = res.data.navigatePages;
+				guser.navigatepageNums = res.data.navigatepageNums;
+				guser.gusers = res.data.list;
+			}
+		}
+	});
+}
 /**
  * 公告管理模块
  */
@@ -536,9 +647,13 @@ var gnotice = new Vue({
 		list:[],
 		oldtitle:"",
 		oldcontent:"",
-		syid:""
+		syid:"",
+		del:[]
 	},
 	methods:{
+		getnoticeId:function(index){
+			gnotice.del = gnotice.list[index];
+		},
 		mo_updategg:function(index){
 			gnotice.syid=gnotice.list[index].id;
 			gnotice.oldtitle=gnotice.list[index].title;
@@ -547,6 +662,9 @@ var gnotice = new Vue({
 		},
 		savenew:function(pageNum){
 			asavenew(gnotice.syid,pageNum);
+		},
+		delnotice:function(id,pageNum){
+			deletenotice(id,pageNum);
 		},
 		change:function(pn){
 			getgnoticeList(pn);
@@ -639,6 +757,20 @@ function asavenew(id,pageNum){
 		}
 	});
 }
+//删除公告
+function deletenotice(id,pageNum){
+	$.ajax({
+		type:"post",
+		url:"../announcement/delete_announcement",
+		data:{"id":id},
+		async:true,
+		success:function(res){
+			getgnoticeList(pageNum);
+		}
+	});
+}
+
+
 /**
  * 个人信息模块
  */
@@ -766,92 +898,141 @@ function sendtheFile(files, editor, $editable) {
  * 商品打折
 */
 	var gamediscount = new Vue({
-	el:"#gamediscount",
+	el:"#discounts",
 	data:{
-		pageNum: "",
-		total: "",
-		pages: "",
-	    prePage:"",
-		nextPage:"",
-		isFirstPage:"",
-		isLastPage:"",
-		hasPreviousPage:"",
-		hasNextPage:"",
-		navigatePages:"",
-		navigatepageNums:[],
-		goods:[]
 		
+		goods:[],
+		nonediscounts:[],
+		newid:"",
+		olddiscountid:"",
+		olddiscount:"",
+		oldstarttime:"",
+		olddeadline:"",
+		deleteid:""
 	},
 	methods:{
-		change:function(pn){
-			getgoodsList(pn);
+		cut_price:function(id){ 
+		gamediscount.newid = id ;
+		},
+		savefirstdiscount:function(){
+			save_firstdiscount();
+			
+		},
+		getdiscount:function(index){
+		gamediscount.olddiscountid = gamediscount.goods[index].discountid ;	
+		console.log(gamediscount.olddiscountid)
+		gamediscount.olddiscount=gamediscount.goods[index].discount;
+		gamediscount.oldstarttime=gamediscount.goods[index].starttime;
+		gamediscount.olddeadline=gamediscount.goods[index].olddeadline;
+		},
+		saveupdateprice:function(){
+			save_updateprice();
+			
+		},
+		deletediscount:function(index){
+			gamediscount.deleteid=gamediscount.goods[index].discountid
+			delete_discounts();
+			
 		}
 	},
 	created:function(){
-		getgoodsList(1);
+		getgoodsList();
+		getnonediscountLit();
 	}
 })
 
 /**
  * 获取商品打折详情
  */
-function getgoodsList(pn){
+function getgoodsList(){
 	var that = this;
-	console.log(pn)
 	$.ajax({
 		type:"post",
-		url:"../game/get_discount_gamelist/"+pn,
+		url:"../game/get_discount",
 		async:true,
 		success:function(res){
-			console.log(res.data)
-			gamediscount.goods = res.data.list;
-		    gamediscount.pageNum = res.data.pageNum;
-			gamediscount.total = res.data.total;
-			gamediscount.pages = res.data.pages;
-			gamediscount.prePage = res.data.prePage;
-			gamediscount.nextPage = res.data.nextPage;
-			gamediscount.isFirstPage = res.data.isFirstPage;
-			gamediscount.isLastPage = res.data.isLastPage;
-			gamediscount.hasPreviousPage = res.data.hasPreviousPage;
-			gamediscount.hasNextPage = res.data.hasNextPage;
-			gamediscount.navigatePages = res.data.navigatePages;
-			gamediscount.navigatepageNums = res.data.navigatepageNums;
-			for(var i = 0; i < gamediscount.goods.length; i++){
-				gamediscount.goods[i].starttime = that.format(gamediscount.goods[i].starttime)
-				
-			}
+			console.log("测试已打折")
+			gamediscount.goods = res.data;
+			console.log(gamediscount.goods)
 		}
 	});
+	
 }
-
-
 /**
- * 所有无打折销售游戏
+ * 获取未打折商品详情
  */
-var nonediscount = new Vue({
-	el:"#nonediscount",
-	data:{
-		nonediscount:[]
-	},
-	methods:{},
-	created:function(){
-		getnonediscountLit();
-	}
-})
-
 function getnonediscountLit(){
 	var that = this;
 	$.ajax({
-		type:"get",
-		url:"../gameaudit/onthesshelf_gamelist",
+		type:"post",
+		url:"../game/get_notdiscount",
 		async:true,
 		success:function(res){
-			nonediscount.nonediscount = res.data;
-			for(var i = 0; i < nonediscount.nonediscount.length; i++){
-				nonediscount.nonediscount[i].shelftime = that.format(nonediscount.nonediscount[i].shelftime)
-			}
+			console.log("测试未打折")
+			gamediscount.nonediscounts = res.data;
 		}
 	});
+	
+}
+
+function save_firstdiscount(){
+	var abc = new FormData(document.getElementById("firstdiscount"));
+	var id = gamediscount.newid;
+	abc.append("gameid",id);
+	$.ajax({
+		type:"POST",
+		url:"../game/add_discount",
+		data:abc,
+		async:true,
+		processData: false,
+		contentType:false,
+		success:function(res){
+			console.log(res)
+			getgoodsList();
+		    getnonediscountLit();
+		}
+	});
+	
+}
+
+function save_updateprice(){
+	var form =new FormData();
+	form.append("id",gamediscount.olddiscountid);
+	form.append("discount",gamediscount.olddiscount);
+	form.append("starttime",gamediscount.oldstarttime);
+	form.append("deadline",gamediscount.olddeadline);
+	
+	$.ajax({
+		type:"POST",
+		url:"../game/update_discount",
+		data:form,
+		async:true,
+		processData: false,
+		contentType:false,
+		success:function(res){
+			console.log(res)
+			getgoodsList();
+		    getnonediscountLit();
+		}
+	});
+	
+}
+
+function delete_discounts(){
+	console.log("删除打折")
+	var id = gamediscount.deleteid ;
+	$.ajax({
+		type:"POST",
+		url:"../game/delete_discount",
+		data:{"id":id},
+		async:true,
+		success:function(res){
+			console.log(res)
+			getgoodsList();
+		    getnonediscountLit();
+		}
+	});
+	
 }
 /*
  * 获取路径参数
@@ -877,46 +1058,7 @@ $(function() {
 		$('.summernote').summernote('reset');
 	})
 })
-//判断老密码
-/*function validatePwd() {
-	var pwd1 = document.getElementById("password").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
-	if (pwd1.trim().length == 0 || pwd1 == "") {
-		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("finish-button").disabled = true;
-	}else {
-		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
-		document.getElementById("save_button").disabled = false;
-	}
-}*/
-//校验第一次输入的密码
-/*function validatePwd1() {
-	var pwd1 = document.getElementById("password").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
-	if (pwd1.trim().length == 0 || pwd1 == "") {
-		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("finish-button").disabled = true;
-	}else {
-		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
-		document.getElementById("finish-button").disabled = false;
-	}
-}*/
 
-	//		 对比两次输入的密码 
-/*function validatePwd2() {
-	var pwd1 = document.getElementById("password").value;
-	var pwd2 = document.getElementById("repassword").value;
-	if (pwd2.trim().length == 0) {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("finish-button").disabled = true;
-	} else if (pwd1 == pwd2) {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
-		document.getElementById("finish-button").disabled = false;
-	} else {
-		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
-		document.getElementById("finish-button").disabled = true;
-	}
-}*/
 
 /**
  * 密码修改模块
@@ -931,8 +1073,8 @@ var updatapw = new Vue({
 	methods:{
 		updatapassword:function(){
 			var that = this;
-			var oldpassword = $("#oldpassword").val();
-			var newpassword = $("#newpassword").val();
+			var oldpassword = updatapw.oldpassword;
+			var newpassword = updatapw.newpassword;
 			$.ajax({
 				type:"post",
 				url:"../user/updatePassword",
@@ -942,7 +1084,11 @@ var updatapw = new Vue({
 				},
 				async:true,
 				success:function(res){
-					console.log(res)
+					if(res.status==0){
+						window.location.href= "/digger/views/index.html?username="+updatapw.username+'&password='+newpassword;						
+					}else if(res.status==1){
+						alert(res.msg)
+					}
 				}
 			});
 		}
@@ -951,6 +1097,50 @@ var updatapw = new Vue({
 		this.username = getUrlParam("username");
 	}
 })
+
+
+//校验旧密码
+function validatePwd() {
+	var pwd1 = document.getElementById("oldpassword").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if(pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("uppw").disabled = true;
+	}
+	else {
+		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
+		document.getElementById("uppw").disabled = false;
+	}
+}
+//校验第一次输入的密码
+function validatePwd1() {
+	var pwd1 = document.getElementById("newpassword").value;
+	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	if(pwd1.trim().length == 0 || pwd1 == "") {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("uppw").disabled = true;
+	}
+	else {
+		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
+		document.getElementById("uppw").disabled = false;
+	}
+}
+
+function validatePwd2() {
+	var pwd1 = document.getElementById("newpassword").value;
+	var pwd2 = document.getElementById("repassword").value;
+	//		 对比两次输入的密码 
+	if(pwd2.trim().length == 0) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
+		document.getElementById("uppw").disabled = true;
+	} else if(pwd1 == pwd2) {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
+		document.getElementById("uppw").disabled = false;
+	} else {
+		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
+		document.getElementById("uppw").disabled = true;
+	}
+}
 
 
 //退款审核
@@ -987,7 +1177,6 @@ var refund = new Vue({
 })
 
 $("#getrefund").click(function(e){
-	alert("nimei");
 	change(1);
 })
 
