@@ -8,6 +8,7 @@ import com.digger.pojo.Order;
 import com.digger.pojo.Payinfo;
 import com.digger.vo.FindMyGameVO;
 import com.digger.vo.OrderVO;
+import com.digger.vo.StatisticsVO;
 
 public interface OrderMapper {
     Integer deleteByid(Integer id);
@@ -39,5 +40,13 @@ public interface OrderMapper {
 	Integer applyRefundByid(Integer id);
 
 	List<FindMyGameVO> toGetMyGame(Integer userid);
+
+	List<StatisticsVO> saleStatistics(String nowyear);
+	
+	List<OrderVO> toGetRefund();
+
+	Integer goRefund(String ordernum);
+
+	Integer disagreeRefund(String ordernum);
 
 }

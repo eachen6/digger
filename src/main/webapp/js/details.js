@@ -28,22 +28,6 @@ $(document).ready(function(){
 			history.go(-1);
 	});
 	
-	//提示框
-	$(function(){
-		toastr.options= {
-		"closeButton":true,//显示关闭按钮
-		"debug":false,//启用debug
-		"positionClass":"toast-top-center",//弹出的位置
-		"showDuration":"300",//显示的时间
-		"hideDuration":"1000",//消失的时间
-		"timeOut":"3000",//停留的时间
-		"extendedTimeOut":"1000",//控制时间
-		"showEasing":"swing",//显示时的动画缓冲方式
-		"hideEasing":"linear",//消失时的动画缓冲方式
-		"showMethod":"fadeIn",//显示时的动画方式
-		"hideMethod":"fadeOut"//消失时的动画方式
-		};
-		});
 
     //点击确认购买动
     $("#btn_buy").click(function(e){
@@ -66,13 +50,12 @@ $(document).ready(function(){
 			success: function(res){
 				console.log(res);
 				if(res.status == 1){
-					toastr.info(res.msg);
+					alert(res.msg);
 					game.iswish = false;
 				}
 				else if(res.status == 0)
 				{
 					game.iswish = true;
-					toastr.success(res.msg);
 					window.location.href = "../order/goAlipay?ordernum=" + ordernum;
 				}
 			}
@@ -205,7 +188,7 @@ function addToWish(id){
 			else if(res.status==1)
 			{
 				game.iswish = false;
-				toastr.info(res.msg);
+				alert(res.msg);
 				console.log(res.msg);
 			}
 		}
@@ -229,7 +212,7 @@ function deleteFromWish(id){
 			else if(res.status==1)
 			{				
 				game.iswish = false;
-				toastr.info(res.msg);
+				alert(res.msg);
 				console.log(res.msg);
 			}
 		}
