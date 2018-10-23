@@ -12,7 +12,8 @@ var mygame = new Vue({
 			url:"../order/get_mygame",
 			async:true,
 			success:function(res){
-				this.content = res.data;
+				console.log(res)
+				mygame.content = res.data;
 			}
 		});
 	}

@@ -9,7 +9,11 @@
 	</head>
 	<body>
 		<div class="container" id="mygame">
-			<div class="container-fluid" v-for="item in content" style="background-color: whitesmoke;border-radius: 5px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
+			<div class="container-fluid" v-if="content == ''||content == null">
+				<img height="530" src="../img/nothing.jpg" />
+			</div>
+			
+			<div class="container-fluid" v-for="item in content" style="background-color: whitesmoke;border-radius: 5px;padding-top:20px;padding-bottom: 20px;margin-top: 20px;margin-bottom: 20px;">
 			
 				<div class="row">
 				   <a :href="'main.html?location=details&id='+item.id" style="text-decoration: none; color:black;">
