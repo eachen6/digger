@@ -1177,6 +1177,7 @@ var refund = new Vue({
 })
 
 $("#getrefund").click(function(e){
+	alert("nimei");
 	change(1);
 })
 
