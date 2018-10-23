@@ -51,7 +51,7 @@
     		$('#date1').val(oneday);
     		$('#date2').val(today);
     		getData($('#mySelect').children('option:selected').val());
-    		getData1('2018-01-01','2019-01-31');
+    		getData1(oneday,today);
     	});
     	
     	$('#mySelect').change(function(){
@@ -72,7 +72,7 @@
     		})
         
     })
-    var y=new Array();
+   
     var option1;
     var option2;
     var swChart;
@@ -89,6 +89,7 @@
     			console.log(res);
     			if(res.status == 0)
     			{
+    				 var y=new Array();
     				for(var i = 0; i < 12; i++){
     						y[i] = 0;
     				}
@@ -155,8 +156,7 @@
     	});
     }
     
-    var game=new Array();
-    var sum=new Array();
+   
     function getData1(date1, date2){
     	$.ajax({
     		type:"POST",
@@ -170,11 +170,8 @@
     			console.log(res);
     			if(res.status == 0)
     			{   
-    				if(res.data.length==0)
-    				   {
-    					  sum = new Array();
-    					  game = new Array();
-    				   }
+    				 var game=new Array();
+    				 var sum=new Array();
     				for(var i = 0; i < res.data.length; i++){
     					game[i] = res.data[i].name;
     					sum[i] = res.data[i].ssum;
