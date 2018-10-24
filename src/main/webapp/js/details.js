@@ -31,14 +31,14 @@ $(document).ready(function(){
 
     //点击确认购买动
     $("#btn_buy").click(function(e){
-    	alert("tttt");
+    	//alert("tttt");
     	if(game.contents.discount==null||game.contents.discount==0){
     		price = game.contents.price;
     	}
     	else
     		price = game.contents.price*game.contents.discount*0.1;
     	var ordernum = GetDateNow();
-    	alert("rrrrrrrrr");
+    	//alert("rrrrrrrrr");
     	$.ajax({
 			type:"POST",
 			url:"../order/create",
@@ -299,9 +299,12 @@ function getAnno(id){
 			gameid:id
 		},
 		success:function(res){
+			console.log(res)
+			if(res.status == 0){
 			game.anno = res.data.list
 			for(var i = 0; i < game.anno.length; i++){
 				game.anno[i].createtime = that.format(game.anno[i].createtime)
+			}
 			}
 		}
 	});
