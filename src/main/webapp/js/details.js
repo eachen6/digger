@@ -297,9 +297,12 @@ function getAnno(id){
 			gameid:id
 		},
 		success:function(res){
+			console.log(res)
+			if(res.status == 0){
 			game.anno = res.data.list
 			for(var i = 0; i < game.anno.length; i++){
 				game.anno[i].createtime = that.format(game.anno[i].createtime)
+			}
 			}
 		}
 	});
