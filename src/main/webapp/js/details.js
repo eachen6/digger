@@ -31,14 +31,12 @@ $(document).ready(function(){
 
     //点击确认购买动
     $("#btn_buy").click(function(e){
-    	alert("tttt");
     	if(game.contents.discount==null||game.contents.discount==0){
     		price = game.contents.price;
     	}
     	else
     		price = game.contents.price*game.contents.discount*0.1;
     	var ordernum = GetDateNow();
-    	alert("rrrrrrrrr");
     	$.ajax({
 			type:"POST",
 			url:"../order/create",
