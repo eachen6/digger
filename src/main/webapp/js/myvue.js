@@ -412,7 +412,11 @@ var isdown = new Vue({
 		},
 		updategame:function(index){
 			var id = isdown.isdowns[index].id;
-			window.location.href = 'upload1.html?id='+id;
+			//window.location.href = 'upload1.html?id='+id;
+			console.log("开始")
+			$("#updategamemsg",parent.document.body).attr("src","upload1.html?id="+id);
+			var temp = $("#updategamemsg").attr("src");
+			console.log("结束",temp)
 		}
 	},
 	created:function(){
@@ -494,7 +498,7 @@ var guser = new Vue({
 				},
 				async:true,
 				success:function(res){
-					getguserList(pageNum);
+					inputselect(pageNum);
 				}
 			});
 		},
@@ -511,7 +515,7 @@ var guser = new Vue({
 /**
  * 获取用户管理列表
  */
-function getguserList(pn){
+/*function getguserList(pn){
 	var that = this;
 	$.ajax({
 		type:"get",
@@ -536,7 +540,7 @@ function getguserList(pn){
 			}
 		}
 	});
-}
+}*/
 //
 function inputselect(pn){
 	var username = guser.username;
@@ -767,6 +771,23 @@ function getgrList(usern){
 			gr.grs.createtime = that.format(gr.grs.createtime)
 		}
 	});
+}
+
+//校验邮箱
+function validateEmail() {
+	var email = document.getElementById("email").value;
+	var tEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	//var right = email.match(tEmail);
+	if(email.value == "" || email.length == 0) {
+		document.getElementById("tishiEmail").innerHTML = "<font color='red'>请输入邮箱</font>";
+		document.getElementById("btnsave").disabled = true;
+	} else if(!tEmail.test(email)) {
+		document.getElementById("tishiEmail").innerHTML = "<font color='red'>邮箱格式错误</font>";
+		document.getElementById("btnsave").disabled = true;
+	} else {
+		document.getElementById("tishiEmail").innerHTML = "<font> </font>"
+		document.getElementById("btnsave").disabled = false;
+	}
 }
 
 /**
@@ -1028,27 +1049,31 @@ var updatepw = new Vue({
 //校验旧密码
 function validatePwd() {
 	var pwd1 = document.getElementById("oldpassword").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
 	if(pwd1.trim().length == 0 || pwd1 == "") {
 		document.getElementById("tishiPwd").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
-	}
-	else {
+		document.getElementById("btnsave1").disabled = true;
+	}else if(!testPwd.test(pwd1)){
+		document.getElementById("tishiPwd").innerHTML = "<font color='red'>必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间</font>";
+		document.getElementById("btnsave1").disabled = true;
+	}else {
 		document.getElementById("tishiPwd").innerHTML = "<font color='white'></font>";
-		document.getElementById("uppw").disabled = false;
+		document.getElementById("btnsave1").disabled = false;
 	}
 }
 //校验第一次输入的密码
 function validatePwd1() {
 	var pwd1 = document.getElementById("newpassword").value;
-	//var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
+	var testPwd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$/;
 	if(pwd1.trim().length == 0 || pwd1 == "") {
 		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
-	}
-	else {
+		document.getElementById("btnsave1").disabled = true;
+	}else if(!testPwd.test(pwd1)){
+		document.getElementById("tishiPwd1").innerHTML = "<font color='red'>必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间</font>";
+		document.getElementById("btnsave1").disabled = true;
+	}else {
 		document.getElementById("tishiPwd1").innerHTML = "<font color='white'></font>";
-		document.getElementById("uppw").disabled = false;
+		document.getElementById("btnsave1").disabled = false;
 	}
 }
 
@@ -1058,13 +1083,13 @@ function validatePwd2() {
 	//		 对比两次输入的密码 
 	if(pwd2.trim().length == 0) {
 		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>密码不能为空</font>";
-		document.getElementById("uppw").disabled = true;
+		document.getElementById("btnsave1").disabled = true;
 	} else if(pwd1 == pwd2) {
 		document.getElementById("tishiPwd2").innerHTML = "<font color='white'>两次密码相同</font>";
-		document.getElementById("uppw").disabled = false;
+		document.getElementById("btnsave1").disabled = false;
 	} else {
 		document.getElementById("tishiPwd2").innerHTML = "<font color='red'>两次密码不相同</font>";
-		document.getElementById("uppw").disabled = true;
+		document.getElementById("btnsave1").disabled = true;
 	}
 }
 
@@ -1189,7 +1214,7 @@ $(function(){
 	})
 	
 	$("#but_3").click(function(e){
-		getguserList(1);
+		inputselect(1);
 	})
 	
 	
