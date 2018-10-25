@@ -20,7 +20,7 @@ var page = new Vue({
 	},
 	methods: {
 		change:function(pn){
-			alert(pn);
+			//alert(pn);
 			mypage(pn);
 		}
 	},

@@ -23,7 +23,7 @@ var wish = new Vue({
 })
 
 function pay(gameid,price,discount){
-	alert(discount);
+	//alert(discount);
 	if(discount!=null&&discount!=0){
 		price = price*discount*0.1;
 	}
