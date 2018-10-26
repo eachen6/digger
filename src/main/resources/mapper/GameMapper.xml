@@ -441,7 +441,7 @@
     from game left join discountlist 
     on game.id=discountlist.gameid
     where state = 2
-    order by sale desc 
+    order by click desc 
   </select>
   
   <!-- 新增方法：获取所有游戏<最新上架>集合(待修改)-->
